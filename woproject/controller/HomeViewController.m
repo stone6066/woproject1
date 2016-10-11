@@ -39,13 +39,13 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tabBarItem.selectedImage = [[UIImage imageNamed:@"bar1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        self.tabBarItem.image = [[UIImage imageNamed:@"bar1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        //NSString *tittxt=@"首页";
+        self.tabBarItem.selectedImage = [[UIImage imageNamed:@"home"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        self.tabBarItem.image = [[UIImage imageNamed:@"home"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        NSString *tittxt=@"首页";
         
-        //self.tabBarItem.title=tittxt;
+        self.tabBarItem.title=tittxt;
         
-        //self.tabBarItem.titlePositionAdjustment=UIOffsetMake(0, -3);
+        self.tabBarItem.titlePositionAdjustment=UIOffsetMake(0, -3);
     }
     return self;
 }
@@ -189,15 +189,16 @@
     
 }
 -(void)clickkq{//考勤
-
-//    KaoqinViewController *kaoqinVc=[[KaoqinViewController alloc]init];
-//    [self.navigationController pushViewController:kaoqinVc animated:YES];
     
     BaseMapViewController *subViewController = [[stdMapViewController alloc] init];
     
     subViewController.title   = @"map";
     subViewController.mapView = self.mapView;
     subViewController.search  = self.search;
+    subViewController.hidesBottomBarWhenPushed=YES;
+    subViewController.navigationItem.hidesBackButton=YES;
+    
+    
     [self.navigationController pushViewController:(UIViewController*)subViewController animated:YES];
 }
 -(void)clickpd{//派单
@@ -209,8 +210,6 @@
 -(void)clickks{//可视化
     
 }
-
-
 
 - (void)initMapView
 {

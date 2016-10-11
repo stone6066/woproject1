@@ -55,7 +55,17 @@
     //tabbar被选中的背景颜色
     CGSize indicatorImageSize =CGSizeMake(fDeviceWidth/3, rootTab.tabBar.bounds.size.height);
     rootTab.tabBar.selectionIndicatorImage = [self drawTabBarItemBackgroundUmageWithSize:indicatorImageSize];
-   
+    
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [UIColor whiteColor], UITextAttributeTextColor,
+                                                       nil] forState:UIControlStateNormal];
+    UIColor *titleHighlightedColor = [UIColor whiteColor];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       titleHighlightedColor, UITextAttributeTextColor,
+                                                       nil] forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                  [UIFont fontWithName:@"Helvetica" size:12.0], NSFontAttributeName, nil]
+                        forState:UIControlStateNormal];
 }
 //绘制图片
 -(UIImage *)drawTabBarItemBackgroundUmageWithSize:(CGSize)size

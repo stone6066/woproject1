@@ -104,4 +104,13 @@
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     return [user objectForKey:mkey];
 }
+
++(NSString *)stdTimeToStr:(NSString*)intTime{
+    NSTimeInterval interval=[[intTime substringToIndex:10] doubleValue];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
+    NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
+    [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [objDateformat stringFromDate: date];
+}
+
 @end

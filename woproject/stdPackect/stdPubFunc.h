@@ -32,4 +32,6 @@
 +(void)saveToUserDefaults:(id)obj myKey:(NSString*)mkey;
 
 +(id)readFormUserDefaults:(NSString*)mkey;
+
++(NSString *)stdTimeToStr:(NSString*)intTime;
 @end

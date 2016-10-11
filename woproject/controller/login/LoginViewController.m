@@ -126,20 +126,40 @@
     txtF.delegate=self;
 }
 
+-(NSDictionary *)makeUpLoadDict{
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
+    
+    [dict setObject:@"hong" forKey:@"id"];
+    [dict setObject:@"admin" forKey:@"password"];
+    NSLog(@"dict:%@",[self dictionaryToJson:dict]);
+    
+    
+    return dict;
+    
+}
+
+-(NSString*)dictionaryToJson:(NSDictionary *)dic
+
+{
+    
+    NSError *parseError = nil;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+}
+
 //登录
 -(void)loginNetFuc:(NSString*)usr passWord:(NSString*)psw{
     [SVProgressHUD showWithStatus:k_Status_Load];
 
-    NSDictionary *paramDict = @{
-                                @"id":@"hong",
-                                @"password":@"admin"
-                                };
 
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/login"];
 
     urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [ApplicationDelegate.httpManager POST:urlstr
-                               parameters:paramDict
+                               parameters:[self makeUpLoadDict]
                                  progress:^(NSProgress * _Nonnull uploadProgress) {}
                                   success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                                       //http请求状态

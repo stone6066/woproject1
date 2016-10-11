@@ -28,13 +28,13 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tabBarItem.selectedImage = [[UIImage imageNamed:@"bar2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        self.tabBarItem.image = [[UIImage imageNamed:@"bar2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        //NSString *tittxt=@"首页";
+        self.tabBarItem.selectedImage = [[UIImage imageNamed:@"Color-Fill"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        self.tabBarItem.image = [[UIImage imageNamed:@"Color-Fill"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        NSString *tittxt=@"报修";
         
-        //self.tabBarItem.title=tittxt;
+        self.tabBarItem.title=tittxt;
         
-        //self.tabBarItem.titlePositionAdjustment=UIOffsetMake(0, -3);
+        self.tabBarItem.titlePositionAdjustment=UIOffsetMake(0, -3);
     }
     return self;
 }
