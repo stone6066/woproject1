@@ -30,6 +30,7 @@
  */
 @property (strong, nonatomic) AFHTTPSessionManager *httpManager;
 @property (assign, nonatomic) BOOL isLogin;
+@property (assign, nonatomic) BOOL isRmbPsw;//是否记住密码
 @property (strong, nonatomic) loginInfo *myLoginInfo;
 @end
 

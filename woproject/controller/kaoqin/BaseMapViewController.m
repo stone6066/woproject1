@@ -76,9 +76,19 @@
     [topLbl setTextColor:[UIColor whiteColor]];
     
     [TopView addSubview:topLbl];
-    UIImageView *backimg=[[UIImageView alloc]initWithFrame:CGRectMake(8, 24, 60, 24)];
+    UIImageView *backimg=[[UIImageView alloc]initWithFrame:CGRectMake(8, 27, 60, 24)];
     backimg.image=[UIImage imageNamed:@"bar_back"];
     [TopView addSubview:backimg];
+    
+    UILabel *hintLbl=[[UILabel alloc]initWithFrame:CGRectMake(25, 29, 30, 20)];
+    hintLbl.text=@"返回";
+    [hintLbl setFont:[UIFont systemFontOfSize:14]];
+    [hintLbl setTextAlignment:NSTextAlignmentCenter];
+    [hintLbl setTextColor:[UIColor whiteColor]];
+    
+    [TopView addSubview:hintLbl];
+
+    
     //返回按钮
     UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
     [back setFrame:CGRectMake(0, 22, 70, 42)];

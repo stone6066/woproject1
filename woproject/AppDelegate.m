@@ -54,6 +54,7 @@
     self.httpManager = [AFHTTPSessionManager manager];
     self.httpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.isLogin=NO;
+    self.isRmbPsw=NO;
 //    [self downLoadDictVerson:@"getEquipmentType"];//下载设备类型字典
 //    [self downLoadDictVerson:@"getFarmType"];//下载农场类型
 }

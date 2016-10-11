@@ -12,6 +12,7 @@
 #import "BaseMapViewController.h"
 #import <AMapSearchKit/AMapSearchKit.h>
 #import "APIKey.h"
+#import "YjgdViewController.h"
 
 #import "stdMapViewController.h"
 
@@ -183,7 +184,12 @@
     [ksbtn addTarget:self action:@selector(clickks) forControlEvents:UIControlEventTouchUpInside];
 }
 -(void)clickyj{//已接
-
+    YjgdViewController *yjVc=[[YjgdViewController alloc]init];
+//    yjVc.hidesBottomBarWhenPushed=YES;
+//    yjVc.navigationItem.hidesBackButton=YES;
+    yjVc.view.backgroundColor=[UIColor whiteColor];
+    
+    [self.navigationController pushViewController:yjVc animated:YES];
 }
 -(void)clickzd{//主动接单
     

@@ -52,9 +52,60 @@
 
 -(void)checkboxClick:(UIButton *)btn
 {
-    btn.selected = !btn.selected;
+    _checkbox.selected = !_checkbox.selected;
+    ApplicationDelegate.isRmbPsw=_checkbox.selected ;
 }
 
+ -(void)UsrtextFieldDidChange:(UITextField *) TextField{
+     if (TextField.text.length>0) {
+         if (!_cancelVc) {
+             _cancelVc=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2-40, 11, 12)];
+             _cancelVc.image=[UIImage imageNamed:@"cancle"];
+             [self.view addSubview:_cancelVc];
+             UIButton *usrClearBtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2-50, 40, 40)];
+             [self.view addSubview:usrClearBtn];
+             //usrClearBtn.backgroundColor=[UIColor blueColor];
+             usrClearBtn.tag=101;
+             [usrClearBtn addTarget:self action:@selector(clearbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+         }
+         _cancelVc.hidden=NO;
+     }
+     else
+     {
+         _cancelVc.hidden=YES;
+     }
+ }
+
+-(void)PswtextFieldDidChange:(UITextField *) TextField{
+    if (TextField.text.length>0) {
+        if (!_cancelVc1) {
+            _cancelVc1=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2+10, 11, 12)];
+            _cancelVc1.image=[UIImage imageNamed:@"cancle"];
+            [self.view addSubview:_cancelVc1];
+            
+            UIButton *usrClearBtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2, 40, 40)];
+            [self.view addSubview:usrClearBtn];
+            
+            //usrClearBtn.backgroundColor=[UIColor yellowColor];
+            usrClearBtn.tag=102;
+            [usrClearBtn addTarget:self action:@selector(clearbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            
+        }
+        _cancelVc1.hidden=NO;
+    }
+    else
+    {
+        _cancelVc1.hidden=YES;
+    }
+}
+
+-(void)clearbtnClick:(UIButton*)btn{
+    if (btn.tag==101) {
+        _UsrTxtF.text=@"";
+    }
+    else
+        _PassTxtF.text=@"";
+}
 -(void)loadLoginView{
     UIImageView *backImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, fDeviceHeight)];
     backImg.image=[UIImage imageNamed:@"login_bg"];
@@ -72,18 +123,19 @@
     
     [self.view addSubview:titleLbl];
     
-    _UsrTxtF = [[UITextField alloc] initWithFrame:CGRectMake(70, fDeviceHeight/2-50, fDeviceWidth-80, 30)];
+    _UsrTxtF = [[UITextField alloc] initWithFrame:CGRectMake(70, fDeviceHeight/2-50, fDeviceWidth-100, 30)];
     [self stdInitTxtF:_UsrTxtF hintxt:@"请输入用户ID/手机号/身份证号"];
     
+    [_UsrTxtF addTarget:self action:@selector(UsrtextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
-    _PassTxtF = [[UITextField alloc] initWithFrame:CGRectMake(70, fDeviceHeight/2, fDeviceWidth-80, 30)];
+    _PassTxtF = [[UITextField alloc] initWithFrame:CGRectMake(70, fDeviceHeight/2, fDeviceWidth-100, 30)];
     [self stdInitTxtF:_PassTxtF hintxt:@"请输入密码"];
     _PassTxtF.secureTextEntry = YES;
+    [_PassTxtF addTarget:self action:@selector(PswtextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [self.view addSubview:_UsrTxtF];
     [self.view addSubview:_PassTxtF];
-    _UsrTxtF.text=[stdPubFunc readUserMsg];
-    _PassTxtF.text=[stdPubFunc readPassword];
+    
 
     UIImageView *usrImg=[[UIImageView alloc]initWithFrame:CGRectMake(40, fDeviceHeight/2-43, 15, 17)];
     usrImg.image=[UIImage imageNamed:@"hh_login01"];
@@ -101,6 +153,11 @@
     [self.view addSubview:geLine1];
     [self.view addSubview:geLine2];
     
+    UIButton * remPswBtn=[[UIButton alloc]initWithFrame:CGRectMake(40, fDeviceHeight/2+31+10, 100, 30)];
+    [remPswBtn addTarget:self action:@selector(checkboxClick:) forControlEvents:UIControlEventTouchUpInside];
+    //remPswBtn.backgroundColor=[UIColor yellowColor];
+    [self.view addSubview:remPswBtn];
+    
     _checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
     
     CGRect checkboxRect = CGRectMake(40, fDeviceHeight/2+31+20, 15, 15);
@@ -112,11 +169,14 @@
     [_checkbox addTarget:self action:@selector(checkboxClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_checkbox];
     
-    UILabel *remPswLbl=[[UILabel alloc]initWithFrame:CGRectMake(40+18,fDeviceHeight/2+31+17, 80, 20)];
+        UILabel *remPswLbl=[[UILabel alloc]initWithFrame:CGRectMake(40+18,fDeviceHeight/2+31+17, 80, 20)];
     remPswLbl.text=@"记住密码";
     [remPswLbl setTextColor:[UIColor grayColor]];
     [remPswLbl setFont:[UIFont systemFontOfSize:12]];
     [self.view addSubview:remPswLbl];
+    
+    
+    
     
     
     _LoginBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-150, fDeviceWidth, 40)];
@@ -144,6 +204,24 @@
     hintLbl.numberOfLines = 0;
     hintLbl.text=@"如果遇到账户信息泄漏，忘记密码，诈骗等账号安全问题请联系系统管理员";
     [self.view addSubview:hintLbl];
+    
+    
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSString * rmbPsw = [user objectForKey:NSUserRmbMsg];
+    
+    if ([rmbPsw isEqualToString:@"1"]) {
+        _checkbox.selected=YES;
+        ApplicationDelegate.isRmbPsw=YES;
+        _UsrTxtF.text=[stdPubFunc readUserMsg];
+        _PassTxtF.text=[stdPubFunc readPassword];
+        [self clickloginbtn];//记住密码 自动登录
+    }
+    else
+    {
+        _checkbox.selected=NO;
+        ApplicationDelegate.isRmbPsw=NO;
+    }
+
 
 }
 -(void)clickzhucebtn{
@@ -230,10 +308,18 @@
                                               //成功
                                               loginInfo *LGIN=[[loginInfo alloc]init];
                                               ApplicationDelegate.myLoginInfo=[LGIN asignInfoWithDict:jsonDic];
-                                              [stdPubFunc saveLoginInfo:_UsrTxtF.text password:_PassTxtF.text];
+                                              
                                               [SVProgressHUD dismiss];
                                               [stdPubFunc stdShowMessage:msg];
                                               [self loginSuccPro];
+                                              if (ApplicationDelegate.isRmbPsw) {
+                                                  
+                                                  [stdPubFunc isSaveLoginInfo:@"1"];
+                                                  [stdPubFunc saveLoginInfo:_UsrTxtF.text password:_PassTxtF.text];
+                                              }
+                                              else{
+                                                  [stdPubFunc isSaveLoginInfo:@"0"];
+                                              }
                                               
                                           } else {
                                               //失败

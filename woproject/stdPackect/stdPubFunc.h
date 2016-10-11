@@ -34,4 +34,7 @@
 +(id)readFormUserDefaults:(NSString*)mkey;
 
 +(NSString *)stdTimeToStr:(NSString*)intTime;
+
++(void)isSaveLoginInfo:(NSString*)saveFlag;
+
 @end

@@ -19,6 +19,12 @@
 		8981D15B1DAB81F600CF2426 /* stdMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8981D15A1DAB81F600CF2426 /* stdMapViewController.m */; };
 		8981D15E1DAB8BD400CF2426 /* ReGeocodeAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8981D15D1DAB8BD400CF2426 /* ReGeocodeAnnotation.m */; };
 		8981D1601DAB8C5900CF2426 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8981D15F1DAB8C5900CF2426 /* AMap.bundle */; };
+		899C89A01DAD101A0073794E /* cancle.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C899F1DAD101A0073794E /* cancle.png */; };
+		899C89A41DAD1D990073794E /* YjgdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899C89A31DAD1D990073794E /* YjgdViewController.m */; };
+		899C89AB1DAD209F0073794E /* DOPDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 899C89A71DAD209F0073794E /* DOPDropDownMenu.m */; };
+		899C89AC1DAD209F0073794E /* icon_chose_arrow_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C89A81DAD209F0073794E /* icon_chose_arrow_nor@2x.png */; };
+		899C89AD1DAD209F0073794E /* icon_chose_arrow_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C89A91DAD209F0073794E /* icon_chose_arrow_sel@2x.png */; };
+		899C89AE1DAD209F0073794E /* icon_chose_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C89AA1DAD209F0073794E /* icon_chose_bottom@2x.png */; };
 		89F3EA211DAB368700B6E54A /* AMapFoundationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F3EA1F1DAB368700B6E54A /* AMapFoundationKit.framework */; };
 		89F3EA221DAB368700B6E54A /* MAMapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F3EA201DAB368700B6E54A /* MAMapKit.framework */; };
 		89F3EA2A1DAB38EB00B6E54A /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F3EA291DAB38EB00B6E54A /* AMapSearchKit.framework */; };
@@ -113,8 +119,6 @@
 		89FBEEE11DAA3690008FBB8A /* MyinfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEEE01DAA3690008FBB8A /* MyinfoViewController.m */; };
 		89FBEF3B1DAA4131008FBB8A /* loginInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEF3A1DAA4131008FBB8A /* loginInfo.m */; };
 		89FBEF3E1DAA41DD008FBB8A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEF3D1DAA41DD008FBB8A /* LoginViewController.m */; };
-		89FBEF521DAA4297008FBB8A /* YCXMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEF421DAA4297008FBB8A /* YCXMenu.m */; };
-		89FBEF531DAA4297008FBB8A /* YCXMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEF441DAA4297008FBB8A /* YCXMenuItem.m */; };
 		89FBEF541DAA4297008FBB8A /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEF451DAA4297008FBB8A /* NullSafe.m */; };
 		89FBEF551DAA4297008FBB8A /* stdCallBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEF471DAA4297008FBB8A /* stdCallBtn.m */; };
 		89FBEF561DAA4297008FBB8A /* stdCellVc.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEF491DAA4297008FBB8A /* stdCellVc.m */; };
@@ -163,6 +167,14 @@
 		8981D15C1DAB8BD400CF2426 /* ReGeocodeAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReGeocodeAnnotation.h; sourceTree = "<group>"; };
 		8981D15D1DAB8BD400CF2426 /* ReGeocodeAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReGeocodeAnnotation.m; sourceTree = "<group>"; };
 		8981D15F1DAB8C5900CF2426 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = woproject/amap/AMap.bundle; sourceTree = "<group>"; };
+		899C899F1DAD101A0073794E /* cancle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancle.png; sourceTree = "<group>"; };
+		899C89A21DAD1D990073794E /* YjgdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YjgdViewController.h; sourceTree = "<group>"; };
+		899C89A31DAD1D990073794E /* YjgdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YjgdViewController.m; sourceTree = "<group>"; };
+		899C89A61DAD209F0073794E /* DOPDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOPDropDownMenu.h; sourceTree = "<group>"; };
+		899C89A71DAD209F0073794E /* DOPDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOPDropDownMenu.m; sourceTree = "<group>"; };
+		899C89A81DAD209F0073794E /* icon_chose_arrow_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_arrow_nor@2x.png"; sourceTree = "<group>"; };
+		899C89A91DAD209F0073794E /* icon_chose_arrow_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_arrow_sel@2x.png"; sourceTree = "<group>"; };
+		899C89AA1DAD209F0073794E /* icon_chose_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_bottom@2x.png"; sourceTree = "<group>"; };
 		89F3EA1F1DAB368700B6E54A /* AMapFoundationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapFoundationKit.framework; sourceTree = "<group>"; };
 		89F3EA201DAB368700B6E54A /* MAMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MAMapKit.framework; sourceTree = "<group>"; };
 		89F3EA291DAB38EB00B6E54A /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapSearchKit.framework; sourceTree = "<group>"; };
@@ -282,10 +294,6 @@
 		89FBEF3A1DAA4131008FBB8A /* loginInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginInfo.m; sourceTree = "<group>"; };
 		89FBEF3C1DAA41DD008FBB8A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		89FBEF3D1DAA41DD008FBB8A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		89FBEF411DAA4297008FBB8A /* YCXMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCXMenu.h; sourceTree = "<group>"; };
-		89FBEF421DAA4297008FBB8A /* YCXMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCXMenu.m; sourceTree = "<group>"; };
-		89FBEF431DAA4297008FBB8A /* YCXMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCXMenuItem.h; sourceTree = "<group>"; };
-		89FBEF441DAA4297008FBB8A /* YCXMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCXMenuItem.m; sourceTree = "<group>"; };
 		89FBEF451DAA4297008FBB8A /* NullSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullSafe.m; sourceTree = "<group>"; };
 		89FBEF461DAA4297008FBB8A /* stdCallBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdCallBtn.h; sourceTree = "<group>"; };
 		89FBEF471DAA4297008FBB8A /* stdCallBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = stdCallBtn.m; sourceTree = "<group>"; };
@@ -358,6 +366,27 @@
 				F35C9632D00B9E99247289CE /* Pods-woproject.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		899C89A11DAD1D860073794E /* yjgd */ = {
+			isa = PBXGroup;
+			children = (
+				899C89A21DAD1D990073794E /* YjgdViewController.h */,
+				899C89A31DAD1D990073794E /* YjgdViewController.m */,
+			);
+			path = yjgd;
+			sourceTree = "<group>";
+		};
+		899C89A51DAD209F0073794E /* DOPDropDownMen */ = {
+			isa = PBXGroup;
+			children = (
+				899C89A61DAD209F0073794E /* DOPDropDownMenu.h */,
+				899C89A71DAD209F0073794E /* DOPDropDownMenu.m */,
+				899C89A81DAD209F0073794E /* icon_chose_arrow_nor@2x.png */,
+				899C89A91DAD209F0073794E /* icon_chose_arrow_sel@2x.png */,
+				899C89AA1DAD209F0073794E /* icon_chose_bottom@2x.png */,
+			);
+			path = DOPDropDownMen;
 			sourceTree = "<group>";
 		};
 		89F3EA1D1DAB307500B6E54A /* kaoqin */ = {
@@ -436,6 +465,7 @@
 		89FBEE991DAA2FA4008FBB8A /* woproject */ = {
 			isa = PBXGroup;
 			children = (
+				899C89A51DAD209F0073794E /* DOPDropDownMen */,
 				89FBEF3F1DAA4297008FBB8A /* stdPackect */,
 				89FBEF381DAA4131008FBB8A /* model */,
 				89FBEEE21DAA3710008FBB8A /* PublicDefine.h */,
@@ -482,6 +512,7 @@
 		89FBEED21DAA35A9008FBB8A /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				899C89A11DAD1D860073794E /* yjgd */,
 				89F3EA1D1DAB307500B6E54A /* kaoqin */,
 				89FBEF341DAA4078008FBB8A /* login */,
 				89FBEED31DAA35A9008FBB8A /* StdRootController.h */,
@@ -499,6 +530,7 @@
 		89FBEEE31DAA3CD5008FBB8A /* image */ = {
 			isa = PBXGroup;
 			children = (
+				899C899F1DAD101A0073794E /* cancle.png */,
 				89F61E7D1DACC2D300E9B489 /* bar_back.png */,
 				89F61E7B1DACC2AE00E9B489 /* login02.png */,
 				89F61E771DACBBAE00E9B489 /* checkbox_off.png */,
@@ -598,7 +630,6 @@
 		89FBEF3F1DAA4297008FBB8A /* stdPackect */ = {
 			isa = PBXGroup;
 			children = (
-				89FBEF401DAA4297008FBB8A /* dropDownList */,
 				89FBEF451DAA4297008FBB8A /* NullSafe.m */,
 				89FBEF461DAA4297008FBB8A /* stdCallBtn.h */,
 				89FBEF471DAA4297008FBB8A /* stdCallBtn.m */,
@@ -614,17 +645,6 @@
 				89FBEF511DAA4297008FBB8A /* StdUploadFileApi.m */,
 			);
 			path = stdPackect;
-			sourceTree = "<group>";
-		};
-		89FBEF401DAA4297008FBB8A /* dropDownList */ = {
-			isa = PBXGroup;
-			children = (
-				89FBEF411DAA4297008FBB8A /* YCXMenu.h */,
-				89FBEF421DAA4297008FBB8A /* YCXMenu.m */,
-				89FBEF431DAA4297008FBB8A /* YCXMenuItem.h */,
-				89FBEF441DAA4297008FBB8A /* YCXMenuItem.m */,
-			);
-			path = dropDownList;
 			sourceTree = "<group>";
 		};
 		C5376C6AA89FF65EAAFC7D78 /* Frameworks */ = {
@@ -757,8 +777,10 @@
 				89F61E581DACAB5B00E9B489 /* NOTEPAD-OK@2x.png in Resources */,
 				89F61E631DACAB5B00E9B489 /* wd_icon01.png in Resources */,
 				89F61E6B1DACAB5B00E9B489 /* wd_icon03@3x.png in Resources */,
+				899C89AE1DAD209F0073794E /* icon_chose_bottom@2x.png in Resources */,
 				89F61E4A1DACAB5B00E9B489 /* kshsj_icon04@3x.png in Resources */,
 				89F61E421DACAB5B00E9B489 /* kshsj_icon02.png in Resources */,
+				899C89A01DAD101A0073794E /* cancle.png in Resources */,
 				89F61E3A1DACAB5B00E9B489 /* FOLDER-OK@2x.png in Resources */,
 				89F61E431DACAB5B00E9B489 /* kshsj_icon02@2x.png in Resources */,
 				89F61E6D1DACAB5B00E9B489 /* wd_icon04@2x.png in Resources */,
@@ -805,10 +827,12 @@
 				89F61E531DACAB5B00E9B489 /* login_icon@3x.png in Resources */,
 				89F61E381DACAB5B00E9B489 /* Color-Fill@3x.png in Resources */,
 				89F61E491DACAB5B00E9B489 /* kshsj_icon04@2x.png in Resources */,
+				899C89AC1DAD209F0073794E /* icon_chose_arrow_nor@2x.png in Resources */,
 				89F61E681DACAB5B00E9B489 /* wd_icon02@3x.png in Resources */,
 				89F61E4D1DACAB5B00E9B489 /* kshsj_icon05@3x.png in Resources */,
 				89F61E4B1DACAB5B00E9B489 /* kshsj_icon05.png in Resources */,
 				89F61E6A1DACAB5B00E9B489 /* wd_icon03@2x.png in Resources */,
+				899C89AD1DAD209F0073794E /* icon_chose_arrow_sel@2x.png in Resources */,
 				89F61E471DACAB5B00E9B489 /* kshsj_icon03@3x.png in Resources */,
 				89F61E511DACAB5B00E9B489 /* login_icon.png in Resources */,
 				89F61E371DACAB5B00E9B489 /* Color-Fill@2x.png in Resources */,
@@ -903,14 +927,14 @@
 				8981D15B1DAB81F600CF2426 /* stdMapViewController.m in Sources */,
 				89FBEE9F1DAA2FA4008FBB8A /* AppDelegate.m in Sources */,
 				89F61E811DACCF4500E9B489 /* AnimatedAnnotationView.m in Sources */,
+				899C89AB1DAD209F0073794E /* DOPDropDownMenu.m in Sources */,
 				89FBEF631DAA4939008FBB8A /* roleList.m in Sources */,
 				89FBEEE11DAA3690008FBB8A /* MyinfoViewController.m in Sources */,
 				89FBEF581DAA4297008FBB8A /* stdPubFunc.m in Sources */,
+				899C89A41DAD1D990073794E /* YjgdViewController.m in Sources */,
 				89FBEF3B1DAA4131008FBB8A /* loginInfo.m in Sources */,
 				8981D12F1DAB3CE200CF2426 /* LineDashPolyline.m in Sources */,
 				89F61E841DACCF9900E9B489 /* AnimatedAnnotation.m in Sources */,
-				89FBEF531DAA4297008FBB8A /* YCXMenuItem.m in Sources */,
-				89FBEF521DAA4297008FBB8A /* YCXMenu.m in Sources */,
 				89FBEF591DAA4297008FBB8A /* stdTextField.m in Sources */,
 				89FBEF3E1DAA41DD008FBB8A /* LoginViewController.m in Sources */,
 				89FBEED51DAA35A9008FBB8A /* StdRootController.m in Sources */,

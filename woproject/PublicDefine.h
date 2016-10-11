@@ -42,6 +42,8 @@
 #define NSUserTypeData @"MyTypeData"
 
 #define NSUserDefaultsMsg @"userMsg"
+#define NSUserRmbMsg @"RmbMsg"
+
 #define NSUserDefaultsUid @"userUid"
 #define NSUserDefaultsNick @"userNickName"
 #define NSUserDefaultsUsers @"userName"
