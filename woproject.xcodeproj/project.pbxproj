@@ -91,6 +91,12 @@
 		89F61E6E1DACAB5B00E9B489 /* wd_icon04@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E341DACAB5B00E9B489 /* wd_icon04@3x.png */; };
 		89F61E711DACABCE00E9B489 /* CHART.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E6F1DACABCE00E9B489 /* CHART.png */; };
 		89F61E721DACABCE00E9B489 /* CHART@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E701DACABCE00E9B489 /* CHART@2x.png */; };
+		89F61E751DACB79600E9B489 /* hh_login01.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E731DACB79600E9B489 /* hh_login01.png */; };
+		89F61E761DACB79600E9B489 /* hh_login02.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E741DACB79600E9B489 /* hh_login02.png */; };
+		89F61E791DACBBAE00E9B489 /* checkbox_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E771DACBBAE00E9B489 /* checkbox_off.png */; };
+		89F61E7A1DACBBAE00E9B489 /* checkbox_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E781DACBBAE00E9B489 /* checkbox_on.png */; };
+		89F61E7C1DACC2AE00E9B489 /* login02.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E7B1DACC2AE00E9B489 /* login02.png */; };
+		89F61E7E1DACC2D300E9B489 /* bar_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E7D1DACC2D300E9B489 /* bar_back.png */; };
 		89FBEE9C1DAA2FA4008FBB8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEE9B1DAA2FA4008FBB8A /* main.m */; };
 		89FBEE9F1DAA2FA4008FBB8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEE9E1DAA2FA4008FBB8A /* AppDelegate.m */; };
 		89FBEEA21DAA2FA5008FBB8A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEEA11DAA2FA5008FBB8A /* ViewController.m */; };
@@ -233,6 +239,12 @@
 		89F61E341DACAB5B00E9B489 /* wd_icon04@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wd_icon04@3x.png"; sourceTree = "<group>"; };
 		89F61E6F1DACABCE00E9B489 /* CHART.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CHART.png; sourceTree = "<group>"; };
 		89F61E701DACABCE00E9B489 /* CHART@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CHART@2x.png"; sourceTree = "<group>"; };
+		89F61E731DACB79600E9B489 /* hh_login01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hh_login01.png; sourceTree = "<group>"; };
+		89F61E741DACB79600E9B489 /* hh_login02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hh_login02.png; sourceTree = "<group>"; };
+		89F61E771DACBBAE00E9B489 /* checkbox_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_off.png; sourceTree = "<group>"; };
+		89F61E781DACBBAE00E9B489 /* checkbox_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_on.png; sourceTree = "<group>"; };
+		89F61E7B1DACC2AE00E9B489 /* login02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login02.png; sourceTree = "<group>"; };
+		89F61E7D1DACC2D300E9B489 /* bar_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_back.png; sourceTree = "<group>"; };
 		89FBEE971DAA2FA4008FBB8A /* woproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89FBEE9B1DAA2FA4008FBB8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		89FBEE9D1DAA2FA4008FBB8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -474,6 +486,12 @@
 		89FBEEE31DAA3CD5008FBB8A /* image */ = {
 			isa = PBXGroup;
 			children = (
+				89F61E7D1DACC2D300E9B489 /* bar_back.png */,
+				89F61E7B1DACC2AE00E9B489 /* login02.png */,
+				89F61E771DACBBAE00E9B489 /* checkbox_off.png */,
+				89F61E781DACBBAE00E9B489 /* checkbox_on.png */,
+				89F61E731DACB79600E9B489 /* hh_login01.png */,
+				89F61E741DACB79600E9B489 /* hh_login02.png */,
 				89F61E6F1DACABCE00E9B489 /* CHART.png */,
 				89F61E701DACABCE00E9B489 /* CHART@2x.png */,
 				89F61DFB1DACAB5B00E9B489 /* CHART@3x.png */,
@@ -732,6 +750,7 @@
 				89F61E3F1DACAB5B00E9B489 /* kshsj_icon01.png in Resources */,
 				89F61E6E1DACAB5B00E9B489 /* wd_icon04@3x.png in Resources */,
 				89F61E361DACAB5B00E9B489 /* Color-Fill.png in Resources */,
+				89F61E7C1DACC2AE00E9B489 /* login02.png in Resources */,
 				89F61E5C1DACAB5B00E9B489 /* PIN-ZOOM-IN@3x.png in Resources */,
 				89F61E3E1DACAB5B00E9B489 /* home@3x.png in Resources */,
 				89F61E461DACAB5B00E9B489 /* kshsj_icon03@2x.png in Resources */,
@@ -744,6 +763,7 @@
 				89F61E691DACAB5B00E9B489 /* wd_icon03.png in Resources */,
 				89F61E651DACAB5B00E9B489 /* wd_icon01@3x.png in Resources */,
 				89F61E671DACAB5B00E9B489 /* wd_icon02@2x.png in Resources */,
+				89F61E7E1DACC2D300E9B489 /* bar_back.png in Resources */,
 				89F61E661DACAB5B00E9B489 /* wd_icon02.png in Resources */,
 				89F61E5D1DACAB5B00E9B489 /* USER-OK.png in Resources */,
 				8981D1601DAB8C5900CF2426 /* AMap.bundle in Resources */,
@@ -754,15 +774,18 @@
 				89F61E3B1DACAB5B00E9B489 /* FOLDER-OK@3x.png in Resources */,
 				89F61E5E1DACAB5B00E9B489 /* USER-OK@2x.png in Resources */,
 				89F61E3C1DACAB5B00E9B489 /* home.png in Resources */,
+				89F61E791DACBBAE00E9B489 /* checkbox_off.png in Resources */,
 				89F61E721DACABCE00E9B489 /* CHART@2x.png in Resources */,
 				89F61E521DACAB5B00E9B489 /* login_icon@2x.png in Resources */,
 				89F61E481DACAB5B00E9B489 /* kshsj_icon04.png in Resources */,
+				89F61E751DACB79600E9B489 /* hh_login01.png in Resources */,
 				89F61E391DACAB5B00E9B489 /* FOLDER-OK.png in Resources */,
 				89F61E4E1DACAB5B00E9B489 /* login_bg.png in Resources */,
 				89F61E5A1DACAB5B00E9B489 /* PIN-ZOOM-IN.png in Resources */,
 				89F61E601DACAB5B00E9B489 /* USERS.png in Resources */,
 				89F61E561DACAB5B00E9B489 /* male@3x.png in Resources */,
 				89F61E441DACAB5B00E9B489 /* kshsj_icon02@3x.png in Resources */,
+				89F61E761DACB79600E9B489 /* hh_login02.png in Resources */,
 				89F61E551DACAB5B00E9B489 /* male@2x.png in Resources */,
 				89F61E531DACAB5B00E9B489 /* login_icon@3x.png in Resources */,
 				89F61E381DACAB5B00E9B489 /* Color-Fill@3x.png in Resources */,
@@ -779,6 +802,7 @@
 				89F61E611DACAB5B00E9B489 /* USERS@2x.png in Resources */,
 				89F61E3D1DACAB5B00E9B489 /* home@2x.png in Resources */,
 				89F61E621DACAB5B00E9B489 /* USERS@3x.png in Resources */,
+				89F61E7A1DACBBAE00E9B489 /* checkbox_on.png in Resources */,
 				89F61E4F1DACAB5B00E9B489 /* login_bg@2x.png in Resources */,
 				89F61E641DACAB5B00E9B489 /* wd_icon01@2x.png in Resources */,
 				89F61E411DACAB5B00E9B489 /* kshsj_icon01@3x.png in Resources */,

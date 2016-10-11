@@ -81,8 +81,8 @@
     CGFloat offsetY=10;
     CGFloat cellWidth=(fDeviceWidth-3*offsetX)/2;
     CGFloat cellMinHeigh=(fDeviceHeight-topHeigh-MainTabbarHeight-4*offsetY)/4;
-    CGFloat imgW=80;
-    CGFloat imgH=64;
+    CGFloat imgW=60;
+    CGFloat imgH=60;
     UIView *topView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, topHeigh)];
     topView.backgroundColor=topviewcolor;
     [self.view addSubview:topView];
@@ -98,7 +98,7 @@
     yjgd.backgroundColor=yjgdColor;
     [self.view addSubview:yjgd];
     UIImageView *yjimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh*2-imgH-30)/2, imgW, imgH)];
-    yjimg.image=[UIImage imageNamed:@"yindex"];
+    yjimg.image=[UIImage imageNamed:@"FOLDER-OK"];
     [yjgd addSubview:yjimg];
     CGFloat lblH1= yjimg.frame.origin.y+yjimg.frame.size.height+3;
     UILabel *yjgdlbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH1, cellWidth, 30)];
@@ -112,7 +112,7 @@
     zdjd.backgroundColor=zdjdColor;
     [self.view addSubview:zdjd];
     UIImageView *zdimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh-imgH-30)/2, imgW, imgH)];
-    zdimg.image=[UIImage imageNamed:@"yindex"];
+    zdimg.image=[UIImage imageNamed:@"USER-OK"];
     [zdjd addSubview:zdimg];
     CGFloat lblH2= zdimg.frame.origin.y+zdimg.frame.size.height+3;
     UILabel *zdlbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH2, cellWidth, 30)];
@@ -127,7 +127,7 @@
     kq.backgroundColor=kqColor;
     [self.view addSubview:kq];
     UIImageView *kqimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh-imgH-30)/2, imgW, imgH)];
-    kqimg.image=[UIImage imageNamed:@"yindex"];
+    kqimg.image=[UIImage imageNamed:@"PIN-ZOOM-IN"];
     [kq addSubview:kqimg];
     CGFloat lblH3= kqimg.frame.origin.y+kqimg.frame.size.height+3;
     UILabel *kqlbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH3, cellWidth, 30)];
@@ -142,7 +142,7 @@
     pd.backgroundColor=pdColor;
     [self.view addSubview:pd];
     UIImageView *pdimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh-imgH-30)/2, imgW, imgH)];
-    pdimg.image=[UIImage imageNamed:@"yindex"];
+    pdimg.image=[UIImage imageNamed:@"NOTEPAD-OK"];
     [pd addSubview:pdimg];
     CGFloat lblH4= pdimg.frame.origin.y+pdimg.frame.size.height+3;
     UILabel *pdlbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH4, cellWidth, 30)];
@@ -157,7 +157,7 @@
     gggd.backgroundColor=gggdColor;
     [self.view addSubview:gggd];
     UIImageView *ggimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh*2-imgH-30)/2, imgW, imgH)];
-    ggimg.image=[UIImage imageNamed:@"yindex"];
+    ggimg.image=[UIImage imageNamed:@"USERS"];
     [gggd addSubview:ggimg];
     CGFloat lblH5= ggimg.frame.origin.y+ggimg.frame.size.height+3;
     UILabel *gglbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH5, cellWidth, 30)];
@@ -172,7 +172,7 @@
     kshsj.backgroundColor=kshsjColor;
     [self.view addSubview:kshsj];
     UIImageView *ksimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh-imgH-30)/2, imgW, imgH)];
-    ksimg.image=[UIImage imageNamed:@"yindex"];
+    ksimg.image=[UIImage imageNamed:@"CHART"];
     [kshsj addSubview:ksimg];
     CGFloat lblH6= ksimg.frame.origin.y+ksimg.frame.size.height+3;
     UILabel *kslbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH6, cellWidth, 30)];

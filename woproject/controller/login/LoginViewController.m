@@ -49,49 +49,102 @@
     self.navigationController.navigationBar.hidden=YES;
 }
 
+
+-(void)checkboxClick:(UIButton *)btn
+{
+    btn.selected = !btn.selected;
+}
+
 -(void)loadLoginView{
     UIImageView *backImg=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, fDeviceHeight)];
-    backImg.image=[UIImage imageNamed:@"backImg"];
+    backImg.image=[UIImage imageNamed:@"login_bg"];
     [self.view addSubview:backImg];
     
-//    UIImageView *logoImg=[[UIImageView alloc]initWithFrame:CGRectMake((fDeviceWidth-172)/2, fDeviceHeight/10, 172, 136)];
-//    logoImg.image=[UIImage imageNamed:@"login"];
-//    [self.view addSubview:logoImg];
+    UIImageView *logoImg=[[UIImageView alloc]initWithFrame:CGRectMake((fDeviceWidth-100)/2, fDeviceHeight/10, 100, 100)];
+    logoImg.image=[UIImage imageNamed:@"login_icon"];
+    [self.view addSubview:logoImg];
     
-    _UsrTxtF = [[UITextField alloc] initWithFrame:CGRectMake(20, fDeviceHeight/2-50, fDeviceWidth-40, 30)];
-    [self stdInitTxtF:_UsrTxtF hintxt:@"用户名"];
+    UILabel *titleLbl=[[UILabel alloc]initWithFrame:CGRectMake(0, fDeviceHeight/10+110, fDeviceWidth, 30)];
+    titleLbl.text=@"工单管理";
+    [titleLbl setTextColor:[UIColor blackColor]];
+    [titleLbl setFont:[UIFont systemFontOfSize:18]];
+    [titleLbl setTextAlignment:NSTextAlignmentCenter];
+    
+    [self.view addSubview:titleLbl];
+    
+    _UsrTxtF = [[UITextField alloc] initWithFrame:CGRectMake(70, fDeviceHeight/2-50, fDeviceWidth-80, 30)];
+    [self stdInitTxtF:_UsrTxtF hintxt:@"请输入用户ID/手机号/身份证号"];
     
     
-    _PassTxtF = [[UITextField alloc] initWithFrame:CGRectMake(20, fDeviceHeight/2, fDeviceWidth-40, 30)];
-    [self stdInitTxtF:_PassTxtF hintxt:@"密码"];
+    _PassTxtF = [[UITextField alloc] initWithFrame:CGRectMake(70, fDeviceHeight/2, fDeviceWidth-80, 30)];
+    [self stdInitTxtF:_PassTxtF hintxt:@"请输入密码"];
     _PassTxtF.secureTextEntry = YES;
     
     [self.view addSubview:_UsrTxtF];
     [self.view addSubview:_PassTxtF];
     _UsrTxtF.text=[stdPubFunc readUserMsg];
     _PassTxtF.text=[stdPubFunc readPassword];
-    UIImageView *logobtnImg=[[UIImageView alloc]initWithFrame:CGRectMake(10, fDeviceHeight/2+50, fDeviceWidth-20, 50)];
-    logobtnImg.image=[UIImage imageNamed:@"logBtn"];
-    [self.view addSubview:logobtnImg];
+
+    UIImageView *usrImg=[[UIImageView alloc]initWithFrame:CGRectMake(40, fDeviceHeight/2-43, 15, 17)];
+    usrImg.image=[UIImage imageNamed:@"hh_login01"];
     
-    _LoginBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight/2+47, fDeviceWidth, 50)];
+    UIImageView *pswImg=[[UIImageView alloc]initWithFrame:CGRectMake(40, fDeviceHeight/2+7, 15, 17)];
+    pswImg.image=[UIImage imageNamed:@"hh_login02"];
+
+    [self.view addSubview:usrImg];
+    [self.view addSubview:pswImg];
+    
+    UIView * geLine1=[[UIView alloc]initWithFrame:CGRectMake(10, fDeviceHeight/2-50+31, fDeviceWidth-20, 0.5)];
+    UIView * geLine2=[[UIView alloc]initWithFrame:CGRectMake(10, fDeviceHeight/2+31, fDeviceWidth-20, 0.5)];
+    geLine1.backgroundColor=graytxtcolor;
+    geLine2.backgroundColor=graytxtcolor;
+    [self.view addSubview:geLine1];
+    [self.view addSubview:geLine2];
+    
+    _checkbox = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    CGRect checkboxRect = CGRectMake(40, fDeviceHeight/2+31+20, 15, 15);
+    [_checkbox setFrame:checkboxRect];
+    
+    [_checkbox setImage:[UIImage imageNamed:@"checkbox_off.png"] forState:UIControlStateNormal];
+    [_checkbox setImage:[UIImage imageNamed:@"checkbox_on.png"] forState:UIControlStateSelected];
+    
+    [_checkbox addTarget:self action:@selector(checkboxClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_checkbox];
+    
+    UILabel *remPswLbl=[[UILabel alloc]initWithFrame:CGRectMake(40+18,fDeviceHeight/2+31+17, 80, 20)];
+    remPswLbl.text=@"记住密码";
+    [remPswLbl setTextColor:[UIColor grayColor]];
+    [remPswLbl setFont:[UIFont systemFontOfSize:12]];
+    [self.view addSubview:remPswLbl];
+    
+    
+    _LoginBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-150, fDeviceWidth, 40)];
     
     [_LoginBtn addTarget:self action:@selector(clickloginbtn) forControlEvents:UIControlEventTouchUpInside];
     
-    [_LoginBtn setTitle:@"登   录"forState:UIControlStateNormal];// 添加文字
-    _LoginBtn.backgroundColor=[UIColor blueColor];
+    [_LoginBtn setTitle:@"登录"forState:UIControlStateNormal];// 添加文字
+    _LoginBtn.backgroundColor=bluetxtcolor;
     [self.view addSubview:_LoginBtn];
     
-    UILabel * zhuceLbl=[[UILabel alloc]initWithFrame:CGRectMake(10, fDeviceHeight/2+100, fDeviceWidth-20, 20)];
-    zhuceLbl.text=@"注册新用户";
-    [zhuceLbl setTextAlignment:NSTextAlignmentCenter];
-    [zhuceLbl setTextColor:topSearchBgdColor];
-    [zhuceLbl setFont:[UIFont systemFontOfSize:14]];
     
-    UIButton *zhuceBtn=[[UIButton alloc]initWithFrame:CGRectMake(10, fDeviceHeight/2+100, fDeviceWidth-20, 20)];
-    [zhuceBtn addTarget:self action:@selector(clickzhucebtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:zhuceLbl];
-    [self.view addSubview:zhuceBtn];
+    _actionBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-150+40+10, fDeviceWidth, 40)];
+    
+    [_actionBtn addTarget:self action:@selector(clickzhucebtn) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_actionBtn setTitle:@"用户激活"forState:UIControlStateNormal];// 添加文字
+    [_actionBtn setTitleColor:bluetxtcolor forState:UIControlStateNormal];//bluetxtcolor;
+    _actionBtn.backgroundColor=[UIColor whiteColor];
+    [self.view addSubview:_actionBtn];
+    
+    UILabel * hintLbl=[[UILabel alloc]initWithFrame:CGRectMake(10, fDeviceHeight-60, fDeviceWidth-20, 40)];
+    [hintLbl setTextAlignment:NSTextAlignmentCenter];
+    [hintLbl setTextColor:graytxtcolor];
+    [hintLbl setFont:[UIFont systemFontOfSize:12]];
+    hintLbl.numberOfLines = 0;
+    hintLbl.text=@"如果遇到账户信息泄漏，忘记密码，诈骗等账号安全问题请联系系统管理员";
+    [self.view addSubview:hintLbl];
+
 }
 -(void)clickzhucebtn{
    
@@ -121,7 +174,7 @@
     txtF.textAlignment = UITextAutocorrectionTypeDefault;//UITextAlignmentCenter;
     txtF.textColor=txtColor;
     txtF.layer.borderColor = [UIColor grayColor].CGColor; // set color as you want.
-    txtF.layer.borderWidth = 1.0f; // set borderWidth as you want.
+    txtF.layer.borderWidth = 0.0f; // set borderWidth as you want.
     txtF.attributedPlaceholder=[[NSAttributedString alloc]initWithString:hintstr attributes:@{NSForegroundColorAttributeName:txtColor}];
     txtF.delegate=self;
 }

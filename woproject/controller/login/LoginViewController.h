@@ -12,6 +12,8 @@
 @property(nonatomic,strong)UITextField *UsrTxtF;
 @property(nonatomic,strong)UITextField *PassTxtF;
 @property(nonatomic,strong)UIButton *LoginBtn;
+@property(nonatomic,strong)UIButton *actionBtn;
+@property(nonatomic,strong)UIButton *checkbox;
 @property (nonatomic, copy) void (^loginSuccBlock) (LoginViewController *);
 @property (nonatomic, copy) void (^loginFailBlock) (LoginViewController *);
 @end
