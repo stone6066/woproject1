@@ -97,6 +97,9 @@
 		89F61E7A1DACBBAE00E9B489 /* checkbox_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E781DACBBAE00E9B489 /* checkbox_on.png */; };
 		89F61E7C1DACC2AE00E9B489 /* login02.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E7B1DACC2AE00E9B489 /* login02.png */; };
 		89F61E7E1DACC2D300E9B489 /* bar_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 89F61E7D1DACC2D300E9B489 /* bar_back.png */; };
+		89F61E811DACCF4500E9B489 /* AnimatedAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F61E801DACCF4500E9B489 /* AnimatedAnnotationView.m */; };
+		89F61E841DACCF9900E9B489 /* AnimatedAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F61E831DACCF9900E9B489 /* AnimatedAnnotation.m */; };
+		89F61E8D1DACE0B000E9B489 /* signInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F61E8C1DACE0B000E9B489 /* signInfo.m */; };
 		89FBEE9C1DAA2FA4008FBB8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEE9B1DAA2FA4008FBB8A /* main.m */; };
 		89FBEE9F1DAA2FA4008FBB8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEE9E1DAA2FA4008FBB8A /* AppDelegate.m */; };
 		89FBEEA21DAA2FA5008FBB8A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEEA11DAA2FA5008FBB8A /* ViewController.m */; };
@@ -245,6 +248,12 @@
 		89F61E781DACBBAE00E9B489 /* checkbox_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_on.png; sourceTree = "<group>"; };
 		89F61E7B1DACC2AE00E9B489 /* login02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login02.png; sourceTree = "<group>"; };
 		89F61E7D1DACC2D300E9B489 /* bar_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar_back.png; sourceTree = "<group>"; };
+		89F61E7F1DACCF4500E9B489 /* AnimatedAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedAnnotationView.h; sourceTree = "<group>"; };
+		89F61E801DACCF4500E9B489 /* AnimatedAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedAnnotationView.m; sourceTree = "<group>"; };
+		89F61E821DACCF9900E9B489 /* AnimatedAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedAnnotation.h; sourceTree = "<group>"; };
+		89F61E831DACCF9900E9B489 /* AnimatedAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedAnnotation.m; sourceTree = "<group>"; };
+		89F61E8B1DACE0B000E9B489 /* signInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signInfo.h; sourceTree = "<group>"; };
+		89F61E8C1DACE0B000E9B489 /* signInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signInfo.m; sourceTree = "<group>"; };
 		89FBEE971DAA2FA4008FBB8A /* woproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89FBEE9B1DAA2FA4008FBB8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		89FBEE9D1DAA2FA4008FBB8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -354,6 +363,10 @@
 		89F3EA1D1DAB307500B6E54A /* kaoqin */ = {
 			isa = PBXGroup;
 			children = (
+				89F61E821DACCF9900E9B489 /* AnimatedAnnotation.h */,
+				89F61E831DACCF9900E9B489 /* AnimatedAnnotation.m */,
+				89F61E7F1DACCF4500E9B489 /* AnimatedAnnotationView.h */,
+				89F61E801DACCF4500E9B489 /* AnimatedAnnotationView.m */,
 				8981D15C1DAB8BD400CF2426 /* ReGeocodeAnnotation.h */,
 				8981D15D1DAB8BD400CF2426 /* ReGeocodeAnnotation.m */,
 				8981D1561DAB81D700CF2426 /* BaseMapViewController.h */,
@@ -576,6 +589,8 @@
 				89FBEF5F1DAA48DE008FBB8A /* projectList.m */,
 				89FBEF611DAA4939008FBB8A /* roleList.h */,
 				89FBEF621DAA4939008FBB8A /* roleList.m */,
+				89F61E8B1DACE0B000E9B489 /* signInfo.h */,
+				89F61E8C1DACE0B000E9B489 /* signInfo.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -880,17 +895,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				89FBEF5A1DAA4297008FBB8A /* StdUploadFileApi.m in Sources */,
+				89F61E8D1DACE0B000E9B489 /* signInfo.m in Sources */,
 				89FBEF561DAA4297008FBB8A /* stdCellVc.m in Sources */,
 				89FBEEA21DAA2FA5008FBB8A /* ViewController.m in Sources */,
 				89F3EA361DAB3A8C00B6E54A /* ALView+PureLayout.m in Sources */,
 				89FBEF571DAA4297008FBB8A /* stdImgBtn.m in Sources */,
 				8981D15B1DAB81F600CF2426 /* stdMapViewController.m in Sources */,
 				89FBEE9F1DAA2FA4008FBB8A /* AppDelegate.m in Sources */,
+				89F61E811DACCF4500E9B489 /* AnimatedAnnotationView.m in Sources */,
 				89FBEF631DAA4939008FBB8A /* roleList.m in Sources */,
 				89FBEEE11DAA3690008FBB8A /* MyinfoViewController.m in Sources */,
 				89FBEF581DAA4297008FBB8A /* stdPubFunc.m in Sources */,
 				89FBEF3B1DAA4131008FBB8A /* loginInfo.m in Sources */,
 				8981D12F1DAB3CE200CF2426 /* LineDashPolyline.m in Sources */,
+				89F61E841DACCF9900E9B489 /* AnimatedAnnotation.m in Sources */,
 				89FBEF531DAA4297008FBB8A /* YCXMenuItem.m in Sources */,
 				89FBEF521DAA4297008FBB8A /* YCXMenu.m in Sources */,
 				89FBEF591DAA4297008FBB8A /* stdTextField.m in Sources */,

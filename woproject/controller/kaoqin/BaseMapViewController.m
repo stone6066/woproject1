@@ -94,10 +94,10 @@
 {
     if (self.mapView == nil)
     {
-        self.mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, fDeviceHeight*2/5)];
+        self.mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, fDeviceHeight*2/5-40)];
     }
     
-    self.mapView.frame = CGRectMake(0, TopSeachHigh, fDeviceWidth, fDeviceHeight*2/5);
+    self.mapView.frame = CGRectMake(0, TopSeachHigh, fDeviceWidth, fDeviceHeight*2/5-40);
     
     self.mapView.delegate = self;
     

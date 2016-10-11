@@ -10,10 +10,17 @@
 #import "ReGeocodeAnnotation.h"
 #import "PublicDefine.h"
 #import "stdPubFunc.h"
+#import "AnimatedAnnotation.h"
+#import "AnimatedAnnotationView.h"
+#import "signInfo.h"
 
 @interface stdMapViewController ()
 @property (nonatomic, strong) MAAnnotationView *userLocationAnnotationView;
 @property (nonatomic, assign) BOOL isDragging;
+
+@property (nonatomic, strong) UIButton* qiandaoBtn;
+@property (nonatomic, strong) UIButton* qiantuiBtn;
+@property (nonatomic, strong) UIButton* yiqiantuiBtn;
 
 @property (nonatomic, assign) BOOL isSearchFromDragging;
 @property (nonatomic, strong) ReGeocodeAnnotation *annotation;
@@ -22,10 +29,50 @@
 @property(nonatomic,copy)NSString *longitudeStr;
 @property(nonatomic,copy)NSString *latitudeStr;
 @property(nonatomic,copy)NSString *locationStr;
+@property(nonatomic,copy)NSMutableArray *signArr;
 
+@property (nonatomic, strong) AnimatedAnnotation *animatedCarAnnotation;
 @end
 
 @implementation stdMapViewController
+@synthesize animatedCarAnnotation = _animatedCarAnnotation;
+
+
+- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:[AnimatedAnnotation class]])
+    {
+        static NSString *animatedAnnotationIdentifier = @"AnimatedAnnotationIdentifier";
+        
+        AnimatedAnnotationView *annotationView = (AnimatedAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:animatedAnnotationIdentifier];
+        
+        if (annotationView == nil)
+        {
+            annotationView = [[AnimatedAnnotationView alloc] initWithAnnotation:annotation
+                                                                reuseIdentifier:animatedAnnotationIdentifier];
+            
+            annotationView.canShowCallout   = YES;
+            annotationView.draggable        = YES;
+        }
+        
+        return annotationView;
+    }
+    
+    return nil;
+}
+
+#pragma mark - Utility
+
+-(void)addCarAnnotationWithCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    
+    self.animatedCarAnnotation = [[AnimatedAnnotation alloc] initWithCoordinate:coordinate];
+    //self.animatedCarAnnotation.title            = _locationStr;
+    self.animatedCarAnnotation.subtitle            = _locationStr;
+    
+    [self.mapView addAnnotation:self.animatedCarAnnotation];
+    [self.mapView selectAnnotation:self.animatedCarAnnotation animated:NO];//标题和子标题自动显示
+}
 
 
 - (void)mapView:(MAMapView *)mapView didAddAnnotationViews:(NSArray *)views
@@ -47,11 +94,13 @@
             
             _longitudeStr=[NSString stringWithFormat:@"%f",self.mapView.userLocation.coordinate.longitude];
             _latitudeStr=[NSString stringWithFormat:@"%f",self.mapView.userLocation.coordinate.latitude];
-            _locationStr=@"哈尔滨市红旗大街108号";
             
+            [self searchReGeocodeWithCoordinate:self.mapView.userLocation.coordinate];
             view.calloutOffset = CGPointMake(0, 0);
             view.canShowCallout = NO;
             self.userLocationAnnotationView = view;
+            
+            
             
         }
 
@@ -92,14 +141,17 @@
         ReGeocodeAnnotation *reGeocodeAnnotation = [[ReGeocodeAnnotation alloc] initWithCoordinate:coordinate
                                                                                          reGeocode:response.regeocode];
         
-        [self.mapView addAnnotation:reGeocodeAnnotation];
-        [self.mapView selectAnnotation:reGeocodeAnnotation animated:YES];
+        _locationStr=reGeocodeAnnotation.reGeocode.formattedAddress;
+        [self addCarAnnotationWithCoordinate:self.mapView.userLocation.coordinate];
+        
+
     }
     else /* from drag search, update address */
     {
         [self.annotation setAMapReGeocode:response.regeocode];
-        [self.mapView selectAnnotation:self.annotation animated:YES];
+
     }
+    
 }
 
 #pragma mark - Override
@@ -125,7 +177,9 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    [self drawBtnView];
+    _signArr=[[NSMutableArray alloc]init];
+    [self requestKaoqin];
+    //[self drawBtnView];
     _isFirstLocation=YES;
 }
 
@@ -195,23 +249,23 @@
     [timeVc addSubview:timeLbl];
 
     CGFloat btnY=timeVc.frame.origin.y+timeVc.frame.size.height+20;
-   UIButton* qiandaoBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, btnY, fDeviceWidth, 50)];
+   _qiandaoBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, btnY, fDeviceWidth, 40)];
     
-    [qiandaoBtn addTarget:self action:@selector(clickqiandao) forControlEvents:UIControlEventTouchUpInside];
+    [_qiandaoBtn addTarget:self action:@selector(clickqiandao) forControlEvents:UIControlEventTouchUpInside];
     
-    [qiandaoBtn setTitle:@"签到"forState:UIControlStateNormal];// 添加文字
-    qiandaoBtn.backgroundColor=[UIColor blueColor];
+    [_qiandaoBtn setTitle:@"签到"forState:UIControlStateNormal];// 添加文字
+    _qiandaoBtn.backgroundColor=bluetxtcolor;
     
-    [self.view addSubview:qiandaoBtn];
+    [self.view addSubview:_qiandaoBtn];
 }
 
 
--(NSDictionary *)makeUpLoadDict{
+-(NSDictionary *)makeUpLoadDict:(NSString*)signFlag{
     NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
     
     [dict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
     [dict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
-    [dict setObject:@"0" forKey:@"status"];//签到
+    [dict setObject:signFlag forKey:@"status"];//签到0  签退1
     [dict setObject:_longitudeStr forKey:@"longitude"];
     
     [dict setObject:_latitudeStr forKey:@"latitude"];
@@ -238,11 +292,11 @@
 }
 
 -(void)clickqiandao{
-    [self uploadKaoqin];
+    [self uploadKaoqin:@"0"];
 }
 
 
--(void)uploadKaoqin{
+-(void)uploadKaoqin:(NSString*)signFlag{
     [SVProgressHUD showWithStatus:k_Status_Load];
     
 //    NSDictionary *paramDict = @{
@@ -254,7 +308,7 @@
     
     urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [ApplicationDelegate.httpManager POST:urlstr
-                               parameters:[self makeUpLoadDict]
+                               parameters:[self makeUpLoadDict:signFlag]
                                  progress:^(NSProgress * _Nonnull uploadProgress) {}
                                   success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                                       //http请求状态
@@ -276,7 +330,13 @@
                                             NSDictionary *datadict=[idict objectForKey:@"Data"];
                                             NSString *signTime=[[datadict objectForKey:@"signTime"]stringValue];
                                             NSLog(@"signTime：%@",signTime);
-                                              [self drawQiantuiVc:signTime];
+                                              if ([signFlag isEqualToString:@"0"]) {
+                                                  [self drawQiantuiVc:signTime];//签到
+                                              }
+                                              else{
+                                                  [self drawYiQiantuiVc:signTime];//签退
+                                              }
+                                              
                                               
                                           } else {
                                               //失败
@@ -298,6 +358,9 @@
 }
 
 -(void)drawQiantuiVc:(NSString*)timeStr{
+    
+    _qiandaoBtn.hidden=YES;
+    
     CGFloat VcY=fDeviceHeight*2/5+TopSeachHigh-30+100+10;
     
     UIView * signInVc=[[UIView alloc]initWithFrame:CGRectMake(0, VcY, fDeviceWidth, 50)];
@@ -309,5 +372,130 @@
     [signInLbl setFont:[UIFont systemFontOfSize:18]];
     [signInLbl setTextColor:[UIColor blackColor]];
     [signInVc addSubview:signInLbl];
+    
+    CGFloat btnY=signInVc.frame.origin.y+signInVc.frame.size.height+10;
+    if (!_qiantuiBtn) {
+        _qiantuiBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, btnY, fDeviceWidth, 40)];
+    }
+    [_qiantuiBtn addTarget:self action:@selector(clickqiantui) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_qiantuiBtn setTitle:@"签退"forState:UIControlStateNormal];// 添加文字
+    _qiantuiBtn.backgroundColor=bluetxtcolor;
+    
+    [self.view addSubview:_qiantuiBtn];
+}
+
+-(void)clickqiantui{
+    [self uploadKaoqin:@"1"];
+}
+
+-(void)drawYiQiantuiVc:(NSString*)timeStr{
+    
+    _qiandaoBtn.hidden=YES;
+    _qiantuiBtn.hidden=YES;
+    
+    CGFloat VcY=fDeviceHeight*2/5+TopSeachHigh-30+100+10 +50+5;
+    
+    UIView * signInVc=[[UIView alloc]initWithFrame:CGRectMake(0, VcY, fDeviceWidth, 50)];
+    signInVc.backgroundColor=[UIColor whiteColor];
+    [self.view addSubview:signInVc];
+    
+    UILabel *signOutLbl=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, fDeviceWidth, 30)];
+    signOutLbl.text=[NSString stringWithFormat:@"签退：%@",[stdPubFunc stdTimeToStr:timeStr]];
+    [signOutLbl setFont:[UIFont systemFontOfSize:18]];
+    [signOutLbl setTextColor:[UIColor blackColor]];
+    [signInVc addSubview:signOutLbl];
+    
+    CGFloat btnY=signInVc.frame.origin.y+signInVc.frame.size.height+10;
+    if (!_yiqiantuiBtn) {
+        _yiqiantuiBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, btnY, fDeviceWidth, 40)];
+    }
+//    [_yiqiantuiBtn addTarget:self action:@selector(clickqiantui) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_yiqiantuiBtn setTitle:@"已签退"forState:UIControlStateNormal];// 添加文字
+    _yiqiantuiBtn.backgroundColor=bluetxtcolor;
+    
+    [self.view addSubview:_yiqiantuiBtn];
+}
+
+
+
+-(void)requestKaoqin{
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+        NSDictionary *paramDict = @{
+                                    @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                    @"ukey":ApplicationDelegate.myLoginInfo.ukey
+                                    };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/forSignInRecord"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"查询签到返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              signInfo *signIN=[[signInfo alloc]init];
+                                              _signArr=[signIN asignInfoWithDict:jsonDic];
+                                              NSString* signTime=@"";
+                                              switch (_signArr.count) {
+                                                  case 0://未签到
+                                                      [self drawBtnView];
+                                                      break;
+                                                  case 1://已签到
+                                                      [self drawBtnView];
+                                                      signIN=_signArr[0];
+                                                      signTime=signIN.signTime;
+                                                      [self drawQiantuiVc:signTime];//签到
+                                                      break;
+                                                  case 2://已签退
+                                                      [self drawBtnView];
+                                                      signIN=_signArr[0];
+                                                      signTime=signIN.signTime;
+                                                      [self drawQiantuiVc:signTime];//签到
+                                                      
+                                                      signIN=_signArr[1];
+                                                      signTime=signIN.signTime;
+                                                      [self drawYiQiantuiVc:signTime];//签到
+                                                      break;
+
+                                                      
+                                                  default:
+                                                      break;
+                                              }
+                                              
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+    
 }
 @end
