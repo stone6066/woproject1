@@ -150,6 +150,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		58CA0F9B1DADCD0C00A569BC /* WoProjectHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WoProjectHeader.pch; sourceTree = "<group>"; };
 		8981D1201DAB3BE200CF2426 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8981D1221DAB3BED00CF2426 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8981D1241DAB3BFF00CF2426 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -474,6 +475,7 @@
 				89FBEE9E1DAA2FA4008FBB8A /* AppDelegate.m */,
 				89FBEEA01DAA2FA5008FBB8A /* ViewController.h */,
 				89FBEEA11DAA2FA5008FBB8A /* ViewController.m */,
+				58CA0F9B1DADCD0C00A569BC /* WoProjectHeader.pch */,
 				89FBEEA91DAA2FA5008FBB8A /* Assets.xcassets */,
 				89FBEEAE1DAA2FA5008FBB8A /* Info.plist */,
 				89FBEEA61DAA2FA5008FBB8A /* woproject.xcdatamodeld */,
@@ -675,12 +677,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 89FBEEC71DAA2FA5008FBB8A /* Build configuration list for PBXNativeTarget "woproject" */;
 			buildPhases = (
-				162C22AC5C63798D12CE199B /* 📦 Check Pods Manifest.lock */,
+				162C22AC5C63798D12CE199B /* [CP] Check Pods Manifest.lock */,
 				89FBEE931DAA2FA4008FBB8A /* Sources */,
 				89FBEE941DAA2FA4008FBB8A /* Frameworks */,
 				89FBEE951DAA2FA4008FBB8A /* Resources */,
-				501FBDFEF6A88FBBCB43BA84 /* 📦 Embed Pods Frameworks */,
-				65F913950A20DD52CF80F36C /* 📦 Copy Pods Resources */,
+				501FBDFEF6A88FBBCB43BA84 /* [CP] Embed Pods Frameworks */,
+				65F913950A20DD52CF80F36C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -866,14 +868,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		162C22AC5C63798D12CE199B /* 📦 Check Pods Manifest.lock */ = {
+		162C22AC5C63798D12CE199B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -881,14 +883,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		501FBDFEF6A88FBBCB43BA84 /* 📦 Embed Pods Frameworks */ = {
+		501FBDFEF6A88FBBCB43BA84 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -896,14 +898,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-woproject/Pods-woproject-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		65F913950A20DD52CF80F36C /* 📦 Copy Pods Resources */ = {
+		65F913950A20DD52CF80F36C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1078,6 +1080,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/woproject/amap",
 				);
+				GCC_PREFIX_HEADER = woproject/WoProjectHeader.pch;
 				INFOPLIST_FILE = woproject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1109,6 +1112,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/woproject/amap",
 				);
+				GCC_PREFIX_HEADER = woproject/WoProjectHeader.pch;
 				INFOPLIST_FILE = woproject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
