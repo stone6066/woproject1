@@ -260,8 +260,8 @@
 -(NSDictionary *)makeUpLoadDict{
     NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
     
-    [dict setObject:@"hong" forKey:@"id"];
-    [dict setObject:@"admin" forKey:@"password"];
+    [dict setObject:@"test2" forKey:@"id"];
+    [dict setObject:@"aaa111AAA" forKey:@"password"];
     NSLog(@"dict:%@",[self dictionaryToJson:dict]);
     
     

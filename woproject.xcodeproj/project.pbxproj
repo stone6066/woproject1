@@ -26,6 +26,9 @@
 		899C89AD1DAD209F0073794E /* icon_chose_arrow_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C89A91DAD209F0073794E /* icon_chose_arrow_sel@2x.png */; };
 		899C89AE1DAD209F0073794E /* icon_chose_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C89AA1DAD209F0073794E /* icon_chose_bottom@2x.png */; };
 		89EAA8C11DAE03270043BE53 /* DownLoadBaseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EAA8C01DAE03270043BE53 /* DownLoadBaseData.m */; };
+		89EAA8C41DAE28490043BE53 /* ticketList.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EAA8C31DAE28490043BE53 /* ticketList.m */; };
+		89EAA8C91DAE2D870043BE53 /* ticketListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EAA8C71DAE2D870043BE53 /* ticketListTableViewCell.m */; };
+		89EAA8CA1DAE2D870043BE53 /* ticketListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89EAA8C81DAE2D870043BE53 /* ticketListTableViewCell.xib */; };
 		89F3EA211DAB368700B6E54A /* AMapFoundationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F3EA1F1DAB368700B6E54A /* AMapFoundationKit.framework */; };
 		89F3EA221DAB368700B6E54A /* MAMapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F3EA201DAB368700B6E54A /* MAMapKit.framework */; };
 		89F3EA2A1DAB38EB00B6E54A /* AMapSearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F3EA291DAB38EB00B6E54A /* AMapSearchKit.framework */; };
@@ -179,6 +182,11 @@
 		899C89AA1DAD209F0073794E /* icon_chose_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_bottom@2x.png"; sourceTree = "<group>"; };
 		89EAA8BF1DAE03270043BE53 /* DownLoadBaseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownLoadBaseData.h; sourceTree = "<group>"; };
 		89EAA8C01DAE03270043BE53 /* DownLoadBaseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownLoadBaseData.m; sourceTree = "<group>"; };
+		89EAA8C21DAE28490043BE53 /* ticketList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ticketList.h; sourceTree = "<group>"; };
+		89EAA8C31DAE28490043BE53 /* ticketList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ticketList.m; sourceTree = "<group>"; };
+		89EAA8C61DAE2D870043BE53 /* ticketListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ticketListTableViewCell.h; sourceTree = "<group>"; };
+		89EAA8C71DAE2D870043BE53 /* ticketListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ticketListTableViewCell.m; sourceTree = "<group>"; };
+		89EAA8C81DAE2D870043BE53 /* ticketListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ticketListTableViewCell.xib; sourceTree = "<group>"; };
 		89F3EA1F1DAB368700B6E54A /* AMapFoundationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapFoundationKit.framework; sourceTree = "<group>"; };
 		89F3EA201DAB368700B6E54A /* MAMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MAMapKit.framework; sourceTree = "<group>"; };
 		89F3EA291DAB38EB00B6E54A /* AMapSearchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AMapSearchKit.framework; sourceTree = "<group>"; };
@@ -393,6 +401,16 @@
 			path = DOPDropDownMen;
 			sourceTree = "<group>";
 		};
+		89EAA8C51DAE2D5C0043BE53 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				89EAA8C61DAE2D870043BE53 /* ticketListTableViewCell.h */,
+				89EAA8C71DAE2D870043BE53 /* ticketListTableViewCell.m */,
+				89EAA8C81DAE2D870043BE53 /* ticketListTableViewCell.xib */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		89F3EA1D1DAB307500B6E54A /* kaoqin */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,11 +487,12 @@
 		89FBEE991DAA2FA4008FBB8A /* woproject */ = {
 			isa = PBXGroup;
 			children = (
+				89EAA8C51DAE2D5C0043BE53 /* view */,
 				899C89A51DAD209F0073794E /* DOPDropDownMen */,
 				89FBEF3F1DAA4297008FBB8A /* stdPackect */,
 				89FBEF381DAA4131008FBB8A /* model */,
-				89FBEEE21DAA3710008FBB8A /* PublicDefine.h */,
 				89FBEED21DAA35A9008FBB8A /* controller */,
+				89FBEEE21DAA3710008FBB8A /* PublicDefine.h */,
 				89FBEE9D1DAA2FA4008FBB8A /* AppDelegate.h */,
 				89FBEE9E1DAA2FA4008FBB8A /* AppDelegate.m */,
 				89FBEEA01DAA2FA5008FBB8A /* ViewController.h */,
@@ -630,6 +649,8 @@
 				89FBEF621DAA4939008FBB8A /* roleList.m */,
 				89F61E8B1DACE0B000E9B489 /* signInfo.h */,
 				89F61E8C1DACE0B000E9B489 /* signInfo.m */,
+				89EAA8C21DAE28490043BE53 /* ticketList.h */,
+				89EAA8C31DAE28490043BE53 /* ticketList.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -817,6 +838,7 @@
 				89FBEEAA1DAA2FA5008FBB8A /* Assets.xcassets in Resources */,
 				89F61E3B1DACAB5B00E9B489 /* FOLDER-OK@3x.png in Resources */,
 				89F61E5E1DACAB5B00E9B489 /* USER-OK@2x.png in Resources */,
+				89EAA8CA1DAE2D870043BE53 /* ticketListTableViewCell.xib in Resources */,
 				89F61E3C1DACAB5B00E9B489 /* home.png in Resources */,
 				89F61E791DACBBAE00E9B489 /* checkbox_off.png in Resources */,
 				89F61E721DACABCE00E9B489 /* CHART@2x.png in Resources */,
@@ -929,6 +951,7 @@
 				89F61E8D1DACE0B000E9B489 /* signInfo.m in Sources */,
 				89FBEF561DAA4297008FBB8A /* stdCellVc.m in Sources */,
 				89FBEEA21DAA2FA5008FBB8A /* ViewController.m in Sources */,
+				89EAA8C41DAE28490043BE53 /* ticketList.m in Sources */,
 				89F3EA361DAB3A8C00B6E54A /* ALView+PureLayout.m in Sources */,
 				89FBEF571DAA4297008FBB8A /* stdImgBtn.m in Sources */,
 				8981D15B1DAB81F600CF2426 /* stdMapViewController.m in Sources */,
@@ -947,6 +970,7 @@
 				89FBEED51DAA35A9008FBB8A /* StdRootController.m in Sources */,
 				8981D1581DAB81D700CF2426 /* BaseMapViewController.m in Sources */,
 				89FBEF551DAA4297008FBB8A /* stdCallBtn.m in Sources */,
+				89EAA8C91DAE2D870043BE53 /* ticketListTableViewCell.m in Sources */,
 				89EAA8C11DAE03270043BE53 /* DownLoadBaseData.m in Sources */,
 				89FBEF541DAA4297008FBB8A /* NullSafe.m in Sources */,
 				89FBEEDE1DAA3681008FBB8A /* RepairViewController.m in Sources */,

@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YjgdViewController : UIViewController
+@interface YjgdViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)NSArray *FaultSyetemArr;
 @property(nonatomic,strong)NSArray *forProjectList;
+@property(nonatomic,strong)NSMutableArray *tabledata;
+
+@property(nonatomic,strong)UITableView *TableView;
+@property(nonatomic,assign)NSInteger pageindex;
 @end

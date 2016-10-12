@@ -7,9 +7,10 @@
 //
 
 #import "YjgdViewController.h"
-//#import "PublicDefine.h"
 #import "DOPDropDownMenu.h"
 #import "DownLoadBaseData.h"
+#import "ticketList.h"
+#import "ticketListTableViewCell.h"
 
 @interface YjgdViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
 @property (nonatomic, strong) NSMutableArray *classifys;
@@ -29,6 +30,8 @@
     [super viewDidLoad];
     [self loadTopNav];
     [self stdVarsInit];
+    [self downforYjgdList];
+    [self loadListTable];
     // Do any additional setup after loading the view.
 }
 
@@ -207,5 +210,145 @@
     }else {
         NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
     }
+}
+
+
+-(void)downforYjgdList{
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                                @"status":@"2",
+                                @"sort_id":@"1",//[NSString stringWithFormat:@"%ld",(long)_pageindex],
+                                @"v":ApplicationDelegate.myLoginInfo.v
+                                };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketList"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"已接工单返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              ticketList *Tlist=[[ticketList alloc]init];
+                                              _tabledata=[Tlist asignInfoWithDict:jsonDic];
+                                              [_TableView reloadData];
+                                             
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
+
+
+
+
+static NSString * const TicketCellId = @"TicketCellId";
+-(void)loadListTable{
+
+    self.TableView=[[UITableView alloc]initWithFrame:CGRectMake(0, 65+50, fDeviceWidth, fDeviceHeight-50-65-MainTabbarHeight)];
+    self.TableView.delegate=self;
+    self.TableView.dataSource=self;
+    [self.view addSubview:self.TableView];
+    self.TableView.tableFooterView = [[UIView alloc]init];
+    self.TableView.backgroundColor=collectionBgdColor;
+    
+    [self.TableView registerNib:[UINib nibWithNibName:NSStringFromClass([ticketListTableViewCell class]) bundle:nil] forCellReuseIdentifier:TicketCellId];
+    self.TableView.backgroundColor=bluebackcolor;
+    [self.view addSubview:self.TableView];
+    
+    // 下拉刷新
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    self.TableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _pageindex=1;
+        [self downforYjgdList];
+        [weakSelf.TableView.mj_header endRefreshing];
+        // 进入刷新状态后会自动调用这个block
+    }];
+    
+    // 上拉刷新
+    self.TableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        // 进入刷新状态后会自动调用这个block
+        if (_tabledata.count>0) {
+            _pageindex+=1;
+            [self downforYjgdList];
+            
+        }
+        else
+        {
+            _pageindex=1;
+            [self downforYjgdList];
+            
+        }
+        
+        // 结束刷新
+        [weakSelf.TableView.mj_footer endRefreshing];
+    }];
+}
+
+
+#pragma mark table delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    return _tabledata.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId forIndexPath:indexPath];
+    //
+    // 将数据视图框架模型(该模型中包含了数据模型)赋值给Cell，
+    ticketList *dm=_tabledata[indexPath.item];
+    [cell showCellView:dm];
+
+    return cell;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 241;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ticketListTableViewCell *svc =(ticketListTableViewCell*)[self.TableView cellForRowAtIndexPath:indexPath];
+    NSLog(@"%@",svc.Id);
+    
+
+//    noticeDetailViewController *noticeVc=[[noticeDetailViewController alloc]init];
+//    [noticeVc setNoticeId:dm.noticeId];
+//    noticeVc.view.backgroundColor = [UIColor whiteColor];
+//    [self.navigationController pushViewController:noticeVc animated:NO];
+    
 }
 @end
