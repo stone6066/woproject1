@@ -8,7 +8,6 @@
 
 #import "stdMapViewController.h"
 #import "ReGeocodeAnnotation.h"
-#import "PublicDefine.h"
 #import "stdPubFunc.h"
 #import "AnimatedAnnotation.h"
 #import "AnimatedAnnotationView.h"

@@ -8,11 +8,11 @@
 
 #import "HomeViewController.h"
 #import "LoginViewController.h"
-#import "PublicDefine.h"
 #import "BaseMapViewController.h"
 #import <AMapSearchKit/AMapSearchKit.h>
 #import "APIKey.h"
 #import "YjgdViewController.h"
+#import "VisualizationController.h"
 
 #import "stdMapViewController.h"
 
@@ -187,7 +187,7 @@
     YjgdViewController *yjVc=[[YjgdViewController alloc]init];
 //    yjVc.hidesBottomBarWhenPushed=YES;
 //    yjVc.navigationItem.hidesBackButton=YES;
-    yjVc.view.backgroundColor=[UIColor whiteColor];
+    yjVc.view.backgroundColor=RGB(245, 245, 245);
     
     [self.navigationController pushViewController:yjVc animated:YES];
 }
@@ -214,7 +214,10 @@
     
 }
 -(void)clickks{//可视化
-    
+    VisualizationController *yjVc=[[VisualizationController alloc] initWithNibName:@"VisualizationController" bundle:nil];
+    yjVc.hidesBottomBarWhenPushed=YES;
+    yjVc.navigationItem.hidesBackButton=YES;    
+    [self.navigationController pushViewController:yjVc animated:YES];
 }
 
 - (void)initMapView

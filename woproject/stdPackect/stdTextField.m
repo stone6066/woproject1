@@ -7,7 +7,6 @@
 //
 
 #import "stdTextField.h"
-#import "PublicDefine.h"
 
 @implementation stdTextField
 

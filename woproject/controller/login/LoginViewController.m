@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "PublicDefine.h"
 #import "loginInfo.h"
 #import "stdPubFunc.h"
 

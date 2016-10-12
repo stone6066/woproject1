@@ -7,7 +7,6 @@
 //
 
 #import "stdPubFunc.h"
-#import "PublicDefine.h"
 
 
 @implementation stdPubFunc

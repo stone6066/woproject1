@@ -7,7 +7,6 @@
 //
 
 #import "stdCellVc.h"
-#import "PublicDefine.h"
 
 @implementation stdCellVc
 
