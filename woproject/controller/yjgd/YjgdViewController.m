@@ -7,17 +7,18 @@
 //
 
 #import "YjgdViewController.h"
-#import "PublicDefine.h"
+//#import "PublicDefine.h"
 #import "DOPDropDownMenu.h"
+#import "DownLoadBaseData.h"
 
 @interface YjgdViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
-@property (nonatomic, strong) NSArray *classifys;
-@property (nonatomic, strong) NSArray *cates;
-@property (nonatomic, strong) NSArray *movices;
-@property (nonatomic, strong) NSArray *hostels;
-@property (nonatomic, strong) NSArray *areas;
+@property (nonatomic, strong) NSMutableArray *classifys;
+@property (nonatomic, strong) NSMutableArray *cates;
+@property (nonatomic, strong) NSMutableArray *movices;
+@property (nonatomic, strong) NSMutableArray *hostels;
+@property (nonatomic, strong) NSMutableArray *areas;
 
-@property (nonatomic, strong) NSArray *sorts;
+@property (nonatomic, strong) NSMutableArray *sorts;
 @property (nonatomic, weak) DOPDropDownMenu *menu;
 
 @end
@@ -74,12 +75,30 @@
 
 
 -(void)stdVarsInit{
-    self.classifys = @[@"美食",@"今日新单",@"电影",@"酒店"];
-    self.cates = @[@"自助餐",@"快餐",@"火锅",@"日韩料理",@"西餐",@"烧烤小吃"];
-    self.movices = @[@"内地剧",@"港台剧",@"英美剧"];
-    self.hostels = @[@"经济酒店",@"商务酒店",@"连锁酒店",@"度假酒店",@"公寓酒店"];
-    self.areas = @[@"全城",@"芙蓉区",@"雨花区",@"天心区",@"开福区",@"岳麓区"];
-    self.sorts = @[@"默认排序",@"离我最近",@"好评优先",@"人气优先",@"最新发布"];
+ //   self.classifys = @[@"项目名称",@"故障系统",@"优先级",@"酒店"];
+
+    _forProjectList=[[NSMutableArray alloc]init];
+    _FaultSyetemArr=[[NSMutableArray alloc]init];
+    _classifys=[[NSMutableArray alloc]init];
+    _areas=[[NSMutableArray alloc]init];
+    _sorts=[[NSMutableArray alloc]initWithObjects:@"优先级",@"高",@"中",@"低", nil];
+
+    _forProjectList= [DownLoadBaseData readBaseData:@"forProjectList.plist"];
+    [_classifys addObject:@"项目名称"];
+    for (NSDictionary * dict in _forProjectList) {
+        NSString *names=[dict objectForKey:@"name"];
+        NSLog(@"names:%@",names);
+        [_classifys addObject:names];
+    }
+    
+    _FaultSyetemArr= [DownLoadBaseData readBaseData:@"forFaultSyetem.plist"];
+    [_areas addObject:@"故障系统"];
+    for (NSDictionary * dict in _FaultSyetemArr) {
+        [_areas addObject:[dict objectForKey:@"name"]];
+    }
+    
+   
+    
     
     // 添加下拉菜单
     DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 64) andHeight:44];

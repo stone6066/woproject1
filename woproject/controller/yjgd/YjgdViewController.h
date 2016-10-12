@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface YjgdViewController : UIViewController
-
+@property(nonatomic,strong)NSArray *FaultSyetemArr;
+@property(nonatomic,strong)NSArray *forProjectList;
 @end

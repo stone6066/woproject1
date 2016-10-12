@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "APIKey.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
+#import "DownLoadBaseData.h"
+
 @interface AppDelegate ()
 
 @end
@@ -55,9 +57,11 @@
     self.httpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.isLogin=NO;
     self.isRmbPsw=NO;
-//    [self downLoadDictVerson:@"getEquipmentType"];//下载设备类型字典
+    
+   // [self downDictData];//下载故障类型字典
 //    [self downLoadDictVerson:@"getFarmType"];//下载农场类型
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

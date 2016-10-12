@@ -15,7 +15,7 @@
 #import "YjgdViewController.h"
 
 #import "stdMapViewController.h"
-
+#import "DownLoadBaseData.h"
 
 @interface HomeViewController ()
 @property (nonatomic, strong) MAMapView *mapView;
@@ -63,6 +63,7 @@
             NSLog(@"login_suc");
             ApplicationDelegate.isLogin = YES;
             [self drawMainView];
+            [self downDictData];
         };
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:NO];
@@ -70,6 +71,14 @@
     }
     
 }
+
+-(void)downDictData{
+    DownLoadBaseData *DLBD=[[DownLoadBaseData alloc]init];
+    [DLBD downFaultSystem];
+    [DLBD downforProjectList];
+    
+}
+
 -(void)stdInitLable:(UILabel*)lab hint:(NSString*)stxt{
     lab.text=stxt;//@"已接工单";
     [lab setTextColor:[UIColor whiteColor]];
