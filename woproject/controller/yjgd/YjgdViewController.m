@@ -7,8 +7,7 @@
 //
 
 #import "YjgdViewController.h"
-#import "PublicDefine.h"
-#import "DOPDropDownMenu.h"
+
 
 @interface YjgdViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
 @property (nonatomic, strong) NSArray *classifys;

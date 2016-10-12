@@ -7,7 +7,6 @@
 //
 
 #import "stdImgBtn.h"
-#import "PublicDefine.h"
 @implementation stdImgBtn
 
 -(id)initWithFrame:(CGRect)frame imgName:(NSString*)imgstr lblName:(NSString*)lblstr sendId:(NSInteger)sId{

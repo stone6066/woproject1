@@ -41,5 +41,7 @@
 	<array>
 		<string>iosamap</string>
 	</array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>photoLibraryDesciption</string>
 </dict>
 </plist>

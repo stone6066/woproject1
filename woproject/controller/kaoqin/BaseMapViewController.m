@@ -7,7 +7,6 @@
 //
 
 #import "BaseMapViewController.h"
-#import "PublicDefine.h"
 
 @interface BaseMapViewController()
 
