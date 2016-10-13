@@ -11,5 +11,7 @@
 @interface DownLoadBaseData : NSObject
 -(void)downFaultSystem;
 -(void)downforProjectList;
+-(void)downForCity;
 +(NSArray *) readBaseData:(NSString*)fileName;
++(NSArray *) readCityData:(NSString*)fileName;
 @end

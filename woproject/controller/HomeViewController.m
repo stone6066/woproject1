@@ -78,6 +78,8 @@
     DownLoadBaseData *DLBD=[[DownLoadBaseData alloc]init];
     [DLBD downFaultSystem];
     [DLBD downforProjectList];
+    [DLBD downForCity];
+    
     
 }
 

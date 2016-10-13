@@ -11,6 +11,7 @@
 #import "DownLoadBaseData.h"
 #import "ticketList.h"
 #import "ticketListTableViewCell.h"
+#import "ticketInfoViewController.h"
 
 @interface YjgdViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
 @property (nonatomic, strong) NSMutableArray *classifys;
@@ -204,12 +205,12 @@
 
 - (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
 {
-    if (indexPath.item >= 0) {
-        
-        NSLog(@"点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
-    }else {
-        NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
-    }
+//    if (indexPath.item >= 0) {
+//        
+//        NSLog(@"点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
+//    }else {
+//        NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
+//    }
     
     NSDictionary * dict;
     
@@ -413,10 +414,11 @@ static NSString * const TicketCellId = @"TicketCellId";
     NSLog(@"%@",svc.Id);
     
 
-//    noticeDetailViewController *noticeVc=[[noticeDetailViewController alloc]init];
-//    [noticeVc setNoticeId:dm.noticeId];
-//    noticeVc.view.backgroundColor = [UIColor whiteColor];
-//    [self.navigationController pushViewController:noticeVc animated:NO];
+    ticketInfoViewController *noticeVc=[[ticketInfoViewController alloc]init];
+    [noticeVc setMyViewTitle:@"已接工单详情"];
+    [noticeVc setListId:svc.Id];
+    noticeVc.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController pushViewController:noticeVc animated:NO];
     
 }
 @end

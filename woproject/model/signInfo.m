@@ -9,7 +9,7 @@
 #import "signInfo.h"
 
 @implementation signInfo
-- (NSMutableArray *)asignInfoWithDict:(NSDictionary *)dict;
+- (NSMutableArray *)asignInfoWithDict:(NSDictionary *)dict
 {
     NSMutableArray *rtnArr=[[NSMutableArray alloc]init];
     NSDictionary *idict=[dict objectForKey:@"i"];

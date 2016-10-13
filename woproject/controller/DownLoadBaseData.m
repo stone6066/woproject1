@@ -134,6 +134,69 @@
                                   }];
 }
 
+
+-(void)downForCity{//下载城市
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    NSDictionary *paramDict = @{
+                                @"v":@"0",
+                                };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/forCity"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"下载city返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              NSDictionary *idict=[jsonDic objectForKey:@"i"];
+                                              NSArray *sysData=[idict objectForKey:@"Data"];
+                                              NSString *carBrandModelPath = [DocumentBasePath stringByAppendingFormat:@"/%@", @"forCity.plist"];
+                                              
+                                              BOOL saveResult = [sysData writeToFile:carBrandModelPath atomically:YES];
+                                              if (saveResult) {
+                                                  
+                                                  NSLog(@"写入 %@ 数据字典成功", carBrandModelPath);
+                                              }
+                                              else {
+                                                  
+                                                  NSLog(@"写入 %@ 数据字典失败", carBrandModelPath);
+                                              }
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
+
+
 -(NSMutableArray *)stdProjectList:(NSArray*)inArr{//自己重组一下数组，原数组有null，保存失败
     NSMutableArray *rtnArr=[[NSMutableArray alloc]init];
     for (NSDictionary * dict in inArr) {
@@ -158,5 +221,6 @@
     NSArray *rtnArr=[[NSArray alloc]initWithContentsOfFile:dataFilePath];
     return rtnArr;
 }
+
 
 @end
