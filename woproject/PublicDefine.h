@@ -36,6 +36,8 @@
 #define HomeADHeigh ((fDeviceWidth*9)/16)
 #define TopStausHight (20)
 
+//每次服务器返回的数据条数
+#define srvDataCount (2)
 //#define NSUserDefaultsUserName @"userName"
 //#define NSUserDefaultsUserPWD @"userPWD"
 #define NSUserJSESSIONID @"JSESSIONID"

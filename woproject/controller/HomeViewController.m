@@ -13,8 +13,10 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 #import "APIKey.h"
 #import "YjgdViewController.h"
-
+#import "ZhiDViewController.h"
 #import "stdMapViewController.h"
+#import "GggdViewController.h"
+#import "PaidanViewController.h"
 #import "DownLoadBaseData.h"
 
 @interface HomeViewController ()
@@ -194,14 +196,14 @@
 }
 -(void)clickyj{//已接
     YjgdViewController *yjVc=[[YjgdViewController alloc]init];
-//    yjVc.hidesBottomBarWhenPushed=YES;
-//    yjVc.navigationItem.hidesBackButton=YES;
     yjVc.view.backgroundColor=[UIColor whiteColor];
     
     [self.navigationController pushViewController:yjVc animated:YES];
 }
--(void)clickzd{//主动接单
-    
+-(void)clickzd{//指定接单
+    ZhiDViewController *zdVc=[[ZhiDViewController alloc]init];
+    zdVc.view.backgroundColor=[UIColor whiteColor];
+    [self.navigationController pushViewController:zdVc animated:YES];
 }
 -(void)clickkq{//考勤
     
@@ -217,10 +219,14 @@
     [self.navigationController pushViewController:(UIViewController*)subViewController animated:YES];
 }
 -(void)clickpd{//派单
-    
+    PaidanViewController *pdVc=[[PaidanViewController alloc]init];
+    pdVc.view.backgroundColor=[UIColor whiteColor];
+    [self.navigationController pushViewController:pdVc animated:YES];
 }
 -(void)clickgg{//公共
-    
+    GggdViewController *ggVc=[[GggdViewController alloc]init];
+    ggVc.view.backgroundColor=[UIColor whiteColor];
+    [self.navigationController pushViewController:ggVc animated:YES];
 }
 -(void)clickks{//可视化
     

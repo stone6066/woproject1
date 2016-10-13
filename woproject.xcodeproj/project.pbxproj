@@ -20,7 +20,6 @@
 		8981D15E1DAB8BD400CF2426 /* ReGeocodeAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8981D15D1DAB8BD400CF2426 /* ReGeocodeAnnotation.m */; };
 		8981D1601DAB8C5900CF2426 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8981D15F1DAB8C5900CF2426 /* AMap.bundle */; };
 		899C89A01DAD101A0073794E /* cancle.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C899F1DAD101A0073794E /* cancle.png */; };
-		899C89A41DAD1D990073794E /* YjgdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899C89A31DAD1D990073794E /* YjgdViewController.m */; };
 		899C89AB1DAD209F0073794E /* DOPDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 899C89A71DAD209F0073794E /* DOPDropDownMenu.m */; };
 		899C89AC1DAD209F0073794E /* icon_chose_arrow_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C89A81DAD209F0073794E /* icon_chose_arrow_nor@2x.png */; };
 		899C89AD1DAD209F0073794E /* icon_chose_arrow_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 899C89A91DAD209F0073794E /* icon_chose_arrow_sel@2x.png */; };
@@ -110,6 +109,10 @@
 		89F61E811DACCF4500E9B489 /* AnimatedAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F61E801DACCF4500E9B489 /* AnimatedAnnotationView.m */; };
 		89F61E841DACCF9900E9B489 /* AnimatedAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F61E831DACCF9900E9B489 /* AnimatedAnnotation.m */; };
 		89F61E8D1DACE0B000E9B489 /* signInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 89F61E8C1DACE0B000E9B489 /* signInfo.m */; };
+		89FB406B1DAF1A7500E95134 /* YjgdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB406A1DAF1A7500E95134 /* YjgdViewController.m */; };
+		89FB406E1DAF1AE600E95134 /* ZhiDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB406D1DAF1AE600E95134 /* ZhiDViewController.m */; };
+		89FB40711DAF223900E95134 /* GggdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB40701DAF223900E95134 /* GggdViewController.m */; };
+		89FB40741DAF271C00E95134 /* PaidanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB40731DAF271C00E95134 /* PaidanViewController.m */; };
 		89FBEE9C1DAA2FA4008FBB8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEE9B1DAA2FA4008FBB8A /* main.m */; };
 		89FBEE9F1DAA2FA4008FBB8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEE9E1DAA2FA4008FBB8A /* AppDelegate.m */; };
 		89FBEEA21DAA2FA5008FBB8A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEEA11DAA2FA5008FBB8A /* ViewController.m */; };
@@ -173,8 +176,6 @@
 		8981D15D1DAB8BD400CF2426 /* ReGeocodeAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReGeocodeAnnotation.m; sourceTree = "<group>"; };
 		8981D15F1DAB8C5900CF2426 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = woproject/amap/AMap.bundle; sourceTree = "<group>"; };
 		899C899F1DAD101A0073794E /* cancle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancle.png; sourceTree = "<group>"; };
-		899C89A21DAD1D990073794E /* YjgdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YjgdViewController.h; sourceTree = "<group>"; };
-		899C89A31DAD1D990073794E /* YjgdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YjgdViewController.m; sourceTree = "<group>"; };
 		899C89A61DAD209F0073794E /* DOPDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOPDropDownMenu.h; sourceTree = "<group>"; };
 		899C89A71DAD209F0073794E /* DOPDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOPDropDownMenu.m; sourceTree = "<group>"; };
 		899C89A81DAD209F0073794E /* icon_chose_arrow_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_arrow_nor@2x.png"; sourceTree = "<group>"; };
@@ -278,6 +279,14 @@
 		89F61E831DACCF9900E9B489 /* AnimatedAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedAnnotation.m; sourceTree = "<group>"; };
 		89F61E8B1DACE0B000E9B489 /* signInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signInfo.h; sourceTree = "<group>"; };
 		89F61E8C1DACE0B000E9B489 /* signInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signInfo.m; sourceTree = "<group>"; };
+		89FB40691DAF1A7500E95134 /* YjgdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YjgdViewController.h; sourceTree = "<group>"; };
+		89FB406A1DAF1A7500E95134 /* YjgdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YjgdViewController.m; sourceTree = "<group>"; };
+		89FB406C1DAF1AE600E95134 /* ZhiDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhiDViewController.h; sourceTree = "<group>"; };
+		89FB406D1DAF1AE600E95134 /* ZhiDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhiDViewController.m; sourceTree = "<group>"; };
+		89FB406F1DAF223900E95134 /* GggdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GggdViewController.h; sourceTree = "<group>"; };
+		89FB40701DAF223900E95134 /* GggdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GggdViewController.m; sourceTree = "<group>"; };
+		89FB40721DAF271C00E95134 /* PaidanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaidanViewController.h; sourceTree = "<group>"; };
+		89FB40731DAF271C00E95134 /* PaidanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaidanViewController.m; sourceTree = "<group>"; };
 		89FBEE971DAA2FA4008FBB8A /* woproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89FBEE9B1DAA2FA4008FBB8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		89FBEE9D1DAA2FA4008FBB8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -380,15 +389,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		899C89A11DAD1D860073794E /* yjgd */ = {
-			isa = PBXGroup;
-			children = (
-				899C89A21DAD1D990073794E /* YjgdViewController.h */,
-				899C89A31DAD1D990073794E /* YjgdViewController.m */,
-			);
-			path = yjgd;
-			sourceTree = "<group>";
-		};
 		899C89A51DAD209F0073794E /* DOPDropDownMen */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +459,21 @@
 				89F3EA351DAB3A8C00B6E54A /* PureLayoutDefines.h */,
 			);
 			path = PureLayout;
+			sourceTree = "<group>";
+		};
+		89FB40681DAF1A7500E95134 /* tickeList */ = {
+			isa = PBXGroup;
+			children = (
+				89FB40691DAF1A7500E95134 /* YjgdViewController.h */,
+				89FB406A1DAF1A7500E95134 /* YjgdViewController.m */,
+				89FB406C1DAF1AE600E95134 /* ZhiDViewController.h */,
+				89FB406D1DAF1AE600E95134 /* ZhiDViewController.m */,
+				89FB406F1DAF223900E95134 /* GggdViewController.h */,
+				89FB40701DAF223900E95134 /* GggdViewController.m */,
+				89FB40721DAF271C00E95134 /* PaidanViewController.h */,
+				89FB40731DAF271C00E95134 /* PaidanViewController.m */,
+			);
+			path = tickeList;
 			sourceTree = "<group>";
 		};
 		89FBEE8E1DAA2FA4008FBB8A = {
@@ -536,7 +551,7 @@
 		89FBEED21DAA35A9008FBB8A /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				899C89A11DAD1D860073794E /* yjgd */,
+				89FB40681DAF1A7500E95134 /* tickeList */,
 				89F3EA1D1DAB307500B6E54A /* kaoqin */,
 				89FBEF341DAA4078008FBB8A /* login */,
 				89FBEED31DAA35A9008FBB8A /* StdRootController.h */,
@@ -957,17 +972,20 @@
 				8981D15B1DAB81F600CF2426 /* stdMapViewController.m in Sources */,
 				89FBEE9F1DAA2FA4008FBB8A /* AppDelegate.m in Sources */,
 				89F61E811DACCF4500E9B489 /* AnimatedAnnotationView.m in Sources */,
+				89FB40741DAF271C00E95134 /* PaidanViewController.m in Sources */,
 				899C89AB1DAD209F0073794E /* DOPDropDownMenu.m in Sources */,
 				89FBEF631DAA4939008FBB8A /* roleList.m in Sources */,
 				89FBEEE11DAA3690008FBB8A /* MyinfoViewController.m in Sources */,
 				89FBEF581DAA4297008FBB8A /* stdPubFunc.m in Sources */,
-				899C89A41DAD1D990073794E /* YjgdViewController.m in Sources */,
 				89FBEF3B1DAA4131008FBB8A /* loginInfo.m in Sources */,
 				8981D12F1DAB3CE200CF2426 /* LineDashPolyline.m in Sources */,
 				89F61E841DACCF9900E9B489 /* AnimatedAnnotation.m in Sources */,
 				89FBEF591DAA4297008FBB8A /* stdTextField.m in Sources */,
+				89FB406E1DAF1AE600E95134 /* ZhiDViewController.m in Sources */,
 				89FBEF3E1DAA41DD008FBB8A /* LoginViewController.m in Sources */,
 				89FBEED51DAA35A9008FBB8A /* StdRootController.m in Sources */,
+				89FB40711DAF223900E95134 /* GggdViewController.m in Sources */,
+				89FB406B1DAF1A7500E95134 /* YjgdViewController.m in Sources */,
 				8981D1581DAB81D700CF2426 /* BaseMapViewController.m in Sources */,
 				89FBEF551DAA4297008FBB8A /* stdCallBtn.m in Sources */,
 				89EAA8C91DAE2D870043BE53 /* ticketListTableViewCell.m in Sources */,

@@ -27,7 +27,7 @@
     _ticketType.text=dataModel.ticketStatus;
     _createTime.text=[self stdTimeToStr:dataModel.createTime];
     _projectName.text=dataModel.projectId;
-    _level.text=dataModel.faultLevel;
+    _level.text=dataModel.priority;
     _detail.text=dataModel.faultDesc;
     _Id=dataModel.Id;
 

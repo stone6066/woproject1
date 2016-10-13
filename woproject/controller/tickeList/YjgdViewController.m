@@ -4,7 +4,7 @@
 //
 //  Created by tianan-apple on 16/10/11.
 //  Copyright © 2016年 tianan-apple. All rights reserved.
-//
+//  已接工单
 
 #import "YjgdViewController.h"
 #import "DOPDropDownMenu.h"
@@ -15,8 +15,6 @@
 @interface YjgdViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
 @property (nonatomic, strong) NSMutableArray *classifys;
 @property (nonatomic, strong) NSMutableArray *cates;
-@property (nonatomic, strong) NSMutableArray *movices;
-@property (nonatomic, strong) NSMutableArray *hostels;
 @property (nonatomic, strong) NSMutableArray *areas;
 
 @property (nonatomic, strong) NSMutableArray *sorts;
@@ -30,8 +28,9 @@
     [super viewDidLoad];
     [self loadTopNav];
     [self stdVarsInit];
-    [self downforYjgdList];
     [self loadListTable];
+    //[self downforYjgdList:_priority systemFault:_systemId priority:_priority];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -206,24 +205,86 @@
 - (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
 {
     if (indexPath.item >= 0) {
+        
         NSLog(@"点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
     }else {
         NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
     }
+    
+    NSDictionary * dict;
+    
+    switch (indexPath.column) {
+            
+        case 0://项目
+            if (indexPath.row>0) {
+                dict=_forProjectList[indexPath.row-1];
+                _projectId=[dict objectForKey:@"id"];
+            }
+            else
+            {
+                _projectId=nil;
+            }
+            break;
+        case 1://系统故障
+            if (indexPath.row>0) {
+                dict=_FaultSyetemArr[indexPath.row-1];
+                _systemId=[dict objectForKey:@"id"];
+            }
+            else
+            {
+                _systemId=nil;
+            }
+            break;
+        case 2://优先级
+            if (indexPath.row>0)
+                _priority=[NSString stringWithFormat:@"%ld",(long)indexPath.row];
+            else
+                _priority=nil;
+            break;
+        default:
+            break;
+           
+    }
+    _pageindex=0;
+    [_tabledata removeAllObjects];
+    [self downforYjgdList:_projectId systemFault:_systemId priority:_priority];
+     NSLog(@"projectId:%@ systemId:%@ priority:%@",_projectId,_systemId,_priority);
 }
 
 
--(void)downforYjgdList{
+-(void)downforYjgdList:(NSString*)pid systemFault:(NSString*)sid priority:(NSString*)priorityId{
     [SVProgressHUD showWithStatus:k_Status_Load];
     
-    NSDictionary *paramDict = @{
-                                @"uid":ApplicationDelegate.myLoginInfo.Id,
-                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
-                                @"status":@"2",
-                                @"sort_id":@"1",//[NSString stringWithFormat:@"%ld",(long)_pageindex],
-                                @"v":ApplicationDelegate.myLoginInfo.v
-                                };
+//    NSDictionary *paramDict1 = @{
+//                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+//                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+//                                @"status":@"2",
+//                                @"sort_id":@"1",//[NSString stringWithFormat:@"%ld",(long)_pageindex],
+//                                @"v":ApplicationDelegate.myLoginInfo.v
+//                                };
+    NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
     
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
+    [paramDict setObject:@"2" forKey:@"status"];
+    [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_pageindex] forKey:@"sort_id"];
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
+    
+    if (_pageindex==0) {//获取最新数据
+        [paramDict setObject:@"Greater" forKey:@"comparison"];
+    }
+    else//获取更多数据
+        [paramDict setObject:@"less" forKey:@"comparison"];
+    if (pid) {
+        [paramDict setObject:pid forKey:@"projectId"];
+    }
+    if (sid) {
+        [paramDict setObject:sid forKey:@"systemId"];
+    }
+    if (priorityId) {
+        [paramDict setObject:priorityId forKey:@"priority"];
+    }
+
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketList"];
     
     urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -246,8 +307,14 @@
                                               //成功
                                               
                                               [SVProgressHUD dismiss];
+                                              
                                               ticketList *Tlist=[[ticketList alloc]init];
-                                              _tabledata=[Tlist asignInfoWithDict:jsonDic];
+                                              NSMutableArray *datatmp=[Tlist asignInfoWithDict:jsonDic];
+                                              if (_tabledata.count>0) {
+                                                  [_tabledata addObjectsFromArray:datatmp];
+                                              }
+                                              else
+                                                  _tabledata=datatmp;
                                               [_TableView reloadData];
                                              
                                               
@@ -289,8 +356,9 @@ static NSString * const TicketCellId = @"TicketCellId";
     // 下拉刷新
     __unsafe_unretained __typeof(self) weakSelf = self;
     self.TableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _pageindex=1;
-        [self downforYjgdList];
+        _pageindex=0;
+        [_tabledata removeAllObjects];
+        [self downforYjgdList:_priority systemFault:_systemId priority:_priority];
         [weakSelf.TableView.mj_header endRefreshing];
         // 进入刷新状态后会自动调用这个block
     }];
@@ -299,14 +367,14 @@ static NSString * const TicketCellId = @"TicketCellId";
     self.TableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         // 进入刷新状态后会自动调用这个block
         if (_tabledata.count>0) {
-            _pageindex+=1;
-            [self downforYjgdList];
+            _pageindex+=srvDataCount;
+            [self downforYjgdList:_priority systemFault:_systemId priority:_priority];
             
         }
         else
         {
-            _pageindex=1;
-            [self downforYjgdList];
+            _pageindex=0;
+            [self downforYjgdList:_priority systemFault:_systemId priority:_priority];
             
         }
         
