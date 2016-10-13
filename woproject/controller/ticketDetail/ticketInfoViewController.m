@@ -8,7 +8,7 @@
 
 #import "ticketInfoViewController.h"
 #import "ticketInfo.h"
-
+#import "baoxiuInfoView.h"
 @interface ticketInfoViewController ()
 
 @end
@@ -109,7 +109,7 @@
                                               [SVProgressHUD dismiss];
                                               ticketInfo *tickInfo=[[ticketInfo alloc]init];
                                               _myTicketInfo=[tickInfo asignInfoWithDict:jsonDic];
-                                             
+                                              [self drawDetailView:_myTicketInfo];
                                               
                                               
                                           } else {
@@ -130,4 +130,9 @@
                                   }];
 }
 
+-(void)drawDetailView:(ticketInfo*)myInfo{
+    baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, 130, fDeviceWidth, 200)];
+    [BXVc asignDataToLab:myInfo];
+    [self.view addSubview:BXVc];
+}
 @end

@@ -116,7 +116,7 @@
 		89FB40781DAF34C000E95134 /* ticketInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB40771DAF34C000E95134 /* ticketInfoViewController.m */; };
 		89FB407B1DAF616B00E95134 /* ticketInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB407A1DAF616B00E95134 /* ticketInfo.m */; };
 		89FB407E1DAF618800E95134 /* ticketFlowInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB407D1DAF618800E95134 /* ticketFlowInfo.m */; };
-		89FB40841DAF701000E95134 /* baoxiuInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB40831DAF701000E95134 /* baoxiuInfoView.m */; };
+		89FB40871DAF850000E95134 /* baoxiuInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FB40861DAF850000E95134 /* baoxiuInfoView.m */; };
 		89FBEE9C1DAA2FA4008FBB8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEE9B1DAA2FA4008FBB8A /* main.m */; };
 		89FBEE9F1DAA2FA4008FBB8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEE9E1DAA2FA4008FBB8A /* AppDelegate.m */; };
 		89FBEEA21DAA2FA5008FBB8A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89FBEEA11DAA2FA5008FBB8A /* ViewController.m */; };
@@ -297,8 +297,8 @@
 		89FB407A1DAF616B00E95134 /* ticketInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ticketInfo.m; sourceTree = "<group>"; };
 		89FB407C1DAF618800E95134 /* ticketFlowInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ticketFlowInfo.h; sourceTree = "<group>"; };
 		89FB407D1DAF618800E95134 /* ticketFlowInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ticketFlowInfo.m; sourceTree = "<group>"; };
-		89FB40821DAF701000E95134 /* baoxiuInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baoxiuInfoView.h; sourceTree = "<group>"; };
-		89FB40831DAF701000E95134 /* baoxiuInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baoxiuInfoView.m; sourceTree = "<group>"; };
+		89FB40851DAF850000E95134 /* baoxiuInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baoxiuInfoView.h; sourceTree = "<group>"; };
+		89FB40861DAF850000E95134 /* baoxiuInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baoxiuInfoView.m; sourceTree = "<group>"; };
 		89FBEE971DAA2FA4008FBB8A /* woproject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woproject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89FBEE9B1DAA2FA4008FBB8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		89FBEE9D1DAA2FA4008FBB8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -416,11 +416,11 @@
 		89EAA8C51DAE2D5C0043BE53 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				89FB40851DAF850000E95134 /* baoxiuInfoView.h */,
+				89FB40861DAF850000E95134 /* baoxiuInfoView.m */,
 				89EAA8C61DAE2D870043BE53 /* ticketListTableViewCell.h */,
 				89EAA8C71DAE2D870043BE53 /* ticketListTableViewCell.m */,
 				89EAA8C81DAE2D870043BE53 /* ticketListTableViewCell.xib */,
-				89FB40821DAF701000E95134 /* baoxiuInfoView.h */,
-				89FB40831DAF701000E95134 /* baoxiuInfoView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1015,7 +1015,7 @@
 				89FB40711DAF223900E95134 /* GggdViewController.m in Sources */,
 				89FB406B1DAF1A7500E95134 /* YjgdViewController.m in Sources */,
 				8981D1581DAB81D700CF2426 /* BaseMapViewController.m in Sources */,
-				89FB40841DAF701000E95134 /* baoxiuInfoView.m in Sources */,
+				89FB40871DAF850000E95134 /* baoxiuInfoView.m in Sources */,
 				89FBEF551DAA4297008FBB8A /* stdCallBtn.m in Sources */,
 				89EAA8C91DAE2D870043BE53 /* ticketListTableViewCell.m in Sources */,
 				89EAA8C11DAE03270043BE53 /* DownLoadBaseData.m in Sources */,

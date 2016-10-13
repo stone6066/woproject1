@@ -173,7 +173,8 @@
 #define topviewcolor RGB(41, 51, 63)
 #define topxiancolor RGB(90, 106, 122)
 #define bluebackcolor RGB(230, 239, 246)//淡蓝色背景
-#define bluetxtcolor RGB(21, 132, 254)//蓝色字体
+#define deepbluetxtcolor RGB(95, 110, 124)//工单详情蓝色字体
+#define bluetxtcolor RGB(21, 132, 254)//登录蓝色字体
 #define graytxtcolor RGB(160, 160, 160)//灰色字体
 #pragma mark -
 
