@@ -23,4 +23,6 @@
 @property (nonatomic,copy)NSString *userId;//派单信息里的接单人
 @property (nonatomic,copy)NSString *v;
 
+
+-(NSMutableArray*)asignDataFromDict:(NSDictionary*)dict;
 @end

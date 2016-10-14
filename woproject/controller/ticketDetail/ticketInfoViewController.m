@@ -9,6 +9,7 @@
 #import "ticketInfoViewController.h"
 #import "ticketInfo.h"
 #import "baoxiuInfoView.h"
+#import "paidanInfoView.h"
 @interface ticketInfoViewController ()
 
 @end
@@ -131,8 +132,64 @@
 }
 
 -(void)drawDetailView:(ticketInfo*)myInfo{
+     /*---------工单状态----------------*/
+    UIView *topTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, 30)];
+    topTitleVc.backgroundColor=bluebackcolor;
+    UILabel *myOrderState=[[UILabel alloc]initWithFrame:CGRectMake(5, 2, 100, 20)];
+    myOrderState.text=@"工单状态";
+    [myOrderState setFont:[UIFont systemFontOfSize:15]];
+    myOrderState.textColor=deepbluetxtcolor;
+    [topTitleVc addSubview:myOrderState];
+    [self.view addSubview:topTitleVc];
+    
+    UIView *orderTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, TopSeachHigh+30, fDeviceWidth, 50)];
+    UILabel *currStateLab=[[UILabel alloc]initWithFrame:CGRectMake(15, 10, 70, 20)];
+    currStateLab.text=@"当前状态：";
+    [currStateLab setFont:[UIFont systemFontOfSize:14]];
+    currStateLab.textColor=graytxtcolor;
+    [orderTitleVc addSubview:currStateLab];
+    
+    
+    UILabel *currStateTxtLab=[[UILabel alloc]initWithFrame:CGRectMake(90, 10, 70, 20)];
+    currStateTxtLab.text=myInfo.status;
+    currStateTxtLab.textColor=highbluetxtcolor;
+    [currStateTxtLab setFont:[UIFont systemFontOfSize:18]];
+    [orderTitleVc addSubview:currStateTxtLab];
+    
+    
+    
+    
+    UILabel *orderNumLab=[[UILabel alloc]initWithFrame:CGRectMake(fDeviceWidth*2/3, 10, 70, 20)];
+    orderNumLab.text=@"工单编号：";
+    orderNumLab.textColor=graytxtcolor;
+    [orderNumLab setFont:[UIFont systemFontOfSize:14]];
+    [orderTitleVc addSubview:orderNumLab];
+    
+    
+    UILabel *orderNumTxtLab=[[UILabel alloc]initWithFrame:CGRectMake(fDeviceWidth*2/3+70, 10, 70, 20)];
+    orderNumTxtLab.text=myInfo.Id;
+     orderNumTxtLab.textColor=graytxtcolor;
+    [orderNumTxtLab setFont:[UIFont systemFontOfSize:14]];
+    [orderTitleVc addSubview:orderNumTxtLab];
+    
+    [self.view addSubview:orderTitleVc];
+    
+    /*---------工单状态----------------*/
+    
+    
+    /*---------报修信息----------------*/
     baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, 130, fDeviceWidth, 200)];
     [BXVc asignDataToLab:myInfo];
     [self.view addSubview:BXVc];
+     /*---------报修信息----------------*/
+    
+    
+    /*----------派单信息----------------*/
+    paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, 430, fDeviceWidth, 180)];
+    [PDvc asignDataToLab:myInfo];
+    [self.view addSubview:PDvc];
+    
+    /*----------派单信息----------------*/
+    
 }
 @end

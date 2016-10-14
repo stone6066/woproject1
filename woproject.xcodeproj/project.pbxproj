@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8919CBCC1DB0AB3D00858721 /* paidanInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */; };
 		8981D1211DAB3BE200CF2426 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8981D1201DAB3BE200CF2426 /* SystemConfiguration.framework */; };
 		8981D1231DAB3BED00CF2426 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8981D1221DAB3BED00CF2426 /* CoreLocation.framework */; };
 		8981D1251DAB3BFF00CF2426 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8981D1241DAB3BFF00CF2426 /* UIKit.framework */; };
@@ -162,6 +163,8 @@
 
 /* Begin PBXFileReference section */
 		58CA0F9B1DADCD0C00A569BC /* WoProjectHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WoProjectHeader.pch; sourceTree = "<group>"; };
+		8919CBCA1DB0AB3D00858721 /* paidanInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paidanInfoView.h; sourceTree = "<group>"; };
+		8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = paidanInfoView.m; sourceTree = "<group>"; };
 		8981D1201DAB3BE200CF2426 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8981D1221DAB3BED00CF2426 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8981D1241DAB3BFF00CF2426 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -421,6 +424,8 @@
 				89EAA8C61DAE2D870043BE53 /* ticketListTableViewCell.h */,
 				89EAA8C71DAE2D870043BE53 /* ticketListTableViewCell.m */,
 				89EAA8C81DAE2D870043BE53 /* ticketListTableViewCell.xib */,
+				8919CBCA1DB0AB3D00858721 /* paidanInfoView.h */,
+				8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1033,6 +1038,7 @@
 				89F3EA371DAB3A8C00B6E54A /* NSArray+PureLayout.m in Sources */,
 				89FBEED81DAA3660008FBB8A /* HomeViewController.m in Sources */,
 				8981D12C1DAB3C9300CF2426 /* CommonUtility.m in Sources */,
+				8919CBCC1DB0AB3D00858721 /* paidanInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,4 +20,6 @@
 @property(nonatomic,copy)NSString * systemId;//系统故障id
 @property(nonatomic,copy)NSString * priority;//优先级id 1高，2中，3低
 @property(nonatomic,copy)NSString * ticketStatus;//0.未派单；1.未接单；2.已接单；3.已完成；4.已核查；5.已退单；6.已挂起
+
+@property(nonatomic,copy)NSString * sortid;//数据id 加载更多的时候使用，初始0
 @end

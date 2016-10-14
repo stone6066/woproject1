@@ -260,7 +260,8 @@
             
     }
     _pageindex=0;
-    [_tabledata removeAllObjects];
+    _sortid=@"0";
+    //[_tabledata removeAllObjects];
     [self downforYjgdList:_projectId systemFault:_systemId priority:_priority ticketStatus:_ticketStatus];
     NSLog(@"projectId:%@ systemId:%@ priority:%@ _ticketStatus:%@",_projectId,_systemId,_priority,_ticketStatus);
 }
@@ -269,19 +270,14 @@
 -(void)downforYjgdList:(NSString*)pid systemFault:(NSString*)sid priority:(NSString*)priorityId ticketStatus:(NSString*)tid{
     [SVProgressHUD showWithStatus:k_Status_Load];
     
-    //    NSDictionary *paramDict1 = @{
-    //                                @"uid":ApplicationDelegate.myLoginInfo.Id,
-    //                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
-    //                                @"status":@"2",
-    //                                @"sort_id":@"1",//[NSString stringWithFormat:@"%ld",(long)_pageindex],
-    //                                @"v":ApplicationDelegate.myLoginInfo.v
-    //                                };
+
     NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
     
     [paramDict setObject:@"" forKey:@"uid"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [paramDict setObject:@"0" forKey:@"status"];
-    [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_pageindex] forKey:@"sort_id"];
+    //[paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_pageindex] forKey:@"sort_id"];
+    [paramDict setObject:[NSString stringWithFormat:@"%@",_sortid] forKey:@"sort_id"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
     
     if (_pageindex==0) {//获取最新数据
@@ -315,7 +311,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"已接工单返回：%@",jsonDic);
+                                          //NSLog(@"派单返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //
@@ -323,14 +319,23 @@
                                               //成功
                                               
                                               [SVProgressHUD dismiss];
-                                              
                                               ticketList *Tlist=[[ticketList alloc]init];
                                               NSMutableArray *datatmp=[Tlist asignInfoWithDict:jsonDic];
-                                              if (_tabledata.count>0) {
-                                                  [_tabledata addObjectsFromArray:datatmp];
+                                              if (datatmp.count>0) {
+                                                  Tlist=datatmp[datatmp.count-1];
+                                                  _sortid=Tlist.Id;
+                                              }
+                                              
+                                              if (_pageindex==0) {
+                                                  [_tabledata removeAllObjects];
+                                                  _tabledata=datatmp;
+                                                  
                                               }
                                               else
-                                                  _tabledata=datatmp;
+                                              {
+                                                  [_tabledata addObjectsFromArray:datatmp];
+                                              }
+                                                  
                                               [_TableView reloadData];
                                               
                                               
@@ -373,7 +378,8 @@ static NSString * const TicketCellId = @"TicketCellId";
     __unsafe_unretained __typeof(self) weakSelf = self;
     self.TableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _pageindex=0;
-        [_tabledata removeAllObjects];
+        _sortid=@"0";
+        
          [self downforYjgdList:_projectId systemFault:_systemId priority:_priority ticketStatus:_ticketStatus];
         [weakSelf.TableView.mj_header endRefreshing];
         // 进入刷新状态后会自动调用这个block
@@ -390,6 +396,7 @@ static NSString * const TicketCellId = @"TicketCellId";
         else
         {
             _pageindex=0;
+            _sortid=@"0";
              [self downforYjgdList:_projectId systemFault:_systemId priority:_priority ticketStatus:_ticketStatus];
             
         }

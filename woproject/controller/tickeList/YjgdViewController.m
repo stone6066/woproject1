@@ -247,7 +247,7 @@
            
     }
     _pageindex=0;
-    [_tabledata removeAllObjects];
+    _sortid=@"0";
     [self downforYjgdList:_projectId systemFault:_systemId priority:_priority];
      NSLog(@"projectId:%@ systemId:%@ priority:%@",_projectId,_systemId,_priority);
 }
@@ -268,14 +268,14 @@
     [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [paramDict setObject:@"2" forKey:@"status"];
-    [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_pageindex] forKey:@"sort_id"];
+    [paramDict setObject:[NSString stringWithFormat:@"%@",_sortid] forKey:@"sort_id"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
-    
     if (_pageindex==0) {//获取最新数据
         [paramDict setObject:@"Greater" forKey:@"comparison"];
     }
     else//获取更多数据
         [paramDict setObject:@"less" forKey:@"comparison"];
+    
     if (pid) {
         [paramDict setObject:pid forKey:@"projectId"];
     }
@@ -300,7 +300,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"已接工单返回：%@",jsonDic);
+                                          //NSLog(@"已接工单返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //
@@ -311,11 +311,22 @@
                                               
                                               ticketList *Tlist=[[ticketList alloc]init];
                                               NSMutableArray *datatmp=[Tlist asignInfoWithDict:jsonDic];
-                                              if (_tabledata.count>0) {
-                                                  [_tabledata addObjectsFromArray:datatmp];
+                                              if (datatmp.count>0) {
+                                                  Tlist=datatmp[datatmp.count-1];
+                                                  _sortid=Tlist.Id;
+                                              }
+                                              
+                                              if (_pageindex==0) {
+                                                  [_tabledata removeAllObjects];
+                                                  _tabledata=datatmp;
+                                                  
                                               }
                                               else
-                                                  _tabledata=datatmp;
+                                              {
+                                                  [_tabledata addObjectsFromArray:datatmp];
+                                              }
+
+                                              
                                               [_TableView reloadData];
                                              
                                               
@@ -358,7 +369,7 @@ static NSString * const TicketCellId = @"TicketCellId";
     __unsafe_unretained __typeof(self) weakSelf = self;
     self.TableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _pageindex=0;
-        [_tabledata removeAllObjects];
+       _sortid=@"0";
         [self downforYjgdList:_priority systemFault:_systemId priority:_priority];
         [weakSelf.TableView.mj_header endRefreshing];
         // 进入刷新状态后会自动调用这个block

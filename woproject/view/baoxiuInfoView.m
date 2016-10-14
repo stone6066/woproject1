@@ -28,8 +28,8 @@
         topTitleVc.backgroundColor=bluebackcolor;
         _myViewTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 2, 100, 20)];
         _myViewTitle.text=@"报修信息";
-        [_repairTimetitle setFont:[UIFont systemFontOfSize:14]];
-        _myViewTitle.textColor=deepbluetxtcolor;
+//        [_repairTimetitle setFont:[UIFont systemFontOfSize:15]];
+//        _myViewTitle.textColor=deepbluetxtcolor;
         [topTitleVc addSubview:_myViewTitle];
         [self addSubview:topTitleVc];
         
@@ -98,7 +98,7 @@
     stdLab.frame=labF;
     [stdLab setFont:[UIFont systemFontOfSize:14]];
     stdLab.textColor=graytxtcolor;
-    stdLab.backgroundColor=[UIColor yellowColor];
+    //stdLab.backgroundColor=[UIColor yellowColor];
     [self addSubview:stdLab];
 }
 

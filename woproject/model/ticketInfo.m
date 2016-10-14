@@ -58,36 +58,13 @@
             /*------------imageList--------------------------------*/
             
             /*------------ticketFlowList--------------------------------*/
-            NSArray *ticketFlowArr=[datadict objectForKey:@"ticketFlowList"];
             NSMutableArray *InfoArr=[[NSMutableArray alloc]init];
-            for (NSDictionary *InfoDict in ticketFlowArr) {
-                ticketFlowInfo *tickF=[[ticketFlowInfo alloc]init];
-                tickF.deptId=[InfoDict objectForKey:@"deptId"];
-                tickF.Id=[InfoDict objectForKey:@"id"];
-                tickF.isValid=[InfoDict objectForKey:@"isValid"];
-                tickF.jobName=[InfoDict objectForKey:@"jobName"];
-                tickF.operation=[InfoDict objectForKey:@"operation"];
-                tickF.operationPhone=[InfoDict objectForKey:@"operationPhone"];
-                tickF.operationTime=[InfoDict objectForKey:@"operationTime"];
-                tickF.operationUser=[InfoDict objectForKey:@"operationUser"];
-                tickF.ticketId=[InfoDict objectForKey:@"ticketId"];
-                tickF.result=[InfoDict objectForKey:@"result"];
-                tickF.userId=[InfoDict objectForKey:@"userId"];
-                tickF.v=[InfoDict objectForKey:@"v"];
-                
-                NSArray *imagArr=[InfoDict objectForKey:@"imageList"];
-                NSMutableArray *UrlArr=[[NSMutableArray alloc]init];
-                for (NSDictionary *imgDict in imagArr) {
-                    NSString *imgUrl=[imgDict objectForKey:@"url"];
-                    [UrlArr addObject:imgUrl];
-                }
-                tickF.imageList=UrlArr;
-                
-                [InfoArr addObject:tickF];
-            }
+            ticketFlowInfo *tickF=[[ticketFlowInfo alloc]init];
+            InfoArr=[tickF asignDataFromDict:datadict];
+            tickInfo.ticketFlowList=InfoArr;
            /*------------ticketFlowList--------------------------------*/
             
-            tickInfo.ticketFlowList=InfoArr;
+            
             
         }
     } @catch (NSException *exception) {

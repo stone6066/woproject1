@@ -246,7 +246,7 @@
             
     }
     _pageindex=0;
-    [_tabledata removeAllObjects];
+    _sortid=@"0";
     [self downforYjgdList:_projectId systemFault:_systemId priority:_priority];
     NSLog(@"projectId:%@ systemId:%@ priority:%@",_projectId,_systemId,_priority);
 }
@@ -299,7 +299,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"指定工单返回：%@",jsonDic);
+                                          //NSLog(@"公共工单返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //
@@ -310,11 +310,21 @@
                                               
                                               ticketList *Tlist=[[ticketList alloc]init];
                                               NSMutableArray *datatmp=[Tlist asignInfoWithDict:jsonDic];
-                                              if (_tabledata.count>0) {
-                                                  [_tabledata addObjectsFromArray:datatmp];
+                                              if (datatmp.count>0) {
+                                                  Tlist=datatmp[datatmp.count-1];
+                                                  _sortid=Tlist.Id;
+                                              }
+                                              
+                                              if (_pageindex==0) {
+                                                  [_tabledata removeAllObjects];
+                                                  _tabledata=datatmp;
+                                                  
                                               }
                                               else
-                                                  _tabledata=datatmp;
+                                              {
+                                                  [_tabledata addObjectsFromArray:datatmp];
+                                              }
+                                              
                                               [_TableView reloadData];
                                               
                                               
@@ -357,7 +367,7 @@ static NSString * const TicketCellId = @"TicketCellId";
     __unsafe_unretained __typeof(self) weakSelf = self;
     self.TableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _pageindex=0;
-        [_tabledata removeAllObjects];
+        _sortid=@"0";
         [self downforYjgdList:_priority systemFault:_systemId priority:_priority];
         [weakSelf.TableView.mj_header endRefreshing];
         // 进入刷新状态后会自动调用这个block
