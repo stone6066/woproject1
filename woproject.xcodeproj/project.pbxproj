@@ -1596,7 +1596,7 @@
 				);
 				GCC_PREFIX_HEADER = woproject/WoProjectHeader.pch;
 				INFOPLIST_FILE = woproject/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1630,7 +1630,7 @@
 				);
 				GCC_PREFIX_HEADER = woproject/WoProjectHeader.pch;
 				INFOPLIST_FILE = woproject/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

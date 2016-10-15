@@ -8,6 +8,7 @@
 
 #import "ticketInfoViewController.h"
 #import "ticketInfo.h"
+#import "ticketFlowInfo.h"
 #import "baoxiuInfoView.h"
 #import "paidanInfoView.h"
 #import "jiedanInfoView.h"
@@ -139,7 +140,7 @@
     
      /*---------工单状态----------------*/
     CGFloat topTitleVcHigh=30;
-    UIView *topTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, topTitleVcHigh)];
+    UIView *topTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, topTitleVcHigh)];
     topTitleVc.backgroundColor=bluebackcolor;
     UILabel *myOrderState=[[UILabel alloc]initWithFrame:CGRectMake(5, 2, 100, 20)];
     myOrderState.text=@"工单状态";
@@ -149,8 +150,8 @@
     [scollVc addSubview:topTitleVc];
     
     CGFloat orderTitleVcHigh=50;
-    UIView *orderTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, TopSeachHigh+30, fDeviceWidth, orderTitleVcHigh)];
-    UILabel *currStateLab=[[UILabel alloc]initWithFrame:CGRectMake(15, 10, 70, 20)];
+    UIView *orderTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, 30, fDeviceWidth, orderTitleVcHigh)];
+    UILabel *currStateLab=[[UILabel alloc]initWithFrame:CGRectMake(15, 10, 80, 20)];
     currStateLab.text=@"当前状态：";
     [currStateLab setFont:[UIFont systemFontOfSize:14]];
     currStateLab.textColor=graytxtcolor;
@@ -166,7 +167,7 @@
     
     
     
-    UILabel *orderNumLab=[[UILabel alloc]initWithFrame:CGRectMake(fDeviceWidth*2/3, 10, 70, 20)];
+    UILabel *orderNumLab=[[UILabel alloc]initWithFrame:CGRectMake(fDeviceWidth*2/3, 10, 80, 20)];
     orderNumLab.text=@"工单编号：";
     orderNumLab.textColor=graytxtcolor;
     [orderNumLab setFont:[UIFont systemFontOfSize:14]];
@@ -183,9 +184,9 @@
     
     /*---------工单状态----------------*/
     
-    CGFloat firstY=130;
+    CGFloat firstY=orderTitleVcHigh+topTitleVcHigh;
     /*---------报修信息----------------*/
-    CGFloat BXVcHigh=200;
+    CGFloat BXVcHigh=360;
     baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, firstY, fDeviceWidth, BXVcHigh)];
     [BXVc asignDataToLab:myInfo];
     [scollVc addSubview:BXVc];
@@ -193,31 +194,61 @@
     
     
     /*----------派单信息----------------*/
-    CGFloat PDvcHigh=180;
-    paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh, fDeviceWidth, PDvcHigh)];
-    [PDvc asignDataToLab:myInfo];
-    [scollVc addSubview:PDvc];
+    CGFloat PDvcHigh=0;
+    if (1==[self haveInfoForType:@"0" infoData:myInfo]) {
+        PDvcHigh=230;
+        paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh, fDeviceWidth, PDvcHigh)];
+        [PDvc asignDataToLab:myInfo];
+        [scollVc addSubview:PDvc];
+    };
+    
     /*----------派单信息----------------*/
     
     /*----------接单信息----------------*/
-    CGFloat JDvcHigh=180;
+    CGFloat JDvcHigh=0;
+    if (1==[self haveInfoForType:@"1" infoData:myInfo]){
+        JDvcHigh=170;
     jiedanInfoView * JDvc=[[jiedanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+JDvcHigh, fDeviceWidth, JDvcHigh)];
     [JDvc asignDataToLab:myInfo];
     [scollVc addSubview:JDvc];
-    
+    }
     /*----------接单信息----------------*/
     
     
     /*----------到场信息----------------*/
-    CGFloat DCvcHigh=180;
+    CGFloat DCvcHigh=0;
+    if (1==[self haveInfoForType:@"2" infoData:myInfo]){
+    DCvcHigh=150;
     daochangInfoView * DCvc=[[daochangInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+JDvcHigh+DCvcHigh, fDeviceWidth, DCvcHigh)];
     [DCvc asignDataToLab:myInfo];
     [scollVc addSubview:DCvc];
-    
+    }
     /*----------到场信息----------------*/
     
     ScrollHeigh=topTitleVcHigh+topTitleVcHigh+BXVcHigh+PDvcHigh+JDvcHigh+DCvcHigh;
     [scollVc setContentSize:CGSizeMake(fDeviceWidth, ScrollHeigh)];
     [self.view addSubview:scollVc];
+}
+
+-(NSInteger)haveInfoForType:(NSString*)types  infoData:(ticketInfo *)modelData{
+    NSArray *flowArr=modelData.ticketFlowList;
+    NSString *operations;
+    NSInteger rtnI=0;
+    @try {
+        if (flowArr) {
+            for (ticketFlowInfo *dict in flowArr) {
+                operations=dict.operation;
+                if ([operations isEqualToString:types]) {
+                    rtnI=1;
+                }
+            }
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"结构不对爆炸了");
+    } @finally {
+        return rtnI;
+    }
+
+
 }
 @end

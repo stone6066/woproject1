@@ -31,7 +31,7 @@
         CGFloat firstLbY=35;//第一个lab的y
         CGFloat fisttLbX=15;
         
-        CGFloat labWidthTitle=70;//lab的宽度（标题lab）
+        CGFloat labWidthTitle=80;//lab的宽度（标题lab）
         CGFloat secondLbX=15+70;
         CGFloat labHeigh=20;//lab的高度
         CGFloat spritePaceY=15+labHeigh;//lab之间的间隔

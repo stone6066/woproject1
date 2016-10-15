@@ -37,8 +37,8 @@
         CGFloat firstLbY=35;//第一个lab的y
         CGFloat fisttLbX=15;
         
-        CGFloat labWidthTitle=70;//lab的宽度（标题lab）
-        CGFloat secondLbX=15+70;
+        CGFloat labWidthTitle=80;//lab的宽度（标题lab）
+        CGFloat secondLbX=15+labWidthTitle;
         CGFloat labHeigh=20;//lab的高度
         CGFloat spritePaceY=15+labHeigh;//lab之间的间隔
         CGFloat labWidth=viewWidth-25-labWidthTitle;//lab的宽度（数据lab）
@@ -87,8 +87,10 @@
         [self stdInitLab:_faultDev labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY*3, labWidth, labHeigh)];
         [self stdInitLab:_faultPos labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY*4, labWidth, labHeigh)];
         [self stdInitLab:_priority labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY*5, labWidth, labHeigh)];
-        [self stdInitLab:_faultDesc labFrame:CGRectMake(fisttLbX, firstLbY+spritePaceY*7, labWidth+secondLbX-fisttLbX, labHeigh*2)];
+        [self stdInitLab:_faultDesc labFrame:CGRectMake(fisttLbX, firstLbY+spritePaceY*7, labWidth+secondLbX-fisttLbX, labHeigh)];
+        
         _faultDesc.numberOfLines=0;//多行显示
+        
         
     }
     return self;
@@ -110,6 +112,7 @@
     _faultPos.text=modelData.faultPos;
     _priority.text=modelData.priority;
     _faultDesc.text=modelData.faultDesc;
+    [_faultDesc sizeToFit];
     _repairPhone=modelData.userPhone;
 }
 
