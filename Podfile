@@ -8,5 +8,8 @@ pod 'MJRefresh'                 #刷新
 pod 'SVProgressHUD'             #蒙版
 pod 'MBProgressHUD', '~> 0.9.1' #蒙版
 pod 'Masonry'
+pod 'YYModel'
+pod 'PNChart'
+pod 'YLProgressBar'
 end
 

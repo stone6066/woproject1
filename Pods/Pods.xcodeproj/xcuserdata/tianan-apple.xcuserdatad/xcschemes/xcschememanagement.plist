@@ -30,6 +30,11 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>PNChart.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>Pods-woproject.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -51,9 +56,34 @@
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
+		<key>UICountingLabel.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>YLProgressBar.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>YYModel.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>016D982990393D4CF14C8AE7998AEC65</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0C712FD232BB3E13DE57FDC571FE064A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>18934BBF59BACBEBFCA2F1CF6CBB6189</key>
 		<dict>
 			<key>primary</key>
@@ -64,7 +94,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>21B0F2062B08083F1B511860CF1B80B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>31CD3002375629C0C28AD259E2031BD8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>6847254D016329D4A531D34ED2B6DF81</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6C18C789438292FED01EB702705FC9AA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -79,12 +124,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>854FF544BAC922D03E782EB0D642F917</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9BA265FD94D3603A7A8E33A7BA784C43</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>A9A83F63385AA43314397B8DD375464B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D97D81462E8AC49A4D566DEEE68DDB8F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

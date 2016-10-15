@@ -7,10 +7,9 @@
 //
 
 #import "LoginViewController.h"
-#import "PublicDefine.h"
 #import "loginInfo.h"
 #import "stdPubFunc.h"
-
+#import "ActionUserViewController.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 
@@ -58,16 +57,16 @@
 
  -(void)UsrtextFieldDidChange:(UITextField *) TextField{
      if (TextField.text.length>0) {
-         if (!_cancelVc) {
-             _cancelVc=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2-40, 11, 12)];
-             _cancelVc.image=[UIImage imageNamed:@"cancle"];
-             [self.view addSubview:_cancelVc];
-             UIButton *usrClearBtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2-50, 40, 40)];
-             [self.view addSubview:usrClearBtn];
-             //usrClearBtn.backgroundColor=[UIColor blueColor];
-             usrClearBtn.tag=101;
-             [usrClearBtn addTarget:self action:@selector(clearbtnClick:) forControlEvents:UIControlEventTouchUpInside];
-         }
+//         if (!_cancelVc) {
+//             _cancelVc=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2-40, 11, 12)];
+//             _cancelVc.image=[UIImage imageNamed:@"cancle"];
+//             [self.view addSubview:_cancelVc];
+//             UIButton *usrClearBtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2-50, 40, 40)];
+//             [self.view addSubview:usrClearBtn];
+//             //usrClearBtn.backgroundColor=[UIColor blueColor];
+//             usrClearBtn.tag=101;
+//             [usrClearBtn addTarget:self action:@selector(clearbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//         }
          _cancelVc.hidden=NO;
      }
      else
@@ -78,19 +77,18 @@
 
 -(void)PswtextFieldDidChange:(UITextField *) TextField{
     if (TextField.text.length>0) {
-        if (!_cancelVc1) {
-            _cancelVc1=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2+10, 11, 12)];
-            _cancelVc1.image=[UIImage imageNamed:@"cancle"];
-            [self.view addSubview:_cancelVc1];
-            
-            UIButton *usrClearBtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2, 40, 40)];
-            [self.view addSubview:usrClearBtn];
-            
-            //usrClearBtn.backgroundColor=[UIColor yellowColor];
-            usrClearBtn.tag=102;
-            [usrClearBtn addTarget:self action:@selector(clearbtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            
-        }
+//        if (!_cancelVc1) {
+//            _cancelVc1=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2+10, 11, 12)];
+//            _cancelVc1.image=[UIImage imageNamed:@"cancle"];
+//            [self.view addSubview:_cancelVc1];
+//            
+//            UIButton *usrClearBtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2, 40, 40)];
+//            [self.view addSubview:usrClearBtn];
+//            
+//            usrClearBtn.tag=102;
+//            [usrClearBtn addTarget:self action:@selector(clearbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//            
+//        }
         _cancelVc1.hidden=NO;
     }
     else
@@ -168,17 +166,13 @@
     
     [_checkbox addTarget:self action:@selector(checkboxClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_checkbox];
-    
-        UILabel *remPswLbl=[[UILabel alloc]initWithFrame:CGRectMake(40+18,fDeviceHeight/2+31+17, 80, 20)];
+    UILabel *remPswLbl=[[UILabel alloc]initWithFrame:CGRectMake(40+18,fDeviceHeight/2+31+17, 80, 20)];
     remPswLbl.text=@"记住密码";
     [remPswLbl setTextColor:[UIColor grayColor]];
     [remPswLbl setFont:[UIFont systemFontOfSize:12]];
     [self.view addSubview:remPswLbl];
     
-    
-    
-    
-    
+
     _LoginBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-150, fDeviceWidth, 40)];
     
     [_LoginBtn addTarget:self action:@selector(clickloginbtn) forControlEvents:UIControlEventTouchUpInside];
@@ -205,6 +199,32 @@
     hintLbl.text=@"如果遇到账户信息泄漏，忘记密码，诈骗等账号安全问题请联系系统管理员";
     [self.view addSubview:hintLbl];
     
+    if (!_cancelVc1) {
+        _cancelVc1=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2+10, 11, 12)];
+        _cancelVc1.image=[UIImage imageNamed:@"cancle"];
+        [self.view addSubview:_cancelVc1];
+        
+        UIButton *usrClearBtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2, 40, 40)];
+        [self.view addSubview:usrClearBtn];
+        
+        usrClearBtn.tag=102;
+        [usrClearBtn addTarget:self action:@selector(clearbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    _cancelVc1.hidden=YES;
+    
+    if (!_cancelVc) {
+        _cancelVc=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2-40, 11, 12)];
+        _cancelVc.image=[UIImage imageNamed:@"cancle"];
+        [self.view addSubview:_cancelVc];
+        UIButton *usrClearBtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-35, fDeviceHeight/2-50, 40, 40)];
+        [self.view addSubview:usrClearBtn];
+        //usrClearBtn.backgroundColor=[UIColor blueColor];
+        usrClearBtn.tag=101;
+        [usrClearBtn addTarget:self action:@selector(clearbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    _cancelVc.hidden=YES;
+    
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSString * rmbPsw = [user objectForKey:NSUserRmbMsg];
@@ -214,6 +234,8 @@
         ApplicationDelegate.isRmbPsw=YES;
         _UsrTxtF.text=[stdPubFunc readUserMsg];
         _PassTxtF.text=[stdPubFunc readPassword];
+        _cancelVc1.hidden=NO;
+        _cancelVc.hidden=NO;
         [self clickloginbtn];//记住密码 自动登录
     }
     else
@@ -221,11 +243,20 @@
         _checkbox.selected=NO;
         ApplicationDelegate.isRmbPsw=NO;
     }
-
-
 }
 -(void)clickzhucebtn{
-   
+    ActionUserViewController *actionUsrVc=[[ActionUserViewController alloc]init];
+    actionUsrVc.actionSuccBlock = ^(ActionUserViewController *aqrvc){
+        NSLog(@"action_suc");
+        //ApplicationDelegate.isLogin = YES;
+        [self loginSuccPro];
+    };
+
+    
+    actionUsrVc.view.backgroundColor=[UIColor whiteColor];
+     self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:actionUsrVc animated:YES];
+    
 }
 -(void)clickloginbtn{
 

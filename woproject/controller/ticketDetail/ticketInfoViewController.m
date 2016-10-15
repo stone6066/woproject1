@@ -10,6 +10,8 @@
 #import "ticketInfo.h"
 #import "baoxiuInfoView.h"
 #import "paidanInfoView.h"
+#import "jiedanInfoView.h"
+#import "daochangInfoView.h"
 @interface ticketInfoViewController ()
 
 @end
@@ -132,17 +134,22 @@
 }
 
 -(void)drawDetailView:(ticketInfo*)myInfo{
+     CGFloat ScrollHeigh=fDeviceHeight;
+    UIScrollView *scollVc=[[UIScrollView alloc]initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, fDeviceHeight-TopSeachHigh)];
+    
      /*---------工单状态----------------*/
-    UIView *topTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, 30)];
+    CGFloat topTitleVcHigh=30;
+    UIView *topTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, topTitleVcHigh)];
     topTitleVc.backgroundColor=bluebackcolor;
     UILabel *myOrderState=[[UILabel alloc]initWithFrame:CGRectMake(5, 2, 100, 20)];
     myOrderState.text=@"工单状态";
     [myOrderState setFont:[UIFont systemFontOfSize:15]];
     myOrderState.textColor=deepbluetxtcolor;
     [topTitleVc addSubview:myOrderState];
-    [self.view addSubview:topTitleVc];
+    [scollVc addSubview:topTitleVc];
     
-    UIView *orderTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, TopSeachHigh+30, fDeviceWidth, 50)];
+    CGFloat orderTitleVcHigh=50;
+    UIView *orderTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, TopSeachHigh+30, fDeviceWidth, orderTitleVcHigh)];
     UILabel *currStateLab=[[UILabel alloc]initWithFrame:CGRectMake(15, 10, 70, 20)];
     currStateLab.text=@"当前状态：";
     [currStateLab setFont:[UIFont systemFontOfSize:14]];
@@ -172,24 +179,45 @@
     [orderNumTxtLab setFont:[UIFont systemFontOfSize:14]];
     [orderTitleVc addSubview:orderNumTxtLab];
     
-    [self.view addSubview:orderTitleVc];
+    [scollVc addSubview:orderTitleVc];
     
     /*---------工单状态----------------*/
     
-    
+    CGFloat firstY=130;
     /*---------报修信息----------------*/
-    baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, 130, fDeviceWidth, 200)];
+    CGFloat BXVcHigh=200;
+    baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, firstY, fDeviceWidth, BXVcHigh)];
     [BXVc asignDataToLab:myInfo];
-    [self.view addSubview:BXVc];
+    [scollVc addSubview:BXVc];
      /*---------报修信息----------------*/
     
     
     /*----------派单信息----------------*/
-    paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, 430, fDeviceWidth, 180)];
+    CGFloat PDvcHigh=180;
+    paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh, fDeviceWidth, PDvcHigh)];
     [PDvc asignDataToLab:myInfo];
-    [self.view addSubview:PDvc];
-    
+    [scollVc addSubview:PDvc];
     /*----------派单信息----------------*/
     
+    /*----------接单信息----------------*/
+    CGFloat JDvcHigh=180;
+    jiedanInfoView * JDvc=[[jiedanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+JDvcHigh, fDeviceWidth, JDvcHigh)];
+    [JDvc asignDataToLab:myInfo];
+    [scollVc addSubview:JDvc];
+    
+    /*----------接单信息----------------*/
+    
+    
+    /*----------到场信息----------------*/
+    CGFloat DCvcHigh=180;
+    daochangInfoView * DCvc=[[daochangInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+JDvcHigh+DCvcHigh, fDeviceWidth, DCvcHigh)];
+    [DCvc asignDataToLab:myInfo];
+    [scollVc addSubview:DCvc];
+    
+    /*----------到场信息----------------*/
+    
+    ScrollHeigh=topTitleVcHigh+topTitleVcHigh+BXVcHigh+PDvcHigh+JDvcHigh+DCvcHigh;
+    [scollVc setContentSize:CGSizeMake(fDeviceWidth, ScrollHeigh)];
+    [self.view addSubview:scollVc];
 }
 @end

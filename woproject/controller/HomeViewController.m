@@ -18,6 +18,8 @@
 #import "GggdViewController.h"
 #import "PaidanViewController.h"
 #import "DownLoadBaseData.h"
+#import "VisualizationController.h"
+
 
 @interface HomeViewController ()
 @property (nonatomic, strong) MAMapView *mapView;
@@ -231,7 +233,10 @@
     [self.navigationController pushViewController:ggVc animated:YES];
 }
 -(void)clickks{//可视化
-    
+    VisualizationController *yjVc=[[VisualizationController alloc] initWithNibName:@"VisualizationController" bundle:nil];
+    yjVc.hidesBottomBarWhenPushed=YES;
+    yjVc.navigationItem.hidesBackButton=YES;
+    [self.navigationController pushViewController:yjVc animated:YES];
 }
 
 - (void)initMapView

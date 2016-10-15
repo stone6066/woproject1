@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>PNChart.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-woproject.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -39,10 +44,45 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>UICountingLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>YLProgressBar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>YYModel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>016D982990393D4CF14C8AE7998AEC65</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0C712FD232BB3E13DE57FDC571FE064A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>21B0F2062B08083F1B511860CF1B80B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>31CD3002375629C0C28AD259E2031BD8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -52,12 +92,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>83E82BE53ED0C4A2EECD50248D0BCD29</key>
+		<key>6C18C789438292FED01EB702705FC9AA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9BA265FD94D3603A7A8E33A7BA784C43</key>
+		<key>854FF544BAC922D03E782EB0D642F917</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,7 +107,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E2922F2BCE8508821887F60DFBBA415E</key>
+		<key>D97D81462E8AC49A4D566DEEE68DDB8F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

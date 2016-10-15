@@ -12,8 +12,19 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "AppDelegate.h"
 
+#import "BaseViewController.h"
+
+
 #import "MJRefresh.h"
 #import "SVProgressHUD.h"
+
+#import <Masonry/Masonry.h>
+#import "YYModel.h"
+#import "DOPDropDownMenu.h"
+
+#import "PNChartDelegate.h"
+#import "PNChart.h"
+#import "YLProgressBar.h"
 
 #define UISCREENHEIGHT  self.view.bounds.size.height
 #define UISCREENWIDTH  self.view.bounds.size.width
@@ -280,6 +291,19 @@ DEF_SINGLETON( __class ) \
 #define IS_SCREEN_35_INCH	(NO)
 
 #endif	// #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+
+/**
+ *     Reachability单利
+ */
+
+#define  gs_ReachabilityManager  [AFNetworkReachabilityManager sharedManager]
+
+#define gs_NotifiCenter [NSNotificationCenter defaultCenter]
+
+
+/* 避免循环持有 */
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
+#define k_text_font(obj) [UIFont systemFontOfSize:obj]
 
 
 #endif

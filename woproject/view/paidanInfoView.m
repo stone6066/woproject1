@@ -110,9 +110,6 @@
     } @finally {
         return;
     }
-    
-    
-    
 }
 
 -(NSString *)stdTimeToStr:(NSString*)intTime{

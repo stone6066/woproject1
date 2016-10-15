@@ -2,12 +2,12 @@
 //  MyinfoViewController.h
 //  woproject
 //
-//  Created by tianan-apple on 16/10/9.
+//  Created by 徐洋 on 16/10/15.
 //  Copyright © 2016年 tianan-apple. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WPViewController.h"
 
-@interface MyinfoViewController : UIViewController
+@interface MyinfoViewController : WPViewController
 
 @end
