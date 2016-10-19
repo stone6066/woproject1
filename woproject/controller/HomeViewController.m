@@ -201,12 +201,13 @@
 -(void)clickyj{//已接
     YjgdViewController *yjVc=[[YjgdViewController alloc]init];
     yjVc.view.backgroundColor=[UIColor whiteColor];
-    
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:yjVc animated:YES];
 }
 -(void)clickzd{//指定接单
     ZhiDViewController *zdVc=[[ZhiDViewController alloc]init];
     zdVc.view.backgroundColor=[UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:zdVc animated:YES];
 }
 -(void)clickkq{//考勤
@@ -225,11 +226,13 @@
 -(void)clickpd{//派单
     PaidanViewController *pdVc=[[PaidanViewController alloc]init];
     pdVc.view.backgroundColor=[UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:pdVc animated:YES];
 }
 -(void)clickgg{//公共
     GggdViewController *ggVc=[[GggdViewController alloc]init];
     ggVc.view.backgroundColor=[UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ggVc animated:YES];
 }
 -(void)clickks{//可视化

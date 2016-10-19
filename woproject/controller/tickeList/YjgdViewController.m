@@ -429,6 +429,7 @@ static NSString * const TicketCellId = @"TicketCellId";
     [noticeVc setMyViewTitle:@"已接工单详情"];
     [noticeVc setListId:svc.Id];
     noticeVc.view.backgroundColor = [UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:noticeVc animated:NO];
     
 }

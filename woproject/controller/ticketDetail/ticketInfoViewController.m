@@ -13,6 +13,8 @@
 #import "paidanInfoView.h"
 #import "jiedanInfoView.h"
 #import "daochangInfoView.h"
+
+#import "tickoperateViewController.h"
 @interface ticketInfoViewController ()
 
 @end
@@ -21,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self downforYjgdInfo];
     // Do any additional setup after loading the view.
 }
 
@@ -41,7 +43,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self loadTopNav];
-    [self downforYjgdInfo];
+//    [self downforYjgdInfo];
 }
 -(void)loadTopNav{
     UIView *TopView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, TopSeachHigh)];
@@ -217,10 +219,12 @@
     
     /*----------到场信息----------------*/
     CGFloat DCvcHigh=0;
+    _daochang=@"0";
     if (1==[self haveInfoForType:@"2" infoData:myInfo]){
     DCvcHigh=150;
+    _daochang=@"1";
     daochangInfoView * DCvc=[[daochangInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+JDvcHigh+DCvcHigh, fDeviceWidth, DCvcHigh)];
-    [DCvc asignDataToLab:myInfo];
+    _daochangTime=[DCvc asignDataToLab:myInfo];
     [scollVc addSubview:DCvc];
     }
     /*----------到场信息----------------*/
@@ -228,6 +232,27 @@
     ScrollHeigh=topTitleVcHigh+topTitleVcHigh+BXVcHigh+PDvcHigh+JDvcHigh+DCvcHigh;
     [scollVc setContentSize:CGSizeMake(fDeviceWidth, ScrollHeigh)];
     [self.view addSubview:scollVc];
+    
+    
+    /*----------处置----------*/
+    UIButton * operateBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-50, fDeviceWidth, 40)];
+    
+    [operateBtn addTarget:self action:@selector(clickoperatebtn) forControlEvents:UIControlEventTouchUpInside];
+    
+    [operateBtn setTitle:@"处置"forState:UIControlStateNormal];// 添加文字
+    operateBtn.backgroundColor=bluetxtcolor;
+    [self.view addSubview:operateBtn];
+
+    
+    /*----------处置----------*/
+}
+
+-(void)clickoperatebtn{
+    tickoperateViewController *oprateVc=[[tickoperateViewController alloc]init:_daochang confTime:_daochangTime];
+    oprateVc.view.backgroundColor=bluebackcolor;
+    [oprateVc setOrderId:_ListId];
+    [self.navigationController pushViewController:oprateVc animated:YES];
+
 }
 
 -(NSInteger)haveInfoForType:(NSString*)types  infoData:(ticketInfo *)modelData{

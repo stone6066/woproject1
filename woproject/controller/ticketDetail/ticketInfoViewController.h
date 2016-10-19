@@ -11,5 +11,7 @@
 @interface ticketInfoViewController : UIViewController
 @property (nonatomic,copy)NSString* myViewTitle;
 @property (nonatomic,copy)NSString* ListId;
+@property (nonatomic,copy)NSString* daochang;//是否到场 0未到  1已到
+@property (nonatomic,copy)NSString* daochangTime;
 @property (nonatomic,strong)ticketInfo *myTicketInfo;
 @end

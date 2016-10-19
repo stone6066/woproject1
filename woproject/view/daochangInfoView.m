@@ -76,7 +76,7 @@
 }
 
 
--(void)asignDataToLab:(ticketInfo*)modelData{
+-(NSString*)asignDataToLab:(ticketInfo*)modelData{
     NSArray *flowArr=modelData.ticketFlowList;
     NSString *operations;
     @try {
@@ -94,7 +94,7 @@
     } @catch (NSException *exception) {
         NSLog(@"结构不对爆炸了");
     } @finally {
-        return;
+        return _operationTime.text;
     }
 }
 

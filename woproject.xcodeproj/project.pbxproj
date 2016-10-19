@@ -68,6 +68,7 @@
 		58F0118E1DB20A9F0051D044 /* EquipmentHealthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F0118C1DB20A9F0051D044 /* EquipmentHealthController.m */; };
 		58F0118F1DB20A9F0051D044 /* EquipmentHealthController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58F0118D1DB20A9F0051D044 /* EquipmentHealthController.xib */; };
 		8919CBCC1DB0AB3D00858721 /* paidanInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */; };
+		8964287B1DB4BC45001203A7 /* baoxiujiahao.png in Resources */ = {isa = PBXBuildFile; fileRef = 8964287A1DB4BC45001203A7 /* baoxiujiahao.png */; };
 		8981D1211DAB3BE200CF2426 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8981D1201DAB3BE200CF2426 /* SystemConfiguration.framework */; };
 		8981D1231DAB3BED00CF2426 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8981D1221DAB3BED00CF2426 /* CoreLocation.framework */; };
 		8981D1251DAB3BFF00CF2426 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8981D1241DAB3BFF00CF2426 /* UIKit.framework */; };
@@ -88,6 +89,7 @@
 		89A4B0FD1DB1D5FB004EF914 /* jiedanInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A4B0FC1DB1D5FB004EF914 /* jiedanInfoView.m */; };
 		89A4B1001DB1D88D004EF914 /* daochangInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A4B0FF1DB1D88D004EF914 /* daochangInfoView.m */; };
 		89A4B1031DB1E808004EF914 /* ActionUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89A4B1021DB1E808004EF914 /* ActionUserViewController.m */; };
+		89C1BAD81DB7544D0034B8F9 /* tickoperateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C1BAD71DB7544D0034B8F9 /* tickoperateViewController.m */; };
 		89EAA8C11DAE03270043BE53 /* DownLoadBaseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EAA8C01DAE03270043BE53 /* DownLoadBaseData.m */; };
 		89EAA8C41DAE28490043BE53 /* ticketList.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EAA8C31DAE28490043BE53 /* ticketList.m */; };
 		89EAA8C91DAE2D870043BE53 /* ticketListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89EAA8C71DAE2D870043BE53 /* ticketListTableViewCell.m */; };
@@ -328,6 +330,7 @@
 		58F0118D1DB20A9F0051D044 /* EquipmentHealthController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EquipmentHealthController.xib; sourceTree = "<group>"; };
 		8919CBCA1DB0AB3D00858721 /* paidanInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paidanInfoView.h; sourceTree = "<group>"; };
 		8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = paidanInfoView.m; sourceTree = "<group>"; };
+		8964287A1DB4BC45001203A7 /* baoxiujiahao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baoxiujiahao.png; sourceTree = "<group>"; };
 		8981D1201DAB3BE200CF2426 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8981D1221DAB3BED00CF2426 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		8981D1241DAB3BFF00CF2426 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -357,6 +360,8 @@
 		89A4B0FF1DB1D88D004EF914 /* daochangInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = daochangInfoView.m; sourceTree = "<group>"; };
 		89A4B1011DB1E808004EF914 /* ActionUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionUserViewController.h; sourceTree = "<group>"; };
 		89A4B1021DB1E808004EF914 /* ActionUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionUserViewController.m; sourceTree = "<group>"; };
+		89C1BAD61DB7544D0034B8F9 /* tickoperateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tickoperateViewController.h; sourceTree = "<group>"; };
+		89C1BAD71DB7544D0034B8F9 /* tickoperateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tickoperateViewController.m; sourceTree = "<group>"; };
 		89EAA8BF1DAE03270043BE53 /* DownLoadBaseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownLoadBaseData.h; sourceTree = "<group>"; };
 		89EAA8C01DAE03270043BE53 /* DownLoadBaseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownLoadBaseData.m; sourceTree = "<group>"; };
 		89EAA8C21DAE28490043BE53 /* ticketList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ticketList.h; sourceTree = "<group>"; };
@@ -746,6 +751,15 @@
 			path = sbjkd;
 			sourceTree = "<group>";
 		};
+		896428711DB4ADFF001203A7 /* ticketOperate */ = {
+			isa = PBXGroup;
+			children = (
+				89C1BAD61DB7544D0034B8F9 /* tickoperateViewController.h */,
+				89C1BAD71DB7544D0034B8F9 /* tickoperateViewController.m */,
+			);
+			path = ticketOperate;
+			sourceTree = "<group>";
+		};
 		899C89A51DAD209F0073794E /* DOPDropDownMen */ = {
 			isa = PBXGroup;
 			children = (
@@ -926,6 +940,7 @@
 		89FBEED21DAA35A9008FBB8A /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				896428711DB4ADFF001203A7 /* ticketOperate */,
 				58F010B61DB205850051D044 /* kshdata */,
 				58F010D31DB205850051D044 /* myinfo */,
 				58F010EA1DB205850051D044 /* repair */,
@@ -950,6 +965,7 @@
 		89FBEEE31DAA3CD5008FBB8A /* image */ = {
 			isa = PBXGroup;
 			children = (
+				8964287A1DB4BC45001203A7 /* baoxiujiahao.png */,
 				899C899F1DAD101A0073794E /* cancle.png */,
 				89F61E7D1DACC2D300E9B489 /* bar_back.png */,
 				89F61E7B1DACC2AE00E9B489 /* login02.png */,
@@ -1292,6 +1308,7 @@
 				58F011291DB206230051D044 /* nhfx_red.png in Resources */,
 				89F61E6A1DACAB5B00E9B489 /* wd_icon03@2x.png in Resources */,
 				899C89AD1DAD209F0073794E /* icon_chose_arrow_sel@2x.png in Resources */,
+				8964287B1DB4BC45001203A7 /* baoxiujiahao.png in Resources */,
 				89F61E471DACAB5B00E9B489 /* kshsj_icon03@3x.png in Resources */,
 				89F61E511DACAB5B00E9B489 /* login_icon.png in Resources */,
 				58F011011DB205860051D044 /* ProjectListCell.xib in Resources */,
@@ -1417,6 +1434,7 @@
 				58F011621DB2067F0051D044 /* JYJSON.m in Sources */,
 				58F011561DB2067F0051D044 /* HAItemManager.m in Sources */,
 				89FBEF581DAA4297008FBB8A /* stdPubFunc.m in Sources */,
+				89C1BAD81DB7544D0034B8F9 /* tickoperateViewController.m in Sources */,
 				89FBEF3B1DAA4131008FBB8A /* loginInfo.m in Sources */,
 				58F011061DB205860051D044 /* ModifyUserIDView.m in Sources */,
 				8981D12F1DAB3CE200CF2426 /* LineDashPolyline.m in Sources */,

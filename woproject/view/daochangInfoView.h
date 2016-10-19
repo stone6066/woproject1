@@ -23,7 +23,7 @@
 @property(nonatomic,copy)NSString *operationPhone;
 
 
--(void)asignDataToLab:(ticketInfo*)modelData;
+-(NSString*)asignDataToLab:(ticketInfo*)modelData;
 -(id)initWithFrame:(CGRect)frame;
 
 @end
