@@ -11,6 +11,7 @@
 #import "DownLoadBaseData.h"
 #import "ticketList.h"
 #import "ticketListTableViewCell.h"
+#import "PaiDanDetailViewController.h"
 
 @interface PaidanViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
 @property (nonatomic, strong) NSMutableArray *classifys;
@@ -435,11 +436,12 @@ static NSString * const TicketCellId = @"TicketCellId";
     ticketListTableViewCell *svc =(ticketListTableViewCell*)[self.TableView cellForRowAtIndexPath:indexPath];
     NSLog(@"%@",svc.Id);
     
+    PaiDanDetailViewController *gggdDetailVc=[[PaiDanDetailViewController alloc]init:svc.Id];
+    [gggdDetailVc setMyViewTitle:@"派单详情"];
     
-    //    noticeDetailViewController *noticeVc=[[noticeDetailViewController alloc]init];
-    //    [noticeVc setNoticeId:dm.noticeId];
-    //    noticeVc.view.backgroundColor = [UIColor whiteColor];
-    //    [self.navigationController pushViewController:noticeVc animated:NO];
+    gggdDetailVc.view.backgroundColor = [UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:gggdDetailVc animated:NO];
     
 }
 

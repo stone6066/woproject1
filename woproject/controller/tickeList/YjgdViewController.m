@@ -257,13 +257,6 @@
 -(void)downforYjgdList:(NSString*)pid systemFault:(NSString*)sid priority:(NSString*)priorityId{
     [SVProgressHUD showWithStatus:k_Status_Load];
     
-//    NSDictionary *paramDict1 = @{
-//                                @"uid":ApplicationDelegate.myLoginInfo.Id,
-//                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
-//                                @"status":@"2",
-//                                @"sort_id":@"1",//[NSString stringWithFormat:@"%ld",(long)_pageindex],
-//                                @"v":ApplicationDelegate.myLoginInfo.v
-//                                };
     NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
     
     [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
@@ -426,9 +419,9 @@ static NSString * const TicketCellId = @"TicketCellId";
     NSLog(@"%@",svc.Id);
     
 
-    ticketInfoViewController *noticeVc=[[ticketInfoViewController alloc]init];
+    ticketInfoViewController *noticeVc=[[ticketInfoViewController alloc]init:svc.Id];
     [noticeVc setMyViewTitle:@"已接工单详情"];
-    [noticeVc setListId:svc.Id];
+    
     noticeVc.view.backgroundColor = [UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:noticeVc animated:NO];

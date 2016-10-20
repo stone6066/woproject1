@@ -267,7 +267,7 @@
     [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [paramDict setObject:@"1" forKey:@"status"];
-    [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_pageindex] forKey:@"sort_id"];
+    [paramDict setObject:[NSString stringWithFormat:@"%@",_sortid] forKey:@"sort_id"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
     
     if (_pageindex==0) {//获取最新数据

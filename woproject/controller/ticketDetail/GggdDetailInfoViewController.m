@@ -1,12 +1,12 @@
 //
-//  ticketInfoViewController.m
+//  GggdDetailInfoViewController.m
 //  woproject
 //
-//  Created by tianan-apple on 16/10/13.
+//  Created by tianan-apple on 2016/10/20.
 //  Copyright © 2016年 tianan-apple. All rights reserved.
 //
 
-#import "ticketInfoViewController.h"
+#import "GggdDetailInfoViewController.h"
 #import "ticketInfo.h"
 #import "ticketFlowInfo.h"
 #import "baoxiuInfoView.h"
@@ -14,13 +14,14 @@
 #import "jiedanInfoView.h"
 #import "daochangInfoView.h"
 #import "hangupInfoView.h"
-#import "tickoperateViewController.h"
 #import "backOrderViewInfo.h"
-@interface ticketInfoViewController ()
+#import "YjgdViewController.h"
+
+@interface GggdDetailInfoViewController ()
 
 @end
 
-@implementation ticketInfoViewController
+@implementation GggdDetailInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,7 +50,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self loadTopNav];
-//    [self downforYjgdInfo];
+    //    [self downforYjgdInfo];
 }
 -(void)loadTopNav{
     UIView *TopView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, TopSeachHigh)];
@@ -90,7 +91,7 @@
 
 -(void)downforYjgdInfo{
     [SVProgressHUD showWithStatus:k_Status_Load];
-
+    
     NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
     
     [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
@@ -143,10 +144,10 @@
 }
 
 -(void)drawDetailView:(ticketInfo*)myInfo{
-     CGFloat ScrollHeigh=fDeviceHeight;
+    CGFloat ScrollHeigh=fDeviceHeight;
     UIScrollView *scollVc=[[UIScrollView alloc]initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, fDeviceHeight-TopSeachHigh)];
     
-     /*---------工单状态----------------*/
+    /*---------工单状态----------------*/
     CGFloat topTitleVcHigh=30;
     UIView *topTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, topTitleVcHigh)];
     topTitleVc.backgroundColor=bluebackcolor;
@@ -184,7 +185,7 @@
     
     UILabel *orderNumTxtLab=[[UILabel alloc]initWithFrame:CGRectMake(fDeviceWidth*2/3+70, 10, 70, 20)];
     orderNumTxtLab.text=myInfo.Id;
-     orderNumTxtLab.textColor=graytxtcolor;
+    orderNumTxtLab.textColor=graytxtcolor;
     [orderNumTxtLab setFont:[UIFont systemFontOfSize:14]];
     [orderTitleVc addSubview:orderNumTxtLab];
     
@@ -198,7 +199,7 @@
     baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, firstY, fDeviceWidth, BXVcHigh)];
     [BXVc asignDataToLab:myInfo];
     [scollVc addSubview:BXVc];
-    _daochang=@"0";
+   
     
     /*-------工单流转信息--*/
     CGFloat hh=[self drawOrderInfoList:myInfo parentVc:scollVc];
@@ -210,17 +211,17 @@
     [self.view addSubview:scollVc];
     
     
-        /*----------处置----------*/
+    /*----------接单----------*/
     UIButton * operateBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-50, fDeviceWidth, 40)];
     
     [operateBtn addTarget:self action:@selector(clickoperatebtn) forControlEvents:UIControlEventTouchUpInside];
     
-    [operateBtn setTitle:@"处置"forState:UIControlStateNormal];// 添加文字
+    [operateBtn setTitle:@"接单"forState:UIControlStateNormal];// 添加文字
     operateBtn.backgroundColor=bluetxtcolor;
     [self.view addSubview:operateBtn];
-
     
-    /*----------处置----------*/
+    
+    /*----------接单----------*/
 }
 
 //0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
@@ -233,29 +234,28 @@
     CGFloat JDvcHigh=170;
     CGFloat DCvcHigh=150;
     CGFloat BXVcHigh=400;
-  
+    
     @try {
         if (flowArr) {
             for (ticketFlowInfo *dict in flowArr) {
                 operations=dict.operation;
                 if ([operations isEqualToString:@"0"]) {//派单
-                        paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
-                        [PDvc asignDataToLab:dict priority:tinfo.priority];
-                        [PVc addSubview:PDvc];
+                    paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
+                    [PDvc asignDataToLab:dict priority:tinfo.priority];
+                    [PVc addSubview:PDvc];
                     pvcHeigh+=PDvcHigh;
                 }
                 else if ([operations isEqualToString:@"1"]) {//接单
-                        jiedanInfoView * JDvc=[[jiedanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, JDvcHigh)];
-                        [JDvc asignDataToLab:dict];
-                        [PVc addSubview:JDvc];
+                    jiedanInfoView * JDvc=[[jiedanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, JDvcHigh)];
+                    [JDvc asignDataToLab:dict];
+                    [PVc addSubview:JDvc];
                     pvcHeigh+=JDvcHigh;
                 }
                 else if ([operations isEqualToString:@"2"]) {//到场
-                    
-                        _daochang=@"1";
-                        daochangInfoView * DCvc=[[daochangInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, DCvcHigh)];
-                        _daochangTime=[DCvc asignDataToLab:dict];
-                        [PVc addSubview:DCvc];
+
+                    daochangInfoView * DCvc=[[daochangInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, DCvcHigh)];
+                    //_daochangTime=[DCvc asignDataToLab:dict];
+                    [PVc addSubview:DCvc];
                     pvcHeigh+=DCvcHigh;
                 }
                 else if ([operations isEqualToString:@"5"]) {//退单
@@ -267,7 +267,7 @@
                 else if ([operations isEqualToString:@"6"]) {//挂起
                     hangupInfoView * DCvc=[[hangupInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
                     [DCvc asignDataToLab:dict];
-                    _daochang=@"0";
+                    
                     [PVc addSubview:DCvc];
                     pvcHeigh+=PDvcHigh;
                 }
@@ -278,36 +278,76 @@
     } @finally {
         return pvcHeigh;
     }
-
-
+    
+    
 }
 -(void)clickoperatebtn{
-    tickoperateViewController *oprateVc=[[tickoperateViewController alloc]init:_daochang confTime:_daochangTime];
-    oprateVc.view.backgroundColor=bluebackcolor;
-    [oprateVc setOrderId:_ListId];
-    [self.navigationController pushViewController:oprateVc animated:YES];
-
+    [self upInfoRepair:@"1"];
 }
 
--(NSInteger)haveInfoForType:(NSString*)types  infoData:(ticketInfo *)modelData{
-    NSArray *flowArr=modelData.ticketFlowList;
-    NSString *operations;
-    NSInteger rtnI=0;
-    @try {
-        if (flowArr) {
-            for (ticketFlowInfo *dict in flowArr) {
-                operations=dict.operation;
-                if ([operations isEqualToString:types]) {
-                    rtnI=1;
-                }
-            }
-        }
-    } @catch (NSException *exception) {
-        NSLog(@"结构不对爆炸了");
-    } @finally {
-        return rtnI;
-    }
+//0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
+-(void)upInfoRepair:(NSString*)operationType{
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
+    
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
+    [paramDict setObject:_ListId forKey:@"tid"];
+    [paramDict setObject:operationType forKey:@"operation"];
+   
+    
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketFlow"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"接单返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              [SVProgressHUD dismiss];
+                                              [stdPubFunc stdShowMessage:@"接单成功"];
+                                              [self pushYjgdView];
+                                              
+                                              
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
 
+-(void)pushYjgdView{
+    YjgdViewController *yjVc=[[YjgdViewController alloc]init];
+    yjVc.view.backgroundColor=[UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:yjVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 
 }
 @end

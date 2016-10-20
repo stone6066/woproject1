@@ -11,6 +11,7 @@
 #import "DownLoadBaseData.h"
 #import "ticketList.h"
 #import "ticketListTableViewCell.h"
+#import "GggdDetailInfoViewController.h"
 
 @interface GggdViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
 @property (nonatomic, strong) NSMutableArray *classifys;
@@ -254,20 +255,12 @@
 
 -(void)downforYjgdList:(NSString*)pid systemFault:(NSString*)sid priority:(NSString*)priorityId{
     [SVProgressHUD showWithStatus:k_Status_Load];
-    
-    //    NSDictionary *paramDict1 = @{
-    //                                @"uid":ApplicationDelegate.myLoginInfo.Id,
-    //                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
-    //                                @"status":@"2",
-    //                                @"sort_id":@"1",//[NSString stringWithFormat:@"%ld",(long)_pageindex],
-    //                                @"v":ApplicationDelegate.myLoginInfo.v
-    //                                };
     NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
     
     [paramDict setObject:@"" forKey:@"uid"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [paramDict setObject:@"1" forKey:@"status"];
-    [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_pageindex] forKey:@"sort_id"];
+    [paramDict setObject:[NSString stringWithFormat:@"%@",_sortid] forKey:@"sort_id"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
     
     if (_pageindex==0) {//获取最新数据
@@ -421,8 +414,12 @@ static NSString * const TicketCellId = @"TicketCellId";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ticketListTableViewCell *svc =(ticketListTableViewCell*)[self.TableView cellForRowAtIndexPath:indexPath];
     NSLog(@"%@",svc.Id);
+    GggdDetailInfoViewController *gggdDetailVc=[[GggdDetailInfoViewController alloc]init:svc.Id];
+    [gggdDetailVc setMyViewTitle:@"公共工单详情"];
     
-    
+    gggdDetailVc.view.backgroundColor = [UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:gggdDetailVc animated:NO];
 }
 
 

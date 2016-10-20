@@ -12,6 +12,7 @@
 -(void)downFaultSystem;
 -(void)downforProjectList;
 -(void)downForCity;
+-(void)downforWorkType;
 +(NSArray *) readBaseData:(NSString*)fileName;
 +(NSArray *) readCityData:(NSString*)fileName;
 @end

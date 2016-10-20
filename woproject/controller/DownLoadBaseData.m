@@ -210,6 +210,135 @@
 }
 
 
+
+
+-(void)downforWorkType{//下载工种列表
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey
+                                };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forWorkType"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"下载工种返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              NSDictionary *idict=[jsonDic objectForKey:@"i"];
+                                              NSArray *sysData=[idict objectForKey:@"Data"];
+                                              NSMutableArray *writeData=[self stdProjectList:sysData];
+                                              NSString *carBrandModelPath = [DocumentBasePath stringByAppendingFormat:@"/%@", @"forProjectList.plist"];
+                                              
+                                              BOOL saveResult = [writeData writeToFile:carBrandModelPath atomically:YES];
+                                              if (saveResult) {
+                                                  
+                                                  NSLog(@"写入 %@ 数据字典成功", carBrandModelPath);
+                                              }
+                                              else {
+                                                  
+                                                  NSLog(@"写入 %@ 数据字典失败", carBrandModelPath);
+                                              }
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
+
+-(void)downforUserList:(NSString*)jobId{//下载工种对应的人员信息
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                                @"job_id":jobId
+                                };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/forUserList"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"下载人员信息返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              NSDictionary *idict=[jsonDic objectForKey:@"i"];
+                                              NSArray *sysData=[idict objectForKey:@"Data"];
+                                              NSMutableArray *writeData=[self stdProjectList:sysData];
+                                              NSString *carBrandModelPath = [DocumentBasePath stringByAppendingFormat:@"/%@", @"forProjectList.plist"];
+                                              
+                                              BOOL saveResult = [writeData writeToFile:carBrandModelPath atomically:YES];
+                                              if (saveResult) {
+                                                  
+                                                  NSLog(@"写入 %@ 数据字典成功", carBrandModelPath);
+                                              }
+                                              else {
+                                                  
+                                                  NSLog(@"写入 %@ 数据字典失败", carBrandModelPath);
+                                              }
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
+
 /**
  *  读取基础信息表
  */
