@@ -37,4 +37,5 @@
 
 +(void)isSaveLoginInfo:(NSString*)saveFlag;
 
++(NSString*)stdGetCurrTime;
 @end

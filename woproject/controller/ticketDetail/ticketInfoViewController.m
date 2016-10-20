@@ -13,8 +13,9 @@
 #import "paidanInfoView.h"
 #import "jiedanInfoView.h"
 #import "daochangInfoView.h"
-
+#import "hangupInfoView.h"
 #import "tickoperateViewController.h"
+#import "backOrderViewInfo.h"
 @interface ticketInfoViewController ()
 
 @end
@@ -188,53 +189,23 @@
     
     CGFloat firstY=orderTitleVcHigh+topTitleVcHigh;
     /*---------报修信息----------------*/
-    CGFloat BXVcHigh=360;
+    CGFloat BXVcHigh=400;
     baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, firstY, fDeviceWidth, BXVcHigh)];
     [BXVc asignDataToLab:myInfo];
     [scollVc addSubview:BXVc];
-     /*---------报修信息----------------*/
-    
-    
-    /*----------派单信息----------------*/
-    CGFloat PDvcHigh=0;
-    if (1==[self haveInfoForType:@"0" infoData:myInfo]) {
-        PDvcHigh=230;
-        paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh, fDeviceWidth, PDvcHigh)];
-        [PDvc asignDataToLab:myInfo];
-        [scollVc addSubview:PDvc];
-    };
-    
-    /*----------派单信息----------------*/
-    
-    /*----------接单信息----------------*/
-    CGFloat JDvcHigh=0;
-    if (1==[self haveInfoForType:@"1" infoData:myInfo]){
-        JDvcHigh=170;
-    jiedanInfoView * JDvc=[[jiedanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+JDvcHigh, fDeviceWidth, JDvcHigh)];
-    [JDvc asignDataToLab:myInfo];
-    [scollVc addSubview:JDvc];
-    }
-    /*----------接单信息----------------*/
-    
-    
-    /*----------到场信息----------------*/
-    CGFloat DCvcHigh=0;
     _daochang=@"0";
-    if (1==[self haveInfoForType:@"2" infoData:myInfo]){
-    DCvcHigh=150;
-    _daochang=@"1";
-    daochangInfoView * DCvc=[[daochangInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+JDvcHigh+DCvcHigh, fDeviceWidth, DCvcHigh)];
-    _daochangTime=[DCvc asignDataToLab:myInfo];
-    [scollVc addSubview:DCvc];
-    }
-    /*----------到场信息----------------*/
     
-    ScrollHeigh=topTitleVcHigh+topTitleVcHigh+BXVcHigh+PDvcHigh+JDvcHigh+DCvcHigh;
+    /*-------工单流转信息--*/
+    CGFloat hh=[self drawOrderInfoList:myInfo parentVc:scollVc];
+    /*-------工单流转信息--*/
+    
+    
+    ScrollHeigh=topTitleVcHigh+topTitleVcHigh+BXVcHigh+hh;
     [scollVc setContentSize:CGSizeMake(fDeviceWidth, ScrollHeigh)];
     [self.view addSubview:scollVc];
     
     
-    /*----------处置----------*/
+        /*----------处置----------*/
     UIButton * operateBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-50, fDeviceWidth, 40)];
     
     [operateBtn addTarget:self action:@selector(clickoperatebtn) forControlEvents:UIControlEventTouchUpInside];
@@ -247,6 +218,64 @@
     /*----------处置----------*/
 }
 
+//0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
+-(CGFloat)drawOrderInfoList:(ticketInfo *)tinfo parentVc:(UIScrollView *)PVc{
+    NSArray *flowArr=tinfo.ticketFlowList;
+    NSString *operations;
+    CGFloat pvcHeigh=0;
+    CGFloat firstY=30+50;
+    CGFloat PDvcHigh=230;
+    CGFloat JDvcHigh=170;
+    CGFloat DCvcHigh=150;
+    CGFloat BXVcHigh=400;
+  
+    @try {
+        if (flowArr) {
+            for (ticketFlowInfo *dict in flowArr) {
+                operations=dict.operation;
+                if ([operations isEqualToString:@"0"]) {//派单
+                        paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
+                        [PDvc asignDataToLab:dict priority:tinfo.priority];
+                        [PVc addSubview:PDvc];
+                    pvcHeigh+=PDvcHigh;
+                }
+                else if ([operations isEqualToString:@"1"]) {//接单
+                        jiedanInfoView * JDvc=[[jiedanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, JDvcHigh)];
+                        [JDvc asignDataToLab:dict];
+                        [PVc addSubview:JDvc];
+                    pvcHeigh+=JDvcHigh;
+                }
+                else if ([operations isEqualToString:@"2"]) {//到场
+                    
+                        _daochang=@"1";
+                        daochangInfoView * DCvc=[[daochangInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, DCvcHigh)];
+                        _daochangTime=[DCvc asignDataToLab:dict];
+                        [PVc addSubview:DCvc];
+                    pvcHeigh+=DCvcHigh;
+                }
+                else if ([operations isEqualToString:@"5"]) {//退单
+                    backOrderViewInfo * DCvc=[[backOrderViewInfo alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
+                    [DCvc asignDataToLab:dict];
+                    [PVc addSubview:DCvc];
+                    pvcHeigh+=PDvcHigh;
+                }
+                else if ([operations isEqualToString:@"6"]) {//挂起
+                    hangupInfoView * DCvc=[[hangupInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
+                    [DCvc asignDataToLab:dict];
+                    _daochang=@"0";
+                    [PVc addSubview:DCvc];
+                    pvcHeigh+=PDvcHigh;
+                }
+            }
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"结构不对爆炸了");
+    } @finally {
+        return pvcHeigh;
+    }
+
+
+}
 -(void)clickoperatebtn{
     tickoperateViewController *oprateVc=[[tickoperateViewController alloc]init:_daochang confTime:_daochangTime];
     oprateVc.view.backgroundColor=bluebackcolor;

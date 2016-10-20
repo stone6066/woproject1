@@ -120,7 +120,7 @@
     NSTimeInterval interval=[[intTime substringToIndex:10] doubleValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
     NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
-    [objDateformat setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     return [objDateformat stringFromDate: date];
 }
 @end

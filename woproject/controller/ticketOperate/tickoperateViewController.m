@@ -7,7 +7,8 @@
 //
 
 #import "tickoperateViewController.h"
-
+#import "backAndHangUpViewController.h"
+#import "turnAndHelpViewController.h"
 @interface tickoperateViewController ()<UITextViewDelegate>
 
 @end
@@ -174,16 +175,20 @@
     if (!_confomBtn) {
         _confomBtn=[[UIButton alloc]initWithFrame:CGRectMake(controllX*2+btnWidth, firstLineY, btnWidth, btnHeigh)];
         _confomBtn.tag=101;
+        
+        _confTimeLbl=[[UILabel alloc]initWithFrame:CGRectMake(controllX, _scanBtn.frame.origin.y+_scanBtn.frame.size.height+5, fDeviceWidth-40, 30)];
+        [_confTimeLbl setFont:[UIFont systemFontOfSize:14]];
+        [_confTimeLbl setTextColor:bluetxtcolor];
+        
         [self stdSetBtn:_confomBtn btnTxt:@"点击确认到场"] ;
         if ([_IsConfom isEqualToString:@"1"]) {
             _confomBtn.enabled=NO;
             _confomBtn.backgroundColor=[UIColor whiteColor];
             [_confomBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            _confTimeLbl=[[UILabel alloc]initWithFrame:CGRectMake(controllX, _scanBtn.frame.origin.y+_scanBtn.frame.size.height+5, fDeviceWidth-40, 30)];
+            
             _confTimeLbl.text=[NSString stringWithFormat:@"%@%@",@"到场时间：",_confTime];
-            [_confTimeLbl setFont:[UIFont systemFontOfSize:14]];
-            [_confTimeLbl setTextColor:bluetxtcolor];
-            [scollVc addSubview:_confTimeLbl];
+           
+            
             
         }
         else{
@@ -191,7 +196,7 @@
             _confomBtn.backgroundColor=bluetxtcolor;
             [_confomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
-        
+        [scollVc addSubview:_confTimeLbl];
         [scollVc addSubview:_confomBtn];
     }
     if (!_hangupBtn) {
@@ -302,6 +307,19 @@
     scollVc.backgroundColor=bluebackcolor;
     [self.view addSubview:scollVc];
 }
+-(void)showBackAndHangUp:(NSInteger)typeI{
+    backAndHangUpViewController * BAHVC=[[backAndHangUpViewController alloc]init:_OrderId viewType:typeI];
+    BAHVC.view.backgroundColor=bluebackcolor;
+    [self.navigationController pushViewController:BAHVC animated:YES];
+}
+
+-(void)showTurnAndHelp:(NSInteger)typeI{
+    turnAndHelpViewController * BAHVC=[[turnAndHelpViewController alloc]init:_OrderId viewType:typeI];
+    BAHVC.view.backgroundColor=bluebackcolor;
+    [self.navigationController pushViewController:BAHVC animated:YES];
+}
+
+//0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
 -(void)clickbtnFunc:(UIButton*)btn{
     NSLog(@"btn:%ld",(long)btn.tag);
     switch (btn.tag) {
@@ -312,16 +330,17 @@
             [self upInfoRepair:@"2"];
             break;
         case 102://挂起
-            
+            //[self upInfoRepair:@"6"];
+            [self showBackAndHangUp:6];
             break;
         case 103://退单
-            
+            [self showBackAndHangUp:5];
             break;
         case 104://协助
-            
+            [self showTurnAndHelp:7];
             break;
         case 105://转单
-            
+            [self showTurnAndHelp:8];
             break;
             
         case 200://添加照片1
@@ -357,7 +376,8 @@
     _doneBtn.enabled=YES;
     _descTxt.editable=YES;
     
-    
+     _confTimeLbl.text=[NSString stringWithFormat:@"%@%@",@"到场时间：",[stdPubFunc stdGetCurrTime]];
+    _confTimeLbl.enabled=YES;
 }
 //0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
 -(void)upInfoRepair:(NSString*)operationType{
@@ -393,6 +413,10 @@
                                           if ([suc isEqualToString:@"0"]) {
                                               //成功
                                               [SVProgressHUD dismiss];
+                                              if ([operationType isEqualToString:@"2"]) {
+                                                  [self confomSuccessBack];
+                                              }
+                                    
                                               
                                               
                                               

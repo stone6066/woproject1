@@ -120,4 +120,10 @@
     return [objDateformat stringFromDate: date];
 }
 
++(NSString*)stdGetCurrTime{
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    return [dateFormatter stringFromDate:currentDate];
+}
 @end

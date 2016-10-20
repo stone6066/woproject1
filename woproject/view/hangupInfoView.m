@@ -1,27 +1,26 @@
 //
-//  daochangInfoView.m
+//  hangupInfoView.m
 //  woproject
 //
-//  Created by tianan-apple on 16/10/15.
+//  Created by tianan-apple on 2016/10/20.
 //  Copyright © 2016年 tianan-apple. All rights reserved.
 //
 
-#import "daochangInfoView.h"
+#import "hangupInfoView.h"
 #import "ticketInfo.h"
 #import "ticketFlowInfo.h"
-
-@implementation daochangInfoView
+@implementation hangupInfoView
 
 -(id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self){
         CGFloat viewWidth=frame.size.width;
-        CGFloat viewHeight=frame.size.height;
+        //CGFloat viewHeight=frame.size.height;
         
         UIView *topTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, 0, viewWidth, 30)];
         topTitleVc.backgroundColor=bluebackcolor;
         _myViewTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 2, 100, 20)];
-        _myViewTitle.text=@"到场信息";
+        _myViewTitle.text=@"挂起信息";
         [topTitleVc addSubview:_myViewTitle];
         [self addSubview:topTitleVc];
         
@@ -40,26 +39,31 @@
         _operationTimeTitle=[[UILabel alloc]init];
         _operationTime=[[UILabel alloc]init];
         
-        _operationUser=[[UILabel alloc]init];
-        _operationUserTitle=[[UILabel alloc]init];
-        
+        _userIdTitle=[[UILabel alloc]init];
+        _userId=[[UILabel alloc]init];
+        _deptIdTitle=[[UILabel alloc]init];
+        _deptId=[[UILabel alloc]init];
         
         
         
         [self stdInitLab:_operationTimeTitle labFrame:CGRectMake(fisttLbX, firstLbY, labWidthTitle, labHeigh)];
-        _operationTimeTitle.text=@"到场时间：";
+        _operationTimeTitle.text=@"挂起时间：";
         
-        [self stdInitLab:_operationUserTitle labFrame:CGRectMake(fisttLbX, firstLbY+spritePaceY, labWidthTitle, labHeigh)];
-        _operationUserTitle.text=@"到场人：";
+        [self stdInitLab:_userIdTitle labFrame:CGRectMake(fisttLbX, firstLbY+spritePaceY, labWidthTitle, labHeigh)];
+        _userIdTitle.text=@"挂起人：";
         
-       
+        [self stdInitLab:_deptIdTitle labFrame:CGRectMake(fisttLbX, firstLbY+spritePaceY*2, labWidthTitle, labHeigh)];
+        _deptIdTitle.text=@"工种：";
         
+        [self stdInitLab:_hangupResonTitle labFrame:CGRectMake(fisttLbX, firstLbY+spritePaceY*3, labWidthTitle, labHeigh)];
+        _deptIdTitle.text=@"挂起原因：";
         
         [self stdInitLab:_operationTime labFrame:CGRectMake(secondLbX, firstLbY, labWidth, labHeigh)];
         
-        [self stdInitLab:_operationUser labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY, labWidth, labHeigh)];
-        
-        
+        [self stdInitLab:_userId labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY, labWidth, labHeigh)];
+        [self stdInitLab:_deptId labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY*2, labWidth, labHeigh)];
+        [self stdInitLab:_hangupReson labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY*3, labWidth, labHeigh)];
+        _hangupReson.numberOfLines=0;//多行显示
         
         
     }
@@ -75,40 +79,21 @@
     [self addSubview:stdLab];
 }
 
--(NSString*)asignDataToLab:(ticketFlowInfo*)modelData{
+
+-(void)asignDataToLab:(ticketFlowInfo*)modelData{
     @try {
         _operationTime.text=[self stdTimeToStr:modelData.operationTime];
-        _operationUser.text=modelData.operationUser;
+        _userId.text=modelData.userId;
+        _deptId.text=modelData.jobName;
+        _hangupReson.text=modelData.result;
         _operationPhone=modelData.operationPhone;
         
     } @catch (NSException *exception) {
         NSLog(@"结构不对爆炸了");
     } @finally {
-        return _operationTime.text;;
+        return;
     }
 }
-//-(NSString*)asignDataToLab:(ticketInfo*)modelData{
-//    NSArray *flowArr=modelData.ticketFlowList;
-//    NSString *operations;
-//    @try {
-//        if (flowArr) {
-//            for (ticketFlowInfo *dict in flowArr) {
-//                operations=dict.operation;
-//                if ([operations isEqualToString:@"2"]) {
-//                    _operationTime.text=[self stdTimeToStr:dict.operationTime];
-//                    _operationUser.text=dict.operationUser;
-//                    
-//                    _operationPhone=dict.operationPhone;
-//                }
-//            }
-//        }
-//    } @catch (NSException *exception) {
-//        NSLog(@"结构不对爆炸了");
-//    } @finally {
-//        return _operationTime.text;
-//    }
-//}
-
 -(NSString *)stdTimeToStr:(NSString*)intTime{
     NSTimeInterval interval=[[intTime substringToIndex:10] doubleValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
@@ -116,5 +101,4 @@
     [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     return [objDateformat stringFromDate: date];
 }
-
 @end

@@ -203,12 +203,14 @@
     yjVc.view.backgroundColor=[UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:yjVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 -(void)clickzd{//指定接单
     ZhiDViewController *zdVc=[[ZhiDViewController alloc]init];
     zdVc.view.backgroundColor=[UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:zdVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 -(void)clickkq{//考勤
     
@@ -222,24 +224,28 @@
     
     
     [self.navigationController pushViewController:(UIViewController*)subViewController animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 -(void)clickpd{//派单
     PaidanViewController *pdVc=[[PaidanViewController alloc]init];
     pdVc.view.backgroundColor=[UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:pdVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 -(void)clickgg{//公共
     GggdViewController *ggVc=[[GggdViewController alloc]init];
     ggVc.view.backgroundColor=[UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ggVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 -(void)clickks{//可视化
     VisualizationController *yjVc=[[VisualizationController alloc] initWithNibName:@"VisualizationController" bundle:nil];
     yjVc.hidesBottomBarWhenPushed=YES;
     yjVc.navigationItem.hidesBackButton=YES;
     [self.navigationController pushViewController:yjVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 - (void)initMapView

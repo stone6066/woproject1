@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ticketInfo;
+@class ticketFlowInfo;
 @interface paidanInfoView : UIView
 @property(nonatomic,strong)UILabel *myViewTitle;//视图标题
 @property(nonatomic,strong)UILabel *operationTimeTitle;
@@ -22,6 +22,6 @@
 @property(nonatomic,strong)UILabel *priority;//优先级
 @property(nonatomic,copy)NSString *operationPhone;
 
--(void)asignDataToLab:(ticketInfo*)modelData;
+-(void)asignDataToLab:(ticketFlowInfo*)modelData priority:(NSString*)pstr;
 -(id)initWithFrame:(CGRect)frame;
 @end

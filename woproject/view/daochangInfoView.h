@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ticketInfo;
+@class ticketFlowInfo;
 @interface daochangInfoView : UIView
 @property(nonatomic,strong)UILabel *myViewTitle;//视图标题
 @property(nonatomic,strong)UILabel *operationTimeTitle;
@@ -23,7 +23,7 @@
 @property(nonatomic,copy)NSString *operationPhone;
 
 
--(NSString*)asignDataToLab:(ticketInfo*)modelData;
+-(NSString*)asignDataToLab:(ticketFlowInfo*)modelData;
 -(id)initWithFrame:(CGRect)frame;
 
 @end

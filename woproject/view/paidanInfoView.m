@@ -87,24 +87,16 @@
     [self addSubview:stdLab];
 }
 
-
--(void)asignDataToLab:(ticketInfo*)modelData{
-    NSArray *flowArr=modelData.ticketFlowList;
-    NSString *operations;
+//priority 优先级
+-(void)asignDataToLab:(ticketFlowInfo*)modelData priority:(NSString*)pstr{
     @try {
-        if (flowArr) {
-            for (ticketFlowInfo *dict in flowArr) {
-                operations=dict.operation;
-                if ([operations isEqualToString:@"0"]) {
-                    _operationTime.text=[self stdTimeToStr:dict.operationTime];
-                    _operationUser.text=dict.operationUser;
-                    _userId.text=dict.userId;
-                    _deptId.text=dict.deptId;
-                    _priority.text=modelData.priority;
-                    _operationPhone=dict.operationPhone;
-                }
-            }
-        }
+        _operationTime.text=[self stdTimeToStr:modelData.operationTime];
+        _operationUser.text=modelData.operationUser;
+        _userId.text=modelData.userId;
+        _deptId.text=modelData.jobName;
+        _priority.text=pstr;
+        _operationPhone=modelData.operationPhone;
+
     } @catch (NSException *exception) {
         NSLog(@"结构不对爆炸了");
     } @finally {
@@ -116,7 +108,7 @@
     NSTimeInterval interval=[[intTime substringToIndex:10] doubleValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
     NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
-    [objDateformat setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     return [objDateformat stringFromDate: date];
 }
 

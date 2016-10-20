@@ -77,34 +77,46 @@
     [self addSubview:stdLab];
 }
 
-
--(void)asignDataToLab:(ticketInfo*)modelData{
-    NSArray *flowArr=modelData.ticketFlowList;
-    NSString *operations;
+-(void)asignDataToLab:(ticketFlowInfo*)modelData{
     @try {
-        if (flowArr) {
-            for (ticketFlowInfo *dict in flowArr) {
-                operations=dict.operation;
-                if ([operations isEqualToString:@"1"]) {
-                    _operationTime.text=[self stdTimeToStr:dict.operationTime];
-                    _userId.text=dict.userId;
-                    _deptId.text=dict.deptId;
-                    _operationPhone=dict.operationPhone;
-                }
-            }
-        }
+        _operationTime.text=[self stdTimeToStr:modelData.operationTime];
+        _userId.text=modelData.userId;
+        _deptId.text=modelData.jobName;
+        _operationPhone=modelData.operationPhone;
+        
     } @catch (NSException *exception) {
         NSLog(@"结构不对爆炸了");
     } @finally {
         return;
     }
 }
+//-(void)asignDataToLab:(ticketInfo*)modelData{
+//    NSArray *flowArr=modelData.ticketFlowList;
+//    NSString *operations;
+//    @try {
+//        if (flowArr) {
+//            for (ticketFlowInfo *dict in flowArr) {
+//                operations=dict.operation;
+//                if ([operations isEqualToString:@"1"]) {
+//                    _operationTime.text=[self stdTimeToStr:dict.operationTime];
+//                    _userId.text=dict.userId;
+//                    _deptId.text=dict.deptId;
+//                    _operationPhone=dict.operationPhone;
+//                }
+//            }
+//        }
+//    } @catch (NSException *exception) {
+//        NSLog(@"结构不对爆炸了");
+//    } @finally {
+//        return;
+//    }
+//}
 
 -(NSString *)stdTimeToStr:(NSString*)intTime{
     NSTimeInterval interval=[[intTime substringToIndex:10] doubleValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
     NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
-    [objDateformat setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     return [objDateformat stringFromDate: date];
 }
 

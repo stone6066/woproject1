@@ -164,14 +164,14 @@
 - (NSString *)menu:(DOPDropDownMenu *)menu detailTextForRowAtIndexPath:(DOPIndexPath *)indexPath
 {
     if (indexPath.column < 2) {
-        return [@(arc4random()%1000) stringValue];
+        return nil;//[@(arc4random()%1000) stringValue];
     }
     return nil;
 }
 
 - (NSString *)menu:(DOPDropDownMenu *)menu detailTextForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath
 {
-    return [@(arc4random()%1000) stringValue];
+    return nil;// [@(arc4random()%1000) stringValue];
 }
 
 - (NSInteger)menu:(DOPDropDownMenu *)menu numberOfItemsInRow:(NSInteger)row column:(NSInteger)column

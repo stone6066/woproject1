@@ -68,6 +68,12 @@
 		58F0118E1DB20A9F0051D044 /* EquipmentHealthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58F0118C1DB20A9F0051D044 /* EquipmentHealthController.m */; };
 		58F0118F1DB20A9F0051D044 /* EquipmentHealthController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58F0118D1DB20A9F0051D044 /* EquipmentHealthController.xib */; };
 		8919CBCC1DB0AB3D00858721 /* paidanInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */; };
+		894752BA1DB85BCC00C32394 /* hangupInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752B91DB85BCC00C32394 /* hangupInfoView.m */; };
+		894752BD1DB85F5A00C32394 /* backOrderViewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BC1DB85F5A00C32394 /* backOrderViewInfo.m */; };
+		894752C01DB8661700C32394 /* backAndHangUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BF1DB8661700C32394 /* backAndHangUpViewController.m */; };
+		894752C31DB89D7800C32394 /* turnAndHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752C21DB89D7800C32394 /* turnAndHelpViewController.m */; };
+		894752D61DB8A90F00C32394 /* ComboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752D51DB8A90F00C32394 /* ComboxView.m */; };
+		894752D81DB8B27100C32394 /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 894752D71DB8B27100C32394 /* downArrow.png */; };
 		8964287B1DB4BC45001203A7 /* baoxiujiahao.png in Resources */ = {isa = PBXBuildFile; fileRef = 8964287A1DB4BC45001203A7 /* baoxiujiahao.png */; };
 		8981D1211DAB3BE200CF2426 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8981D1201DAB3BE200CF2426 /* SystemConfiguration.framework */; };
 		8981D1231DAB3BED00CF2426 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8981D1221DAB3BED00CF2426 /* CoreLocation.framework */; };
@@ -330,6 +336,17 @@
 		58F0118D1DB20A9F0051D044 /* EquipmentHealthController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EquipmentHealthController.xib; sourceTree = "<group>"; };
 		8919CBCA1DB0AB3D00858721 /* paidanInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paidanInfoView.h; sourceTree = "<group>"; };
 		8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = paidanInfoView.m; sourceTree = "<group>"; };
+		894752B81DB85BCC00C32394 /* hangupInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hangupInfoView.h; sourceTree = "<group>"; };
+		894752B91DB85BCC00C32394 /* hangupInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hangupInfoView.m; sourceTree = "<group>"; };
+		894752BB1DB85F5A00C32394 /* backOrderViewInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backOrderViewInfo.h; sourceTree = "<group>"; };
+		894752BC1DB85F5A00C32394 /* backOrderViewInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backOrderViewInfo.m; sourceTree = "<group>"; };
+		894752BE1DB8661700C32394 /* backAndHangUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backAndHangUpViewController.h; sourceTree = "<group>"; };
+		894752BF1DB8661700C32394 /* backAndHangUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = backAndHangUpViewController.m; sourceTree = "<group>"; };
+		894752C11DB89D7800C32394 /* turnAndHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turnAndHelpViewController.h; sourceTree = "<group>"; };
+		894752C21DB89D7800C32394 /* turnAndHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = turnAndHelpViewController.m; sourceTree = "<group>"; };
+		894752D41DB8A90F00C32394 /* ComboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComboxView.h; sourceTree = "<group>"; };
+		894752D51DB8A90F00C32394 /* ComboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComboxView.m; sourceTree = "<group>"; };
+		894752D71DB8B27100C32394 /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrow.png; sourceTree = "<group>"; };
 		8964287A1DB4BC45001203A7 /* baoxiujiahao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baoxiujiahao.png; sourceTree = "<group>"; };
 		8981D1201DAB3BE200CF2426 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8981D1221DAB3BED00CF2426 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -756,6 +773,10 @@
 			children = (
 				89C1BAD61DB7544D0034B8F9 /* tickoperateViewController.h */,
 				89C1BAD71DB7544D0034B8F9 /* tickoperateViewController.m */,
+				894752BE1DB8661700C32394 /* backAndHangUpViewController.h */,
+				894752BF1DB8661700C32394 /* backAndHangUpViewController.m */,
+				894752C11DB89D7800C32394 /* turnAndHelpViewController.h */,
+				894752C21DB89D7800C32394 /* turnAndHelpViewController.m */,
 			);
 			path = ticketOperate;
 			sourceTree = "<group>";
@@ -786,6 +807,10 @@
 				89A4B0FC1DB1D5FB004EF914 /* jiedanInfoView.m */,
 				89A4B0FE1DB1D88D004EF914 /* daochangInfoView.h */,
 				89A4B0FF1DB1D88D004EF914 /* daochangInfoView.m */,
+				894752B81DB85BCC00C32394 /* hangupInfoView.h */,
+				894752B91DB85BCC00C32394 /* hangupInfoView.m */,
+				894752BB1DB85F5A00C32394 /* backOrderViewInfo.h */,
+				894752BC1DB85F5A00C32394 /* backOrderViewInfo.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -965,6 +990,7 @@
 		89FBEEE31DAA3CD5008FBB8A /* image */ = {
 			isa = PBXGroup;
 			children = (
+				894752D71DB8B27100C32394 /* downArrow.png */,
 				8964287A1DB4BC45001203A7 /* baoxiujiahao.png */,
 				899C899F1DAD101A0073794E /* cancle.png */,
 				89F61E7D1DACC2D300E9B489 /* bar_back.png */,
@@ -1087,6 +1113,8 @@
 		89FBEF3F1DAA4297008FBB8A /* stdPackect */ = {
 			isa = PBXGroup;
 			children = (
+				894752D41DB8A90F00C32394 /* ComboxView.h */,
+				894752D51DB8A90F00C32394 /* ComboxView.m */,
 				89FBEF451DAA4297008FBB8A /* NullSafe.m */,
 				89FBEF461DAA4297008FBB8A /* stdCallBtn.h */,
 				89FBEF471DAA4297008FBB8A /* stdCallBtn.m */,
@@ -1301,6 +1329,7 @@
 				89F61E531DACAB5B00E9B489 /* login_icon@3x.png in Resources */,
 				89F61E381DACAB5B00E9B489 /* Color-Fill@3x.png in Resources */,
 				89F61E491DACAB5B00E9B489 /* kshsj_icon04@2x.png in Resources */,
+				894752D81DB8B27100C32394 /* downArrow.png in Resources */,
 				899C89AC1DAD209F0073794E /* icon_chose_arrow_nor@2x.png in Resources */,
 				89F61E681DACAB5B00E9B489 /* wd_icon02@3x.png in Resources */,
 				89F61E4D1DACAB5B00E9B489 /* kshsj_icon05@3x.png in Resources */,
@@ -1403,6 +1432,8 @@
 				58F010FE1DB205860051D044 /* CloudPlatformManageController.m in Sources */,
 				89F61E8D1DACE0B000E9B489 /* signInfo.m in Sources */,
 				89FBEF561DAA4297008FBB8A /* stdCellVc.m in Sources */,
+				894752D61DB8A90F00C32394 /* ComboxView.m in Sources */,
+				894752C01DB8661700C32394 /* backAndHangUpViewController.m in Sources */,
 				58F0110A1DB205860051D044 /* SettingVC.m in Sources */,
 				89FBEEA21DAA2FA5008FBB8A /* ViewController.m in Sources */,
 				89EAA8C41DAE28490043BE53 /* ticketList.m in Sources */,
@@ -1434,12 +1465,14 @@
 				58F011621DB2067F0051D044 /* JYJSON.m in Sources */,
 				58F011561DB2067F0051D044 /* HAItemManager.m in Sources */,
 				89FBEF581DAA4297008FBB8A /* stdPubFunc.m in Sources */,
+				894752BA1DB85BCC00C32394 /* hangupInfoView.m in Sources */,
 				89C1BAD81DB7544D0034B8F9 /* tickoperateViewController.m in Sources */,
 				89FBEF3B1DAA4131008FBB8A /* loginInfo.m in Sources */,
 				58F011061DB205860051D044 /* ModifyUserIDView.m in Sources */,
 				8981D12F1DAB3CE200CF2426 /* LineDashPolyline.m in Sources */,
 				89F61E841DACCF9900E9B489 /* AnimatedAnnotation.m in Sources */,
 				89FBEF591DAA4297008FBB8A /* stdTextField.m in Sources */,
+				894752BD1DB85F5A00C32394 /* backOrderViewInfo.m in Sources */,
 				89FB406E1DAF1AE600E95134 /* ZhiDViewController.m in Sources */,
 				89FBEF3E1DAA41DD008FBB8A /* LoginViewController.m in Sources */,
 				58F010F71DB205850051D044 /* ProgressbarSetView.m in Sources */,
@@ -1483,6 +1516,7 @@
 				89FBEED81DAA3660008FBB8A /* HomeViewController.m in Sources */,
 				58F011591DB2067F0051D044 /* HARootScrollViewManager.m in Sources */,
 				8981D12C1DAB3C9300CF2426 /* CommonUtility.m in Sources */,
+				894752C31DB89D7800C32394 /* turnAndHelpViewController.m in Sources */,
 				8919CBCC1DB0AB3D00858721 /* paidanInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
