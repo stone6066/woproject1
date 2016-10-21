@@ -12,6 +12,12 @@
 #import "StdRootController.h"
 #import "loginInfo.h"
 #import "listNum.h"
+//571e16ac4e21355db19ce77f
+//314e49a9c6dcc64f9f7c5d07
+static NSString *appKey = @"314e49a9c6dcc64f9f7c5d07";
+static NSString *channel = @"Publish channel";
+static BOOL isProduction = FALSE;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     UITabBarController* tabBarViewController;

@@ -72,6 +72,11 @@
 		8919CBCC1DB0AB3D00858721 /* paidanInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */; };
 		892298BB1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 892298BA1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m */; };
 		892298BE1DB9E1870053ECB1 /* listNum.m in Sources */ = {isa = PBXBuildFile; fileRef = 892298BD1DB9E1870053ECB1 /* listNum.m */; };
+		892298C31DB9F9110053ECB1 /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 892298C11DB9F9110053ECB1 /* jpush-ios-2.2.0.a */; };
+		892298C51DB9F9560053ECB1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892298C41DB9F9560053ECB1 /* CFNetwork.framework */; };
+		892298C71DB9F9670053ECB1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892298C61DB9F9670053ECB1 /* CoreFoundation.framework */; };
+		892298C91DB9F9BE0053ECB1 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892298C81DB9F9BE0053ECB1 /* UserNotifications.framework */; };
+		892298CB1DB9F9D60053ECB1 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 892298CA1DB9F9D60053ECB1 /* libresolv.tbd */; };
 		894752BA1DB85BCC00C32394 /* hangupInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752B91DB85BCC00C32394 /* hangupInfoView.m */; };
 		894752BD1DB85F5A00C32394 /* backOrderViewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BC1DB85F5A00C32394 /* backOrderViewInfo.m */; };
 		894752C01DB8661700C32394 /* backAndHangUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BF1DB8661700C32394 /* backAndHangUpViewController.m */; };
@@ -348,6 +353,13 @@
 		892298BA1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhiDDetailInfoViewController.m; sourceTree = "<group>"; };
 		892298BC1DB9E1870053ECB1 /* listNum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listNum.h; sourceTree = "<group>"; };
 		892298BD1DB9E1870053ECB1 /* listNum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = listNum.m; sourceTree = "<group>"; };
+		892298C11DB9F9110053ECB1 /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
+		892298C21DB9F9110053ECB1 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		892298C41DB9F9560053ECB1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		892298C61DB9F9670053ECB1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		892298C81DB9F9BE0053ECB1 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		892298CA1DB9F9D60053ECB1 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		892298CC1DB9FAB10053ECB1 /* woproject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = woproject.entitlements; sourceTree = "<group>"; };
 		894752B81DB85BCC00C32394 /* hangupInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hangupInfoView.h; sourceTree = "<group>"; };
 		894752B91DB85BCC00C32394 /* hangupInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hangupInfoView.m; sourceTree = "<group>"; };
 		894752BB1DB85F5A00C32394 /* backOrderViewInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backOrderViewInfo.h; sourceTree = "<group>"; };
@@ -558,15 +570,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				892298CB1DB9F9D60053ECB1 /* libresolv.tbd in Frameworks */,
+				892298C91DB9F9BE0053ECB1 /* UserNotifications.framework in Frameworks */,
+				89F3EA401DAB3B5C00B6E54A /* CoreTelephony.framework in Frameworks */,
+				892298C71DB9F9670053ECB1 /* CoreFoundation.framework in Frameworks */,
+				892298C51DB9F9560053ECB1 /* CFNetwork.framework in Frameworks */,
 				8981D1311DAB3D2000CF2426 /* JavaScriptCore.framework in Frameworks */,
 				8981D1291DAB3C1E00CF2426 /* CoreGraphics.framework in Frameworks */,
 				8981D1271DAB3C1300CF2426 /* Foundation.framework in Frameworks */,
 				8981D1251DAB3BFF00CF2426 /* UIKit.framework in Frameworks */,
 				8981D1231DAB3BED00CF2426 /* CoreLocation.framework in Frameworks */,
 				8981D1211DAB3BE200CF2426 /* SystemConfiguration.framework in Frameworks */,
+				892298C31DB9F9110053ECB1 /* jpush-ios-2.2.0.a in Frameworks */,
 				89F3EA441DAB3BA100B6E54A /* QuartzCore.framework in Frameworks */,
 				89F3EA421DAB3B8E00B6E54A /* Security.framework in Frameworks */,
-				89F3EA401DAB3B5C00B6E54A /* CoreTelephony.framework in Frameworks */,
 				89F3EA3E1DAB3B2D00B6E54A /* libz.tbd in Frameworks */,
 				89F3EA3C1DAB3B1E00B6E54A /* libstdc++.6.0.9.tbd in Frameworks */,
 				89F3EA3A1DAB3B0300B6E54A /* libc++.tbd in Frameworks */,
@@ -780,6 +797,15 @@
 			path = sbjkd;
 			sourceTree = "<group>";
 		};
+		892298C01DB9F9110053ECB1 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				892298C11DB9F9110053ECB1 /* jpush-ios-2.2.0.a */,
+				892298C21DB9F9110053ECB1 /* JPUSHService.h */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
 		896428711DB4ADFF001203A7 /* ticketOperate */ = {
 			isa = PBXGroup;
 			children = (
@@ -933,6 +959,8 @@
 		89FBEE991DAA2FA4008FBB8A /* woproject */ = {
 			isa = PBXGroup;
 			children = (
+				892298CC1DB9FAB10053ECB1 /* woproject.entitlements */,
+				892298C01DB9F9110053ECB1 /* Lib */,
 				58F011301DB2067F0051D044 /* library */,
 				89EAA8C51DAE2D5C0043BE53 /* view */,
 				899C89A51DAD209F0073794E /* DOPDropDownMen */,
@@ -1155,6 +1183,10 @@
 		C5376C6AA89FF65EAAFC7D78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				892298CA1DB9F9D60053ECB1 /* libresolv.tbd */,
+				892298C81DB9F9BE0053ECB1 /* UserNotifications.framework */,
+				892298C61DB9F9670053ECB1 /* CoreFoundation.framework */,
+				892298C41DB9F9560053ECB1 /* CFNetwork.framework */,
 				8981D1301DAB3D2000CF2426 /* JavaScriptCore.framework */,
 				8981D1281DAB3C1E00CF2426 /* CoreGraphics.framework */,
 				8981D1261DAB3C1300CF2426 /* Foundation.framework */,
@@ -1244,6 +1276,11 @@
 					89FBEE961DAA2FA4008FBB8A = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 9K3Z97VTT8;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					89FBEEB21DAA2FA5008FBB8A = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1665,7 +1702,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = woproject/woproject.entitlements;
 				DEVELOPMENT_TEAM = 9K3Z97VTT8;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/woproject/amap",
@@ -1674,6 +1713,10 @@
 				INFOPLIST_FILE = woproject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/woproject/Lib",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -1690,6 +1733,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tianan-apple.woproject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/{静态库所在文件夹名称}\"";
 			};
 			name = Debug;
 		};
@@ -1699,7 +1743,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = woproject/woproject.entitlements;
 				DEVELOPMENT_TEAM = 9K3Z97VTT8;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/woproject/amap",
@@ -1708,6 +1754,10 @@
 				INFOPLIST_FILE = woproject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/woproject/Lib",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -1724,6 +1774,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tianan-apple.woproject";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/{静态库所在文件夹名称}\"";
 			};
 			name = Release;
 		};
