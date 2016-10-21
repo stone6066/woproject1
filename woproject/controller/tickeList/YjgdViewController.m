@@ -424,7 +424,7 @@ static NSString * const TicketCellId = @"TicketCellId";
     
     noticeVc.view.backgroundColor = [UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:noticeVc animated:NO];
+    [self.navigationController pushViewController:noticeVc animated:YES];
     
 }
 @end

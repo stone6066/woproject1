@@ -31,7 +31,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"下载系统故障返回：%@",jsonDic);
+                                          //NSLog(@"下载系统故障返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //
@@ -93,7 +93,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"下载项目返回：%@",jsonDic);
+                                          //NSLog(@"下载项目返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //
@@ -156,7 +156,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"下载city返回：%@",jsonDic);
+                                          //NSLog(@"下载city返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //
@@ -234,7 +234,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"下载工种返回：%@",jsonDic);
+                                          //NSLog(@"下载工种返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //
@@ -298,7 +298,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"下载人员信息返回：%@",jsonDic);
+                                          //NSLog(@"下载人员信息返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //

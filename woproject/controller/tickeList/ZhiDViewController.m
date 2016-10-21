@@ -11,7 +11,7 @@
 #import "DownLoadBaseData.h"
 #import "ticketList.h"
 #import "ticketListTableViewCell.h"
-
+#import "ZhiDDetailInfoViewController.h"
 @interface ZhiDViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate>
 @property (nonatomic, strong) NSMutableArray *classifys;
 @property (nonatomic, strong) NSMutableArray *cates;
@@ -420,8 +420,13 @@ static NSString * const TicketCellId = @"TicketCellId";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ticketListTableViewCell *svc =(ticketListTableViewCell*)[self.TableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"%@",svc.Id);
+   
+    ZhiDDetailInfoViewController *gggdDetailVc=[[ZhiDDetailInfoViewController alloc]init:svc.Id];
+    [gggdDetailVc setMyViewTitle:@"指定接单详情"];
     
+    gggdDetailVc.view.backgroundColor = [UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:gggdDetailVc animated:YES];
     
 }
 

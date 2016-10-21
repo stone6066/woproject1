@@ -20,7 +20,7 @@
 #import "ComboxView.h"
 
 #define kDropDownListTag1 1000
-@interface PaiDanDetailViewController ()
+@interface PaiDanDetailViewController ()<StdComBoxDelegate>
 
 @end
 
@@ -150,21 +150,37 @@
     CGFloat offsetY=15;
     CGFloat BoxHeigh=40;
     CGFloat BoxWidth=fDeviceWidth-offsetX*2;
-    _priorityBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY, BoxWidth, BoxHeigh) titleStr:@"优先级："];
-    NSArray* arr=[[NSArray alloc]initWithObjects:@"高",@"中",@"低",nil];
-    _priorityBox.tableArray = arr;
+    _priorityBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY, BoxWidth, BoxHeigh) titleStr:@"优先级：" tagFlag:0];
+    _priorityBox.stdTableDelegate=self;
     [Svc addSubview:_priorityBox];
-    
-    _jobNameBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+15+BoxHeigh, BoxWidth, BoxHeigh) titleStr:@"工种："];
-    NSArray* arr1=[[NSArray alloc]initWithObjects:@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",nil];
-    _jobNameBox.tableArray = arr1;
+   
+    _jobNameBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+15+BoxHeigh, BoxWidth, BoxHeigh) titleStr:@"工种：" tagFlag:1];
+    _jobNameBox.stdTableDelegate=self;
     [Svc addSubview:_jobNameBox];
     
     
-    _operationUserBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+(15+BoxHeigh)*2, BoxWidth, BoxHeigh) titleStr:@"接单人："];
-    NSArray* arr2=[[NSArray alloc]initWithObjects:@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",nil];
-    _operationUserBox.tableArray = arr2;
+    _operationUserBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+(15+BoxHeigh)*2, BoxWidth, BoxHeigh) titleStr:@"接单人：" tagFlag:2];
+    _operationUserBox.stdTableDelegate=self;
     [Svc addSubview:_operationUserBox];
+
+}
+-(void)stdComBoxClickDelegate:(NSString *)sendId tag:(NSInteger)tagFlag
+{
+    switch (tagFlag) {
+        case 0://优先级
+            
+            break;
+        case 1://工种
+            _operationUserBox.job_id=sendId;
+            [_operationUserBox resetCombox];//接单人联动清空
+            break;
+        case 2://接单人
+            
+            break;
+
+        default:
+            break;
+    }
 
 }
 -(void)drawDetailView:(ticketInfo*)myInfo{
@@ -242,7 +258,7 @@
     
     [operateBtn addTarget:self action:@selector(clickoperatebtn) forControlEvents:UIControlEventTouchUpInside];
     
-    [operateBtn setTitle:@"接单"forState:UIControlStateNormal];// 添加文字
+    [operateBtn setTitle:@"派单"forState:UIControlStateNormal];// 添加文字
     operateBtn.backgroundColor=bluetxtcolor;
     [self.view addSubview:operateBtn];
     
@@ -313,6 +329,18 @@
 
 //0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
 -(void)upInfoRepair:(NSString*)operationType{
+    if ([_priorityBox.data_id isEqualToString:@"-1"]) {
+        [stdPubFunc stdShowMessage:@"请选择优先级"];
+        return;
+    }
+    if ([_jobNameBox.data_id isEqualToString:@"-1"]) {
+        [stdPubFunc stdShowMessage:@"请选择工种"];
+        return;
+    }
+    if ([_operationUserBox.data_id isEqualToString:@"-1"]) {
+        [stdPubFunc stdShowMessage:@"请选择人员"];
+        return;
+    }
     [SVProgressHUD showWithStatus:k_Status_Load];
     
     NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
@@ -321,7 +349,9 @@
     [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [paramDict setObject:_ListId forKey:@"tid"];
     [paramDict setObject:operationType forKey:@"operation"];
-    
+    [paramDict setObject:_priorityBox.data_id forKey:@"priority"];
+    [paramDict setObject:_jobNameBox.data_id forKey:@"job_id"];
+    [paramDict setObject:_operationUserBox.data_id forKey:@"user_id"];
     
     
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketFlow"];

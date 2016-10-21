@@ -15,5 +15,9 @@
 @property (nonatomic,strong)ComboxView *priorityBox;//优先级
 @property (nonatomic,strong)ComboxView *jobNameBox;//工种
 @property (nonatomic,strong)ComboxView *operationUserBox;//接单人
+
+//@property(nonatomic,copy)NSString *priorityId;//优先级id
+//@property(nonatomic,copy)NSString *jobId;//工种id
+//@property(nonatomic,copy)NSString *operationUserId;//接单人id
 -(id)init:(NSString *)listId;
 @end

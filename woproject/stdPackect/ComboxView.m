@@ -10,7 +10,7 @@
 
 @implementation ComboxView
 
--(id)initWithFrame:(CGRect)frame titleStr:(NSString*)tstr
+-(id)initWithFrame:(CGRect)frame titleStr:(NSString*)tstr tagFlag:(NSInteger)tagI
 {
     if (frame.size.height<200) {
         frameHeight = 200;
@@ -20,7 +20,9 @@
     tabheight = frameHeight-30;
     
     frame.size.height = 30.0f;
-    
+    _tagFlag=tagI;
+    _job_id=@"-1";
+    _data_id=@"-1";
     self = [super initWithFrame:frame];
     
     if(self){
@@ -52,7 +54,7 @@
         
         if (!_viewBtn) {
             _viewBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, 40)];
-             [_viewBtn addTarget:self action:@selector(dropdown) forControlEvents:UIControlEventTouchUpInside];
+             [_viewBtn addTarget:self action:@selector(viewBtnClick) forControlEvents:UIControlEventTouchUpInside];
             [comboxBackGroudVc addSubview:_viewBtn];
         }
         
@@ -62,7 +64,32 @@
     return self;
 }
 
+-(void)resetCombox{
+    _textLbl.text=@"---------";
+    _data_id=@"-1";
+}
+-(void)viewBtnClick{
+    switch (_tagFlag) {
+        case 0://优先级
+            _tableArray = [[NSMutableArray alloc]initWithObjects:@"高",@"中",@"低",nil];
+            _tableIdArray= [[NSMutableArray alloc]initWithObjects:@"1",@"2",@"3",nil];
+            [self dropdown];
+            break;
+        case 1://工种
+            [self downforWorkType];
+            break;
+        case 2:
+            if ([_job_id isEqualToString:@"-1"]) {
+                [stdPubFunc stdShowMessage:@"请选择上一级列表"];
+            }
+            else
+                [self downforUserList:_job_id];
+            break;
+        default:
+            break;
+    }
 
+}
 
 - (void)creatTableView:(CGRect)frame
 {
@@ -72,11 +99,6 @@
     _dropTableView.hidden = YES;
 }
 
-//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-//{
-//    [self dropdown];
-//    return NO;
-//}
 
 - (void)closeTableView
 {
@@ -94,7 +116,7 @@
     }
     else
     {//如果下拉框尚未显示，则进行显示
-        
+        [_dropTableView reloadData];
         CGRect sf = self.frame;
         sf.size.height = frameHeight;
         [self addSubview:_dropTableView];        
@@ -147,19 +169,18 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _textLbl.text = [_tableArray objectAtIndex:[indexPath row]];
-    [self stdRemoveView];
-//    showList = NO;
-//    _dropTableView.hidden = YES;
-//    
-//    CGRect sf = self.frame;
-//    sf.size.height = 30;
-//    self.frame = sf;
-//    CGRect frame = _dropTableView.frame;
-//    frame.size.height = 0;
-//    _dropTableView.frame = frame;
-//    //选择完后，移除
-//    [_dropTableView removeFromSuperview];
+    @try {
+        _textLbl.text = [_tableArray objectAtIndex:[indexPath row]];
+        [self stdRemoveView];
+        _data_id=[_tableIdArray objectAtIndex:[indexPath row]] ;
+        [self.stdTableDelegate  stdComBoxClickDelegate:_data_id tag:_tagFlag];
+    } @catch (NSException *exception) {
+        NSLog(@"comboxDidSelectRowAtIndexPath err");
+    } @finally {
+        ;
+    }
+   
+
 }
 
 -(void)stdRemoveView{
@@ -183,4 +204,141 @@
 }
 
 
+
+-(NSMutableArray *)stdProjectList:(NSArray*)inArr{//自己重组一下数组，原数组有null，保存失败
+    NSMutableArray *rtnArr=[[NSMutableArray alloc]init];
+    for (NSDictionary * dict in inArr) {
+        NSMutableDictionary * dictTmp=[[NSMutableDictionary alloc]init];
+        
+        [dictTmp setObject:[dict objectForKey:@"id"] forKey:@"id"];
+        [dictTmp setObject:[dict objectForKey:@"name"]forKey:@"name"];
+        [rtnArr addObject:dictTmp];
+    }
+    return rtnArr;
+}
+-(void)downforWorkType{//下载工种列表
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey
+                                };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forWorkType"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"下载工种返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              NSDictionary *idict=[jsonDic objectForKey:@"i"];
+                                              NSArray *sysData=[idict objectForKey:@"Data"];
+                                              
+                                              [self loadDataToLocalArr:sysData];
+                                              [self dropdown];
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
+
+
+-(void)downforUserList:(NSString*)jobId{//下载工种对应的人员信息
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                                @"job_id":jobId
+                                };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/forUserList"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"下载人员信息返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              NSDictionary *idict=[jsonDic objectForKey:@"i"];
+                                              NSArray *sysData=[idict objectForKey:@"Data"];
+                                              [self loadDataToLocalArr:sysData];
+                                              [self dropdown];
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
+
+-(void)loadDataToLocalArr:(NSArray*)idata{
+    NSMutableArray *idArr=[[NSMutableArray alloc]init];
+    NSMutableArray *nameArr=[[NSMutableArray alloc]init];
+    @try {
+        for (NSDictionary * dictTmp in idata) {
+            [idArr addObject:[dictTmp objectForKey:@"id"]] ;
+            [nameArr addObject:[dictTmp objectForKey:@"name"]] ;
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"loadDataToLocalArr err");
+    } @finally {
+        _tableArray=nameArr;
+        _tableIdArray=idArr;
+    }
+
+
+}
 @end

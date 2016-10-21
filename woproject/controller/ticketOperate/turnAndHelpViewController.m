@@ -12,7 +12,7 @@
 #define kDropDownListTag 1000
 
 
-@interface turnAndHelpViewController ()<UITextViewDelegate>
+@interface turnAndHelpViewController ()<UITextViewDelegate,StdComBoxDelegate>
 
 @end
 
@@ -89,26 +89,41 @@
     [self.view addSubview:btn];
 }
 
-
+-(void)stdComBoxClickDelegate:(NSString *)sendId tag:(NSInteger)tagFlag
+{
+    switch (tagFlag) {
+        case 0://优先级
+            
+            break;
+        case 1://工种
+            _operationUserBox.job_id=sendId;
+            [_operationUserBox resetCombox];//接单人联动清空
+            break;
+        case 2://接单人
+            
+            break;
+            
+        default:
+            break;
+    }
+    
+}
 -(void)drawMainView{
     CGFloat offsetX=15;
     CGFloat offsetY=90;
     CGFloat BoxHeigh=40;
     CGFloat BoxWidth=fDeviceWidth-offsetX*2;
-     _priorityBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY, BoxWidth, BoxHeigh) titleStr:@"优先级："];
-    NSArray* arr=[[NSArray alloc]initWithObjects:@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",nil];
-    _priorityBox.tableArray = arr;
+    _priorityBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY, BoxWidth, BoxHeigh) titleStr:@"优先级：" tagFlag:0];
+    _priorityBox.stdTableDelegate=self;
     [self.view addSubview:_priorityBox];
     
-    _jobNameBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+15+BoxHeigh, BoxWidth, BoxHeigh) titleStr:@"工种："];
-    NSArray* arr1=[[NSArray alloc]initWithObjects:@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",nil];
-    _jobNameBox.tableArray = arr1;
+    _jobNameBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+15+BoxHeigh, BoxWidth, BoxHeigh) titleStr:@"工种：" tagFlag:1];
+    _jobNameBox.stdTableDelegate=self;
     [self.view addSubview:_jobNameBox];
     
     
-    _operationUserBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+(15+BoxHeigh)*2, BoxWidth, BoxHeigh) titleStr:@"接单人："];
-    NSArray* arr2=[[NSArray alloc]initWithObjects:@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",@"电话",@"email",@"手机",@"aaa",@"bbb",@"ccc",nil];
-    _operationUserBox.tableArray = arr2;
+    _operationUserBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+(15+BoxHeigh)*2, BoxWidth, BoxHeigh) titleStr:@"接单人：" tagFlag:2];
+    _operationUserBox.stdTableDelegate=self;
     [self.view addSubview:_operationUserBox];
     
     NSMutableAttributedString * lblStr=[[NSMutableAttributedString alloc]initWithString:@"转单原因*："];

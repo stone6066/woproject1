@@ -19,7 +19,7 @@
 #import "PaidanViewController.h"
 #import "DownLoadBaseData.h"
 #import "VisualizationController.h"
-
+#import "listNum.h"
 
 @interface HomeViewController ()
 @property (nonatomic, strong) MAMapView *mapView;
@@ -68,6 +68,8 @@
             ApplicationDelegate.isLogin = YES;
             [self drawMainView];
             [self downDictData];
+            [self loadListNum];
+            
         };
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:NO];
@@ -90,6 +92,21 @@
     [lab setTextColor:[UIColor whiteColor]];
     [lab setFont:[UIFont systemFontOfSize:18]];
     [lab setTextAlignment:NSTextAlignmentCenter];
+}
+
+//画小圆圈
+-(void)drawListNumLbl:(UILabel*)lbl Lframe:(CGRect)lframe parentVc:(UIView*)pvc{
+    CGFloat lblWidth=30;
+    CGFloat lblHeigh=30;
+    [lbl setFrame:CGRectMake(lframe.origin.x+lframe.size.width-lblWidth/2, lframe.origin.y-lblHeigh/2, lblWidth, lblHeigh)];
+    lbl.layer.cornerRadius = 15;
+    lbl.layer.masksToBounds = YES;
+    lbl.backgroundColor=bluetxtcolor;
+    [lbl setTextAlignment:NSTextAlignmentCenter];
+    [lbl setTextColor:[UIColor whiteColor]];
+    [lbl setFont:[UIFont systemFontOfSize:16]];
+    lbl.text=@"0";
+    [pvc addSubview:lbl];
 }
 -(void)drawMainView{
     CGFloat topHeigh=60;
@@ -120,6 +137,16 @@
     UILabel *yjgdlbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH1, cellWidth, 30)];
     [self stdInitLable:yjgdlbl hint:@"已接工单"];
     [yjgd addSubview:yjgdlbl];
+    if (!_YjNum) {
+        _YjNum=[[UILabel alloc]initWithFrame:CGRectMake(yjimg.frame.origin.x, yjimg.frame.origin.y+yjimg.frame.size.height/2-5, yjimg.frame.size.width, 13)];
+        _YjNum.text=@"0";
+        [_YjNum setTextAlignment:NSTextAlignmentCenter];
+        [_YjNum setTextColor:bluetxtcolor];
+        [_YjNum setFont:[UIFont systemFontOfSize:16]];
+        
+        [yjgd addSubview:_YjNum];
+        
+    }
     UIButton *yjbtn=[[UIButton alloc]initWithFrame:yjgd.frame];
     [self.view addSubview:yjbtn];
     [yjbtn addTarget:self action:@selector(clickyj) forControlEvents:UIControlEventTouchUpInside];
@@ -134,6 +161,11 @@
     UILabel *zdlbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH2, cellWidth, 30)];
     [self stdInitLable:zdlbl hint:@"指定接单"];
     [zdjd addSubview:zdlbl];
+    
+    if (!_ZdNum) {
+        _ZdNum=[[UILabel alloc]init];
+        [self drawListNumLbl:_ZdNum Lframe:zdimg.frame parentVc:zdjd];
+    }
     UIButton *zdbtn=[[UIButton alloc]initWithFrame:zdjd.frame];
     [self.view addSubview:zdbtn];
     [zdbtn addTarget:self action:@selector(clickzd) forControlEvents:UIControlEventTouchUpInside];
@@ -164,6 +196,15 @@
     UILabel *pdlbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH4, cellWidth, 30)];
     [self stdInitLable:pdlbl hint:@"派单"];
     [pd addSubview:pdlbl];
+    
+    
+    if (!_PdNum) {
+        _PdNum=[[UILabel alloc]init];
+        [self drawListNumLbl:_PdNum Lframe:pdimg.frame parentVc:pd];
+    }
+
+    
+    
     UIButton *pdbtn=[[UIButton alloc]initWithFrame:pd.frame];
     [self.view addSubview:pdbtn];
     [pdbtn addTarget:self action:@selector(clickpd) forControlEvents:UIControlEventTouchUpInside];
@@ -179,6 +220,12 @@
     UILabel *gglbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH5, cellWidth, 30)];
     [self stdInitLable:gglbl hint:@"公共工单"];
     [gggd addSubview:gglbl];
+    
+    if (!_GgNum) {
+        _GgNum=[[UILabel alloc]init];
+        [self drawListNumLbl:_GgNum Lframe:ggimg.frame parentVc:gggd];
+    }
+    
     UIButton *ggbtn=[[UIButton alloc]initWithFrame:gggd.frame];
     [self.view addSubview:ggbtn];
     [ggbtn addTarget:self action:@selector(clickgg) forControlEvents:UIControlEventTouchUpInside];
@@ -278,17 +325,78 @@
     return self;
 }
 
+-(NSDictionary *)makeUpLoadDict{
+    NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
+    
+    [dict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
+    [dict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
+    [dict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
+    //NSLog(@"dict:%@",[self dictionaryToJson:dict]);
+    
+    
+    return dict;
+    
+}
+//下载工单数目
+-(void)loadListNum{
+    
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                                @"v":@"0"//这里必须写0，接口小坑逼
+                                };
 
+//    http://139.129.218.74:8080/ticket/support/ticket/forStaffCount
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forStaffCount"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@",paramDict);
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict//[self makeUpLoadDict]
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          NSLog(@"下载工单数目:%@",jsonDic);
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              listNum *lum=[[listNum alloc]init];
+                                              ApplicationDelegate.mylistNum=[lum asignInfoWithDict:jsonDic];
+                                              [self refreshListNum];
+                                              [SVProgressHUD dismiss];
+                                              
+                                              
+                                              
+                                          } else {
+                                              //失败
+                                              
+                                          }
+                                          
+                                      } else {
+                                         
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      
+                                  }];
+    
+}
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    
-//    self.navigationController.navigationBar.barStyle    = UIBarStyleBlack;
-//    self.navigationController.navigationBar.translucent = NO;
-//    
-//    [self.navigationController setToolbarHidden:YES animated:animated];
-//}
+-(void)refreshListNum{
+    _YjNum.text=ApplicationDelegate.mylistNum.receivedCount;
+    _ZdNum.text=ApplicationDelegate.mylistNum.assignCount;
+    _PdNum.text=ApplicationDelegate.mylistNum.notRepairsCount;
+    _GgNum.text=ApplicationDelegate.mylistNum.publicCount;
 
+}
 
 @end

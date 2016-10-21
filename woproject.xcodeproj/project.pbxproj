@@ -70,6 +70,8 @@
 		8900D80B1DB8F86400FC2C2D /* GggdDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8900D80A1DB8F86400FC2C2D /* GggdDetailInfoViewController.m */; };
 		8900D80E1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8900D80D1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m */; };
 		8919CBCC1DB0AB3D00858721 /* paidanInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */; };
+		892298BB1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 892298BA1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m */; };
+		892298BE1DB9E1870053ECB1 /* listNum.m in Sources */ = {isa = PBXBuildFile; fileRef = 892298BD1DB9E1870053ECB1 /* listNum.m */; };
 		894752BA1DB85BCC00C32394 /* hangupInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752B91DB85BCC00C32394 /* hangupInfoView.m */; };
 		894752BD1DB85F5A00C32394 /* backOrderViewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BC1DB85F5A00C32394 /* backOrderViewInfo.m */; };
 		894752C01DB8661700C32394 /* backAndHangUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BF1DB8661700C32394 /* backAndHangUpViewController.m */; };
@@ -342,6 +344,10 @@
 		8900D80D1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaiDanDetailViewController.m; sourceTree = "<group>"; };
 		8919CBCA1DB0AB3D00858721 /* paidanInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paidanInfoView.h; sourceTree = "<group>"; };
 		8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = paidanInfoView.m; sourceTree = "<group>"; };
+		892298B91DB9B5130053ECB1 /* ZhiDDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhiDDetailInfoViewController.h; sourceTree = "<group>"; };
+		892298BA1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhiDDetailInfoViewController.m; sourceTree = "<group>"; };
+		892298BC1DB9E1870053ECB1 /* listNum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listNum.h; sourceTree = "<group>"; };
+		892298BD1DB9E1870053ECB1 /* listNum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = listNum.m; sourceTree = "<group>"; };
 		894752B81DB85BCC00C32394 /* hangupInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hangupInfoView.h; sourceTree = "<group>"; };
 		894752B91DB85BCC00C32394 /* hangupInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hangupInfoView.m; sourceTree = "<group>"; };
 		894752BB1DB85F5A00C32394 /* backOrderViewInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backOrderViewInfo.h; sourceTree = "<group>"; };
@@ -895,6 +901,8 @@
 				8900D80A1DB8F86400FC2C2D /* GggdDetailInfoViewController.m */,
 				8900D80C1DB8FC3B00FC2C2D /* PaiDanDetailViewController.h */,
 				8900D80D1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m */,
+				892298B91DB9B5130053ECB1 /* ZhiDDetailInfoViewController.h */,
+				892298BA1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m */,
 			);
 			path = ticketDetail;
 			sourceTree = "<group>";
@@ -1116,6 +1124,8 @@
 				89FB407A1DAF616B00E95134 /* ticketInfo.m */,
 				89FB407C1DAF618800E95134 /* ticketFlowInfo.h */,
 				89FB407D1DAF618800E95134 /* ticketFlowInfo.m */,
+				892298BC1DB9E1870053ECB1 /* listNum.h */,
+				892298BD1DB9E1870053ECB1 /* listNum.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1505,6 +1515,7 @@
 				89FB40781DAF34C000E95134 /* ticketInfoViewController.m in Sources */,
 				58F011151DB205E30051D044 /* RepairViewController.m in Sources */,
 				89A4B1001DB1D88D004EF914 /* daochangInfoView.m in Sources */,
+				892298BB1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m in Sources */,
 				8900D80B1DB8F86400FC2C2D /* GggdDetailInfoViewController.m in Sources */,
 				58F0110E1DB205860051D044 /* PNModel.m in Sources */,
 				89FBEF541DAA4297008FBB8A /* NullSafe.m in Sources */,
@@ -1515,6 +1526,7 @@
 				89FBEE9C1DAA2FA4008FBB8A /* main.m in Sources */,
 				8981D15E1DAB8BD400CF2426 /* ReGeocodeAnnotation.m in Sources */,
 				58F011051DB205860051D044 /* ModifyPwdView.m in Sources */,
+				892298BE1DB9E1870053ECB1 /* listNum.m in Sources */,
 				58F0115A1DB2067F0051D044 /* HAScrollNavBar.m in Sources */,
 				8900D80E1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m in Sources */,
 				89FBEEA81DAA2FA5008FBB8A /* woproject.xcdatamodeld in Sources */,

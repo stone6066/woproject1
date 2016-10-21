@@ -11,7 +11,7 @@
 #import "AFNetworking.h"//网络请求三方
 #import "StdRootController.h"
 #import "loginInfo.h"
-
+#import "listNum.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     UITabBarController* tabBarViewController;
@@ -32,5 +32,6 @@
 @property (assign, nonatomic) BOOL isLogin;
 @property (assign, nonatomic) BOOL isRmbPsw;//是否记住密码
 @property (strong, nonatomic) loginInfo *myLoginInfo;
+@property (strong, nonatomic) listNum *mylistNum;//各种工单数量，登陆成功后，取一次
 @end
 

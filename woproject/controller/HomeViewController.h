@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface HomeViewController : UIViewController
-
+@property(nonatomic,strong)UILabel *YjNum;
+@property(nonatomic,strong)UILabel *ZdNum;
+@property(nonatomic,strong)UILabel *GgNum;
+@property(nonatomic,strong)UILabel *PdNum;
 @end

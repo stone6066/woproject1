@@ -1,12 +1,12 @@
 //
-//  GggdDetailInfoViewController.m
+//  ZhiDDetailInfoViewController.m
 //  woproject
 //
-//  Created by tianan-apple on 2016/10/20.
+//  Created by tianan-apple on 2016/10/21.
 //  Copyright © 2016年 tianan-apple. All rights reserved.
 //
 
-#import "GggdDetailInfoViewController.h"
+#import "ZhiDDetailInfoViewController.h"
 #import "ticketInfo.h"
 #import "ticketFlowInfo.h"
 #import "baoxiuInfoView.h"
@@ -16,12 +16,11 @@
 #import "hangupInfoView.h"
 #import "backOrderViewInfo.h"
 #import "YjgdViewController.h"
-
-@interface GggdDetailInfoViewController ()
+@interface ZhiDDetailInfoViewController ()
 
 @end
 
-@implementation GggdDetailInfoViewController
+@implementation ZhiDDetailInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -113,7 +112,7 @@
                                                                    JSONObjectWithData:responseObject
                                                                    options:kNilOptions
                                                                    error:&error];
-                                          NSLog(@"公共工单详情返回：%@",jsonDic);
+                                          NSLog(@"已接工单详情返回：%@",jsonDic);
                                           NSString *suc=[jsonDic objectForKey:@"s"];
                                           NSString *msg=[jsonDic objectForKey:@"m"];
                                           //
@@ -199,7 +198,7 @@
     baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, firstY, fDeviceWidth, BXVcHigh)];
     [BXVc asignDataToLab:myInfo];
     [scollVc addSubview:BXVc];
-   
+    
     
     /*-------工单流转信息--*/
     CGFloat hh=[self drawOrderInfoList:myInfo parentVc:scollVc];
@@ -252,7 +251,7 @@
                     pvcHeigh+=JDvcHigh;
                 }
                 else if ([operations isEqualToString:@"2"]) {//到场
-
+                    
                     daochangInfoView * DCvc=[[daochangInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, DCvcHigh)];
                     //_daochangTime=[DCvc asignDataToLab:dict];
                     [PVc addSubview:DCvc];
@@ -295,7 +294,7 @@
     [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [paramDict setObject:_ListId forKey:@"tid"];
     [paramDict setObject:operationType forKey:@"operation"];
-   
+    
     
     
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketFlow"];
@@ -348,6 +347,7 @@
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:yjVc animated:YES];
     self.hidesBottomBarWhenPushed = NO;
-
+    
 }
+
 @end

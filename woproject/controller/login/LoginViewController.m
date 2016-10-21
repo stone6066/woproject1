@@ -316,7 +316,7 @@
 -(void)loginNetFuc:(NSString*)usr passWord:(NSString*)psw{
     [SVProgressHUD showWithStatus:k_Status_Load];
 
-
+//http://139.129.218.74:8080/ticket/
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/login"];
 
     urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
