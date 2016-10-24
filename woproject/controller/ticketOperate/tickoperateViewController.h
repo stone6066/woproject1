@@ -25,5 +25,12 @@
 @property (nonatomic,copy)NSString *OrderId;//工单id
 @property (nonatomic,copy)NSString *confTime;//到场时间
 
+
+@property (nonatomic, strong) UIAlertController *alert;
+@property (nonatomic, strong) UIImagePickerController *pickerController;
+@property (nonatomic, assign) NSInteger imgTag;
+@property (nonatomic, strong) NSMutableArray *imgArray;
+@property (nonatomic, strong) NSMutableDictionary *paramsDic;
+
 -(id)init:(NSString *)isConf confTime:(NSString*)timeStr;
 @end

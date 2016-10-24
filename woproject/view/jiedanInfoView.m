@@ -80,7 +80,7 @@
 -(void)asignDataToLab:(ticketFlowInfo*)modelData{
     @try {
         _operationTime.text=[self stdTimeToStr:modelData.operationTime];
-        _userId.text=modelData.userId;
+        _userId.text=modelData.operationUser;
         _deptId.text=modelData.jobName;
         _operationPhone=modelData.operationPhone;
         

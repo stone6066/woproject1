@@ -75,6 +75,8 @@
         [self.navigationController pushViewController:vc animated:NO];
         self.hidesBottomBarWhenPushed = NO;
     }
+    else
+        [self loadListNum];
     
 }
 

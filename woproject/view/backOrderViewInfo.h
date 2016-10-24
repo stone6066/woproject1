@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol stdBackOrderImgDelegate <NSObject>
+-(void)stdBackOrderImgDelegate:(NSString*)imgUrl;
+@end
+
 @class ticketFlowInfo;
 @interface backOrderViewInfo : UIView
 @property(nonatomic,strong)UILabel *myViewTitle;//视图标题
@@ -19,7 +23,10 @@
 @property(nonatomic,strong)UILabel *hangupReson;
 @property(nonatomic,copy)NSString *operationPhone;
 
+@property(nonatomic,strong)UIButton *phonebtn;//拨打电话
 
+@property(nonatomic,strong)NSMutableArray *imgArr;//图片imageList
+@property(nonatomic,strong)id<stdBackOrderImgDelegate> stdBackOrderImgDelegate;
 -(id)initWithFrame:(CGRect)frame;
 -(void)asignDataToLab:(ticketFlowInfo*)modelData;
 @end

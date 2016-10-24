@@ -25,6 +25,7 @@
 #import "PNChartDelegate.h"
 #import "PNChart.h"
 #import "YLProgressBar.h"
+#import "UIImageView+WebCache.h"
 
 #define UISCREENHEIGHT  self.view.bounds.size.height
 #define UISCREENWIDTH  self.view.bounds.size.width
@@ -47,6 +48,11 @@
 #define HomeADHeigh ((fDeviceWidth*9)/16)
 #define TopStausHight (20)
 
+
+#define BXVcHigh 400//报修高度
+#define PDvcHigh 270//派单
+#define JDvcHigh 210//接单
+#define DCvcHigh 190//到场
 //每次服务器返回的数据条数
 #define srvDataCount (2)
 //#define NSUserDefaultsUserName @"userName"

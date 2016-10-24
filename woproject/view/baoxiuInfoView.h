@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol stdImgDelegate <NSObject>
+-(void)stdImageClickDelegate:(NSString*)imgUrl;
+@end
+
 @class ticketInfo;
 @interface baoxiuInfoView : UIView
 @property(nonatomic,strong)UILabel *myViewTitle;//视图标题
@@ -24,9 +28,11 @@
 @property(nonatomic,strong)UILabel *priority;//优先级
 @property(nonatomic,strong)UILabel *faultDescTitle;
 @property(nonatomic,strong)UILabel *faultDesc;//故障描述
+@property(nonatomic,strong)UIButton *phonebtn;//拨打电话
 
 @property(nonatomic,copy)NSString *repairPhone;
-
+@property(nonatomic,strong)NSMutableArray *imgArr;//图片imageList
+@property(nonatomic,strong)id<stdImgDelegate> stdImgDelegate;
 -(id)initWithFrame:(CGRect)frame;
 -(void)asignDataToLab:(ticketInfo*)modelData;
 @end

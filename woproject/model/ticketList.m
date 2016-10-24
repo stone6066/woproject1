@@ -39,6 +39,7 @@
             tList.ticketStatus=[loopdict objectForKey:@"ticketStatus"];
             tList.userName=[loopdict objectForKey:@"userName"];
             tList.userPhone=[loopdict objectForKey:@"userPhone"];
+            tList.isNew=[loopdict objectForKey:@"isNew"];
             tList.v=[loopdict objectForKey:@"v"];
             [rtnArr addObject:tList];
         }

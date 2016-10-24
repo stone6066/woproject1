@@ -29,6 +29,12 @@
     _projectName.text=dataModel.projectId;
     _level.text=dataModel.priority;
     _detail.text=dataModel.faultDesc;
+    _isnew=dataModel.isNew;
+    if ([_isnew isEqualToString:@"2"]) {
+        _myNewImg.hidden=YES;
+    }
+    else
+         _myNewImg.hidden=NO;
     _Id=dataModel.Id;
 
 }

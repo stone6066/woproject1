@@ -16,11 +16,11 @@
 #import "hangupInfoView.h"
 #import "backOrderViewInfo.h"
 #import "PaidanViewController.h"
-
+#import "ShowImgViewController.h"
 #import "ComboxView.h"
 
 #define kDropDownListTag1 1000
-@interface PaiDanDetailViewController ()<StdComBoxDelegate>
+@interface PaiDanDetailViewController ()<StdComBoxDelegate,stdImgDelegate,stdPaidanImgDelegate,stdHangUpImgDelegate,stdBackOrderImgDelegate>
 
 @end
 
@@ -237,9 +237,10 @@
     
     CGFloat firstY=orderTitleVcHigh+topTitleVcHigh+topTitleY;
     /*---------报修信息----------------*/
-    CGFloat BXVcHigh=400;
+
     baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, firstY, fDeviceWidth, BXVcHigh)];
     [BXVc asignDataToLab:myInfo];
+    BXVc.stdImgDelegate =self;
     [scollVc addSubview:BXVc];
     
     
@@ -271,11 +272,9 @@
     NSArray *flowArr=tinfo.ticketFlowList;
     NSString *operations;
     CGFloat pvcHeigh=0;
-    CGFloat firstY=30+50;
-    CGFloat PDvcHigh=230;
-    CGFloat JDvcHigh=170;
-    CGFloat DCvcHigh=150;
-    CGFloat BXVcHigh=400;
+    CGFloat firstY=30+50+200;
+
+
     
     @try {
         if (flowArr) {
@@ -285,6 +284,7 @@
                     paidanInfoView * PDvc=[[paidanInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
                     [PDvc asignDataToLab:dict priority:tinfo.priority];
                     [PVc addSubview:PDvc];
+                    PDvc.stdPaidanImgDelegate=self;
                     pvcHeigh+=PDvcHigh;
                 }
                 else if ([operations isEqualToString:@"1"]) {//接单
@@ -304,12 +304,13 @@
                     backOrderViewInfo * DCvc=[[backOrderViewInfo alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
                     [DCvc asignDataToLab:dict];
                     [PVc addSubview:DCvc];
+                    DCvc.stdBackOrderImgDelegate=self;
                     pvcHeigh+=PDvcHigh;
                 }
                 else if ([operations isEqualToString:@"6"]) {//挂起
                     hangupInfoView * DCvc=[[hangupInfoView alloc]initWithFrame:CGRectMake(0, firstY+BXVcHigh+pvcHeigh, fDeviceWidth, PDvcHigh)];
                     [DCvc asignDataToLab:dict];
-                    
+                     DCvc.stdHangUpImgDelegate=self;
                     [PVc addSubview:DCvc];
                     pvcHeigh+=PDvcHigh;
                 }
@@ -406,4 +407,27 @@
     self.hidesBottomBarWhenPushed = NO;
 }
 
+-(void)stdImageClickDelegate:(NSString *)imgUrl{
+    ShowImgViewController * SIVC=[[ShowImgViewController alloc]init:imgUrl];
+    SIVC.view.backgroundColor=[UIColor whiteColor];
+    [self.navigationController pushViewController:SIVC animated:YES];
+    
+}
+
+-(void)stdPaidanClickDelegate:(NSString *)imgUrl{
+    ShowImgViewController * SIVC=[[ShowImgViewController alloc]init:imgUrl];
+    SIVC.view.backgroundColor=[UIColor whiteColor];
+    [self.navigationController pushViewController:SIVC animated:YES];
+}
+-(void)stdHangUpClickDelegate:(NSString *)imgUrl{
+    ShowImgViewController * SIVC=[[ShowImgViewController alloc]init:imgUrl];
+    SIVC.view.backgroundColor=[UIColor whiteColor];
+    [self.navigationController pushViewController:SIVC animated:YES];
+}
+
+-(void)stdBackOrderImgDelegate:(NSString *)imgUrl{
+    ShowImgViewController * SIVC=[[ShowImgViewController alloc]init:imgUrl];
+    SIVC.view.backgroundColor=[UIColor whiteColor];
+    [self.navigationController pushViewController:SIVC animated:YES];
+}
 @end

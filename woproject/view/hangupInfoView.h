@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol stdHangUpImgDelegate <NSObject>
+-(void)stdHangUpClickDelegate:(NSString*)imgUrl;
+@end
 @class ticketFlowInfo;
 @interface hangupInfoView : UIView
 @property(nonatomic,strong)UILabel *myViewTitle;//视图标题
@@ -19,8 +22,10 @@
 @property(nonatomic,strong)UILabel *hangupResonTitle;//挂起标题
 @property(nonatomic,strong)UILabel *hangupReson;
 @property(nonatomic,copy)NSString *operationPhone;
+@property(nonatomic,strong)UIButton *phonebtn;//拨打电话
 
-
+@property(nonatomic,strong)NSMutableArray *imgArr;//图片imageList
+@property(nonatomic,strong)id<stdHangUpImgDelegate> stdHangUpImgDelegate;
 -(id)initWithFrame:(CGRect)frame;
 -(void)asignDataToLab:(ticketFlowInfo*)modelData;
 @end

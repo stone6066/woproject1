@@ -66,7 +66,16 @@
         _priorityTitle.text=@"优先级：";
         
         
-        
+        if (!_phonebtn) {
+            _phonebtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-60, firstLbY+spritePaceY*2, 50, 50)];
+            [_phonebtn addTarget:self action:@selector(btnCallFunc:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [_phonebtn setImage:[UIImage imageNamed:@"tel"] forState:UIControlStateNormal];
+            _phonebtn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+            _phonebtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            [self addSubview:_phonebtn];
+        }
+
         
         [self stdInitLab:_operationTime labFrame:CGRectMake(secondLbX, firstLbY, labWidth, labHeigh)];
         [self stdInitLab:_operationUser labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY, labWidth, labHeigh)];
@@ -77,6 +86,29 @@
         
     }
     return self;
+}
+-(void)btnCallFunc:(UIButton*)btn{
+    if (_operationPhone) {
+        UIAlertView *myalert=[[UIAlertView alloc]initWithTitle:_operationPhone message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+        [myalert show];
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:{//取消
+            
+        }break;
+        case 1:{//呼叫
+            
+            NSString * telStr=[NSString stringWithFormat:@"%@%@",@"tel://",alertView.title];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telStr]];
+        }break;
+            
+        default:
+            break;
+    }
 }
 
 -(void)stdInitLab:(UILabel*)stdLab labFrame:(CGRect)labF{
@@ -96,6 +128,8 @@
         _deptId.text=modelData.jobName;
         _priority.text=pstr;
         _operationPhone=modelData.operationPhone;
+        _imgArr=modelData.imageList;
+        [self setImgBtn:_imgArr];
 
     } @catch (NSException *exception) {
         NSLog(@"结构不对爆炸了");
@@ -112,4 +146,42 @@
     return [objDateformat stringFromDate: date];
 }
 
+
+-(void)setImgBtn:(NSMutableArray*)imgList{
+    CGFloat firstLbX=15;//第一个lab的y
+    CGFloat offsetX=45;
+    NSInteger i=0;
+    @try {
+        for (NSString* imgUrl in imgList) {
+            
+            UIImageView *imgView=[[UIImageView alloc]initWithFrame:CGRectMake(firstLbX+offsetX*i, _priority.frame.origin.y+_priority.frame.size.height+5, 40, 40)];
+            [imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+            
+            UIButton *imgBtn=[[UIButton alloc]initWithFrame:CGRectMake(firstLbX+offsetX*i, _priority.frame.origin.y+_priority.frame.size.height+5, 40, 40)];
+            imgBtn.tag=i;
+            i++;
+            
+            [imgBtn addTarget:self action:@selector(imagbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:imgView];
+            [self addSubview:imgBtn];
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"imglist为空");
+    } @finally {
+        ;
+    }
+}
+-(void)imagbtnClick:(UIButton*)btn{
+    NSString *imgUrl=@"";
+    @try {
+        imgUrl=_imgArr[btn.tag];
+        [self.stdPaidanImgDelegate stdPaidanClickDelegate:imgUrl];
+        
+    } @catch (NSException *exception) {
+        
+    } @finally {
+        NSLog(@"imagbtnClick:%@",imgUrl);
+    }
+    
+}
 @end

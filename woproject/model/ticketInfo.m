@@ -30,6 +30,7 @@
             tickInfo.faultDesc=[datadict objectForKey:@"faultDesc"];
             tickInfo.faultId=[datadict objectForKey:@"faultId"];
             tickInfo.faultLevel=[datadict objectForKey:@"faultLevel"];
+            tickInfo.faultPos=[datadict objectForKey:@"faultPos"];
             tickInfo.Id=[datadict objectForKey:@"id"];
             tickInfo.isNew=[datadict objectForKey:@"isNew"];
             tickInfo.jobId=[datadict objectForKey:@"jobId"];

@@ -9,6 +9,7 @@
 #import "baoxiuInfoView.h"
 #import "ticketInfo.h"
 
+#import "ShowImgViewController.h"
 @implementation baoxiuInfoView
 
 /*
@@ -90,10 +91,48 @@
         [self stdInitLab:_faultDesc labFrame:CGRectMake(fisttLbX, firstLbY+spritePaceY*7, labWidth+secondLbX-fisttLbX, labHeigh)];
         
         _faultDesc.numberOfLines=0;//多行显示
-        
+        if (!_phonebtn) {
+            _phonebtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-60, firstLbY+spritePaceY*2, 50, 50)];
+            [_phonebtn addTarget:self action:@selector(btnCallFunc:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [_phonebtn setImage:[UIImage imageNamed:@"tel"] forState:UIControlStateNormal];
+            _phonebtn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+            _phonebtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            [self addSubview:_phonebtn];
+        }
         
     }
     return self;
+}
+
+-(void)btnCallFunc:(UIButton*)btn{
+    if (_repairPhone) {
+        
+        UIAlertView *myalert=[[UIAlertView alloc]initWithTitle:_repairPhone message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+        [myalert show];
+    }
+    
+
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:{//取消
+            
+        }break;
+        case 1:{//呼叫
+            
+            NSString * telStr=[NSString stringWithFormat:@"%@%@",@"tel://",alertView.title];
+            //NSString * telStr=alertView.title;
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telStr]];
+            
+            
+        }break;
+            
+        default:
+            break;
+    }
 }
 
 -(void)stdInitLab:(UILabel*)stdLab labFrame:(CGRect)labF{
@@ -114,8 +153,47 @@
     _faultDesc.text=modelData.faultDesc;
     [_faultDesc sizeToFit];
     _repairPhone=modelData.userPhone;
+    _imgArr=modelData.imageList;
+    [self setImgBtn:_imgArr];
 }
 
+-(void)setImgBtn:(NSMutableArray*)imgList{
+    CGFloat firstLbY=15;//第一个lab的y
+    CGFloat offsetX=45;
+    NSInteger i=0;
+    @try {
+        for (NSString* imgUrl in imgList) {
+            
+            UIImageView *imgView=[[UIImageView alloc]initWithFrame:CGRectMake(firstLbY+offsetX*i, _faultDesc.frame.origin.y+_faultDesc.frame.size.height+5, 40, 40)];
+            [imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+            
+            UIButton *imgBtn=[[UIButton alloc]initWithFrame:CGRectMake(firstLbY+offsetX*i, _faultDesc.frame.origin.y+_faultDesc.frame.size.height+5, 40, 40)];
+            imgBtn.tag=i;
+            i++;
+
+             [imgBtn addTarget:self action:@selector(imagbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:imgView];
+            [self addSubview:imgBtn];
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"imglist为空");
+    } @finally {
+        ;
+    }
+}
+-(void)imagbtnClick:(UIButton*)btn{
+    NSString *imgUrl=@"";
+    @try {
+         imgUrl=_imgArr[btn.tag];
+        [self.stdImgDelegate stdImageClickDelegate:imgUrl];
+        
+    } @catch (NSException *exception) {
+        
+    } @finally {
+        NSLog(@"imagbtnClick:%@",imgUrl);
+    }
+    
+}
 -(NSString *)stdTimeToStr:(NSString*)intTime{
     NSTimeInterval interval=[[intTime substringToIndex:10] doubleValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];

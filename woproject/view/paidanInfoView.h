@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol stdPaidanImgDelegate <NSObject>
+-(void)stdPaidanClickDelegate:(NSString*)imgUrl;
+@end
 @class ticketFlowInfo;
 @interface paidanInfoView : UIView
 @property(nonatomic,strong)UILabel *myViewTitle;//视图标题
@@ -21,6 +24,12 @@
 @property(nonatomic,strong)UILabel *priorityTitle;
 @property(nonatomic,strong)UILabel *priority;//优先级
 @property(nonatomic,copy)NSString *operationPhone;
+@property(nonatomic,strong)UIButton *phonebtn;//拨打电话
+@property(nonatomic,strong)NSMutableArray *imgArr;//图片imageList
+
+
+@property(nonatomic,strong)id<stdPaidanImgDelegate> stdPaidanImgDelegate;
+
 
 -(void)asignDataToLab:(ticketFlowInfo*)modelData priority:(NSString*)pstr;
 -(id)initWithFrame:(CGRect)frame;

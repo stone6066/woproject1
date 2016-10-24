@@ -291,7 +291,7 @@
 -(NSDictionary *)makeUpLoadDict{
     NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
     
-    [dict setObject:@"jingli2" forKey:@"id"];
+    [dict setObject:@"jingli1" forKey:@"id"];
     [dict setObject:@"admin" forKey:@"password"];
     NSLog(@"dict:%@",[self dictionaryToJson:dict]);
     

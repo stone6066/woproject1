@@ -14,9 +14,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *createTime;
 @property (weak, nonatomic) IBOutlet UILabel *projectName;
 @property (weak, nonatomic) IBOutlet UILabel *level;
-
+@property (weak, nonatomic) IBOutlet UIImageView *myNewImg;
 @property (weak, nonatomic) IBOutlet UILabel *detail;
 @property(nonatomic,copy)NSString* Id;
+@property(nonatomic,copy)NSString* isnew;
 
 -(void)showCellView:(ticketList*)dataModel;
 @end

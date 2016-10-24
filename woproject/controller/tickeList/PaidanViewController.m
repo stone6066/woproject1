@@ -213,12 +213,12 @@
 
 - (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
 {
-    if (indexPath.item >= 0) {
-        
-        NSLog(@"点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
-    }else {
-        NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
-    }
+//    if (indexPath.item >= 0) {
+//        
+//        NSLog(@"点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
+//    }else {
+//        NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
+//    }
     
     NSDictionary * dict;
     

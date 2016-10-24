@@ -214,11 +214,21 @@
 
 -(void)myclickFunc:(UIButton*)btn{
     switch (btn.tag) {
-        case 200://添加第一个图片
+        case 200://添加第1个图片
             self.imgTag = btn.tag;
             [self presentViewController:self.alert animated:YES completion:nil];
             break;
-            
+        case 201://添加第2个图片
+            self.imgTag = btn.tag;
+            [self presentViewController:self.alert animated:YES completion:nil];
+            break;
+        case 202://添加第3个图片
+            self.imgTag = btn.tag;
+            [self presentViewController:self.alert animated:YES completion:nil];
+            break;
+        case 203:
+            [self upLoadHelpTickInofo];
+            break;
         default:
             break;
     }
@@ -333,18 +343,34 @@
 {
     [self.paramsDic setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
     [self.paramsDic setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
+    [self.paramsDic setObject:_memoResion.text forKey:@"result"];
+    [self.paramsDic setObject:_listId forKey:@"tid"];
+    [self.paramsDic setObject:@"7" forKey:@"operation"];
+    [self.paramsDic setObject:_operationUserBox.job_id forKey:@"job_id"];
+    [self.paramsDic setObject:_operationUserBox.data_id forKey:@"user_id"];
+    
     return self.paramsDic;
 }
-- (void)ConfirmRepairAction:(UIButton *)sender
+//- (void)ConfirmRepairAction:(UIButton *)sender
+-(void)upLoadHelpTickInofo
 {
     //[self.rView.describeTextView resignFirstResponder];
     NSDictionary *params = [self getParams];
-    if (!params[@"fault_desc"]) {
-        [stdPubFunc stdShowMessage:@"请填写描述"];
+    if (!params[@"job_id"]) {
+        [stdPubFunc stdShowMessage:@"请填写工种"];
         return;
     }
+    if (!params[@"user_id"]) {
+        [stdPubFunc stdShowMessage:@"请填写接单人"];
+        return;
+    }
+    if (!params[@"result"]) {
+        [stdPubFunc stdShowMessage:@"请填写原因"];
+        return;
+    }
+
     NSLog(@"%@", params);
-    NSString *urlStr = [NSString stringWithFormat:@"%@support/ticket/forRepairs", BaseUrl];
+    NSString *urlStr = [NSString stringWithFormat:@"%@support/ticket/forTicketFlow", BaseUrl];
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     
@@ -366,11 +392,11 @@
                 [SVProgressHUD dismiss];
                 [stdPubFunc stdShowMessage:msg];
                 NSLog(@"======== %@", jsonDic);
-                NSString *cid = jsonDic[@"i"][@"Data"][@"id"];
+                //NSString *cid = jsonDic[@"i"][@"Data"][@"id"];
                 NSString *imgUrl = [NSString stringWithFormat:@"%@support/sys/forUpLoading", BaseUrl];
                 imgUrl = [imgUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 [self.imgArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:imgUrl parameters:@{@"tid":cid,@"status":@"-1",} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:imgUrl parameters:@{@"tid":_listId,@"status":@"7",} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                         
                         
                         NSString *name =[NSString stringWithFormat:@"image_ios_img_%ld.png",idx];

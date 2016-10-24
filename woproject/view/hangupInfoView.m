@@ -43,7 +43,7 @@
         _userId=[[UILabel alloc]init];
         _deptIdTitle=[[UILabel alloc]init];
         _deptId=[[UILabel alloc]init];
-        
+        _hangupReson=[[UILabel alloc]init];
         
         
         [self stdInitLab:_operationTimeTitle labFrame:CGRectMake(fisttLbX, firstLbY, labWidthTitle, labHeigh)];
@@ -61,15 +61,47 @@
         [self stdInitLab:_operationTime labFrame:CGRectMake(secondLbX, firstLbY, labWidth, labHeigh)];
         
         [self stdInitLab:_userId labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY, labWidth, labHeigh)];
-        [self stdInitLab:_deptId labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY*2, labWidth, labHeigh)];
-        [self stdInitLab:_hangupReson labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY*3, labWidth, labHeigh)];
+//        [self stdInitLab:_deptId labFrame:CGRectMake(secondLbX, firstLbY+spritePaceY*2, labWidth, labHeigh)];
+        [self stdInitLab:_hangupReson labFrame:CGRectMake(fisttLbX, firstLbY+spritePaceY*3, labWidth, labHeigh)];
         _hangupReson.numberOfLines=0;//多行显示
+        if (!_phonebtn) {
+            _phonebtn=[[UIButton alloc]initWithFrame:CGRectMake(fDeviceWidth-60, firstLbY+spritePaceY*2, 50, 50)];
+            [_phonebtn addTarget:self action:@selector(btnCallFunc:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [_phonebtn setImage:[UIImage imageNamed:@"tel"] forState:UIControlStateNormal];
+            _phonebtn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+            _phonebtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            [self addSubview:_phonebtn];
+        }
         
         
     }
     return self;
 }
 
+-(void)btnCallFunc:(UIButton*)btn{
+    if (_operationPhone) {
+        UIAlertView *myalert=[[UIAlertView alloc]initWithTitle:_operationPhone message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+        [myalert show];
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:{//取消
+            
+        }break;
+        case 1:{//呼叫
+            
+            NSString * telStr=[NSString stringWithFormat:@"%@%@",@"tel://",alertView.title];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telStr]];
+        }break;
+            
+        default:
+            break;
+    }
+}
 
 -(void)stdInitLab:(UILabel*)stdLab labFrame:(CGRect)labF{
     stdLab.frame=labF;
@@ -83,10 +115,13 @@
 -(void)asignDataToLab:(ticketFlowInfo*)modelData{
     @try {
         _operationTime.text=[self stdTimeToStr:modelData.operationTime];
-        _userId.text=modelData.userId;
+        _userId.text=modelData.operationUser;
         _deptId.text=modelData.jobName;
         _hangupReson.text=modelData.result;
         _operationPhone=modelData.operationPhone;
+        _operationPhone=modelData.operationPhone;
+        _imgArr=modelData.imageList;
+        [self setImgBtn:_imgArr];
         
     } @catch (NSException *exception) {
         NSLog(@"结构不对爆炸了");
@@ -100,5 +135,44 @@
     NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
     [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     return [objDateformat stringFromDate: date];
+}
+
+
+-(void)setImgBtn:(NSMutableArray*)imgList{
+    CGFloat firstLbX=15;//第一个lab的y
+    CGFloat offsetX=45;
+    NSInteger i=0;
+    @try {
+        for (NSString* imgUrl in imgList) {
+            
+            UIImageView *imgView=[[UIImageView alloc]initWithFrame:CGRectMake(firstLbX+offsetX*i, _hangupReson.frame.origin.y+_hangupReson.frame.size.height+5, 40, 40)];
+            [imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+            
+            UIButton *imgBtn=[[UIButton alloc]initWithFrame:CGRectMake(firstLbX+offsetX*i, _hangupReson.frame.origin.y+_hangupReson.frame.size.height+5, 40, 40)];
+            imgBtn.tag=i;
+            i++;
+            
+            [imgBtn addTarget:self action:@selector(imagbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:imgView];
+            [self addSubview:imgBtn];
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"imglist为空");
+    } @finally {
+        ;
+    }
+}
+-(void)imagbtnClick:(UIButton*)btn{
+    NSString *imgUrl=@"";
+    @try {
+        imgUrl=_imgArr[btn.tag];
+        [self.stdHangUpImgDelegate stdHangUpClickDelegate:imgUrl];
+        
+    } @catch (NSException *exception) {
+        
+    } @finally {
+        NSLog(@"imagbtnClick:%@",imgUrl);
+    }
+    
 }
 @end

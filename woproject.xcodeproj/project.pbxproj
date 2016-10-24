@@ -77,6 +77,9 @@
 		892298C71DB9F9670053ECB1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892298C61DB9F9670053ECB1 /* CoreFoundation.framework */; };
 		892298C91DB9F9BE0053ECB1 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892298C81DB9F9BE0053ECB1 /* UserNotifications.framework */; };
 		892298CB1DB9F9D60053ECB1 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 892298CA1DB9F9D60053ECB1 /* libresolv.tbd */; };
+		893339A91DBDAD1000B2AFAC /* ShowImgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 893339A81DBDAD1000B2AFAC /* ShowImgViewController.m */; };
+		893339AB1DBDCFDC00B2AFAC /* tel.png in Resources */ = {isa = PBXBuildFile; fileRef = 893339AA1DBDCFDC00B2AFAC /* tel.png */; };
+		893339AD1DBDF68100B2AFAC /* new.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 893339AC1DBDF68100B2AFAC /* new.jpg */; };
 		894752BA1DB85BCC00C32394 /* hangupInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752B91DB85BCC00C32394 /* hangupInfoView.m */; };
 		894752BD1DB85F5A00C32394 /* backOrderViewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BC1DB85F5A00C32394 /* backOrderViewInfo.m */; };
 		894752C01DB8661700C32394 /* backAndHangUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BF1DB8661700C32394 /* backAndHangUpViewController.m */; };
@@ -360,6 +363,10 @@
 		892298C81DB9F9BE0053ECB1 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		892298CA1DB9F9D60053ECB1 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		892298CC1DB9FAB10053ECB1 /* woproject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = woproject.entitlements; sourceTree = "<group>"; };
+		893339A71DBDAD1000B2AFAC /* ShowImgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowImgViewController.h; sourceTree = "<group>"; };
+		893339A81DBDAD1000B2AFAC /* ShowImgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowImgViewController.m; sourceTree = "<group>"; };
+		893339AA1DBDCFDC00B2AFAC /* tel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tel.png; sourceTree = "<group>"; };
+		893339AC1DBDF68100B2AFAC /* new.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = new.jpg; sourceTree = "<group>"; };
 		894752B81DB85BCC00C32394 /* hangupInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hangupInfoView.h; sourceTree = "<group>"; };
 		894752B91DB85BCC00C32394 /* hangupInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hangupInfoView.m; sourceTree = "<group>"; };
 		894752BB1DB85F5A00C32394 /* backOrderViewInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backOrderViewInfo.h; sourceTree = "<group>"; };
@@ -1029,6 +1036,8 @@
 				89FBEED71DAA3660008FBB8A /* HomeViewController.m */,
 				89EAA8BF1DAE03270043BE53 /* DownLoadBaseData.h */,
 				89EAA8C01DAE03270043BE53 /* DownLoadBaseData.m */,
+				893339A71DBDAD1000B2AFAC /* ShowImgViewController.h */,
+				893339A81DBDAD1000B2AFAC /* ShowImgViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -1036,6 +1045,8 @@
 		89FBEEE31DAA3CD5008FBB8A /* image */ = {
 			isa = PBXGroup;
 			children = (
+				893339AC1DBDF68100B2AFAC /* new.jpg */,
+				893339AA1DBDCFDC00B2AFAC /* tel.png */,
 				894752D71DB8B27100C32394 /* downArrow.png */,
 				8964287A1DB4BC45001203A7 /* baoxiujiahao.png */,
 				899C899F1DAD101A0073794E /* cancle.png */,
@@ -1317,6 +1328,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				893339AD1DBDF68100B2AFAC /* new.jpg in Resources */,
 				89F61E581DACAB5B00E9B489 /* NOTEPAD-OK@2x.png in Resources */,
 				89F61E631DACAB5B00E9B489 /* wd_icon01.png in Resources */,
 				89F61E6B1DACAB5B00E9B489 /* wd_icon03@3x.png in Resources */,
@@ -1389,6 +1401,7 @@
 				894752D81DB8B27100C32394 /* downArrow.png in Resources */,
 				899C89AC1DAD209F0073794E /* icon_chose_arrow_nor@2x.png in Resources */,
 				89F61E681DACAB5B00E9B489 /* wd_icon02@3x.png in Resources */,
+				893339AB1DBDCFDC00B2AFAC /* tel.png in Resources */,
 				89F61E4D1DACAB5B00E9B489 /* kshsj_icon05@3x.png in Resources */,
 				89F61E4B1DACAB5B00E9B489 /* kshsj_icon05.png in Resources */,
 				58F011291DB206230051D044 /* nhfx_red.png in Resources */,
@@ -1549,6 +1562,7 @@
 				89EAA8C91DAE2D870043BE53 /* ticketListTableViewCell.m in Sources */,
 				58F011571DB2067F0051D044 /* HARootScrollView.m in Sources */,
 				89EAA8C11DAE03270043BE53 /* DownLoadBaseData.m in Sources */,
+				893339A91DBDAD1000B2AFAC /* ShowImgViewController.m in Sources */,
 				89FB40781DAF34C000E95134 /* ticketInfoViewController.m in Sources */,
 				58F011151DB205E30051D044 /* RepairViewController.m in Sources */,
 				89A4B1001DB1D88D004EF914 /* daochangInfoView.m in Sources */,
