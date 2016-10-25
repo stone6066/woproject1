@@ -625,6 +625,7 @@
                                               NSLog(@"全部传完");
                                               [SVProgressHUD dismiss];
                                               [stdPubFunc stdShowMessage:@"上传完毕"];
+                                              [self.navigationController popViewControllerAnimated:YES];
                                           }
                                           
                                       }

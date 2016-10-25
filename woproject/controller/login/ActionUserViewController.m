@@ -168,7 +168,7 @@
     
 }
 
-//登录
+//激活
 -(void)ActionNetFuc:(NSString*)usr passWord:(NSString*)psw{
     [SVProgressHUD showWithStatus:k_Status_Load];
     
