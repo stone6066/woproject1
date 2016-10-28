@@ -20,7 +20,7 @@
 #import "DownLoadBaseData.h"
 #import "VisualizationController.h"
 #import "listNum.h"
-
+#import "JPUSHService.h"
 @interface HomeViewController ()
 @property (nonatomic, strong) MAMapView *mapView;
 @property (nonatomic, strong) AMapSearchAPI *search;
@@ -34,6 +34,7 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(drawHome) name:@"drawHome" object:nil];
     [self initMapView];
+    [self stdInitNotification];
     // Do any additional setup after loading the view.
 }
 
@@ -70,7 +71,7 @@
             [self drawMainView];
             [self downDictData];
             [self loadListNum];
-            
+             [self stdSetAlias];
         };
         [[NSNotificationCenter defaultCenter] postNotificationName:@"isLogin" object:nil];
         self.hidesBottomBarWhenPushed = YES;
@@ -410,4 +411,213 @@
 
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NotificationJiguang
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NotificationLogout
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NotificationTicketTurn
+                                                  object:nil];
+}
+
+-(void)stdInitNotification{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateTikeNum:)
+                                                 name:NotificationJiguang
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(logout:)
+                                                 name:NotificationLogout
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(turnTicketFunc:)
+                                                 name:NotificationTicketTurn
+                                               object:nil];
+}
+- (void)updateTikeNum:(NSNotification *) noti
+{
+    NSString *mystr=[noti.object stringByReplacingOccurrencesOfString:@"\\\"" withString:@""];
+    NSDictionary *tmpdict=[self dictionaryWithJsonString:mystr];
+    NSDictionary *content = [tmpdict valueForKey:@"title"];
+    
+    NSString *receivedCount=[content objectForKey:@"receivedCount"];
+    if (![receivedCount isEqualToString:@"-1"]) {
+        ApplicationDelegate.mylistNum.receivedCount=[content objectForKey:@"receivedCount"];
+    }
+    NSString *assignCount=[content objectForKey:@"assignCount"];
+    if (![assignCount isEqualToString:@"-1"]) {
+        ApplicationDelegate.mylistNum.assignCount=[content objectForKey:@"assignCount"];
+    }
+    NSString *notRepairsCount=[content objectForKey:@"notRepairsCount"];
+    if (![notRepairsCount isEqualToString:@"-1"]) {
+        ApplicationDelegate.mylistNum.notRepairsCount=[content objectForKey:@"notRepairsCount"];
+    }
+    NSString *publicCount=[content objectForKey:@"publicCount"];
+    if (![publicCount isEqualToString:@"-1"]) {
+        ApplicationDelegate.mylistNum.receivedCount=[content objectForKey:@"publicCount"];
+    }
+    NSString *ticketCount=[content objectForKey:@"ticketCount"];
+    if (![ticketCount isEqualToString:@"-1"]) {
+        ApplicationDelegate.mylistNum.ticketCount=[content objectForKey:@"ticketCount"];
+    }
+
+    NSString *repairsCount=[content objectForKey:@"repairsCount"];
+    if (![repairsCount isEqualToString:@"-1"]) {
+        ApplicationDelegate.mylistNum.repairsCount=[content objectForKey:@"repairsCount"];
+    }
+    
+    NSString *sendCount=[content objectForKey:@"sendCount"];
+    if (![sendCount isEqualToString:@"-1"]) {
+        ApplicationDelegate.mylistNum.sendCount=[content objectForKey:@"sendCount"];
+    }
+
+    NSString *ticketCountDay=[content objectForKey:@"ticketCountDay"];
+    if (![ticketCountDay isEqualToString:@"-1"]) {
+        ApplicationDelegate.mylistNum.ticketCountDay=[content objectForKey:@"ticketCountDay"];
+    }
+
+    [self refreshListNum];
+    
+    
+    
+}
+
+
+/*!
+ * @brief 把格式化的JSON格式的字符串转换成字典
+ * @param jsonString JSON格式的字符串
+ * @return 返回字典
+ */
+-(NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
+
+-(void)stdSetAlias{
+    [JPUSHService setAlias:ApplicationDelegate.myLoginInfo.Id
+          callbackSelector:@selector(tagsAliasCallback:tags:alias:)
+                    object:self];
+    
+}
+- (void)tagsAliasCallback:(int)iResCode
+                     tags:(NSSet *)tags
+                    alias:(NSString *)alias {
+    NSString *callbackString =
+    [NSString stringWithFormat:@"%d, \ntags: %@, \nalias: %@\n", iResCode,
+     [self logSet:tags], alias];
+    NSLog(@"TagsAlias回调:%@", callbackString);
+}
+
+// log NSSet with UTF8
+// if not ,log will be \Uxxx
+- (NSString *)logSet:(NSSet *)dic {
+    if (![dic count]) {
+        return nil;
+    }
+    NSString *tempStr1 =
+    [[dic description] stringByReplacingOccurrencesOfString:@"\\u"
+                                                 withString:@"\\U"];
+    NSString *tempStr2 =
+    [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSString *tempStr3 =
+    [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
+    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *str =
+    [NSPropertyListSerialization propertyListFromData:tempData
+                                     mutabilityOption:NSPropertyListImmutable
+                                               format:NULL
+                                     errorDescription:NULL];
+    return str;
+}
+
+
+
+
+-(void)logout:(NSNotification *) noti{
+    NSString *mystr=noti.object;//[ stringByReplacingOccurrencesOfString:@"\\\"" withString:@""];
+    
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/logout"];
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    if (!mystr) {
+        return;
+    }
+    NSLog(@"ApplicationDelegate.myLoginInfo.Id:%@",mystr);
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:@{@"id":mystr}
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              [SVProgressHUD showSuccessWithStatus:@"退出成功"];
+                                              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                  //成功
+                                                  LoginViewController *vc = [[LoginViewController alloc]init];
+                                                  vc.loginSuccBlock = ^(LoginViewController *aqrvc){
+                                                      NSLog(@"login_suc");
+                                                      ApplicationDelegate.isLogin = YES;
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"rootvc" object:nil];
+                                                  };
+                                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"isLogin" object:nil];
+                                                  self.hidesBottomBarWhenPushed = YES;
+                                                  [self.navigationController pushViewController:vc animated:NO];
+                                                  self.hidesBottomBarWhenPushed = NO;
+                                              });
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                  }];
+    
+}
+
+-(void)turnTicketFunc:(NSNotification *) noti{
+    NSString *tikectType=noti.object;
+    if ([tikectType isEqualToString:@"2"]) {
+        [self clickzd];
+    }
+    else if([tikectType isEqualToString:@"0"]) {
+        [self clickpd];
+    }
+    else if([tikectType isEqualToString:@"1"]) {
+        [self clickgg];
+    }
+
+}
 @end

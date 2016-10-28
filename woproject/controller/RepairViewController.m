@@ -139,6 +139,10 @@
                 [SVProgressHUD dismiss];
                 [stdPubFunc stdShowMessage:msg];
                 NSLog(@"======== %@", jsonDic);
+                if (self.imgArray.count<1) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                    return ;
+                }
                 NSString *cid = jsonDic[@"i"][@"Data"][@"id"];
                 NSString *imgUrl = [NSString stringWithFormat:@"%@support/sys/forUpLoading", BaseUrl];
                 imgUrl = [imgUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

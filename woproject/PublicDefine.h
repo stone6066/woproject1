@@ -89,6 +89,9 @@
 #define NSUserDefaultsTypeInfo @"TypeInfo"
 #define NSUserDefaultsTypeName @"TypeName"
 #define DefaultsImage @"noPic"
+#define NotificationJiguang @"jiguangMessage"
+#define NotificationLogout @"NotificationLogout"
+#define NotificationTicketTurn @"NotificationTicketTurn"
 
 #define HomeAdUrl1 @"http://img-ta-01.b0.upaiyun.com/14609471436342429.jpg"
 #define HomeAdUrl2 @"http://img-ta-01.b0.upaiyun.com/14609471436342429.jpg"

@@ -39,5 +39,7 @@ static BOOL isProduction = FALSE;
 @property (assign, nonatomic) BOOL isRmbPsw;//是否记住密码
 @property (strong, nonatomic) loginInfo *myLoginInfo;
 @property (strong, nonatomic) listNum *mylistNum;//各种工单数量，登陆成功后，取一次
+@property(nonatomic,copy)NSString *logoutUid;
+@property(nonatomic,copy)NSString *Msgtype;//推送的消息类型
 @end
 

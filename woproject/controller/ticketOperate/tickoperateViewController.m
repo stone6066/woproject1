@@ -583,7 +583,10 @@
                 [stdPubFunc stdShowMessage:msg];
                 NSLog(@"======== %@", jsonDic);
                 //NSString *cid = jsonDic[@"i"][@"Data"][@"id"];
-               
+                if (self.imgArray.count<1) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                    return ;
+                }
                 NSString *imgUrl = [NSString stringWithFormat:@"%@support/sys/forUpLoading", BaseUrl];
                 imgUrl = [imgUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 [self.imgArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

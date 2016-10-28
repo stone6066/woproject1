@@ -330,15 +330,90 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
     
     NSDictionary *userInfo = [notification userInfo];
-    NSString *title = [userInfo valueForKey:@"title"];
-    NSString *content = [userInfo valueForKey:@"content"];
-    NSDictionary *extra = [userInfo valueForKey:@"extras"];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-    NSLog(@"%@",notification);
+    NSString *content = [userInfo valueForKey:@"content"];
+    
+    NSString *mystr=[content stringByReplacingOccurrencesOfString:@"\\\"" withString:@""];
+    NSDictionary *tmpdict=[self dictionaryWithJsonString:mystr];
+    _Msgtype = [tmpdict objectForKey:@"type"];
+    
+    NSLog(@"自定义消息userInfo:%@",userInfo);
+    NSLog(@"mytype:%@",_Msgtype);
+    
+    if ([_Msgtype isEqualToString:@"4"]) {//工单数目变化
+        [[NSNotificationCenter defaultCenter] postNotificationName:NotificationJiguang
+                                                            object:content];
+        
+    }
+    else if ([_Msgtype isEqualToString:@"3"]) {//单点登录
+        NSDictionary *dicttmp=[tmpdict objectForKey:@"title"];
+        _logoutUid=[dicttmp objectForKey:@"uid"];
+        [JPUSHService setAlias:@"" callbackSelector:nil object:self];//解除setAlias绑定
+        [self singleLogin];
+    }
+    else{
+        [self tiketInfoTurn:@"您有新工单请查看"];
+    
+    }
+}
+/*!
+ * @brief 把格式化的JSON格式的字符串转换成字典
+ * @param jsonString JSON格式的字符串
+ * @return 返回字典
+ */
+-(NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
 }
 
+-(void)singleLogin{
+        UIAlertView *alert =
+        [[UIAlertView alloc] initWithTitle:@"该账号已在其他设备登录"
+                                   message:@"请退出当前账号"
+                                  delegate:self
+                         cancelButtonTitle:@"确定"
+                         otherButtonTitles:nil, nil];
+        [alert show];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:{//
+            if ([_Msgtype isEqualToString:@"3"]) {//单点登录
+                [[NSNotificationCenter defaultCenter] postNotificationName:NotificationLogout
+                                                                    object:_logoutUid];
+            }
+            else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NotificationTicketTurn
+                                                                    object:_Msgtype];
+            }
+        }break;
+        default:
+            break;
+    }
+}
 
+-(void)tiketInfoTurn:(NSString*)thint{
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:thint
+                               message:@"确定查看"
+                              delegate:self
+                     cancelButtonTitle:@"确定"
+                     otherButtonTitles:@"取消", nil];
+    [alert show];
+
+}
 
 @end
