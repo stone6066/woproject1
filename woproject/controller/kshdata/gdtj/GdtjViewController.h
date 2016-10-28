@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface GdtjViewController : BaseViewController<PNChartDelegate>
+@interface GdtjViewController : BaseViewController
 
 @end

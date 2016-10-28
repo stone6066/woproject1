@@ -8,15 +8,18 @@
 
 #import "BaseViewController.h"
 
-@interface BaseViewController () <DOPDropDownMenuDataSource,DOPDropDownMenuDelegate, UITableViewDelegate>
-@property (nonatomic, strong) NSArray *classifys;
-@property (nonatomic, strong) NSArray *cates;
-@property (nonatomic, strong) NSArray *movices;
-@property (nonatomic, strong) NSArray *hostels;
-@property (nonatomic, strong) NSArray *areas;
+@interface BaseViewController () <DOPDropDownMenuDataSource,DOPDropDownMenuDelegate, UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) NSMutableArray *classifys;
 
-@property (nonatomic, strong) NSArray *sorts;
+@property (nonatomic, strong) NSMutableArray *areas;
+
+@property (nonatomic, strong) NSMutableArray *sorts;
 @property (nonatomic, weak) DOPDropDownMenu *menu;
+
+@property(nonatomic,strong)NSArray *forProjectList;//项目列表
+@property(nonatomic,strong)NSArray *forCityList;//省
+
+
 
 @property (nonatomic, strong) UIView *toptView;
 
@@ -27,6 +30,7 @@
 
 @property (nonatomic, strong) UIButton *dateListBt;
 
+@property (nonatomic, strong) NSDictionary *tempProStr;
 
 @end
 
@@ -44,7 +48,10 @@
     _projectIdStr = @"";
     _provinceIdStr = @"";
     _cityIdStr = @"";
-
+    _classifys = [NSMutableArray arrayWithCapacity:0];
+    _sorts = [NSMutableArray arrayWithCapacity:0];
+    _areas = [NSMutableArray arrayWithCapacity:0];
+   
 }
 
 - (void)manuallyProperties {
@@ -66,6 +73,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
     self.view.backgroundColor = RGB(240, 240, 240);
     [self manuallyProperties];
     [self gsHandleData];
@@ -103,7 +111,7 @@
     [_toptView addSubview:hintLbl];
     
     _dateListBt = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_dateListBt setFrame:CGRectMake(UISCREENWIDTH - 60, 28, 50, 25)];
+    [_dateListBt setFrame:CGRectMake(fDeviceWidth - 60, 28, 50, 25)];
     [_dateListBt addTarget:self action:@selector(showList) forControlEvents:UIControlEventTouchUpInside];
     _dateListBt.hidden = !_dateListShow;
     _dateListBt.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -167,7 +175,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 22;
+    return 25;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -194,12 +202,22 @@
 }
 
 -(void)stdVarsInit{
-    self.classifys = @[@"美食",@"今日新单",@"电影",@"酒店"];
-    self.cates = @[@"自助餐",@"快餐",@"火锅",@"日韩料理",@"西餐",@"烧烤小吃"];
-    self.movices = @[@"内地剧",@"港台剧",@"英美剧"];
-    self.hostels = @[@"经济酒店",@"商务酒店",@"连锁酒店",@"度假酒店",@"公寓酒店"];
-    self.areas = @[@"全城",@"芙蓉区",@"雨花区",@"天心区",@"开福区",@"岳麓区"];
-    self.sorts = @[@"默认排序",@"离我最近",@"好评优先",@"人气优先",@"最新发布"];
+    _forCityList = [DownLoadBaseData readBaseData:@"forCity.plist"];
+    [_classifys addObject:@"目标省份"];
+    
+    for (NSDictionary *dict in _forCityList) {
+        NSString *names=[dict objectForKey:@"name"];
+        [_classifys addObject:names];
+    }
+    
+    _forProjectList= [DownLoadBaseData readBaseData:@"forProjectList.plist"];
+    [_sorts addObject:@"项目名称"];
+    for (NSDictionary * dict in _forProjectList) {
+        NSString *names=[dict objectForKey:@"name"];
+        [_sorts addObject:names];
+    }
+    
+    [_areas addObject:@"全城"];
     
     // 添加下拉菜单
     DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 64) andHeight:44];
@@ -231,6 +249,7 @@
 
 - (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath
 {
+    
     if (indexPath.column == 0) {
         return self.classifys[indexPath.row];
     } else if (indexPath.column == 1){
@@ -263,7 +282,7 @@
 - (NSString *)menu:(DOPDropDownMenu *)menu detailTextForRowAtIndexPath:(DOPIndexPath *)indexPath
 {
     if (indexPath.column < 2) {
-        return [@(arc4random()%1000) stringValue];
+//        return [@(arc4random()%1000) stringValue];
     }
     return nil;
 }
@@ -301,11 +320,92 @@
     return nil;
 }
 
+
+
 - (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
 {
+    
     if (indexPath.item >= 0) {
-        NSLog(@"点击了 %ld - %ld - %ld 项目",indexPath.column,indexPath.row,indexPath.item);
+        
     }else {
+        
+        switch (indexPath.column) {
+            case 0: {
+                
+                
+
+                if (indexPath.row !=0) {
+                    NSDictionary *dic = _forCityList[indexPath.row -1];
+                    
+                    if (_areas.count > 0) {
+                        [_areas removeAllObjects];
+                    }
+                    [_areas addObject:@"全城"];
+                    
+                    for (NSDictionary *dict in dic[@"city"]) {
+                        NSString *names=[dict objectForKey:@"name"];
+                        [self.areas addObject:names];
+                    }
+                    
+//                    if (_tempStr.length ==0) {
+//                        _tempStr =  dic[@"name"];
+//                    } else {
+//                        if ([_tempStr isEqualToString:dic[@"name"]]) {
+//                            
+//                        } else {
+//                                                        _tempStr = dic[@"name"];
+//                        }
+//                    }
+//                    
+//                                       NSLog(@"%@", dic[@"name"]);
+                    _provinceIdStr = dic[@"id"];
+                    _tempProStr = dic;
+                } else {
+                    if (_areas.count > 0) {
+                        [_areas removeAllObjects];
+                    }
+                    [_areas addObject:@"全城"];
+                    _provinceIdStr = @"";
+                   
+                    _cityIdStr = @"";
+                }
+ 
+            }
+                
+                break;
+            case 1: {
+                
+                if (indexPath.row !=0) {
+                    NSDictionary *dic = _tempProStr[@"city"][indexPath.row - 1];
+
+                    if (_provinceIdStr.length > 0) {
+                        if ([dic[@"parentId"] isEqualToString:_provinceIdStr]) {
+                            _cityIdStr = dic[@"id"];
+                        }
+                    } else {
+                        [SVProgressHUD showInfoWithStatus:@"请先选择省份"];
+                        return;
+                    }
+                    
+                } else {
+                    _cityIdStr = @"";
+                }
+            }
+                
+                break;
+            case 2:
+                
+                break;
+            default:
+                break;
+        }
+    
+        NSLog(@"%@", _areas);
+        
+        
+        
+        [self gsHandleData];
+        
         NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
     }
 }

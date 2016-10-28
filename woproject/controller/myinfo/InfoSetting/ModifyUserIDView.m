@@ -42,7 +42,7 @@
 - (void)setUserID:(NSString *)userID
 {
     _userID = userID;
-    _userIDFD.text = userID;
+    _userIDFD.text = [userID isKindOfClass:[NSNull class]]?@"":userID;
     if (userID.length > 0) {
         _saveButton.enabled = YES;
         _saveButton.backgroundColor = RGB(22, 125, 250);

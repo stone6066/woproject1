@@ -9,6 +9,7 @@
 #import "RepairViewController.h"
 #import "RepairView.h"
 #import "stdPubFunc.h"
+#import "MyRepairVC.h"
 
 @interface RepairViewController ()
 <
@@ -40,6 +41,12 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)clearUI
+{
+    [self.imgArray removeAllObjects];
+    [self.rView clearUI];
+}
+
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -55,78 +62,6 @@
     return self;
 }
 
-- (void)selectedItem:(NSInteger)type
-{
-    [SVProgressHUD showWithStatus:k_Status_Load];
-    NSString *str = @"";
-    switch (type) {
-        case 0:
-            str = @"support/ticket/forProjectList";
-            break;
-        case 1:
-            str = @"support/ticket/forFaultSyetem";
-            break;
-        case 2:
-            str = @"support/ticket/forDeviceType";
-            break;
-    }
-    NSString *urlstr = [NSString stringWithFormat:@"%@%@", BaseUrl, str];
-    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSMutableDictionary *dict = @{}.mutableCopy;
-    [dict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
-    [dict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
-    [ApplicationDelegate.httpManager POST:urlstr parameters:dict progress:^(NSProgress * _Nonnull uploadProgress) {} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //http请求状态
-        if (task.state == NSURLSessionTaskStateCompleted) {
-            NSError* error;
-            NSDictionary* jsonDic = [NSJSONSerialization
-                                     JSONObjectWithData:responseObject
-                                     options:kNilOptions
-                                     error:&error];
-            
-            NSString *suc=[jsonDic objectForKey:@"s"];
-            NSString *msg=[jsonDic objectForKey:@"m"];
-            //
-            if ([suc isEqualToString:@"0"]) {
-                //成功
-                
-                [SVProgressHUD dismiss];
-                [stdPubFunc stdShowMessage:msg];
-                NSArray *arr = jsonDic[@"i"][@"Data"];
-                switch (type) {
-                    case 0:
-                    {
-                        NSArray *array = [NSArray yy_modelArrayWithClass:[PNModel class] json:arr];
-                        self.rView.dataArray = array;
-                    }
-                        break;
-                    case 1:
-                    {
-                        NSArray *array = [NSArray yy_modelArrayWithClass:[FSModel class] json:arr];
-                        self.rView.dataArray = array;
-                    }
-                        break;
-                    case 2:
-                    {
-                        NSArray *array = [NSArray yy_modelArrayWithClass:[DTModel class] json:arr];
-                        self.rView.dataArray = array;
-                    }
-                        break;
-                }
-                NSLog(@"======== %@", jsonDic);
-                
-            } else {
-                //失败
-                [SVProgressHUD showErrorWithStatus:msg];
-            }
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus:k_Error_Network];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [SVProgressHUD showErrorWithStatus:k_Error_Network];
-    }];
-}
 #pragma mark Action
 - (void)openPhotosAndCamera:(UIButton *)button
 {
@@ -208,41 +143,60 @@
                 NSString *imgUrl = [NSString stringWithFormat:@"%@support/sys/forUpLoading", BaseUrl];
                 imgUrl = [imgUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 [self.imgArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    NSMutableDictionary *imgParams = [NSMutableDictionary dictionary];
-                    [imgParams setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"tid"];
-                    [imgParams setObject:@"-1" forKey:@"status"];
-                    [imgParams setObject:obj forKey:@"image_stream"];
-                    [ApplicationDelegate.httpManager POST:imgUrl parameters:imgParams progress:^(NSProgress * _Nonnull uploadProgress) {} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                        //http请求状态
-                        if (task.state == NSURLSessionTaskStateCompleted) {
-                            NSError* error;
-                            NSDictionary* jsonDic = [NSJSONSerialization
-                                                     JSONObjectWithData:responseObject
-                                                     options:kNilOptions
-                                                     error:&error];
+                        NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:imgUrl parameters:@{@"tid":cid,@"status":@"-1",} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                             
-                            NSString *suc=[jsonDic objectForKey:@"s"];
-                            NSString *msg=[jsonDic objectForKey:@"m"];
-                            //
-                            if ([suc isEqualToString:@"0"]) {
-                                //成功
-                                
-                                [SVProgressHUD dismiss];
-                                [stdPubFunc stdShowMessage:@"上传图片成功"];
-                                NSLog(@"======== %@", jsonDic);
-                                
-                            } else {
-                                //失败
-                                [SVProgressHUD showErrorWithStatus:msg];
-                            }
                             
-                        } else {
-                            [SVProgressHUD showErrorWithStatus:k_Error_Network];
-                        }
-                    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                        [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                NSString *name =[NSString stringWithFormat:@"image_ios_img_%ld.png",idx];
+                                
+                                NSString *type = @"image/jpeg";
+                                
+                                [formData appendPartWithFileData:self.imgArray[idx] name:@"image_stream" fileName:name mimeType:type];
+                        } error:nil];
+
+                        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+                        
+                        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+                        
+                        
+                        NSURLSessionUploadTask *uploadTask;
+                        uploadTask = [manager
+                                      uploadTaskWithStreamedRequest:request
+                                      progress:^(NSProgress * _Nonnull uploadProgress) {
+                                          [SVProgressHUD showWithStatus:k_Status_Upload];
+
+                                      }
+                                      completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                                          
+                                          if (error) {
+                                              [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                              
+                                          } else {
+                                              
+                                              id  dict_data = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
+                                              NSLog(@"%@", dict_data);
+                                              if ([dict_data[@"s"] isEqualToString:@"0"]) {
+                                                  [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"第%ld张图片上传成功", idx + 1]];
+                                              }
+                                              if (idx == self.imgArray.count - 1) {
+                                                  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                      MyRepairVC *vc = [[MyRepairVC alloc] init];
+                                                      vc.hidesBottomBarWhenPushed = YES;
+                                                      [self.navigationController pushViewController:vc animated:YES];
+                                                  });
+
+                                              }
+
+                                          }
+                                          
+                                      }];
+                        
+                        [uploadTask resume];
                     }];
-                }];
+                if (self.imgArray.count == 0) {
+                    MyRepairVC *vc = [[MyRepairVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
             } else {
                 //失败
                 [SVProgressHUD showErrorWithStatus:msg];
@@ -269,6 +223,7 @@
     [self.view addSubview:tmpView];
     self.rView.delegate = self;
     [self.rView.repairButton addTarget:self action:@selector(ConfirmRepairAction:) forControlEvents:UIControlEventTouchUpInside];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clearUI) name:@"dismiss" object:nil];
 }
 
 - (UIAlertController *)alert

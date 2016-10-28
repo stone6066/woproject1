@@ -21,8 +21,8 @@
                      clockwise:clockwise
                         shadow:NO
                    shadowColor:[UIColor clearColor]
-          displayCountingLabel:NO
-             overrideLineWidth:@14.0f];
+          displayCountingLabel:YES
+             overrideLineWidth:@8.0f];
     
 }
 

@@ -90,9 +90,6 @@
             dict_data = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
             
         }
-        NSLog(@"%@", dict_data);
-        
-        //        DLOG(@"%d=%@",tag,dict_data);
         
         if ([dict_data[@"m"] isEqualToString:@"成功"]) {
             
@@ -107,7 +104,6 @@
         [SVProgressHUD showInfoWithStatus:error.userInfo[@"NSLocalizedDescription"]];
         
     }];
-
 
 }
 

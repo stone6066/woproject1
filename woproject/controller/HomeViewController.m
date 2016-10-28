@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(drawHome) name:@"drawHome" object:nil];
     [self initMapView];
     // Do any additional setup after loading the view.
 }
@@ -58,7 +59,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"dismiss" object:nil];
     self.navigationController.navigationBar.hidden=YES;
     if (!ApplicationDelegate.isLogin) {
         //显示登录页面
@@ -71,6 +72,7 @@
             [self loadListNum];
             
         };
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"isLogin" object:nil];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:NO];
         self.hidesBottomBarWhenPushed = NO;
@@ -80,12 +82,19 @@
     
 }
 
+- (void)drawHome
+{
+    [self drawMainView];
+    [self downDictData];
+    [self loadListNum];
+}
+
 -(void)downDictData{
     DownLoadBaseData *DLBD=[[DownLoadBaseData alloc]init];
     [DLBD downFaultSystem];
     [DLBD downforProjectList];
     [DLBD downForCity];
-    
+    [DLBD downDeviceType];
     
 }
 

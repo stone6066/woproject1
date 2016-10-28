@@ -7,13 +7,31 @@
 //
 
 #import "EquipmentHealthController.h"
-#import "HACursor.h"
-#import "UIView+Extension.h"
-#import "HATestView.h"
 
-@interface EquipmentHealthController () <PNChartDelegate>
+#import "MaxMinView.h"
+#import "DoubleSlidingContainer.h"
+
+
+
+
+@interface EquipmentHealthController () <SCChartDataSource>
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSMutableArray *pageViews;
+@property (nonatomic, strong) NSMutableArray *yValuesArr;
+@property (nonatomic, strong) NSMutableArray *chartArr;
+
+@property (nonatomic, strong) NSArray *xData;
+@property (nonatomic, strong) NSArray *downDataArr;
+
+#pragma mark -
+#pragma mark baseUI
+
+@property (strong, nonatomic) IBOutlet UILabel *sortInC;
+@property (strong, nonatomic) IBOutlet UILabel *health;
+@property (strong, nonatomic) IBOutlet UILabel *questions;
+@property (strong, nonatomic) IBOutlet UILabel *healthGrade;
+@property (strong, nonatomic) IBOutlet UIImageView *gradeColor;
+
 
 @end
 
@@ -21,141 +39,206 @@
 
 - (void)manuallyProperties {
     [super initFrontProperties];
-    
-    
+    _chartArr = [NSMutableArray arrayWithCapacity:0];
+    _yValuesArr = [NSMutableArray arrayWithCapacity:0];
+    //不允许有重复的标题
+    self.titles = @[@"综合指数列表",@"消防指数列表",@"安防指数列表",@"照明指数列表",@"楼控指数列表"];
+
 }
 
 
 - (void)initUI {
     self.topTitle = @"设备健康度";
     self.dateListShow = YES;
-    [self lineChart];
+    [self setCursor];
 }
 
-- (void)lineChart {
-    UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:view];
-    
-    //不允许有重复的标题
-    self.titles = @[@"综合指数列表",@"消防指数列表",@"安防指数列表",@"照明指数列表",@"楼控指数列表"];
-    
-    HACursor *cursor = [[HACursor alloc]init];
-    cursor.frame = CGRectMake(0, 250, self.view.width, 40);
-    cursor.titles = self.titles;
-    cursor.pageViews = [self createPageViews];
-    //设置根滚动视图的高度
-    cursor.rootScrollViewHeight = 200;
-    
-    //默认值是白色
-    cursor.titleNormalColor = [UIColor lightGrayColor];
-    //默认值是白色
-    cursor.titleSelectedColor = RGB(41, 51, 63);
-    //是否显示排序按钮
-    cursor.showSortbutton = NO;
-    //默认的最小值是5，小于默认值的话按默认值设置
-    cursor.minFontSize = 11;
-    //默认的最大值是25，小于默认值的话按默认值设置，大于默认值按设置的值处理
-    cursor.maxFontSize = 5;
-    //cursor.isGraduallyChangFont = NO;
-    //在isGraduallyChangFont为NO的时候，isGraduallyChangColor不会有效果
-    //cursor.isGraduallyChangColor = NO;
-    [self.view addSubview:cursor];
-    
+- (void)setCursor {
+    DoubleSlidingContainer *doubleSlidingContainer = [[DoubleSlidingContainer alloc] init];
+    [doubleSlidingContainer setFrame:CGRectMake(0, 250, fDeviceWidth, 280)];
+    doubleSlidingContainer.titleArr = self.titles;
+    doubleSlidingContainer.contentArr = [self creatSubViews];
+
+    [self.view addSubview:doubleSlidingContainer];
 
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-      // Do any additional setup after loading the view from its nib.
 }
 
-- (NSMutableArray *)createPageViews{
+- (NSMutableArray *)creatSubViews{
     NSMutableArray *pageViews = [NSMutableArray array];
     for (NSInteger i = 0; i < self.titles.count; i++) {
-    
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH , 300)];
-        PNLineChart *lineChart = [[PNLineChart alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH , 180)];
-        lineChart.yLabelFormat = @"%1.1f";
-        lineChart.backgroundColor = [UIColor clearColor];
-        [lineChart setXLabels:@[@"0", @"1", @"2",@"3", @"4",@"5", @"6",@"7", @"8",@"9", @"10",@"11", @"12",@"13", @"14",@"15", @"16",@"17", @"18",@"19", @"20",@"21", @"22",@"23", @"24",]];
-//        [lineChart setXLabels:@[ @"1", @"2",@"3"]];
-        lineChart.showCoordinateAxis = YES;
+
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH , 235)];
+        SCChart *chartView = [[SCChart alloc] initwithSCChartDataFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width- 10, 185)
+                                                   withSource:self
+                                                    withStyle:SCChartLineStyle];
+        chartView.backgroundColor = [UIColor clearColor];
+        chartView.tag = 100 + i;
+        [chartView showInView:view];
         
-        // added an examle to show how yGridLines can be enabled
-        // the color is set to clearColor so that the demo remains the same
-        lineChart.yGridLinesColor = [UIColor clearColor];
-        lineChart.showYGridLines = YES;
+
+        MaxMinView *maxMinView  = [[MaxMinView alloc] init];
+        [maxMinView setFrame:CGRectMake(fDeviceWidth * 0.05, 190, fDeviceWidth * 0.9, 40)];
+                maxMinView.backgroundColor = RGB(230, 230, 230);
         
-        //Use yFixedValueMax and yFixedValueMin to Fix the Max and Min Y Value
-        //Only if you needed
-        lineChart.yFixedValueMax = 100.0;
-        lineChart.yFixedValueMin = 0.0;
+        [view addSubview:maxMinView];
         
-        [lineChart setYLabels:@[@"0",
-                                @"10",
-                                @"20",
-                                @"30",
-                                @"40",
-                                @"50",
-                                @"60",
-                                @"70", @"80", @"90", @"100"
-                                ]
-         ];
-        
-        // Line Chart #1
-        NSArray * data01Array = @[@10.1, @20.2, @15.3, @19.1, @20.2, @30.3, @17.4];
-        PNLineChartData *data01 = [PNLineChartData new];
-        data01.dataTitle = @"Alpha";
-        data01.color = PNFreshGreen;
-        data01.alpha = 0.3f;
-        data01.itemCount = data01Array.count;
-        data01.inflexionPointColor = PNRed;
-        data01.inflexionPointStyle = PNLineChartPointStyleTriangle;
-        data01.getData = ^(NSUInteger index) {
-            CGFloat yValue = [data01Array[index] floatValue];
-            return [PNLineChartDataItem dataItemWithY:yValue];
-        };
-        
-//        // Line Chart #2
-//        NSArray * data02Array = @[@0.0, @180.1, @26.4, @202.2, @126.2, @167.2, @276.2];
-//        PNLineChartData *data02 = [PNLineChartData new];
-//        data02.dataTitle = @"Beta";
-//        data02.color = PNTwitterColor;
-//        data02.alpha = 0.5f;
-//        data02.itemCount = data02Array.count;
-//        data02.inflexionPointStyle = PNLineChartPointStyleCircle;
-//        data02.getData = ^(NSUInteger index) {
-//            CGFloat yValue = [data02Array[index] floatValue];
-//            return [PNLineChartDataItem dataItemWithY:yValue];
-//        };
-        
-        lineChart.chartData = @[data01];
-        [lineChart strokeChart];
-        lineChart.delegate = self;
-        [view addSubview:lineChart];
-        //        [pageViews addObject:lineChart];
-        //    [self.view addSubview:lineChart];
-        
-        lineChart.legendStyle = PNLegendItemStyleStacked;
-        lineChart.legendFont = [UIFont boldSystemFontOfSize:5.0f];
-        lineChart.legendFontColor = [UIColor redColor];
-        
-        UIView *legend = [lineChart getLegendWithMaxWidth:320];
-        [legend setFrame:CGRectMake(30, 340, legend.frame.size.width, legend.frame.size.width)];
-        [view addSubview:legend];
         [pageViews addObject:view];
     }
+    [_chartArr addObjectsFromArray:pageViews];
+
     return pageViews;
 }
 
 
-- (void)userClickedOnLinePoint:(CGPoint)point lineIndex:(NSInteger)lineIndex {
-    NSLog(@"%ld",lineIndex);
+- (NSArray *)getXTitles:(int)num {
+    return _xData.count > 0 ? _xData :nil;
 }
 
-- (void)userClickedOnLineKeyPoint:(CGPoint)point lineIndex:(NSInteger)lineIndex pointIndex:(NSInteger)pointIndex {
-    
+#pragma mark - @required
+//横坐标标题数组
+- (NSArray *)SCChart_xLableArray:(SCChart *)chart {
+    return [self getXTitles:24];
 }
+
+//数值多重数组
+- (NSArray *)SCChart_yValueArray:(SCChart *)chart {
+  
+    NSMutableArray *ary = [NSMutableArray array];
+
+    if (_yValuesArr.count > 0) {
+        for (NSNumber *i in _yValuesArr[chart.tag - 100]) {
+            [ary addObject:[NSString stringWithFormat:@"%@", i]];
+        }
+    }
+    
+    
+    return ary.count > 0 ? @[ary] : nil;
+
+}
+
+#pragma mark - @optional
+//颜色数组
+- (NSArray *)SCChart_ColorArray:(SCChart *)chart {
+    return @[SCBlue,SCRed,SCGreen];
+}
+
+#pragma mark 折线图专享功能
+//标记数值区域
+- (CGRange)SCChartMarkRangeInLineChart:(SCChart *)chart {
+    return CGRangeZero;
+}
+
+//判断显示横线条
+- (BOOL)SCChart:(SCChart *)chart ShowHorizonLineAtIndex:(NSInteger)index {
+    return YES;
+}
+
+//判断显示最大最小值
+- (BOOL)SCChart:(SCChart *)chart ShowMaxMinAtIndex:(NSInteger)index {
+    return NO;
+}
+
+
+#pragma mark -
+#pragma mark 网络请求
+
+- (void)gsHandleData{
+    
+    NSDictionary *param = @{
+                            @"uid":ApplicationDelegate.myLoginInfo.Id,
+                            @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                            @"provinceId":@"",
+                            @"cityId":@"",
+                            @"projectId":@"",
+                            @"dateType":self.dateStr
+                            };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forDeviceHealthData"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    WS(weakSelf);
+    
+    [GSHttpManager httpManagerPostParameter:param toHttpUrlStr:urlstr  success:^(id result) {
+//        NSLog(@"%@", result);
+        
+        [SVProgressHUD dismiss];
+        
+        [weakSelf endDealWith:result];
+        
+    } orFail:^(NSError *error) {
+        
+    }];
+}
+#pragma mark -
+#pragma mark 数据处理
+
+- (void)endDealWith:(id)result {
+    
+    if (_yValuesArr.count > 0) {
+        [_yValuesArr removeAllObjects];
+    }
+    _yValuesArr = @[result[@"alarmArr"],result[@"automationArr"],result[@"generalArr"],result[@"lightingArr"],result[@"securityArr"]].mutableCopy;
+    _xData = result[@"xDate"];
+    for (UIView *view in _chartArr) {
+        SCChart *chartView = view.subviews[0];
+        [chartView strokeChart];
+    }
+    
+    _sortInC.text = [NSString stringWithFormat:@"%@", result[@"rank"]];
+    _health.text = [NSString stringWithFormat:@"%@",result[@"realHealth"]];
+    _questions.text = [NSString stringWithFormat:@"%@",result[@"generalFaultCount"]];
+    _healthGrade.text = [NSString stringWithFormat:@"%@",result[@"grade"]];
+    [_gradeColor setImage:[UIImage imageNamed:[NSString stringWithFormat:@"nhfx_color%@",result[@"grade"]]]];
+    
+    _downDataArr = @[
+                            @{
+                                @"Max":[NSString stringWithFormat:@"%@",result[@"alarmMax"]],
+                                @"Min":[NSString stringWithFormat:@"%@",result[@"alarmMin"]],
+                                @"Avg":[NSString stringWithFormat:@"%@",result[@"alarmAvg"]],
+                                },
+                            @{
+                                @"Max":[NSString stringWithFormat:@"%@",result[@"automationMax"]],
+                                @"Min":[NSString stringWithFormat:@"%@",result[@"automationMin"]],
+                                @"Avg":[NSString stringWithFormat:@"%@",result[@"automationAvg"]],
+
+                                },
+                            @{
+                                @"Max":[NSString stringWithFormat:@"%@",result[@"generalMax"]],
+                                @"Min":[NSString stringWithFormat:@"%@",result[@"generalMin"]],
+                                @"Avg":[NSString stringWithFormat:@"%@",result[@"generalAvg"]],
+
+                                },
+                            @{
+                                @"Max":[NSString stringWithFormat:@"%@",result[@"lightingMax"]],
+                                @"Min":[NSString stringWithFormat:@"%@",result[@"lightingMin"]],
+                                @"Avg":[NSString stringWithFormat:@"%@",result[@"lightingAvg"]],
+
+                                },
+                            @{
+                                @"Max":[NSString stringWithFormat:@"%@",result[@"securityMax"]],
+                                @"Min":[NSString stringWithFormat:@"%@",result[@"securityMin"]],
+                                @"Avg":[NSString stringWithFormat:@"%@",result[@"securityAvg"]],
+                                },
+                            ];
+    
+    for (NSInteger i = 0; i < _chartArr.count ; i ++) {
+        UIView *vi = _chartArr[i];
+        MaxMinView *chartView = vi.subviews[1];
+        chartView.countDic = _downDataArr[i];
+    }
+
+}
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

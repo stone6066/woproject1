@@ -9,6 +9,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EquipmentHealthController">
             <connections>
+                <outlet property="gradeColor" destination="Et3-XV-vRJ" id="V95-2E-7AJ"/>
+                <outlet property="health" destination="O3b-7t-sTK" id="Tj6-kF-21e"/>
+                <outlet property="healthGrade" destination="4hp-my-XGj" id="oLh-bH-Ivz"/>
+                <outlet property="questions" destination="WcK-Xg-Zer" id="dmL-0I-iXD"/>
+                <outlet property="sortInC" destination="HJ5-wf-qjX" id="4v5-gg-7Z3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,7 +25,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4J4-Yq-eS5">
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="grade_all.png" translatesAutoresizingMaskIntoConstraints="NO" id="TFD-gE-bPT"/>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nhfx_green.png" translatesAutoresizingMaskIntoConstraints="NO" id="Et3-XV-vRJ">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nhfx_color1.png" translatesAutoresizingMaskIntoConstraints="NO" id="Et3-XV-vRJ">
                             <constraints>
                                 <constraint firstAttribute="width" constant="45" id="Bom-Rw-RaR"/>
                             </constraints>
@@ -110,11 +115,11 @@
                 <constraint firstItem="4J4-Yq-eS5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="61O-tc-W2p"/>
                 <constraint firstItem="4J4-Yq-eS5" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="108" id="FTb-5y-iEe"/>
             </constraints>
-            <point key="canvasLocation" x="41" y="4"/>
+            <point key="canvasLocation" x="85" y="-18"/>
         </view>
     </objects>
     <resources>
         <image name="grade_all.png" width="321" height="219"/>
-        <image name="nhfx_green.png" width="39" height="41"/>
+        <image name="nhfx_color1.png" width="39" height="41"/>
     </resources>
 </document>

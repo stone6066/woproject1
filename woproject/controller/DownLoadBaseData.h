@@ -13,6 +13,7 @@
 -(void)downforProjectList;
 -(void)downForCity;
 -(void)downforWorkType;
+-(void)downDeviceType;
 +(NSArray *) readBaseData:(NSString*)fileName;
 +(NSArray *) readCityData:(NSString*)fileName;
 @end

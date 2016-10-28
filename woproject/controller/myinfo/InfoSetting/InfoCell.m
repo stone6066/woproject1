@@ -55,7 +55,7 @@
     _icon_label = [UILabel new];
     _icon_label.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:_icon_label];
-    _icon = [UIButton buttonWithType:UIButtonTypeCustom];
+    _icon = [UIImageView new];
     [self.contentView addSubview:_icon];
     _loginOutLabel = [UILabel new];
     _loginOutLabel.text = @"退出登录";
@@ -78,6 +78,7 @@
         make.left.equalTo(_icon_label.mas_right).offset(10);
     }];
     _icon.layer.cornerRadius = 30.f;
+    _icon.layer.masksToBounds = YES;
     [_loginOutLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.bottom.offset(0);
     }];

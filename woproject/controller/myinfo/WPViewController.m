@@ -26,15 +26,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
     [self loadTopNav];
     [self initUI];
-    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+}
+
+- (void)setTopTitle:(NSString *)topTitle
+{
+    _topTitle = topTitle;
+    _topLabel.text = topTitle;
 }
 
 - (void)setIsHiddenBackItem:(BOOL)isHiddenBackItem

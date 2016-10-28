@@ -30,7 +30,7 @@
 
 - (void)textChange
 {
-    if (_phoneFD.text.length > 0) {
+    if (_phoneFD.text.length > 10) {
         _saveButton.enabled = YES;
         _saveButton.backgroundColor = RGB(22, 125, 250);
     }else{
@@ -42,8 +42,8 @@
 - (void)setPhone:(NSString *)phone
 {
     _phone = phone;
-    _phoneFD.text = phone;
-    if (phone.length > 0) {
+    _phoneFD.text = [phone isKindOfClass:[NSNull class]]?@"":phone;
+    if (phone.length > 10) {
         _saveButton.enabled = YES;
         _saveButton.backgroundColor = RGB(22, 125, 250);
     }

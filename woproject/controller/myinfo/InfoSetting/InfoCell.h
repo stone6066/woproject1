@@ -11,7 +11,7 @@
 @interface InfoCell : UITableViewCell
 
 @property (nonatomic, assign) NSUInteger index;
-@property (nonatomic, strong) UIButton *icon;
+@property (nonatomic, strong) UIImageView *icon;
 @property (nonatomic, strong) UILabel *icon_label;
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import "SingleProgressBarView.h"
+#import "THProgressView.h"
+
 
 @interface SingleProgressBarView ()
 
-@property (nonatomic, strong) YLProgressBar  *progressBarRoundedSlim;
+@property (nonatomic, strong) THProgressView  *progressBarRoundedSlim;
 @property (nonatomic, strong) UILabel  *count;
 @property (nonatomic, strong) UILabel  *word;
 
@@ -73,9 +75,9 @@
     return _count;
 }
 
-- (YLProgressBar *)progressBarRoundedSlim {
+- (THProgressView *)progressBarRoundedSlim {
     if (!_progressBarRoundedSlim) {
-        _progressBarRoundedSlim = [[YLProgressBar alloc] init];
+        _progressBarRoundedSlim = [[THProgressView alloc] init];
         [self addSubview:_progressBarRoundedSlim];
         [_progressBarRoundedSlim mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_word.mas_bottom);
@@ -83,18 +85,12 @@
             make.left.equalTo(self).offset(8);
             make.height.equalTo(@18);
         }];
-        [self initRoundedSlimProgressBar];
         
     }
     return _progressBarRoundedSlim;
 }
 
-- (void)initRoundedSlimProgressBar
-{
-    _progressBarRoundedSlim.trackTintColor = [UIColor whiteColor];
-    _progressBarRoundedSlim.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeTrack;
-    
-}
+
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated
 {
@@ -116,13 +112,16 @@
     }
     _count.text = _countStr;
     NSLog(@"%@", _countStr);
+    if ([_totalCount isEqualToString:@"0"]) {
+        _totalCount =@"100";
+    }
     [self setProgress:[_countStr integerValue] / [_totalCount floatValue] animated:YES];
 }
 
 - (void)setCircleColor:(UIColor *)circleColor {
-    _progressBarRoundedSlim.uniformTintColor = YES;
-    _progressBarRoundedSlim.stripesColor = circleColor;
+    _progressBarRoundedSlim.borderTintColor = circleColor;
     _progressBarRoundedSlim.progressTintColor = circleColor;
+
 }
 
 - (void)setTotalCount:(NSString *)totalCount {

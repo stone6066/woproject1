@@ -38,6 +38,7 @@ ModifyPwdDelegate
         {
             self.topTitle = @"用户ID";
             self.userView = [[ModifyUserIDView alloc] initWithFrame:CGRectMake(0, 64, fDeviceWidth, fDeviceHeight - 64)];
+            self.userView.userID = ApplicationDelegate.myLoginInfo.name;
             [self.userView.saveButton addTarget:self action:@selector(saveUserID) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:self.userView];
         }
@@ -51,23 +52,125 @@ ModifyPwdDelegate
         case 3:
             self.topTitle = @"电话更改";
             self.phoneView = [[ModifyPhoneView alloc] initWithFrame:CGRectMake(0, 64, fDeviceWidth, fDeviceHeight - 64)];
+            self.phoneView.phone = ApplicationDelegate.myLoginInfo.phone;
             [self.phoneView.saveButton addTarget:self action:@selector(savePhone) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:self.phoneView];
             break;
     }
 }
 #pragma mark Delegate
-- (void)savePassward:(NSString *)pwd
+- (void)savePassward:(NSString *)opwd newPwd:(NSString *)npwd
 {
-    NSLog(@"新密码:%@", pwd);
+    [self.view endEditing:YES];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/support/sys/forModifyPwd", BaseUrl];
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    [ApplicationDelegate.httpManager POST:urlStr parameters:@{@"ukey":ApplicationDelegate.myLoginInfo.ukey,@"uid":ApplicationDelegate.myLoginInfo.Id,@"password_old":opwd,@"password_new":npwd} progress:^(NSProgress * _Nonnull uploadProgress) {} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //http请求状态
+        if (task.state == NSURLSessionTaskStateCompleted) {
+            NSError* error;
+            NSDictionary* jsonDic = [NSJSONSerialization
+                                     JSONObjectWithData:responseObject
+                                     options:kNilOptions
+                                     error:&error];
+            
+            NSString *suc=[jsonDic objectForKey:@"s"];
+            NSString *msg=[jsonDic objectForKey:@"m"];
+            //
+            if ([suc isEqualToString:@"0"]) {
+                //成功
+                [SVProgressHUD showSuccessWithStatus:msg];
+                NSLog(@"======== %@", jsonDic);
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                //失败
+                [SVProgressHUD showErrorWithStatus:msg];
+            }
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:k_Error_Network];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD showErrorWithStatus:k_Error_Network];
+    }];
 }
 - (void)saveUserID
 {
-    NSLog(@"新用户ID:%@", self.userView.userIDFD.text);
+    [self.userView.userIDFD resignFirstResponder];
+    ApplicationDelegate.myLoginInfo.name = self.userView.userIDFD.text;
+    NSString *urlStr = [NSString stringWithFormat:@"%@support/sys/forModifyName", BaseUrl];
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    [ApplicationDelegate.httpManager POST:urlStr parameters:@{@"ukey":ApplicationDelegate.myLoginInfo.ukey,@"uid":ApplicationDelegate.myLoginInfo.Id,@"name":self.userView.userIDFD.text} progress:^(NSProgress * _Nonnull uploadProgress) {} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //http请求状态
+        if (task.state == NSURLSessionTaskStateCompleted) {
+            NSError* error;
+            NSDictionary* jsonDic = [NSJSONSerialization
+                                     JSONObjectWithData:responseObject
+                                     options:kNilOptions
+                                     error:&error];
+            
+            NSString *suc=[jsonDic objectForKey:@"s"];
+            NSString *msg=[jsonDic objectForKey:@"m"];
+            //
+            if ([suc isEqualToString:@"0"]) {
+                //成功
+                [SVProgressHUD showSuccessWithStatus:msg];
+                NSLog(@"======== %@", jsonDic);
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                //失败
+                [SVProgressHUD showErrorWithStatus:msg];
+            }
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:k_Error_Network];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD showErrorWithStatus:k_Error_Network];
+    }];
 }
 - (void)savePhone
 {
-    NSLog(@"新手机号码:%@", self.phoneView.phoneFD.text);
+    [self.phoneView.phoneFD resignFirstResponder];
+    ApplicationDelegate.myLoginInfo.phone = self.phoneView.phoneFD.text;
+    NSString *urlStr = [NSString stringWithFormat:@"%@support/sys/forModifyPhone", BaseUrl];
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    [ApplicationDelegate.httpManager POST:urlStr parameters:@{@"ukey":ApplicationDelegate.myLoginInfo.ukey,@"uid":ApplicationDelegate.myLoginInfo.Id,@"phone":self.phoneView.phoneFD.text} progress:^(NSProgress * _Nonnull uploadProgress) {} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        //http请求状态
+        if (task.state == NSURLSessionTaskStateCompleted) {
+            NSError* error;
+            NSDictionary* jsonDic = [NSJSONSerialization
+                                     JSONObjectWithData:responseObject
+                                     options:kNilOptions
+                                     error:&error];
+            
+            NSString *suc=[jsonDic objectForKey:@"s"];
+            NSString *msg=[jsonDic objectForKey:@"m"];
+            //
+            if ([suc isEqualToString:@"0"]) {
+                //成功
+                [SVProgressHUD showSuccessWithStatus:msg];
+                NSLog(@"======== %@", jsonDic);
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                //失败
+                [SVProgressHUD showErrorWithStatus:msg];
+            }
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:k_Error_Network];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD showErrorWithStatus:k_Error_Network];
+    }];
 }
 
 @end

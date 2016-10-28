@@ -10,6 +10,8 @@
 #import "stdPubFunc.h"
 #import "InfoCell.h"
 #import "ModifyVC.h"
+#import "IconVC.h"
+#import "LoginViewController.h"
 
 @interface InfoSettingViewController ()
 <
@@ -19,6 +21,7 @@
 
 @property (nonatomic, strong) UITableView *infoTabView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) UIAlertController *alert;
 
 @end
 
@@ -32,19 +35,82 @@
     return _dataArray;
 }
 
+- (UIAlertController *)alert
+{
+    if (!_alert) {
+         _alert = [UIAlertController alertControllerWithTitle:nil message:@"是否退出登录" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *loginOut = [UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/logout"];
+            [SVProgressHUD showWithStatus:k_Status_Load];
+            urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [ApplicationDelegate.httpManager POST:urlstr
+                                       parameters:@{@"id":ApplicationDelegate.myLoginInfo.Id}
+                                         progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                              //http请求状态
+                                              if (task.state == NSURLSessionTaskStateCompleted) {
+                                                  NSError* error;
+                                                  NSDictionary* jsonDic = [NSJSONSerialization
+                                                                           JSONObjectWithData:responseObject
+                                                                           options:kNilOptions
+                                                                           error:&error];
+                                                  
+                                                  NSString *suc=[jsonDic objectForKey:@"s"];
+                                                  NSString *msg=[jsonDic objectForKey:@"m"];
+                                                  //
+                                                  if ([suc isEqualToString:@"0"]) {
+                                                      [SVProgressHUD showSuccessWithStatus:@"退出成功"];
+                                                      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                          //成功
+                                                          LoginViewController *vc = [[LoginViewController alloc]init];
+                                                          vc.loginSuccBlock = ^(LoginViewController *aqrvc){
+                                                              NSLog(@"login_suc");
+                                                              ApplicationDelegate.isLogin = YES;
+                                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"rootvc" object:nil];
+                                                          };
+                                                          [[NSNotificationCenter defaultCenter] postNotificationName:@"isLogin" object:nil];
+                                                          self.hidesBottomBarWhenPushed = YES;
+                                                          [self.navigationController pushViewController:vc animated:NO];
+                                                          self.hidesBottomBarWhenPushed = NO;
+                                                      });
+                                                  } else {
+                                                      //失败
+                                                      [SVProgressHUD showErrorWithStatus:msg];
+                                                  }
+                                                  
+                                              } else {
+                                                  [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                              }
+                                              
+                                          } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                              //请求异常
+                                              [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          }];
+            
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [_alert addAction:loginOut];
+        [_alert addAction:cancel];
+    }
+    return _alert;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.dataArray addObject:@"icon"];
-    [self.dataArray addObject:@"徐洋"];
-    [self.dataArray addObject:@"*****"];
-    [self.dataArray addObject:@"13244588225"];
-    [self.dataArray addObject:@"loginout"];
+    NSLog(@"%@", ApplicationDelegate.myLoginInfo.phone);
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.infoTabView reloadData];
 }
 #pragma mark Action
 - (void)loginOutAction
 {
-    [stdPubFunc stdShowMessage:@"退出登录"];
+    [self presentViewController:self.alert animated:YES completion:nil];
 }
 - (void)ModifyInfo:(NSInteger)index
 {
@@ -55,7 +121,7 @@
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.dataArray.count;
+    return 5;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -75,16 +141,16 @@
     switch (indexPath.section) {
         case 0:
             cell.icon_label.text = @"头像:";
-            cell.icon.backgroundColor = [UIColor redColor];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:ApplicationDelegate.myLoginInfo.image] placeholderImage:[UIImage imageNamed:@"touxiang"]];
             break;
         case 1:
-            cell.icon_label.text = [NSString stringWithFormat:@"用户ID: %@", self.dataArray[indexPath.section]];
+            cell.icon_label.text = [NSString stringWithFormat:@"用户ID: %@", [ApplicationDelegate.myLoginInfo.name isKindOfClass:[NSNull class]]?@"":ApplicationDelegate.myLoginInfo.name];
             break;
         case 2:
-            cell.icon_label.text = [NSString stringWithFormat:@"密码: %@", self.dataArray[indexPath.section]];
+            cell.icon_label.text = @"密码: ******";
             break;
         case 3:
-            cell.icon_label.text = [NSString stringWithFormat:@"电话: %@", self.dataArray[indexPath.section]];
+            cell.icon_label.text = [NSString stringWithFormat:@"电话: %@", [ApplicationDelegate.myLoginInfo.phone isKindOfClass:[NSNull class]]?@"":ApplicationDelegate.myLoginInfo.phone];
             break;
         case 4:
             //按钮
@@ -92,12 +158,15 @@
     }
     return cell;
 }
+
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.section) {
         case 0:
-            NSLog(@"修改头像");
+        {
+            [self.navigationController pushViewController:[[IconVC alloc] init] animated:YES];
+        }
             break;
         case 1:
         case 2:
@@ -105,7 +174,9 @@
             [self ModifyInfo:indexPath.section];
             break;
         case 4:
+        {
             [self loginOutAction];
+        }
             break;
     }
 }

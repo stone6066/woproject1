@@ -8,6 +8,7 @@
 #import "RepairView.h"
 #import "PublicDefine.h"
 #import "stdPubFunc.h"
+#import "DownLoadBaseData.h"
 
 @interface RepairView ()
 <
@@ -59,6 +60,7 @@
  */
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, strong) NSMutableDictionary *paramsDic;
+@property (nonatomic, strong) UILabel *msgLabel;
 
 @end
 
@@ -142,17 +144,14 @@
     return self.paramsDic;
 }
 #pragma mark Action
-- (void)repariButtonAction:(UIButton *)sender
-{
-    NSLog(@"yes");
-}
 - (void)PNAction:(UIButton *)sender
 {
     self.type = 0;
     if (_isPN) {
         [self.tableView removeFromSuperview];
     }else{
-        [self click:self.type];
+        NSArray *array = [DownLoadBaseData readBaseData:@"forProjectList.plist"];
+        self.dataArray = [NSArray yy_modelArrayWithClass:[PNModel class] json:array];
     }
     _isPN = !_isPN;
 }
@@ -166,7 +165,8 @@
     if (_isFS) {
         [self.tableView removeFromSuperview];
     }else{
-        [self click:self.type];
+        NSArray *array = [DownLoadBaseData readBaseData:@"forFaultSyetem.plist"];
+        self.dataArray = [NSArray yy_modelArrayWithClass:[FSModel class] json:array];
     }
     _isFS = !_isFS;
 }
@@ -180,8 +180,8 @@
     if (_isDT) {
         [self.tableView removeFromSuperview];
     }else{
-        [self click:self.type];
-    }
+        NSArray *array = [DownLoadBaseData readBaseData:@"forDeviceType.plist"];
+        self.dataArray = [NSArray yy_modelArrayWithClass:[DTModel class] json:array];    }
     _isDT = !_isDT;
 }
 - (void)PAction:(UITapGestureRecognizer *)sender
@@ -194,17 +194,35 @@
     }
     _isP = !_isP;
 }
-- (void)click:(NSInteger)type
-{
-    [self addSubview:self.tableView];
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(selectedItem:)]) {
-        [self.delegate selectedItem:type];
-    }
-}
+
 - (void)imageButtonAction:(UIButton *)sender
 {
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(openPhotosAndCamera:)]) {
         [self.delegate openPhotosAndCamera:sender];
+    }
+}
+- (void)clearUI
+{
+    _PNTapLabel.text = @"------";
+    _FSTapLabel.text = @"------";
+    _DTTapLabel.text = @"------";
+    _PTapLabel.text = @"------";
+    _describeTextView.text = @"";
+    [_imgBtn1 setImage:[UIImage imageNamed:@"add"] forState:normal];
+    [_imgBtn2 setImage:[UIImage imageNamed:@"add"] forState:normal];
+    [_imgBtn3 setImage:[UIImage imageNamed:@"add"] forState:normal];
+    _imgBtn2.hidden = _imgBtn3.hidden = YES;
+    [self.paramsDic removeAllObjects];
+    [self repairButtonIsReady];
+}
+- (void)repairButtonIsReady
+{
+    if (![_PNTapLabel.text isEqualToString:@"------"] && _describeTextView.text.length != 0) {
+        _repairButton.enabled = YES;
+        _repairButton.backgroundColor = RGB(21, 125, 251);
+    }else{
+        _repairButton.enabled = NO;
+        _repairButton.backgroundColor = [UIColor lightGrayColor];
     }
 }
 #pragma mark UITableViewDataSource
@@ -247,6 +265,7 @@
             _PNTapLabel.text = pn.name;
             _isPN = NO;
             [self.paramsDic setObject:pn.pnID forKey:@"project_id"];
+            [self repairButtonIsReady];
         }
             break;
         case 1:
@@ -270,13 +289,13 @@
             _PTapLabel.text = self.dataArray[indexPath.row];
             _isP = NO;
             if ([_PTapLabel.text isEqualToString:@"低"]) {
-                [self.paramsDic setObject:@"0" forKey:@"priority"];
+                [self.paramsDic setObject:@"3" forKey:@"priority"];
 
             }else if ([_PTapLabel.text isEqualToString:@"中"]){
-                [self.paramsDic setObject:@"1" forKey:@"priority"];
+                [self.paramsDic setObject:@"2" forKey:@"priority"];
 
             }else{
-                [self.paramsDic setObject:@"2" forKey:@"priority"];
+                [self.paramsDic setObject:@"1" forKey:@"priority"];
             }
         }
             break;
@@ -301,6 +320,7 @@
         }];
     }
     if (textView.text.length > 0) [self.paramsDic setObject:textView.text forKey:@"fault_desc"];
+    [self repairButtonIsReady];
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
@@ -393,13 +413,13 @@
     [self addSubview:_describeTextView];
     
     _imgBtn1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    _imgBtn1.backgroundColor = [UIColor redColor];
+    [_imgBtn1 setImage:[UIImage imageNamed:@"add"] forState:normal];
     [self addSubview:_imgBtn1];
     _imgBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    _imgBtn2.backgroundColor = [UIColor redColor];
+    [_imgBtn2 setImage:[UIImage imageNamed:@"add"] forState:normal];
     [self addSubview:_imgBtn2];
     _imgBtn3 = [UIButton buttonWithType:UIButtonTypeCustom];
-    _imgBtn3.backgroundColor = [UIColor redColor];
+    [_imgBtn3 setImage:[UIImage imageNamed:@"add"] forState:normal];
     [self addSubview:_imgBtn3];
     [_imgBtn1 addTarget:self action:@selector(imageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     _imgBtn1.tag = 191;
@@ -409,11 +429,14 @@
     [_imgBtn3 addTarget:self action:@selector(imageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     _imgBtn3.tag = 193;
     _imgBtn3.hidden = YES;
-    
+    _msgLabel = [UILabel new];
+    _msgLabel.text = @"只允许添加三张";
+    _msgLabel.font = k_text_font(8);
+    [self addSubview:_msgLabel];
     _repairButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_repairButton setTitleColor:[UIColor whiteColor] forState:normal];
     [_repairButton setTitle:@"确认报修" forState:normal];
-    _repairButton.backgroundColor = [UIColor cyanColor];
+    _repairButton.backgroundColor = RGB(21, 125, 251);
     [self addSubview:_repairButton];
 }
 #pragma mark frame
@@ -498,9 +521,14 @@
         make.top.width.height.equalTo(_imgBtn1);
         make.left.equalTo(_imgBtn2.mas_right).offset(10);
     }];
+    [_msgLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_imgBtn1.mas_bottom).offset(5);
+        make.left.equalTo(_imgBtn1);
+    }];
+    [_msgLabel sizeToFit];
     [_repairButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.offset(0);
-        make.top.equalTo(_imgBtn1.mas_bottom).offset(10);
+        make.top.equalTo(_msgLabel.mas_bottom).offset(5);
         make.height.mas_equalTo(@40);
     }];
 }

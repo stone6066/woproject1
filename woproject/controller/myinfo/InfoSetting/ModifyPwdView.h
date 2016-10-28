@@ -10,7 +10,7 @@
 
 @protocol ModifyPwdDelegate <NSObject>
 
-- (void)savePassward:(NSString *)pwd;
+- (void)savePassward:(NSString *)opwd newPwd:(NSString *)npwd;
 
 @end
 

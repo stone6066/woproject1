@@ -47,6 +47,9 @@
     
     //NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
     
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [SVProgressHUD setMinimumDismissTimeInterval:1];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
         JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
@@ -105,8 +108,19 @@
     
     [stdRootV SetUpStdRootView:tabBarViewController];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rootVC) name:@"rootvc" object:nil];
 
     return YES;
+}
+
+- (void)rootVC
+{
+    tabBarViewController = [[UITabBarController alloc]init];
+    [self.window setRootViewController:tabBarViewController];
+    StdRootController *stdRootV=[[StdRootController alloc]init];
+    
+    [stdRootV SetUpStdRootView:tabBarViewController];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"drawHome" object:nil];
 }
 
 /**

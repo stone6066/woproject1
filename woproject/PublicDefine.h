@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 
 #import "BaseViewController.h"
+#import "DownLoadBaseData.h"
 
 
 #import "MJRefresh.h"
@@ -21,9 +22,11 @@
 #import <Masonry/Masonry.h>
 #import "YYModel.h"
 #import "DOPDropDownMenu.h"
+#import "SDPhotoBrowser.h"
 
-#import "PNChartDelegate.h"
-#import "PNChart.h"
+//#import "PNChartDelegate.h"
+//#import "PNChart.h"
+#import "SCChart.h"
 #import "YLProgressBar.h"
 #import "UIImageView+WebCache.h"
 

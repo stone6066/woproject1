@@ -54,10 +54,10 @@
 //            [stdPubFunc stdShowMessage:@"原密码输入错误，请重新输入"];
 //            return;
 //        }
-        if (![self checkInputPassword:_originalPwdFD.text] && _originalPwdFD.text.length > 0) {
-            [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
-            return;
-        }
+//        if (![self checkInputPassword:_originalPwdFD.text] && _originalPwdFD.text.length > 0) {
+//            [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
+//            return;
+//        }
     }
     if (_pwdFD.text.length == 0) {
         [stdPubFunc stdShowMessage:@"请输入新密码"];
@@ -78,8 +78,8 @@
         }
     }
     if (![self passwardIsRepeatWithPwd:_pwdFD.text andAgainPwd:_againPwdFD.text]) {
-        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(savePassward:)]) {
-            [self.delegate savePassward:_pwdFD.text];
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(savePassward:newPwd:)]) {
+            [self.delegate savePassward:_originalPwdFD.text newPwd:_pwdFD.text];
         }
     }
 }

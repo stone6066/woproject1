@@ -9,12 +9,15 @@
 #import "GdtjViewController.h"
 #import "CircleAnnotationView.h"
 #import "ProgressbarSetView.h"
+#import "PNChartDelegate.h"
+#import "PNChart.h"
 
-@interface GdtjViewController () 
+@interface GdtjViewController () <PNChartDelegate>
+
 @property (nonatomic, strong) UIScrollView *backScrollV;
-@property (nonatomic) PNCircleChart * circleChart;
-@property (nonatomic) PNCircleChart * circleChart1;
-@property (nonatomic) PNCircleChart * circleChart2;
+@property (nonatomic) SCCircleChart * circleChart;
+@property (nonatomic) SCCircleChart * circleChart1;
+@property (nonatomic) SCCircleChart * circleChart2;
 
 @property (nonatomic, strong) UILabel *gdTilte;
 @property (nonatomic, strong) UILabel *gdallCount;
@@ -28,6 +31,7 @@
 @property (nonatomic) PNBarChart * barChart;
 
 
+
 @end
 
 @implementation GdtjViewController
@@ -35,7 +39,6 @@
 
 - (void)manuallyProperties {
     [super initFrontProperties];
-    
 
 }
 
@@ -53,7 +56,7 @@
     [self gdTilte];
     
     [self gdallCount];
-   
+
     [self annotationView];
     [self progressbarSetView];
     [self eachListCount];
@@ -65,8 +68,8 @@
 
 - (UIScrollView *)backScrollV {
     if (!_backScrollV) {
-        _backScrollV = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 108, UISCREENWIDTH, UISCREENHEIGHT - 108)];
-        _backScrollV.contentSize =CGSizeMake(0, 600);
+        _backScrollV = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 108, fDeviceWidth, fDeviceHeight - 108)];
+        _backScrollV.contentSize =CGSizeMake(0, 650);
         _backScrollV.showsVerticalScrollIndicator = NO;
         
         [self.view addSubview:_backScrollV];
@@ -77,19 +80,20 @@
 #pragma mark -
 #pragma mark 环图
 
-- (PNCircleChart *)circleChart {
+- (SCCircleChart *)circleChart {
     if (!_circleChart) {
         
-        _circleChart = [[PNCircleChart alloc] initWithFrame:CGRectMake(0,37.0, SCREEN_WIDTH, 140.0)
+        _circleChart = [[SCCircleChart alloc] initWithFrame:CGRectMake(0,37.0, SCREEN_WIDTH, 140.0)
                                                           total:@10
                                                         current:@0
-                                                      clockwise:YES] ;
+                                                      clockwise:YES color:RGB(190, 190, 190)]  ;
         _circleChart.backgroundColor = [UIColor clearColor];
         
         [_circleChart setStrokeColor:[UIColor clearColor]];
 
         [_circleChart setStrokeColorGradientStart:[UIColor blueColor]];
-//        [_circleChart strokeChart];
+        
+        [_circleChart strokeChart];
         
         [self.backScrollV addSubview:_circleChart];
        
@@ -97,19 +101,19 @@
     return _circleChart;
 }
 
-- (PNCircleChart *)circleChart1 {
+- (SCCircleChart *)circleChart1 {
     
     if (!_circleChart1) {
         
-        _circleChart1 = [[PNCircleChart alloc] initWithFrame:CGRectMake(0,22.0, SCREEN_WIDTH, 170.0)
+        _circleChart1 = [[SCCircleChart alloc] initWithFrame:CGRectMake(0,22.0, SCREEN_WIDTH, 170.0)
                                                       total:@10
                                                     current:@0
-                                                              clockwise:YES];
+                                                              clockwise:YES color:RGB(210, 210  , 210)];
         _circleChart1.backgroundColor = [UIColor clearColor];
         [_circleChart1 setStrokeColor:[UIColor clearColor]];
 
         [_circleChart1 setStrokeColorGradientStart:[UIColor brownColor]];
-//        [_circleChart1 strokeChart];
+        [_circleChart1 strokeChart];
         
         [self.backScrollV addSubview:_circleChart1];
         
@@ -117,18 +121,20 @@
     return _circleChart1;
 }
 
-- (PNCircleChart *)circleChart2 {
+- (SCCircleChart *)circleChart2 {
     if (!_circleChart2) {
         
-        _circleChart2 = [[PNCircleChart alloc] initWithFrame:CGRectMake(0,7.0, SCREEN_WIDTH, 200.0)
+        _circleChart2 = [[SCCircleChart alloc] initWithFrame:CGRectMake(0,7.0, SCREEN_WIDTH, 200.0)
                                                       total:@10
                                                     current:@0
-                                                  clockwise:YES];
+                                                  clockwise:YES color:RGB(230, 230, 230)];
         _circleChart2.backgroundColor = [UIColor clearColor];
         
         [_circleChart2 setStrokeColor:[UIColor clearColor]];
+        
         [_circleChart2 setStrokeColorGradientStart:[UIColor greenColor]];
-//        [_circleChart2 strokeChart];
+        
+        [_circleChart2 strokeChart];
         
         [self.backScrollV addSubview:_circleChart2];
         
@@ -177,7 +183,7 @@
         [_annotationView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_circleChart2.mas_bottom).offset(8);
             make.centerX.equalTo(_backScrollV);
-            make.size.mas_equalTo(CGSizeMake(UISCREENWIDTH, 50));
+            make.size.mas_equalTo(CGSizeMake(fDeviceWidth, 50));
         }];
         
         
@@ -195,7 +201,7 @@
             make.top.equalTo(_annotationView.mas_bottom).offset(8);
             make.centerX.equalTo(_backScrollV);
             make.height.equalTo(@66);
-            make.width.equalTo(@(UISCREENWIDTH * 0.9));
+            make.width.equalTo(@(fDeviceWidth * 0.9));
         }];
         _progressbarSetView.backgroundColor = RGB(230, 230, 230);
         
@@ -224,62 +230,71 @@
 
 #pragma mark - 
 #pragma mark 柱图
-- (PNBarChart *)barChart {
-    if (!_barChart) {
-        static NSNumberFormatter *barChartFormatter;
-        if (!barChartFormatter){
-            barChartFormatter = [[NSNumberFormatter alloc] init];
-            barChartFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
-            barChartFormatter.allowsFloats = NO;
-            barChartFormatter.maximumFractionDigits = 0;
+
+#pragma mark -
+#pragma mark 柱图
+    - (PNBarChart *)barChart {
+        if (!_barChart) {
+            static NSNumberFormatter *barChartFormatter;
+            if (!barChartFormatter){
+                barChartFormatter = [[NSNumberFormatter alloc] init];
+                barChartFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+                barChartFormatter.allowsFloats = NO;
+                barChartFormatter.maximumFractionDigits = 0;
+            }
+            
+            self.barChart = [[PNBarChart alloc] initWithFrame:CGRectMake(8, 400, SCREEN_WIDTH -16, 200.0)];
+            //        self.barChart.showLabel = NO;
+            self.barChart.backgroundColor = [UIColor clearColor];
+            self.barChart.yLabelFormatter = ^(CGFloat yValue){
+                return [barChartFormatter stringFromNumber:[NSNumber numberWithFloat:yValue]];
+            };
+            
+            self.barChart.yChartLabelWidth = 20.0;
+            self.barChart.chartMarginLeft = 30.0;
+            self.barChart.chartMarginRight = 10.0;
+            self.barChart.chartMarginTop = 5.0;
+            self.barChart.chartMarginBottom = 10.0;
+            
+            
+            self.barChart.labelMarginTop = 5.0;
+            self.barChart.showChartBorder = YES;
+            [self.barChart setXLabels:@[@"暖通",@"强电",@"弱电",@"水工",@"综合",@"其他"]];
+                 
+            [self.barChart setStrokeColors:@[[UIColor blueColor],[UIColor purpleColor],[UIColor greenColor],[UIColor yellowColor],[UIColor orangeColor],[UIColor cyanColor]]];
+            self.barChart.isGradientShow = NO;
+            self.barChart.isShowNumbers = YES;
+            
+            [self.barChart strokeChart];
+            
+            self.barChart.delegate = self;
+            
+            
+            [self.backScrollV addSubview:self.barChart];
+            
         }
-        
-        self.barChart = [[PNBarChart alloc] initWithFrame:CGRectMake(8, 400, SCREEN_WIDTH -16, 200.0)];
-        //        self.barChart.showLabel = NO;
-        self.barChart.backgroundColor = [UIColor clearColor];
-        self.barChart.yLabelFormatter = ^(CGFloat yValue){
-            return [barChartFormatter stringFromNumber:[NSNumber numberWithFloat:yValue]];
-        };
-        
-        self.barChart.yChartLabelWidth = 20.0;
-        self.barChart.chartMarginLeft = 30.0;
-        self.barChart.chartMarginRight = 10.0;
-        self.barChart.chartMarginTop = 5.0;
-        self.barChart.chartMarginBottom = 10.0;
-        
-        
-        self.barChart.labelMarginTop = 5.0;
-        self.barChart.showChartBorder = YES;
-        [self.barChart setXLabels:@[@"暖通",@"强电",@"弱电",@"水工",@"综合",@"其他"]];
-        //       self.barChart.yLabels = @[@-10,@0,@10];
-        //        [self.barChart setYValues:@[@10000.0,@30000.0,@10000.0,@100000.0,@500000.0,@1000000.0,@1150000.0,@2150000.0]];
-        [self.barChart setYLabels:@[@0, @10,@20, @30,@40,@50]];
-        
-        [self.barChart setStrokeColors:@[RGB(10, 10, 10),RGB(33, 44, 55),RGB(66, 77, 88),RGB(99, 199, 23),RGB(64, 20, 222),RGB(100, 21, 177)]];
-        self.barChart.isGradientShow = NO;
-        self.barChart.isShowNumbers = YES;
-        
-        [self.barChart strokeChart];
-        
-        self.barChart.delegate = self;
-        
-        
-        [self.backScrollV addSubview:self.barChart];
+        return _barChart;
     }
-    return _barChart;
-}
+
+
+
+
+
+
+
 
 
 #pragma mark -
 #pragma mark 网络请求
+
 - (void)gsHandleData{
     
     NSDictionary *param = @{
                             @"uid":ApplicationDelegate.myLoginInfo.Id,
                             @"ukey":ApplicationDelegate.myLoginInfo.ukey,
-                            @"provinceId":@"",
-                            @"cityId":@"",
-                            @"projectId":@"",
+                            @"provinceId":self.projectIdStr,
+                            @"cityId":self.cityIdStr,
+                            @"projectId":self.provinceIdStr,
                             @"dateType":self.dateStr
                             };
     
@@ -304,20 +319,30 @@
 #pragma mark 数据处理 
 
 - (void)endDealWith:(id)result {
-    [_circleChart updateChartByCurrent:result[@"high"] byTotal:result[@"total"]];
-    [_circleChart strokeChart];
+    NSNumber *num = nil;
+    if ([result[@"total"] isEqualToNumber:@0] ) {
+        num = @100;
+    } else {
+        num = result[@"total"];
+    }
+    
+    
+    [_circleChart updateChartByCurrent:result[@"high"] byTotal:num];
 
-    [_circleChart1 updateChartByCurrent:result[@"middle"] byTotal:result[@"total"]];
-    [_circleChart1 strokeChart];
+    [_circleChart1 updateChartByCurrent:result[@"middle"] byTotal:num];
 
-    [_circleChart2 updateChartByCurrent:result[@"low"] byTotal:result[@"total"]];
-    [_circleChart2 strokeChart];
+    [_circleChart2 updateChartByCurrent:result[@"low"] byTotal:num];
     
     _gdallCount.text = [NSString stringWithFormat:@"%@", result[@"total"]];
+    
     _annotationView.countArr =@[[NSString stringWithFormat:@"%@", result[@"high"]],[NSString stringWithFormat:@"%@", result[@"middle"]], [NSString stringWithFormat:@"%@", result[@"low"]]];
+    
     _progressbarSetView.countArr =@[[NSString stringWithFormat:@"%@", result[@"notRepair"]],[NSString stringWithFormat:@"%@", result[@"unFinish"]], [NSString stringWithFormat:@"%@", result[@"completed"]]];
     
-    [_barChart updateChartData:@[result[@"hv"],result[@"se"],result[@"le"],result[@"ww"],result[@"syn"],result[@"other"]]];
+    
+     [_barChart updateChartData:@[result[@"hv"],result[@"se"],result[@"le"],result[@"ww"],result[@"syn"],result[@"other"]]];
+    
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -12,7 +12,6 @@
 
 @protocol RepairViewDelegate <NSObject>
 
-- (void)selectedItem:(NSInteger)type;
 - (void)openPhotosAndCamera:(UIButton *)button;
 
 @end
@@ -28,5 +27,6 @@
 @property (nonatomic, assign) id<RepairViewDelegate> delegate;
 
 - (NSDictionary *)getParams;
+- (void)clearUI;
 
 @end

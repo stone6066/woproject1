@@ -10,6 +10,11 @@
 #import "GdtjViewController.h"
 #import "CloudPlatformManageController.h"
 #import "EquipmentHealthController.h"
+#import "PropertySecurityController.h"
+#import "EnvironmentComfortableController.h"
+#import "EnergyConsumptionController.h"
+
+
 
 
 @interface VisualizationController () 
@@ -23,6 +28,12 @@
 @end
 
 @implementation VisualizationController
+
+- (void)manuallyProperties {
+    [super initFrontProperties];
+    
+    
+}
 
 
 - (void)initUI {
@@ -61,14 +72,30 @@
         }
 
             break;
-        case 12:
+        case 12: {
+            PropertySecurityController *gdtj = [[PropertySecurityController alloc] initWithNibName:@"PropertySecurityController" bundle:nil];
+            gdtj.hidesBottomBarWhenPushed=YES;
+            gdtj.navigationItem.hidesBackButton=YES;
+            [self.navigationController pushViewController:gdtj animated:YES];
+
+        }
             
             break;
-        case 13:
+        case 13: {
+            EnvironmentComfortableController *gdtj = [[EnvironmentComfortableController alloc] initWithNibName:@"EnvironmentComfortableController" bundle:nil];
+            gdtj.hidesBottomBarWhenPushed=YES;
+            gdtj.navigationItem.hidesBackButton=YES;
+            [self.navigationController pushViewController:gdtj animated:YES];
+
+        }
             
             break;
-        case 14:
-            
+        case 14: {
+            EnergyConsumptionController *gdtj = [[EnergyConsumptionController alloc] initWithNibName:@"EnergyConsumptionController" bundle:nil];
+            gdtj.hidesBottomBarWhenPushed=YES;
+            gdtj.navigationItem.hidesBackButton=YES;
+            [self.navigationController pushViewController:gdtj animated:YES];
+        }
             break;
 
     }
