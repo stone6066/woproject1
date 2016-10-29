@@ -109,7 +109,7 @@
             break;
     }
     _dqztContent.text = model.status;
-    _gdbhLabel.text = [NSString stringWithFormat:@"工单编号:%@", model.ticketNum];
+    _gdbhLabel.text = [NSString stringWithFormat:@"工单编号:%@", model.Id];
     _yxjContent.text = model.priority;
     _gzmsContent.text = model.faultDesc;
     _xmmcContent.text = model.projectId;
@@ -197,7 +197,7 @@
     photoBrowser.delegate = self;
     photoBrowser.currentImageIndex = 0;
     photoBrowser.imageCount = _model.imageList.count;
-    photoBrowser.sourceImagesContainerView = self;
+    photoBrowser.sourceImagesContainerView = _bxxxContentView;
     [photoBrowser show];
 }
 - (void)imageViewTwoClick:(UITapGestureRecognizer *)tap
@@ -206,7 +206,7 @@
     photoBrowser.delegate = self;
     photoBrowser.currentImageIndex = 1;
     photoBrowser.imageCount = _model.imageList.count;
-    photoBrowser.sourceImagesContainerView = self;
+    photoBrowser.sourceImagesContainerView = _bxxxContentView;
     [photoBrowser show];
 }
 - (void)imageViewThreeClick:(UITapGestureRecognizer *)tap
@@ -215,7 +215,7 @@
     photoBrowser.delegate = self;
     photoBrowser.currentImageIndex = 2;
     photoBrowser.imageCount = _model.imageList.count;
-    photoBrowser.sourceImagesContainerView = self;
+    photoBrowser.sourceImagesContainerView = _bxxxContentView;
     [photoBrowser show];
 }
 

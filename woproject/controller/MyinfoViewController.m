@@ -74,12 +74,26 @@ static NSString *myInfoIdentifier = @"myInfoIdentifier";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myInfoIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myInfoIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:myInfoIdentifier];
     }
     cell.imageView.image = [UIImage imageNamed:_infoArray[indexPath.section][@"img"]];
     cell.textLabel.text = _infoArray[indexPath.section][@"text"];
     cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+    switch (indexPath.section) {
+        case 0:
+            cell.detailTextLabel.text = ApplicationDelegate.mylistNum.repairsCount;
+            break;
+        case 1:
+            cell.detailTextLabel.text = ApplicationDelegate.mylistNum.sendCount;
+            break;
+        case 2:
+            cell.detailTextLabel.text = ApplicationDelegate.mylistNum.ticketCount;
+            break;
+            
+        default:
+            break;
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;

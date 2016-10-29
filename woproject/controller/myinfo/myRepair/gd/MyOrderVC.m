@@ -47,6 +47,7 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 
 @property (nonatomic, strong) UISegmentedControl *segment;
+@property (nonatomic, copy) NSString *url;
 
 @end
 
@@ -65,15 +66,20 @@ static NSString * const myorderIdentifier = @"myorderIdentifier";
     switch (seg.selectedSegmentIndex) {
         case 0:
             NSLog(@"我的工单");
+            _url = @"support/ticket/forTicketList";
             break;
         case 1:
             NSLog(@"下属工单");
+#warning 加下属工单接口
+            _url = @"support/ticket/forTicketList";
             break;
     }
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)initUI
 {
+    _url = @"support/ticket/forTicketList";
     _segment = [[UISegmentedControl alloc] initWithItems:@[@"我的工单",@"下属工单"]];
     [self.view addSubview:_segment];
     _segment.tintColor = [UIColor whiteColor];
@@ -135,7 +141,7 @@ static NSString * const myorderIdentifier = @"myorderIdentifier";
     if (tid) {
         [paramDict setObject:tid forKey:@"ticketStatus"];
     }
-    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketList"];
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,_url];
     
     urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [ApplicationDelegate.httpManager POST:urlstr

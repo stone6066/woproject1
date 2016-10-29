@@ -18,7 +18,7 @@
     return [self initWithFrame:frame
                          total:total
                        current:current
-                     clockwise:clockwise
+                     clockwise:NO
                         shadow:YES
                    shadowColor:co
           displayCountingLabel:NO
@@ -72,8 +72,8 @@ displayCountingLabel:(BOOL)displayCountingLabel
         
         _displayCountingLabel = displayCountingLabel;
 
-        CGFloat startAngle = clockwise ? -90.0f : 270.0f;
-        CGFloat endAngle = clockwise ? -90.01f : 270.01f;
+        CGFloat startAngle = clockwise ? -180.0f : 180.0f;
+        CGFloat endAngle = clockwise ? 180.01f : -180.0f;
 
         _lineWidth = overrideLineWidth;
         

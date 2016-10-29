@@ -115,6 +115,9 @@
     [_dateListBt addTarget:self action:@selector(showList) forControlEvents:UIControlEventTouchUpInside];
     _dateListBt.hidden = !_dateListShow;
     _dateListBt.titleLabel.font = [UIFont systemFontOfSize:14];
+    _dateListBt.layer.cornerRadius = 5;
+    _dateListBt.layer.masksToBounds = YES;
+//    _dateListBt setImage:[UIImage] forState:(UIControlState)
     [_dateListBt setTitle:_dateArr[3][@"word"] forState:(UIControlStateNormal)];
     _dateListBt .backgroundColor = RGB(61, 71, 83);
     [_toptView addSubview:_dateListBt];
@@ -141,6 +144,8 @@
     }];
     [_backbt addTarget:self action:@selector(back) forControlEvents:(UIControlEventTouchUpInside)];
     UITableView *tab = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
+    tab.layer.cornerRadius = 5;
+    tab.layer.masksToBounds = YES;
     [_backbt addSubview:tab];
     [tab mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_backbt).offset(54);
@@ -167,9 +172,9 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellName];
     }
     cell.textLabel.text = _dateArr[indexPath.row][@"word"];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
-    cell.backgroundColor = RGB(61, 71, 83);
+    cell.textLabel.textColor = [UIColor blackColor];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.backgroundColor = RGB(255, 255, 255);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
