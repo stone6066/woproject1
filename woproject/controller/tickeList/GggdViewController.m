@@ -401,6 +401,21 @@ static NSString * const TicketCellId = @"TicketCellId";
     //
     // 将数据视图框架模型(该模型中包含了数据模型)赋值给Cell，
     ticketList *dm=_tabledata[indexPath.item];
+    
+    NSInteger index = indexPath.row % 2;
+    switch (index) {
+        case 0:
+            cell.backgroundColor = [UIColor whiteColor];
+            break;
+        case 1:
+            cell.backgroundColor = bluebackcolor;
+            break;
+            
+        default:
+            break;
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     [cell showCellView:dm];
     
     return cell;
