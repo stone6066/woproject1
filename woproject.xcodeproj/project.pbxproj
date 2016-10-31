@@ -305,6 +305,7 @@
 		2F5649FC1DC0F8260075019F /* JDDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5649FB1DC0F8260075019F /* JDDetailView.m */; };
 		2FDA5FE31DC23ACC005221AC /* SHDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDA5FE21DC23ACB005221AC /* SHDView.m */; };
 		2FDA5FE61DC23F17005221AC /* SHVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDA5FE51DC23F17005221AC /* SHVC.m */; };
+		2FDA5FF21DC5E096005221AC /* UIView+WPEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDA5FF11DC5E096005221AC /* UIView+WPEmptyView.m */; };
 		587C7A761DC235DE0090EA92 /* HUChartEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 587C7A4F1DC235DE0090EA92 /* HUChartEntry.m */; };
 		587C7A771DC235DE0090EA92 /* HUSemiCircleChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 587C7A511DC235DE0090EA92 /* HUSemiCircleChart.m */; };
 		587C7A781DC235DE0090EA92 /* SCBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 587C7A541DC235DE0090EA92 /* SCBar.m */; };
@@ -1127,6 +1128,8 @@
 		2FDA5FE21DC23ACB005221AC /* SHDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHDView.m; sourceTree = "<group>"; };
 		2FDA5FE41DC23F17005221AC /* SHVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHVC.h; sourceTree = "<group>"; };
 		2FDA5FE51DC23F17005221AC /* SHVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHVC.m; sourceTree = "<group>"; };
+		2FDA5FF01DC5E096005221AC /* UIView+WPEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WPEmptyView.h"; sourceTree = "<group>"; };
+		2FDA5FF11DC5E096005221AC /* UIView+WPEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WPEmptyView.m"; sourceTree = "<group>"; };
 		587C7A4E1DC235DE0090EA92 /* HUChartEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUChartEntry.h; sourceTree = "<group>"; };
 		587C7A4F1DC235DE0090EA92 /* HUChartEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUChartEntry.m; sourceTree = "<group>"; };
 		587C7A501DC235DE0090EA92 /* HUSemiCircleChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUSemiCircleChart.h; sourceTree = "<group>"; };
@@ -1503,6 +1506,8 @@
 				2F5648831DBF9F230075019F /* wdqx */,
 				2F56488A1DBF9F230075019F /* WPViewController.h */,
 				2F56488B1DBF9F230075019F /* WPViewController.m */,
+				2FDA5FF01DC5E096005221AC /* UIView+WPEmptyView.h */,
+				2FDA5FF11DC5E096005221AC /* UIView+WPEmptyView.m */,
 			);
 			path = myinfo;
 			sourceTree = "<group>";
@@ -3671,6 +3676,7 @@
 				2F5648CC1DBF9F230075019F /* ZXEmailAddressParsedResult.m in Sources */,
 				2F5648991DBF9F230075019F /* ModifyPwdView.m in Sources */,
 				2F5649271DBF9F230075019F /* ZXByQuadrantReader.m in Sources */,
+				2FDA5FF21DC5E096005221AC /* UIView+WPEmptyView.m in Sources */,
 				2F5648B11DBF9F230075019F /* LBXScanResult.m in Sources */,
 				2F5648E31DBF9F230075019F /* ZXVCardResultParser.m in Sources */,
 				8900D80E1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m in Sources */,

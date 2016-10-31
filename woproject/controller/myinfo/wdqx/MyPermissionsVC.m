@@ -63,6 +63,19 @@ static NSString *mypermissionsIdentifier = @"mypermissionsIdentifier";
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = self.dataArray[indexPath.row];
+    NSInteger index = indexPath.row % 2;
+    switch (index) {
+        case 0:
+            cell.backgroundColor = [UIColor whiteColor];
+            break;
+        case 1:
+            cell.backgroundColor = RGB(232, 239, 247);
+            break;
+            
+        default:
+            break;
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 #pragma mark UITableViewDelegate
@@ -85,6 +98,7 @@ static NSString *mypermissionsIdentifier = @"mypermissionsIdentifier";
         MyPermissionsModel *model = [MyPermissionsModel yy_modelWithJSON:dic];
         [self.dataArray addObject:model];
     }];
+    [self.tableView showEmptyMessage:k_jurisdiction dataSourceCount:self.dataArray.count];
     [self.tableView reloadData];
 }
 

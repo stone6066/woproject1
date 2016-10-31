@@ -39,6 +39,13 @@
             _qrImgView.hidden = YES;
             _qrLabel.hidden = YES;
             _loginOut.hidden = YES;
+            if (index == 0) {
+                [_setSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"setting_notice"]];
+            }else if (index == 1){
+                [_setSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"setting_sound"]];
+            }else{
+                [_setSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"setting_vibration"]];
+            }
         }
             break;
         case 3:
@@ -71,6 +78,27 @@
     }
 }
 
+- (void)switchAction:(UISwitch *)sender
+{
+    switch (_index) {
+        case 0:
+            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"setting_notice"];
+            [stdPubFunc stdShowMessage:@"通知"];
+            break;
+        case 1:
+            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"setting_sound"];
+            [stdPubFunc stdShowMessage:@"声音"];
+            break;
+        case 2:
+            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"setting_vibration"];
+            [stdPubFunc stdShowMessage:@"振动"];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (void)setSubViews
 {
     _nameLabel = [UILabel new];
@@ -79,6 +107,7 @@
     _setSwitch = [UISwitch new];
     _setSwitch.onTintColor = RGB(22, 125, 250);
     [self.contentView addSubview:_setSwitch];
+    [_setSwitch addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
     _qrImgView = [UIImageView new];
     [self.contentView addSubview:_qrImgView];
     _loginOut = [UILabel new];

@@ -29,6 +29,7 @@
 #import "SCChart.h"
 #import "YLProgressBar.h"
 #import "UIImageView+WebCache.h"
+#import "UIView+WPEmptyView.h"
 
 #define UISCREENHEIGHT  self.view.bounds.size.height
 #define UISCREENWIDTH  self.view.bounds.size.width
@@ -163,6 +164,9 @@
 #define k_FormatError_PasswordSubmit @"确认密码格式错误"
 #define k_FormatError_NickName       @"昵称格式不正确"
 #define k_FormatError_Consignee      @"收货人格式错误"
+
+#define k_jurisdiction @"无管辖范围"
+#define k_empty_messgae @"无数据"
 
 
 // 2.获得RGB颜色

@@ -12,6 +12,7 @@
 #import "DownLoadBaseData.h"
 #import "JPUSHService.h"
 #import <AdSupport/AdSupport.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
@@ -414,6 +415,34 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                      otherButtonTitles:@"取消", nil];
     [alert show];
 
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+{
+    BOOL notice = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_notice"];
+    BOOL vibration = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_vibration"];
+    BOOL isSound = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_sound"];
+    if (vibration) {
+        //振动
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+    if (notice && !isSound) {
+        //有弹窗无声音
+        completionHandler(UNNotificationPresentationOptionAlert);
+    }else if (!notice && isSound){
+        //无弹窗有声音
+        completionHandler(UNNotificationPresentationOptionSound);
+    }else if(notice && isSound){
+        //有弹窗有声音
+        completionHandler(UNNotificationPresentationOptionAlert|UNNotificationPresentationOptionSound);
+    }else{
+        //无弹窗无声音
+    }
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    [stdPubFunc stdShowMessage:@"收到自定义通知"];
 }
 
 @end

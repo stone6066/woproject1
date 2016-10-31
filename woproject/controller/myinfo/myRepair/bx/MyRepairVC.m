@@ -150,7 +150,7 @@ static NSString * const myrepairIdentifier = @"myrepairIdentifier";
                                               {
                                                   [self.dataArray addObjectsFromArray:datatmp];
                                               }
-                                              
+                                              [self.tableView showEmptyMessage:k_empty_messgae dataSourceCount:self.dataArray.count];
                                               [self.tableView reloadData];
                                               
                                               
@@ -335,6 +335,19 @@ static NSString * const myrepairIdentifier = @"myrepairIdentifier";
         cell = [[MRCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myrepairIdentifier];
     }
     MRModel *dm=self.dataArray[indexPath.row];
+    NSInteger index = indexPath.row % 2;
+    switch (index) {
+        case 0:
+            cell.backgroundColor = [UIColor whiteColor];
+            break;
+        case 1:
+            cell.backgroundColor = RGB(232, 239, 247);
+            break;
+            
+        default:
+            break;
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = dm;
     return cell;
 }
