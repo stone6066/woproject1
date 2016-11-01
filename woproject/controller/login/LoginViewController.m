@@ -260,14 +260,14 @@
 }
 -(void)clickloginbtn{
 
-    if ( _UsrTxtF.text.length<1) {
-        [stdPubFunc stdShowMessage:@"请填写用户名"];
-        return;
-    }
-    if ( _PassTxtF.text.length<1) {
-        [stdPubFunc stdShowMessage:@"请填写密码"];
-        return;
-    }
+//    if ( _UsrTxtF.text.length<1) {
+//        [stdPubFunc stdShowMessage:@"请填写用户名"];
+//        return;
+//    }
+//    if ( _PassTxtF.text.length<1) {
+//        [stdPubFunc stdShowMessage:@"请填写密码"];
+//        return;
+//    }
     [self loginNetFuc:_UsrTxtF.text passWord:_PassTxtF.text];
 }
 
@@ -291,14 +291,13 @@
 -(NSDictionary *)makeUpLoadDict{
     NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
     
-//    [dict setObject:@"hong" forKey:@"id"];
-//    [dict setObject:@"jingli1" forKey:@"id"];
-//    [dict setObject:@"admin" forKey:@"password"];
-//    NSLog(@"dict:%@",[self dictionaryToJson:dict]);
+    //[dict setObject:@"hong" forKey:@"id"];
+    [dict setObject:@"jingli1" forKey:@"id"];
+    [dict setObject:@"admin" forKey:@"password"];
+    NSLog(@"dict:%@",[self dictionaryToJson:dict]);
     
-    [dict setObject:_UsrTxtF.text forKey:@"id"];
-    //[dict setObject:@"jingli1" forKey:@"id"];
-    [dict setObject:_PassTxtF.text forKey:@"password"];
+//    [dict setObject:_UsrTxtF.text forKey:@"id"];
+//    [dict setObject:_PassTxtF.text forKey:@"password"];
     return dict;
     
 }

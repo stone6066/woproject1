@@ -18,7 +18,7 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-@interface AppDelegate ()<JPUSHRegisterDelegate>
+@interface AppDelegate ()<JPUSHRegisterDelegate,UNUserNotificationCenterDelegate>
 
 @end
 
@@ -45,8 +45,6 @@
     
     
     /*-------jpush------*/
-    
-    //NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
     
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     [SVProgressHUD setMinimumDismissTimeInterval:1];
@@ -93,11 +91,18 @@
                                              selector:@selector(networkDidReceiveMessage:)
                                                  name:kJPFNetworkDidReceiveMessageNotification
                                                object:nil];
-//    [[NSBundle mainBundle] loadNibNamed:@"JpushTabBarViewController"
-//                                  owner:self
-//                                options:nil];
     
-    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:UNAuthorizationOptionBadge|UNAuthorizationOptionSound|UNAuthorizationOptionAlert|UNAuthorizationOptionCarPlay completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            //在block中会传入布尔值granted，表示用户是否同意
+            if (granted) {
+                //如果用户权限申请成功，设置通知中心的代理
+                [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+            }
+        }];
+    }
+ 
+   
     /*-------jpush------*/
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
@@ -444,5 +449,15 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 {
     [stdPubFunc stdShowMessage:@"收到自定义通知"];
 }
+
+
+
+
+
+
+
+
+
+
 
 @end
