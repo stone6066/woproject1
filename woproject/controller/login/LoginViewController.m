@@ -292,12 +292,12 @@
     NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
     
     //[dict setObject:@"hong" forKey:@"id"];
-    [dict setObject:@"jingli1" forKey:@"id"];
-    [dict setObject:@"admin" forKey:@"password"];
-    NSLog(@"dict:%@",[self dictionaryToJson:dict]);
-    
-//    [dict setObject:_UsrTxtF.text forKey:@"id"];
-//    [dict setObject:_PassTxtF.text forKey:@"password"];
+//    [dict setObject:@"jingli1" forKey:@"id"];
+//    [dict setObject:@"admin" forKey:@"password"];
+//    NSLog(@"dict:%@",[self dictionaryToJson:dict]);
+//    
+    [dict setObject:_UsrTxtF.text forKey:@"id"];
+    [dict setObject:_PassTxtF.text forKey:@"password"];
     return dict;
     
 }
