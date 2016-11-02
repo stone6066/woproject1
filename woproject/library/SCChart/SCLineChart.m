@@ -19,6 +19,7 @@
     if (self) {
         // Initialization code
         self.clipsToBounds = YES;
+        self.userInteractionEnabled = YES;
     }
     return self;
 }
@@ -297,6 +298,16 @@
     ch = size.height;
     
     return size;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    NSSet *allTouches = [event allTouches];    //返回与当前接收者有关的所有的触摸对象
+    UITouch *touch = [allTouches anyObject];   //视图中的所有对象
+    CGPoint point = [touch locationInView:[touch view]]; //返回触摸点在视图中的当前坐标
+    int x = point.x;
+    int y = point.y;
+    NSLog(@"touch (x, y) is (%d, %d)", x, y);
 }
 
 

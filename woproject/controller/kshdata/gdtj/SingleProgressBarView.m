@@ -8,13 +8,16 @@
 
 #import "SingleProgressBarView.h"
 #import "THProgressView.h"
-
+#import  "LDProgressView.h"
 
 @interface SingleProgressBarView ()
 
-@property (nonatomic, strong) THProgressView  *progressBarRoundedSlim;
+@property (nonatomic, strong) LDProgressView  *progressBarRoundedSlim;
 @property (nonatomic, strong) UILabel  *count;
 @property (nonatomic, strong) UILabel  *word;
+
+
+
 
 @end
 
@@ -70,14 +73,14 @@
             make.height.equalTo(@40);
         }];
         _count.textColor = RGB(0,0, 0);
-        _count.font =[UIFont boldSystemFontOfSize:20];
+        _count.font =[UIFont boldSystemFontOfSize:18];
     }
     return _count;
 }
 
-- (THProgressView *)progressBarRoundedSlim {
+- (LDProgressView *)progressBarRoundedSlim {
     if (!_progressBarRoundedSlim) {
-        _progressBarRoundedSlim = [[THProgressView alloc] init];
+        _progressBarRoundedSlim = [[LDProgressView alloc] init];
         [self addSubview:_progressBarRoundedSlim];
         [_progressBarRoundedSlim mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_word.mas_bottom);
@@ -86,16 +89,28 @@
             make.height.equalTo(@18);
         }];
         
+        
+        _progressBarRoundedSlim.flat = @YES;
+        _progressBarRoundedSlim.animate = @YES;
+        _progressBarRoundedSlim.showStroke = @NO;
+        _progressBarRoundedSlim.progressInset = @2;
+        _progressBarRoundedSlim.showBackground = @NO;
+        _progressBarRoundedSlim.outerStrokeWidth = @1;
+        _progressBarRoundedSlim.type = LDProgressSolid;
+        
+        _progressBarRoundedSlim.textAlignment = NSTextAlignmentCenter;
+        [_progressBarRoundedSlim overrideProgressTextColor:[UIColor whiteColor]];
+        
+        [self addSubview:_progressBarRoundedSlim];
+
+        
     }
     return _progressBarRoundedSlim;
 }
 
 
 
-- (void)setProgress:(CGFloat)progress animated:(BOOL)animated
-{
-    [_progressBarRoundedSlim setProgress:progress animated:animated];
-}
+
 
 
 
@@ -115,12 +130,16 @@
     if ([_totalCount isEqualToString:@"0"]) {
         _totalCount =@"100";
     }
-    [self setProgress:[_countStr integerValue] / [_totalCount floatValue] animated:YES];
+    _progressBarRoundedSlim.progress = [_countStr integerValue] / [_totalCount floatValue] ;
+    [_progressBarRoundedSlim overrideProgressText:_countStr];
+
 }
 
 - (void)setCircleColor:(UIColor *)circleColor {
-    _progressBarRoundedSlim.borderTintColor = circleColor;
-    _progressBarRoundedSlim.progressTintColor = circleColor;
+    
+    _progressBarRoundedSlim.color = circleColor;
+
+    
 
 }
 

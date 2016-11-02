@@ -9,12 +9,14 @@
 #import "EnergyConsumptionController.h"
 
 #import "MaxMinView.h"
-#import "HUSemiCircleChart.h"
-#import "HUChartEntry.h"
-
+#import "LoopProgressSetView.h"
 #import "AnalysisView.h"
 
-@interface EnergyConsumptionController ()<SCChartDataSource>
+
+#import "TTLineChartView.h"
+#import "TTHistoryDataObject.h"
+
+@interface EnergyConsumptionController ()
 
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSMutableArray *pageViews;
@@ -39,11 +41,14 @@
 @property (nonatomic, strong) UILabel *titleO;
 @property (nonatomic, strong) UILabel *titleT;
 
-@property (nonatomic, strong) HUSemiCircleChart *semiCircleChart;
+//@property (nonatomic, strong)  *semiCircleChart;
+@property (nonatomic, strong) LoopProgressSetView *looprogressView;
 @property (nonatomic, strong) UILabel *startL;
 @property (nonatomic, strong) UILabel *endL;
 @property (nonatomic, strong) AnalysisView *analysisView;
 
+
+@property (nonatomic, strong) NSDictionary *tempDic;
 
 @end
 
@@ -64,6 +69,7 @@
     
     [self titleT];
     [self setCursor];
+
     [self startL];
     [self endL];
     [self analysisView];
@@ -71,7 +77,7 @@
 - (AnalysisView *)analysisView {
     
     if (!_analysisView) {
-        _analysisView = [[AnalysisView alloc] initWithFrame:CGRectMake(0, 190, fDeviceWidth, 70)];
+        _analysisView = [[AnalysisView alloc] initWithFrame:CGRectMake(0, 240, fDeviceWidth, 70)];
         [_backScroll addSubview:_analysisView];
     }
     
@@ -92,52 +98,68 @@
 
 
 - (void)pieChart:(id)result {
-    CGRect frame = CGRectMake((fDeviceWidth - 200 ) /2, 40, 200, 150);
-    NSMutableArray *data = [NSMutableArray arrayWithObjects:
-                            [[HUChartEntry alloc]initWithName:@"" value:result[@"havc"]],
-                            [[HUChartEntry alloc]initWithName:@"" value:result[@"light"]],
-                            [[HUChartEntry alloc]initWithName:@"" value:result[@"work"]],
-                            [[HUChartEntry alloc]initWithName:@"" value:result[@"other"]],
-                            
-                            nil];
-
     
-    if (_semiCircleChart) {
-        [_semiCircleChart setData:data];
-        //    semiCircleChart.showPortionTextType = SHOW_PORTION_VALUE;
-        //    semiCircleChart.showPortionTextType = DONT_SHOW_PORTION;
-        [_semiCircleChart setTitle:[NSString stringWithFormat:@"%@kcge",result[@"totalCost"]]];
-        _semiCircleChart.showPortionTextType = DONT_SHOW_PORTION;
+    _tempDic = result;
+    NSLog(@"%@", result);
 
-    } else {
-        _semiCircleChart = [[HUSemiCircleChart alloc]
-                            initWithFrame:frame];
-        _semiCircleChart.backgroundColor = [UIColor clearColor];
-        
-        //colors maybe not setup, will be generated automatically
-        UIColor * color1 = RGB(45, 169, 243);
-        UIColor * color2 = RGB(78, 210, 143);
-        UIColor * color3 = RGB(244, 193, 65);
-        UIColor * color4 = RGB(222, 227, 234);
-        
-        NSMutableArray *colors = [NSMutableArray arrayWithObjects:  color1, color2,
-                                  color3, color4,
-                                  nil];
-        [_semiCircleChart setColors:colors];
-        [_semiCircleChart setData:data];
-        //    semiCircleChart.showPortionTextType = SHOW_PORTION_VALUE;
-        //    semiCircleChart.showPortionTextType = DONT_SHOW_PORTION;
-        [_semiCircleChart setTitle:[NSString stringWithFormat:@"%@kcge",result[@"totalCost"]]];
-        _semiCircleChart.showPortionTextType = DONT_SHOW_PORTION;
-        
-        [_backScroll addSubview:_semiCircleChart];
-    }
+    [self looprogressView];
     
+//
+//    NSMutableArray *data = [NSMutableArray arrayWithObjects:
+//                            [[HUChartEntry alloc]initWithName:@"" value:result[@"havc"]],
+//                            [[HUChartEntry alloc]initWithName:@"" value:result[@"light"]],
+//                            [[HUChartEntry alloc]initWithName:@"" value:result[@"work"]],
+//                            [[HUChartEntry alloc]initWithName:@"" value:result[@"other"]],
+//                            
+//                            nil];
+//
+//    
+//    if (_semiCircleChart) {
+//        [_semiCircleChart setData:data];
+//        //    semiCircleChart.showPortionTextType = SHOW_PORTION_VALUE;
+//        //    semiCircleChart.showPortionTextType = DONT_SHOW_PORTION;
+//        [_semiCircleChart setTitle:[NSString stringWithFormat:@"%@kcge",result[@"totalCost"]]];
+//        _semiCircleChart.showPortionTextType = DONT_SHOW_PORTION;
+//
+//    } else {
+//        _semiCircleChart = [[HUSemiCircleChart alloc]
+//                            initWithFrame:frame];
+//        _semiCircleChart.backgroundColor = [UIColor clearColor];
+//        
+//        //colors maybe not setup, will be generated automatically
+//        
+//        
+//        NSMutableArray *colors = [NSMutableArray arrayWithObjects:  color1, color2,
+//                                  color3, color4,
+//                                  nil];
+//        [_semiCircleChart setColors:colors];
+//        [_semiCircleChart setData:data];
+//        //    semiCircleChart.showPortionTextType = SHOW_PORTION_VALUE;
+//        //    semiCircleChart.showPortionTextType = DONT_SHOW_PORTION;
+//        _semiCircleChart.showPortionTextType = DONT_SHOW_PORTION;
+//        
+//        [_backScroll addSubview:_semiCircleChart];
+//    }
+//    
 }
+
+- (LoopProgressSetView *)looprogressView {
+    if (!_looprogressView) {
+        CGRect frame = CGRectMake((fDeviceWidth - 200 ) /2, 40, 200, 200);
+        _looprogressView = [[LoopProgressSetView alloc] initWithFrame:frame];
+        [self.backScroll addSubview:_looprogressView];
+        
+        _looprogressView.titleContent =_tempDic[@"totalCost"];
+
+        _looprogressView.contentArr =@[_tempDic[@"havc"], _tempDic[@"light"],_tempDic[@"work"], _tempDic[@"other"]] ;
+    }
+    return _looprogressView;
+}
+
 - (UILabel *)titleT {
     if (!_titleT) {
         _titleT = [[UILabel alloc] init];
-        [_titleT setFrame:CGRectMake(15, 260, 200, 40)];
+        [_titleT setFrame:CGRectMake(15, 310, 200, 40)];
         [_backScroll addSubview:_titleT];
         NSString *str = @"累计减排量(tCO₂e)";
         _titleT.attributedText = [MJYUtils attributeStr:str changePartStr:@"累计减排量" withFont:18 andColor:RGB(0,0,0)];
@@ -148,7 +170,7 @@
 - (UILabel *)startL {
     if (!_startL) {
         _startL = [[UILabel alloc] init];
-        [_startL setFrame:CGRectMake((fDeviceWidth - 200 ) /2, 170, 20, 20)];
+        [_startL setFrame:CGRectMake((fDeviceWidth - 200 ) /2 + 25, 220, 20, 20)];
         [_backScroll addSubview:_startL];
         _startL.text = @"0";
         _startL.textColor = [UIColor lightGrayColor];
@@ -160,7 +182,7 @@
 - (UILabel *)endL {
     if (!_endL) {
         _endL = [[UILabel alloc] init];
-        [_endL setFrame:CGRectMake((fDeviceWidth - 200 ) /2 + 175, 170, 30, 20)];
+        [_endL setFrame:CGRectMake((fDeviceWidth - 200 ) /2 + 150, 220, 30, 20)];
         [_backScroll addSubview:_endL];
         _endL.text = @"100";
         _endL.textColor = [UIColor lightGrayColor];
@@ -172,81 +194,38 @@
     if (!_backScroll) {
         _backScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 228, fDeviceWidth, fDeviceHeight -228)];
         [self.view addSubview:_backScroll];
-        _backScroll.contentSize = CGSizeMake(0, 570);
+        _backScroll.contentSize = CGSizeMake(0, 620);
     }
     return _backScroll;
 }
 
+
+
 - (void)setCursor {
-    UIScrollView *view = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 290, SCREEN_WIDTH , 280)];
+    UIScrollView *view = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 340, SCREEN_WIDTH , 280)];
     view.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 0);
-    SCChart *chartView = [[SCChart alloc] initwithSCChartDataFrame:CGRectMake(0, 10, [UIScreen mainScreen].bounds.size.width- 10, 200)
-                                                        withSource:self
-                                                         withStyle:SCChartLineStyle];
-    chartView.backgroundColor = [UIColor clearColor];
-    chartView.tag = 100;
-    [chartView showInView:view];
+    
+    TTLineChartView *lineChartView = [[TTLineChartView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, 200)];
+    lineChartView.showBackgroundView = YES;
+    lineChartView.heightOffset = 34;
+    lineChartView.widthOffset = 17.5;
+    [view addSubview:lineChartView];
+    
+    lineChartView.tag = 100;
     
     MaxMinView *maxMinView  = [[MaxMinView alloc] init];
     [maxMinView setFrame:CGRectMake(fDeviceWidth * 0.05, 220, fDeviceWidth * 0.9, 40)];
     maxMinView.backgroundColor = RGB(230, 230, 230);
-    
     [view addSubview:maxMinView];
     [_backScroll addSubview:view];
-    [_chartArr addObject:view];
 
 }
 
 
 
 
-- (NSArray *)getXTitles:(int)num {
-    return _xData.count > 0 ? _xData :nil;
-}
 
-#pragma mark - @required
-//横坐标标题数组
-- (NSArray *)SCChart_xLableArray:(SCChart *)chart {
-    return [self getXTitles:24];
-}
 
-//数值多重数组
-- (NSArray *)SCChart_yValueArray:(SCChart *)chart {
-    
-    NSMutableArray *ary = [NSMutableArray array];
-    
-    if (_yValuesArr.count > 0) {
-        for (NSNumber *i in _yValuesArr[chart.tag - 100]) {
-            [ary addObject:[NSString stringWithFormat:@"%@", i]];
-        }
-    }
-    
-    
-    return ary.count > 0 ? @[ary] : nil;
-    
-}
-
-#pragma mark - @optional
-//颜色数组
-- (NSArray *)SCChart_ColorArray:(SCChart *)chart {
-    return @[SCBlue,SCRed,SCGreen];
-}
-
-#pragma mark 折线图专享功能
-//标记数值区域
-- (CGRange)SCChartMarkRangeInLineChart:(SCChart *)chart {
-    return CGRangeZero;
-}
-
-//判断显示横线条
-- (BOOL)SCChart:(SCChart *)chart ShowHorizonLineAtIndex:(NSInteger)index {
-    return YES;
-}
-
-//判断显示最大最小值
-- (BOOL)SCChart:(SCChart *)chart ShowMaxMinAtIndex:(NSInteger)index {
-    return NO;
-}
 
 
 #pragma mark -
@@ -298,7 +277,6 @@
     _sortInC.text = [NSString stringWithFormat:@"%@", result[@"rank"]];
     _health.text = [NSString stringWithFormat:@"%@",result[@"unitCost"]];
     _questions.text = [NSString stringWithFormat:@"%@",result[@"totalCer"]];
-
     _healthGrade.text = [NSString stringWithFormat:@"%@",result[@"grade"]];
     [_gradeColor setImage:[UIImage imageNamed:[NSString stringWithFormat:@"nhfx_color%@",result[@"grade"]]]];
     
@@ -323,7 +301,26 @@
                                                         @{@"color":RGB(244, 193, 65), @"name":@"办公",@"zhanbi":[NSString stringWithFormat:@"%@",result[@"workPer"]],@"count":[NSString stringWithFormat:@"%@",result[@"work"]]},
                                                         @{@"color":RGB(222, 227, 234), @"name":@"其他",@"zhanbi":[NSString stringWithFormat:@"%@",result[@"otherPer"]],@"count":[NSString stringWithFormat:@"%@",result[@"other"]]}
                                                         ]];
+    NSMutableArray *sourceData = [NSMutableArray array];
+    NSInteger count = 25;
+    for (int i = 0; i < count; i++) {
+        [sourceData addObject:_yValuesArr[0][i]];
+    }
+    NSMutableArray *historyData = [NSMutableArray array];
+    for (int i = 0; i < sourceData.count; i++) {
+        TTHistoryDataObject *obj = [[TTHistoryDataObject alloc] init];
+        obj.displayX = [NSString stringWithFormat:@"%@", @(i)];
+        obj.detailX = [NSString stringWithFormat:@"%@", sourceData[i]];
+        obj.yValue = sourceData[i];
+        obj.ring = i == 0 ? @0 : @((([sourceData[i] floatValue] - [sourceData[i - 1] floatValue]) / [sourceData[i - 1] floatValue]) * 100);
+        [historyData addObject:obj];
+    }
     
+    TTLineChartView *lineChartView = [_backScroll viewWithTag:100];
+    lineChartView.historyData = historyData;
+    [lineChartView refreshUIWithElementData:sourceData];
+    
+
 }
 
 

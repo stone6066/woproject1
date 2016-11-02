@@ -11,7 +11,7 @@
 #import "ProgressbarSetView.h"
 #import "PNChartDelegate.h"
 #import "PNChart.h"
-
+ 
 @interface GdtjViewController () <PNChartDelegate>
 
 @property (nonatomic, strong) UIScrollView *backScrollV;
@@ -253,6 +253,7 @@
             self.barChart.yChartLabelWidth = 20.0;
             self.barChart.chartMarginLeft = 30.0;
             self.barChart.chartMarginRight = 10.0;
+            self.barChart.showChartBorder = NO;
             self.barChart.chartMarginTop = 5.0;
             self.barChart.chartMarginBottom = 10.0;
             
@@ -268,7 +269,6 @@
             [self.barChart strokeChart];
             
             self.barChart.delegate = self;
-            
             
             [self.backScrollV addSubview:self.barChart];
             

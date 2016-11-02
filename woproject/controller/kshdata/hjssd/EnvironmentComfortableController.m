@@ -9,8 +9,11 @@
 #import "EnvironmentComfortableController.h"
 #import "MaxMinView.h"
 
+#import "TTLineChartView.h"
+#import "TTHistoryDataObject.h"
 
-@interface EnvironmentComfortableController ()<SCChartDataSource>
+
+@interface EnvironmentComfortableController ()
 
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSMutableArray *pageViews;
@@ -79,72 +82,25 @@
 - (void)setCursor {
     UIScrollView *view = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH , 280)];
     view.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 0);
-    SCChart *chartView = [[SCChart alloc] initwithSCChartDataFrame:CGRectMake(0, 10, [UIScreen mainScreen].bounds.size.width- 10, 200)
-                                                        withSource:self
-                                                         withStyle:SCChartLineStyle];
-    chartView.backgroundColor = [UIColor clearColor];
-    chartView.tag = 100;
-    [chartView showInView:view];
+    TTLineChartView *lineChartView = [[TTLineChartView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, 200)];
+    lineChartView.showBackgroundView = YES;
+    lineChartView.heightOffset = 34;
+    lineChartView.widthOffset = 17.5;
+    [view addSubview:lineChartView];
+    
+    lineChartView.tag = 100;
     
     MaxMinView *maxMinView  = [[MaxMinView alloc] init];
     [maxMinView setFrame:CGRectMake(fDeviceWidth * 0.05, 220, fDeviceWidth * 0.9, 40)];
     maxMinView.backgroundColor = RGB(230, 230, 230);
-    
     [view addSubview:maxMinView];
     [_backScroll addSubview:view];
-    [_chartArr addObject:view];
     
 }
 
 
 
-- (NSArray *)getXTitles:(int)num {
-    return _xData.count > 0 ? _xData :nil;
-}
 
-#pragma mark - @required
-//横坐标标题数组
-- (NSArray *)SCChart_xLableArray:(SCChart *)chart {
-    return [self getXTitles:24];
-}
-
-//数值多重数组
-- (NSArray *)SCChart_yValueArray:(SCChart *)chart {
-    
-    NSMutableArray *ary = [NSMutableArray array];
-    
-    if (_yValuesArr.count > 0) {
-        for (NSNumber *i in _yValuesArr[chart.tag - 100]) {
-            [ary addObject:[NSString stringWithFormat:@"%@", i]];
-        }
-    }
-    
-    
-    return ary.count > 0 ? @[ary] : nil;
-    
-}
-
-#pragma mark - @optional
-//颜色数组
-- (NSArray *)SCChart_ColorArray:(SCChart *)chart {
-    return @[SCBlue,SCRed,SCGreen];
-}
-
-#pragma mark 折线图专享功能
-//标记数值区域
-- (CGRange)SCChartMarkRangeInLineChart:(SCChart *)chart {
-    return CGRangeZero;
-}
-
-//判断显示横线条
-- (BOOL)SCChart:(SCChart *)chart ShowHorizonLineAtIndex:(NSInteger)index {
-    return YES;
-}
-
-//判断显示最大最小值
-- (BOOL)SCChart:(SCChart *)chart ShowMaxMinAtIndex:(NSInteger)index {
-    return NO;
-}
 
 
 #pragma mark -
@@ -211,7 +167,24 @@
         MaxMinView *chartView = vi.subviews[1];
         chartView.countDic = _downDataArr[i];
     }
+    NSMutableArray *sourceData = [NSMutableArray array];
+    NSInteger count = 25;
+    for (int i = 0; i < count; i++) {
+        [sourceData addObject:_yValuesArr[0][i]];
+    }
+    NSMutableArray *historyData = [NSMutableArray array];
+    for (int i = 0; i < sourceData.count; i++) {
+        TTHistoryDataObject *obj = [[TTHistoryDataObject alloc] init];
+        obj.displayX = [NSString stringWithFormat:@"%@", @(i)];
+        obj.detailX = [NSString stringWithFormat:@"%@", sourceData[i]];
+        obj.yValue = sourceData[i];
+        obj.ring = i == 0 ? @0 : @((([sourceData[i] floatValue] - [sourceData[i - 1] floatValue]) / [sourceData[i - 1] floatValue]) * 100);
+        [historyData addObject:obj];
+    }
     
+    TTLineChartView *lineChartView = [_backScroll viewWithTag:100];
+    lineChartView.historyData = historyData;
+    [lineChartView refreshUIWithElementData:sourceData];
 }
 
 

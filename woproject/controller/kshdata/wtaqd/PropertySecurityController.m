@@ -10,9 +10,11 @@
 #import "DoubleSlidingContainer.h"
 
 #import "MaxMinView.h"
+#import "TTLineChartView.h"
+#import "TTHistoryDataObject.h"
 
 
-@interface PropertySecurityController ()<SCChartDataSource>
+@interface PropertySecurityController ()
 
 
 @property (nonatomic, strong) NSArray *titles;
@@ -53,7 +55,7 @@
 
 - (void)setCursor {
     DoubleSlidingContainer *doubleSlidingContainer = [[DoubleSlidingContainer alloc] init];
-    [doubleSlidingContainer setFrame:CGRectMake(0, 250, fDeviceWidth, 280)];
+    [doubleSlidingContainer setFrame:CGRectMake(0, 250, fDeviceWidth, 320)];
     doubleSlidingContainer.titleArr = self.titles;
     doubleSlidingContainer.contentArr = [self creatSubViews];
     
@@ -65,21 +67,19 @@
     NSMutableArray *pageViews = [NSMutableArray array];
     for (NSInteger i = 0; i < self.titles.count; i++) {
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH , 235)];
-        SCChart *chartView = [[SCChart alloc] initwithSCChartDataFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width- 10, 185)
-                                                            withSource:self
-                                                             withStyle:SCChartLineStyle];
-        chartView.backgroundColor = [UIColor clearColor];
-        chartView.tag = 100 + i;
-        [chartView showInView:view];
-        
-        
+        UIScrollView *view = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH , 320)];
+        view.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 0);
+        TTLineChartView *lineChartView = [[TTLineChartView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 200)];
+        lineChartView.showBackgroundView = YES;
+        lineChartView.heightOffset = 34;
+        lineChartView.widthOffset = 17.5;
+        [view addSubview:lineChartView];
+        lineChartView.tag = 100 + i;
         MaxMinView *maxMinView  = [[MaxMinView alloc] init];
-        [maxMinView setFrame:CGRectMake(fDeviceWidth * 0.05, 190, fDeviceWidth * 0.9, 40)];
+        [maxMinView setFrame:CGRectMake(fDeviceWidth * 0.05, 230, fDeviceWidth * 0.9, 40)];
         maxMinView.backgroundColor = RGB(230, 230, 230);
-        
         [view addSubview:maxMinView];
-        
+    
         [pageViews addObject:view];
     }
     [_chartArr addObjectsFromArray:pageViews];
@@ -87,55 +87,6 @@
     return pageViews;
 }
 
-
-
-- (NSArray *)getXTitles:(int)num {
-    return _xData.count > 0 ? _xData :nil;
-}
-
-#pragma mark - @required
-//横坐标标题数组
-- (NSArray *)SCChart_xLableArray:(SCChart *)chart {
-    return [self getXTitles:24];
-}
-
-//数值多重数组
-- (NSArray *)SCChart_yValueArray:(SCChart *)chart {
-    
-    NSMutableArray *ary = [NSMutableArray array];
-    
-    if (_yValuesArr.count > 0) {
-        for (NSNumber *i in _yValuesArr[chart.tag - 100]) {
-            [ary addObject:[NSString stringWithFormat:@"%@", i]];
-        }
-    }
-    
-    
-    return ary.count > 0 ? @[ary] : nil;
-    
-}
-
-#pragma mark - @optional
-//颜色数组
-- (NSArray *)SCChart_ColorArray:(SCChart *)chart {
-    return @[SCBlue,SCRed,SCGreen];
-}
-
-#pragma mark 折线图专享功能
-//标记数值区域
-- (CGRange)SCChartMarkRangeInLineChart:(SCChart *)chart {
-    return CGRangeZero;
-}
-
-//判断显示横线条
-- (BOOL)SCChart:(SCChart *)chart ShowHorizonLineAtIndex:(NSInteger)index {
-    return YES;
-}
-
-//判断显示最大最小值
-- (BOOL)SCChart:(SCChart *)chart ShowMaxMinAtIndex:(NSInteger)index {
-    return NO;
-}
 
 
 #pragma mark -
@@ -179,9 +130,29 @@
     }
     _yValuesArr = @[result[@"generalArr"],result[@"alarmArr"],result[@"securityArr"]].mutableCopy;
     _xData = result[@"xDate"];
-    for (UIView *view in _chartArr) {
-        SCChart *chartView = view.subviews[0];
-        [chartView strokeChart];
+    
+    
+    for (int i = 0; i < 3; i++) {
+        
+        NSMutableArray *sourceData = [NSMutableArray array];
+
+        [sourceData addObjectsFromArray:_yValuesArr[i]];
+        
+        NSMutableArray *historyData = [NSMutableArray array];
+        for (int i = 0; i < sourceData.count; i++) {
+            TTHistoryDataObject *obj = [[TTHistoryDataObject alloc] init];
+            obj.displayX = [NSString stringWithFormat:@"%@", @(i)];
+            obj.detailX = [NSString stringWithFormat:@"%@", sourceData[i]];
+            obj.yValue = sourceData[i];
+            obj.ring = i == 0 ? @0 : @((([sourceData[i] floatValue] - [sourceData[i - 1] floatValue]) / [sourceData[i - 1] floatValue]) * 100);
+            [historyData addObject:obj];
+        }
+        
+        TTLineChartView *lineChartView = [_chartArr[i] viewWithTag:100 + i];
+        lineChartView.historyData = historyData;
+        [lineChartView refreshUIWithElementData:sourceData];
+        
+
     }
     
     _sortInC.text = [NSString stringWithFormat:@"%@", result[@"rank"]];

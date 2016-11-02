@@ -20,6 +20,7 @@ typedef enum {
 
 
 @class SCChart;
+
 @protocol SCChartDataSource <NSObject>
 
 @required

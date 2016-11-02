@@ -241,7 +241,7 @@
                                                           self.showLevelLine ? chartCavanHeight/2.0:chartCavanHeight)]; //Bar height
 
             //Change Bar Radius
-            bar.barRadius = _barRadius;
+            bar.barRadius = barWidth/2;
             
             //Set Bar Animation
             bar.displayAnimated = self.displayAnimated;
@@ -309,78 +309,78 @@
 
     //Add chart border lines
 
-    if (_showChartBorder) {
-        _chartBottomLine = [CAShapeLayer layer];
-        _chartBottomLine.lineCap      = kCALineCapButt;
-        _chartBottomLine.fillColor    = [[UIColor whiteColor] CGColor];
-        _chartBottomLine.lineWidth    = 1.0;
-        _chartBottomLine.strokeEnd    = 0.0;
-
-        UIBezierPath *progressline = [UIBezierPath bezierPath];
-
-        [progressline moveToPoint:CGPointMake(_chartMarginLeft, self.frame.size.height - kXLabelHeight - _chartMarginBottom + _chartMarginTop)];
-        [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMarginRight,  self.frame.size.height - kXLabelHeight - _chartMarginBottom + _chartMarginTop)];
-
-        [progressline setLineWidth:1.0];
-        [progressline setLineCapStyle:kCGLineCapSquare];
-        _chartBottomLine.path = progressline.CGPath;
-        _chartBottomLine.strokeColor = [_chartBorderColor CGColor];;
-        _chartBottomLine.strokeEnd = 1.0;
-
-        [self.layer addSublayer:_chartBottomLine];
-
-        //Add left Chart Line
-
-        _chartLeftLine = [CAShapeLayer layer];
-        _chartLeftLine.lineCap      = kCALineCapButt;
-        _chartLeftLine.fillColor    = [[UIColor whiteColor] CGColor];
-        _chartLeftLine.lineWidth    = 1.0;
-        _chartLeftLine.strokeEnd    = 0.0;
-
-        UIBezierPath *progressLeftline = [UIBezierPath bezierPath];
-
-        [progressLeftline moveToPoint:CGPointMake(_chartMarginLeft, self.frame.size.height - kXLabelHeight - _chartMarginBottom + _chartMarginTop)];
-        [progressLeftline addLineToPoint:CGPointMake(_chartMarginLeft,  _chartMarginTop)];
-
-        [progressLeftline setLineWidth:1.0];
-        [progressLeftline setLineCapStyle:kCGLineCapSquare];
-        _chartLeftLine.path = progressLeftline.CGPath;
-        _chartLeftLine.strokeColor = [_chartBorderColor CGColor];
-        _chartLeftLine.strokeEnd = 1.0;
-
-        [self addBorderAnimationIfNeeded];
-        [self.layer addSublayer:_chartLeftLine];
-    }
-
-  // Add Level Separator Line
-  if (_showLevelLine) {
-    _chartLevelLine = [CAShapeLayer layer];
-    _chartLevelLine.lineCap      = kCALineCapButt;
-    _chartLevelLine.fillColor    = [[UIColor whiteColor] CGColor];
-    _chartLevelLine.lineWidth    = 1.0;
-    _chartLevelLine.strokeEnd    = 0.0;
-
-    UIBezierPath *progressline = [UIBezierPath bezierPath];
-
-    [progressline moveToPoint:CGPointMake(_chartMarginLeft, (self.frame.size.height - kXLabelHeight )/2.0)];
-    [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMarginLeft - _chartMarginRight,  (self.frame.size.height - kXLabelHeight )/2.0)];
-
-    [progressline setLineWidth:1.0];
-    [progressline setLineCapStyle:kCGLineCapSquare];
-    _chartLevelLine.path = progressline.CGPath;
-
-    _chartLevelLine.strokeColor = PNLightGrey.CGColor;
-      
-    [self addSeparatorAnimationIfNeeded];
-    _chartLevelLine.strokeEnd = 1.0;
-
-    [self.layer addSublayer:_chartLevelLine];
-  } else {
-    if (_chartLevelLine) {
-      [_chartLevelLine removeFromSuperlayer];
-      _chartLevelLine = nil;
-    }
-  }
+//    if (_showChartBorder) {
+//        _chartBottomLine = [CAShapeLayer layer];
+//        _chartBottomLine.lineCap      = kCALineCapButt;
+//        _chartBottomLine.fillColor    = [[UIColor whiteColor] CGColor];
+//        _chartBottomLine.lineWidth    = 1.0;
+//        _chartBottomLine.strokeEnd    = 0.0;
+//
+//        UIBezierPath *progressline = [UIBezierPath bezierPath];
+//
+//        [progressline moveToPoint:CGPointMake(_chartMarginLeft, self.frame.size.height - kXLabelHeight - _chartMarginBottom + _chartMarginTop)];
+//        [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMarginRight,  self.frame.size.height - kXLabelHeight - _chartMarginBottom + _chartMarginTop)];
+//
+//        [progressline setLineWidth:1.0];
+//        [progressline setLineCapStyle:kCGLineCapSquare];
+//        _chartBottomLine.path = progressline.CGPath;
+//        _chartBottomLine.strokeColor = [_chartBorderColor CGColor];;
+//        _chartBottomLine.strokeEnd = 1.0;
+//
+//        [self.layer addSublayer:_chartBottomLine];
+//
+//        //Add left Chart Line
+//
+//        _chartLeftLine = [CAShapeLayer layer];
+//        _chartLeftLine.lineCap      = kCALineCapButt;
+//        _chartLeftLine.fillColor    = [[UIColor whiteColor] CGColor];
+//        _chartLeftLine.lineWidth    = 1.0;
+//        _chartLeftLine.strokeEnd    = 0.0;
+//
+//        UIBezierPath *progressLeftline = [UIBezierPath bezierPath];
+//
+//        [progressLeftline moveToPoint:CGPointMake(_chartMarginLeft, self.frame.size.height - kXLabelHeight - _chartMarginBottom + _chartMarginTop)];
+//        [progressLeftline addLineToPoint:CGPointMake(_chartMarginLeft,  _chartMarginTop)];
+//
+//        [progressLeftline setLineWidth:1.0];
+//        [progressLeftline setLineCapStyle:kCGLineCapSquare];
+//        _chartLeftLine.path = progressLeftline.CGPath;
+//        _chartLeftLine.strokeColor = [_chartBorderColor CGColor];
+//        _chartLeftLine.strokeEnd = 1.0;
+//
+//        [self addBorderAnimationIfNeeded];
+//        [self.layer addSublayer:_chartLeftLine];
+//    }
+//
+//  // Add Level Separator Line
+//  if (_showLevelLine) {
+//    _chartLevelLine = [CAShapeLayer layer];
+//    _chartLevelLine.lineCap      = kCALineCapButt;
+//    _chartLevelLine.fillColor    = [[UIColor whiteColor] CGColor];
+//    _chartLevelLine.lineWidth    = 1.0;
+//    _chartLevelLine.strokeEnd    = 0.0;
+//
+//    UIBezierPath *progressline = [UIBezierPath bezierPath];
+//
+//    [progressline moveToPoint:CGPointMake(_chartMarginLeft, (self.frame.size.height - kXLabelHeight )/2.0)];
+//    [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMarginLeft - _chartMarginRight,  (self.frame.size.height - kXLabelHeight )/2.0)];
+//
+//    [progressline setLineWidth:1.0];
+//    [progressline setLineCapStyle:kCGLineCapSquare];
+//    _chartLevelLine.path = progressline.CGPath;
+//
+//    _chartLevelLine.strokeColor = PNLightGrey.CGColor;
+//      
+//    [self addSeparatorAnimationIfNeeded];
+//    _chartLevelLine.strokeEnd = 1.0;
+//
+//    [self.layer addSublayer:_chartLevelLine];
+//  } else {
+//    if (_chartLevelLine) {
+//      [_chartLevelLine removeFromSuperlayer];
+//      _chartLevelLine = nil;
+//    }
+//  }
 }
 
 - (void)addBorderAnimationIfNeeded

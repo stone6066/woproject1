@@ -49,7 +49,7 @@
 - (UIScrollView *)contentScr {
     
     if (!_contentScr) {
-        _contentScr = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 45, fDeviceWidth, 235)];
+        _contentScr = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 45, fDeviceWidth, 275)];
         _contentScr.showsVerticalScrollIndicator = NO;
         _contentScr.showsHorizontalScrollIndicator = NO;
         _contentScr.pagingEnabled = YES;
@@ -104,7 +104,7 @@
     int i = 0;
     for (UIView *view in _contentArr) {
         [_contentScr addSubview:view];
-        [view setFrame:CGRectMake(fDeviceWidth * i, 0, fDeviceWidth, 235)];
+        [view setFrame:CGRectMake(fDeviceWidth * i, 0, fDeviceWidth, 275)];
         i ++;
     }
 }
