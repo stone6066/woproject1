@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *yxjLabel;
 @property (nonatomic, strong) UILabel *xmmsLabel;
 @property (nonatomic, strong) UILabel *xmmsContent;
+@property (nonatomic, strong) UIImageView *img;
 
 @end
 
@@ -41,8 +42,9 @@
 
     _jdsjLabel.text = [NSString stringWithFormat:@"报修时间:  %@", [self stdTimeToStr:model.createTime]];
     _xmmcLabel.text = [NSString stringWithFormat:@"项目名称:  %@", model.projectId];
-    _yxjLabel.text = [NSString stringWithFormat:@"优先级:  %@", model.priority];
+    _yxjLabel.text = model.priority != nil?[NSString stringWithFormat:@"优先级:  %@", model.priority]:@"优先级: 无";
     _xmmsContent.text = model.faultDesc;
+    _img.hidden = [model.isNew isEqualToString:@"1"]?NO:[model.isNew isEqualToString:@"2"]?YES:NO;
 }
 
 - (void)setType:(NSString *)type
@@ -95,6 +97,9 @@
     _xmmsContent.textColor = RGB(123, 123, 123);
     _xmmsContent.numberOfLines = 0;
     [self.contentView addSubview:_xmmsContent];
+    _img = [UIImageView new];
+    _img.image = [UIImage imageNamed:@"new"];
+    [self addSubview:_img];
 }
 
 - (void)layoutSubviews
@@ -106,6 +111,11 @@
     [_stateLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_gzsbLabel);
         make.right.offset(-10);
+    }];
+    [_img mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(20, 20));
+        make.right.equalTo(_stateLabel.mas_left).offset(-10);
+        make.centerY.equalTo(_stateLabel);
     }];
     [_lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.right.offset(0);

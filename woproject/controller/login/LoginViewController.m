@@ -229,7 +229,7 @@
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSString * rmbPsw = [user objectForKey:NSUserRmbMsg];
     
-    if ([rmbPsw isEqualToString:@"1"]) {
+    if ([rmbPsw isEqualToString:@"1"] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"login_out"]) {
         _checkbox.selected=YES;
         ApplicationDelegate.isRmbPsw=YES;
         _UsrTxtF.text=[stdPubFunc readUserMsg];

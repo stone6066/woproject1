@@ -68,7 +68,7 @@
     _backView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_backView];
     _userListLabel = [UILabel new];
-    _userListLabel.text = @"用户组:";
+    _userListLabel.text = @"用户组 :";
     _userListLabel.font = k_text_font(14);
     _userListLabel.textAlignment = 2;
     [_backView addSubview:_userListLabel];
@@ -76,7 +76,7 @@
     _userListContent.font = k_text_font(14);
     [_backView addSubview:_userListContent];
     _roleListLabel = [UILabel new];
-    _roleListLabel.text = @"角色:";
+    _roleListLabel.text = @"角色 :";
     _roleListLabel.font = k_text_font(14);
     _roleListLabel.textAlignment = 2;
     [_backView addSubview:_roleListLabel];
@@ -84,7 +84,7 @@
     _roleListContent.font = k_text_font(14);
     [_backView addSubview:_roleListContent];
     _pnameListLabel = [UILabel new];
-    _pnameListLabel.text = @"项目名称:";
+    _pnameListLabel.text = @"项目名称 :";
     _pnameListLabel.font = k_text_font(14);
     _pnameListLabel.textAlignment = 2;
     [_backView addSubview:_pnameListLabel];
@@ -104,11 +104,11 @@
     }];
     [_userListLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.top.offset(10);
-        make.size.mas_equalTo(CGSizeMake(70, 20));
+        make.size.mas_equalTo(CGSizeMake(75, 20));
     }];
     [_userListContent mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.height.equalTo(_userListLabel);
-        make.left.equalTo(_userListLabel.mas_right).offset(0);
+        make.left.equalTo(_userListLabel.mas_right).offset(5);
         make.right.offset(-10);
     }];
     [_roleListLabel mas_remakeConstraints:^(MASConstraintMaker *make) {

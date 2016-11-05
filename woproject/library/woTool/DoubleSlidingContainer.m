@@ -139,6 +139,10 @@
     
     
     [_contentScr setContentOffset:CGPointMake((bt.tag-10) * fDeviceWidth, 0) animated:YES];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:@"lalalallalalalala" object:nil userInfo:@{@"content":bt.titleLabel.text}];
+    
     NSLog(@"123");
 }
 

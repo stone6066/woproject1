@@ -153,6 +153,7 @@
         }];
         _gdTilte.textAlignment = 1;
         _gdTilte.text = @"今日工单总数";
+        
         _gdTilte.font = [UIFont systemFontOfSize:13.0];
         _gdTilte.textColor = RGB(80, 80, 80);
     }
@@ -220,8 +221,7 @@
             make.top.equalTo(_progressbarSetView.mas_bottom).offset(20);
             make.left.equalTo(_backScrollV).offset(20);
         }];
-        _eachListCount.text=@"各工种工单数";
-        _eachListCount.font = [UIFont systemFontOfSize:15];
+        _eachListCount.attributedText = [MJYUtils attributeStr:@"各工种工单数" changePartStr:@"各工种工单数" withFont:18 andColor:RGB(0,0,0)];
     }
     return _eachListCount;
 }

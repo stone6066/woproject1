@@ -19,11 +19,13 @@
 @interface RepairView : UIView<UITextViewDelegate>
 
 @property (nonatomic, strong) UIButton *repairButton;
+@property (nonatomic, strong) UILabel *PNTapLabel;
 @property (nonatomic, strong) NSArray *dataArray;
 @property (nonatomic, strong) UITextView *describeTextView;
 @property (nonatomic, strong) UIButton *imgBtn1;
-@property (nonatomic, strong) UIButton *imgBtn2;
-@property (nonatomic, strong) UIButton *imgBtn3;
+@property (nonatomic, strong) UIImageView *imgView1;
+@property (nonatomic, strong) UIImageView *imgView2;
+@property (nonatomic, strong) UIImageView *imgView3;
 @property (nonatomic, assign) id<RepairViewDelegate> delegate;
 
 - (NSDictionary *)getParams;

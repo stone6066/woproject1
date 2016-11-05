@@ -12,6 +12,7 @@
                 <outlet property="gradeColor" destination="Et3-XV-vRJ" id="V95-2E-7AJ"/>
                 <outlet property="health" destination="O3b-7t-sTK" id="Tj6-kF-21e"/>
                 <outlet property="healthGrade" destination="4hp-my-XGj" id="oLh-bH-Ivz"/>
+                <outlet property="healthTitleLb" destination="xki-E5-ptK" id="jnD-NS-mQa"/>
                 <outlet property="questions" destination="WcK-Xg-Zer" id="dmL-0I-iXD"/>
                 <outlet property="sortInC" destination="HJ5-wf-qjX" id="4v5-gg-7Z3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

@@ -43,6 +43,14 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self configureAPIKey];
     
+    //默认开启通知和声音
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"first_login"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"first_login"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"setting_notice"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"setting_sound"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"setting_vibration"];
+    }
+    
     
     /*-------jpush------*/
     
@@ -359,7 +367,22 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     }
     else{
         [self tiketInfoTurn:@"您有新工单请查看"];
-    
+#warning 在前台时看看这里的走不走
+        UNMutableNotificationContent * content = [UNMutableNotificationContent new];
+        //设置通知请求发送时 app图标上显示的数字
+        content.badge = @1;
+        //设置通知的内容
+        content.body = userInfo[@"aps"][@"alert"];
+        //默认的通知提示音
+        content.sound = [UNNotificationSound defaultSound];
+        //设置5S之后执行
+        UNTimeIntervalNotificationTrigger * trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:.1f repeats:NO];
+#warning identifier这个参数每个本地通知需要不一样的 要不然只显示最新的
+        UNNotificationRequest * request = [UNNotificationRequest requestWithIdentifier:@"NotificationDefault" content:content trigger:trigger];
+        //添加通知请求
+        [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+            NSLog(@"success");
+        }];
     }
 }
 /*!
@@ -424,13 +447,14 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
 {
+#warning 开启声音就带振动了,没想到关的办法
     BOOL notice = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_notice"];
     BOOL vibration = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_vibration"];
     BOOL isSound = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_sound"];
-    if (vibration) {
-        //振动
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    }
+//    if (vibration) {
+//        //振动
+//        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+//    }
     if (notice && !isSound) {
         //有弹窗无声音
         completionHandler(UNNotificationPresentationOptionAlert);

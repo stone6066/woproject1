@@ -13,7 +13,8 @@
 @interface RepairView ()
 <
     UITableViewDelegate,
-    UITableViewDataSource
+    UITableViewDataSource,
+    SDPhotoBrowserDelegate
 >
 
 /**
@@ -22,7 +23,6 @@
 @property (nonatomic, strong) UIView *PNView;
 @property (nonatomic, strong) UILabel *PNLabel;
 @property (nonatomic, strong) UITapGestureRecognizer *PNTap;
-@property (nonatomic, strong) UILabel *PNTapLabel;
 @property (nonatomic, assign) BOOL isPN;
 /**
  故障系统
@@ -61,6 +61,15 @@
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, strong) NSMutableDictionary *paramsDic;
 @property (nonatomic, strong) UILabel *msgLabel;
+
+
+@property (nonatomic, strong) UITapGestureRecognizer *tap1;
+@property (nonatomic, strong) UITapGestureRecognizer *tap2;
+@property (nonatomic, strong) UITapGestureRecognizer *tap3;
+@property (nonatomic, strong) UIImageView *dimg1;
+@property (nonatomic, strong) UIImageView *dimg2;
+@property (nonatomic, strong) UIImageView *dimg3;
+@property (nonatomic, strong) UIImageView *dimg4;
 
 @end
 
@@ -143,6 +152,54 @@
     [self.paramsDic setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     return self.paramsDic;
 }
+// 返回临时占位图片（即原来的小图）
+- (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
+{
+    if (index == 0) {
+        return _imgView1.image;
+    }else if (index == 1){
+        return _imgView2.image;
+    }else{
+        return _imgView3.image;
+    }
+}
+- (void)imageViewClick:(UITapGestureRecognizer *)tap
+{
+    SDPhotoBrowser *photoBrowser = [SDPhotoBrowser new];
+    photoBrowser.delegate = self;
+    photoBrowser.currentImageIndex = 0;
+    photoBrowser.imageCount = [self imageListCount];
+    photoBrowser.sourceImagesContainerView = self;
+    [photoBrowser show];
+}
+- (void)imageViewTwoClick:(UITapGestureRecognizer *)tap
+{
+    SDPhotoBrowser *photoBrowser = [SDPhotoBrowser new];
+    photoBrowser.delegate = self;
+    photoBrowser.currentImageIndex = 1;
+    photoBrowser.imageCount = [self imageListCount];
+    photoBrowser.sourceImagesContainerView = self;
+    [photoBrowser show];
+}
+- (void)imageViewThreeClick:(UITapGestureRecognizer *)tap
+{
+    SDPhotoBrowser *photoBrowser = [SDPhotoBrowser new];
+    photoBrowser.delegate = self;
+    photoBrowser.currentImageIndex = 2;
+    photoBrowser.imageCount = [self imageListCount];
+    photoBrowser.sourceImagesContainerView = self;
+    [photoBrowser show];
+}
+
+- (NSInteger)imageListCount
+{
+    NSInteger count = 0;
+    if (_imgView1.hidden == NO) count = 1;
+    if (_imgView2.hidden == NO) count = 2;
+    if (_imgView3.hidden == NO) count = 3;
+    return count;
+}
+
 #pragma mark Action
 - (void)PNAction:(UIButton *)sender
 {
@@ -157,10 +214,10 @@
 }
 - (void)FSAction:(UITapGestureRecognizer *)sender
 {
-    if ([_PNTapLabel.text isEqualToString:@"------"]) {
-        [stdPubFunc stdShowMessage:@"请选择项目名称"];
-        return;
-    }
+//    if ([_PNTapLabel.text isEqualToString:@"------"]) {
+//        [stdPubFunc stdShowMessage:@"请选择项目名称"];
+//        return;
+//    }
     self.type = 1;
     if (_isFS) {
         [self.tableView removeFromSuperview];
@@ -172,10 +229,10 @@
 }
 - (void)DTAction:(UITapGestureRecognizer *)sender
 {
-    if ([_FSTapLabel.text isEqualToString:@"------"]) {
-        [stdPubFunc stdShowMessage:@"请选择故障系统"];
-        return;
-    }
+//    if ([_FSTapLabel.text isEqualToString:@"------"]) {
+//        [stdPubFunc stdShowMessage:@"请选择故障系统"];
+//        return;
+//    }
     self.type = 2;
     if (_isDT) {
         [self.tableView removeFromSuperview];
@@ -209,21 +266,19 @@
     _PTapLabel.text = @"------";
     _describeTextView.text = @"";
     [_imgBtn1 setImage:[UIImage imageNamed:@"add"] forState:normal];
-    [_imgBtn2 setImage:[UIImage imageNamed:@"add"] forState:normal];
-    [_imgBtn3 setImage:[UIImage imageNamed:@"add"] forState:normal];
-    _imgBtn2.hidden = _imgBtn3.hidden = YES;
+    _imgView1.hidden = _imgView2.hidden = _imgView3.hidden = YES;
     [self.paramsDic removeAllObjects];
     [self repairButtonIsReady];
 }
 - (void)repairButtonIsReady
 {
-    if (![_PNTapLabel.text isEqualToString:@"------"] && _describeTextView.text.length != 0) {
+//    if (![_PNTapLabel.text isEqualToString:@"------"] && _describeTextView.text.length != 0) {
         _repairButton.enabled = YES;
         _repairButton.backgroundColor = RGB(21, 125, 251);
-    }else{
-        _repairButton.enabled = NO;
-        _repairButton.backgroundColor = [UIColor lightGrayColor];
-    }
+//    }else{
+//        _repairButton.enabled = NO;
+//        _repairButton.backgroundColor = [UIColor lightGrayColor];
+//    }
 }
 #pragma mark UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -322,6 +377,12 @@
     if (textView.text.length > 0) [self.paramsDic setObject:textView.text forKey:@"fault_desc"];
     [self repairButtonIsReady];
 }
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSMutableString *t = [self.describeTextView.text mutableCopy];
+    [t replaceCharactersInRange:range withString:text];
+    return t.length <= 100;
+}
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [_describeTextView resignFirstResponder];
@@ -356,7 +417,7 @@
     [self addSubview:_FSView];
     _FSLabel = [UILabel new];
     _FSLabel.font = [UIFont systemFontOfSize:14];
-    _FSLabel.text = @"故障系统";
+    _FSLabel.text = @"故障系统:";
     [_FSView addSubview:_FSLabel];
     _FSTapLabel = [UILabel new];
     _FSTapLabel.font = [UIFont systemFontOfSize:14];
@@ -373,7 +434,7 @@
     [self addSubview:_DTView];
     _DTLabel = [UILabel new];
     _DTLabel.font = [UIFont systemFontOfSize:14];
-    _DTLabel.text = @"设备类型";
+    _DTLabel.text = @"设备类型:";
     [_DTView addSubview:_DTLabel];
     _DTTapLabel = [UILabel new];
     _DTTapLabel.font = [UIFont systemFontOfSize:14];
@@ -390,7 +451,7 @@
     [self addSubview:_PView];
     _PLabel = [UILabel new];
     _PLabel.font = [UIFont systemFontOfSize:14];
-    _PLabel.text = @"优先级 ";
+    _PLabel.text = @"优先级:";
     [_PView addSubview:_PLabel];
     _PTapLabel = [UILabel new];
     _PTapLabel.font = [UIFont systemFontOfSize:14];
@@ -415,20 +476,7 @@
     _imgBtn1 = [UIButton buttonWithType:UIButtonTypeCustom];
     [_imgBtn1 setImage:[UIImage imageNamed:@"add"] forState:normal];
     [self addSubview:_imgBtn1];
-    _imgBtn2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_imgBtn2 setImage:[UIImage imageNamed:@"add"] forState:normal];
-    [self addSubview:_imgBtn2];
-    _imgBtn3 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_imgBtn3 setImage:[UIImage imageNamed:@"add"] forState:normal];
-    [self addSubview:_imgBtn3];
     [_imgBtn1 addTarget:self action:@selector(imageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    _imgBtn1.tag = 191;
-    [_imgBtn2 addTarget:self action:@selector(imageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    _imgBtn2.tag = 192;
-    _imgBtn2.hidden = YES;
-    [_imgBtn3 addTarget:self action:@selector(imageButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    _imgBtn3.tag = 193;
-    _imgBtn3.hidden = YES;
     _msgLabel = [UILabel new];
     _msgLabel.text = @"只允许添加三张";
     _msgLabel.font = k_text_font(8);
@@ -438,6 +486,29 @@
     [_repairButton setTitle:@"确认报修" forState:normal];
     _repairButton.backgroundColor = RGB(21, 125, 251);
     [self addSubview:_repairButton];
+    
+    _imgView1 = [UIImageView new];
+    [self addSubview:_imgView1];
+    _imgView2 = [UIImageView new];
+    [self addSubview:_imgView2];
+    _imgView3 = [UIImageView new];
+    [self addSubview:_imgView3];
+    _imgView1.hidden = _imgView3.hidden = _imgView2.hidden = YES;
+    _tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewClick:)];
+    _tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTwoClick:)];
+    _tap3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewThreeClick:)];
+    _dimg1 = [UIImageView new];
+    _dimg1.image = [UIImage imageNamed:@"downArrow"];
+    [self addSubview:_dimg1];
+    _dimg2 = [UIImageView new];
+    _dimg2.image = [UIImage imageNamed:@"downArrow"];
+    [self addSubview:_dimg2];
+    _dimg3 = [UIImageView new];
+    _dimg3.image = [UIImage imageNamed:@"downArrow"];
+    [self addSubview:_dimg3];
+    _dimg4 = [UIImageView new];
+    _dimg4.image = [UIImage imageNamed:@"downArrow"];
+    [self addSubview:_dimg4];
 }
 #pragma mark frame
 - (void)layoutSubviews
@@ -499,28 +570,39 @@
     [_PTapLabel addGestureRecognizer:_PTap];
     [_describeLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(20);
-        make.top.equalTo(_PView.mas_bottom).offset(0);
+        make.top.equalTo(_PView.mas_bottom).offset(10);
         make.height.mas_equalTo(@25);
     }];
     [_describeTextView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(10);
         make.top.equalTo(_describeLabel.mas_bottom).offset(0);
         make.right.offset(-10);
-        make.height.mas_equalTo(@100);
+        make.height.mas_equalTo(@90);
     }];
     [_imgBtn1 mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_describeTextView.mas_bottom).offset(10);
         make.left.offset(10);
         make.size.mas_equalTo(CGSizeMake(50, 50));
     }];
-    [_imgBtn2 mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.width.height.equalTo(_imgBtn1);
+    [_imgView1 mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.equalTo(_imgBtn1);
+        make.top.equalTo(_imgBtn1);
         make.left.equalTo(_imgBtn1.mas_right).offset(10);
     }];
-    [_imgBtn3 mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.width.height.equalTo(_imgBtn1);
-        make.left.equalTo(_imgBtn2.mas_right).offset(10);
+    [_imgView2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.equalTo(_imgBtn1);
+        make.top.equalTo(_imgBtn1);
+        make.left.equalTo(_imgView1.mas_right).offset(10);
     }];
+    [_imgView3 mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.equalTo(_imgBtn1);
+        make.top.equalTo(_imgBtn1);
+        make.left.equalTo(_imgView2.mas_right).offset(10);
+    }];
+    _imgView1.userInteractionEnabled = _imgView2.userInteractionEnabled = _imgView3.userInteractionEnabled = YES;
+    [_imgView1 addGestureRecognizer:_tap1];
+    [_imgView2 addGestureRecognizer:_tap2];
+    [_imgView3 addGestureRecognizer:_tap3];
     [_msgLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_imgBtn1.mas_bottom).offset(5);
         make.left.equalTo(_imgBtn1);
@@ -530,6 +612,26 @@
         make.left.right.offset(0);
         make.top.equalTo(_msgLabel.mas_bottom).offset(5);
         make.height.mas_equalTo(@40);
+    }];
+    [_dimg1 mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(20, 10));
+        make.centerY.equalTo(_PNTapLabel);
+        make.right.offset(-30);
+    }];
+    [_dimg2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(20, 10));
+        make.centerY.equalTo(_FSTapLabel);
+        make.right.offset(-30);
+    }];
+    [_dimg3 mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(20, 10));
+        make.centerY.equalTo(_DTTapLabel);
+        make.right.offset(-30);
+    }];
+    [_dimg4 mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(20, 10));
+        make.centerY.equalTo(_PTapLabel);
+        make.right.offset(-30);
     }];
 }
 

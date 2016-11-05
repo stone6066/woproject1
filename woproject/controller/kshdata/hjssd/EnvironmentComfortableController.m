@@ -74,7 +74,7 @@
     if (!_backScroll) {
         _backScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 228, fDeviceWidth, fDeviceHeight -228)];
         [self.view addSubview:_backScroll];
-        _backScroll.contentSize = CGSizeMake(0, 570);
+        _backScroll.contentSize = CGSizeMake(0, 280);
     }
     return _backScroll;
 }
@@ -82,6 +82,7 @@
 - (void)setCursor {
     UIScrollView *view = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH , 280)];
     view.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 0);
+    view.scrollEnabled = NO;
     TTLineChartView *lineChartView = [[TTLineChartView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, 200)];
     lineChartView.showBackgroundView = YES;
     lineChartView.heightOffset = 34;

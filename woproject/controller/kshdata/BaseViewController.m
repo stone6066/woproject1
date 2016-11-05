@@ -155,7 +155,7 @@
     }];
     tab.delegate = self;
     tab.dataSource = self;
-    tab.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    tab.separatorStyle = UITableViewCellSeparatorStyleNone;
     tab.scrollEnabled = NO;
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -172,8 +172,14 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellName];
     }
     cell.textLabel.text = _dateArr[indexPath.row][@"word"];
-    cell.textLabel.textColor = [UIColor blackColor];
+    
+    
     cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.textLabel.textColor = [UIColor blackColor];
+    if ([cell.textLabel.text isEqualToString:_dateListBt.titleLabel.text]) {
+        cell.textLabel.textColor = RGB(130, 219, 250);
+    }
+    
     cell.backgroundColor = RGB(255, 255, 255);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -208,7 +214,7 @@
 
 -(void)stdVarsInit{
     _forCityList = [DownLoadBaseData readBaseData:@"forCity.plist"];
-    [_classifys addObject:@"目标省份"];
+    [_classifys addObject:@"请选择省"];
     
     for (NSDictionary *dict in _forCityList) {
         NSString *names=[dict objectForKey:@"name"];
@@ -216,13 +222,13 @@
     }
     
     _forProjectList= [DownLoadBaseData readBaseData:@"forProjectList.plist"];
-    [_sorts addObject:@"项目名称"];
+    [_sorts addObject:@"请选择项"];
     for (NSDictionary * dict in _forProjectList) {
         NSString *names=[dict objectForKey:@"name"];
         [_sorts addObject:names];
     }
     
-    [_areas addObject:@"全城"];
+    [_areas addObject:@"请选择市"];
     
     // 添加下拉菜单
     DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 64) andHeight:44];
@@ -345,7 +351,7 @@
                     if (_areas.count > 0) {
                         [_areas removeAllObjects];
                     }
-                    [_areas addObject:@"全城"];
+                    [_areas addObject:@"请选择市"];
                     
                     for (NSDictionary *dict in dic[@"city"]) {
                         NSString *names=[dict objectForKey:@"name"];
@@ -369,7 +375,7 @@
                     if (_areas.count > 0) {
                         [_areas removeAllObjects];
                     }
-                    [_areas addObject:@"全城"];
+                    [_areas addObject:@"请选择市"];
                     _provinceIdStr = @"";
                    
                     _cityIdStr = @"";

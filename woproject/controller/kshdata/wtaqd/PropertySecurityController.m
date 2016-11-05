@@ -27,6 +27,7 @@
 
 #pragma mark -
 #pragma mark baseUI
+@property (strong, nonatomic) IBOutlet UILabel *healthTitleLb;
 
 @property (strong, nonatomic) IBOutlet UILabel *sortInC;
 @property (strong, nonatomic) IBOutlet UILabel *health;
@@ -193,9 +194,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(dealwith:) name:@"lalalallalalalala" object:nil];
+    
 }
 
+- (void)dealwith:(NSNotification *)noti {
+    _healthTitleLb.text = [NSString stringWithFormat:@"%@:" ,noti.userInfo[@"content"] ];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

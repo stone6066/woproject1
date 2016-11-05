@@ -27,6 +27,7 @@
 
 #pragma mark -
 #pragma mark baseUI
+@property (strong, nonatomic) IBOutlet UILabel *healthTitleLb;
 
 @property (strong, nonatomic) IBOutlet UILabel *sortInC;
 @property (strong, nonatomic) IBOutlet UILabel *health;
@@ -44,7 +45,7 @@
     _chartArr = [NSMutableArray arrayWithCapacity:0];
     _yValuesArr = [NSMutableArray arrayWithCapacity:0];
     //不允许有重复的标题
-    self.titles = @[@"综合指数列表",@"消防指数列表",@"安防指数列表",@"照明指数列表",@"楼控指数列表"];
+    self.titles = @[@"综合健康度",@"消防类健康度",@"安防类健康度",@"照明类健康度",@"楼控类健康度"];
 
 }
 
@@ -67,7 +68,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(dealwith:) name:@"lalalallalalalala" object:nil];
+
+}
+- (void)dealwith:(NSNotification *)noti {
+    _healthTitleLb.text = [NSString stringWithFormat:@"%@:" ,noti.userInfo[@"content"] ];
 }
 
 - (NSMutableArray *)creatSubViews{

@@ -21,7 +21,6 @@
 @property (nonatomic, strong) RepairView *rView;
 @property (nonatomic, strong) UIAlertController *alert;
 @property (nonatomic, strong) UIImagePickerController *pickerController;
-@property (nonatomic, assign) NSInteger imgTag;
 @property (nonatomic, strong) NSMutableArray *imgArray;
 
 @end
@@ -65,7 +64,10 @@
 #pragma mark Action
 - (void)openPhotosAndCamera:(UIButton *)button
 {
-    self.imgTag = button.tag;
+    if (self.imgArray.count == 3) {
+        [stdPubFunc stdShowMessage:@"只允许添加三张照片"];
+        return;
+    }
     [self presentViewController:self.alert animated:YES completion:nil];
 }
 ////选择图片完成
@@ -82,35 +84,38 @@
     //二进制文件 需要作为图片上传
     NSData *imgData = UIImageJPEGRepresentation(currentImage, 1.0f);
     UIImage *image = [[UIImage alloc] initWithData:imgData];
-    switch (self.imgTag) {
-        case 191:
-            [self.rView.imgBtn1 setImage:image forState:normal];
-            if (self.imgArray.count == 1) {
-                [self.imgArray removeObjectAtIndex:0];
-            }
-            [self.imgArray insertObject:imgData atIndex:0];
-            self.rView.imgBtn2.hidden = NO;
-            break;
-        case 192:
-            [self.rView.imgBtn2 setImage:image forState:normal];
+    if (_rView.imgView1.hidden) {
+        _rView.imgView1.image = image;
+        _rView.imgView1.hidden = NO;
+        if (self.imgArray.count == 1) {
+            [self.imgArray removeObjectAtIndex:0];
+        }
+        [self.imgArray insertObject:imgData atIndex:0];
+    }else{
+        if (_rView.imgView2.hidden) {
+            _rView.imgView2.hidden = NO;
+            _rView.imgView2.image = image;
             if (self.imgArray.count == 2) {
                 [self.imgArray removeObjectAtIndex:1];
             }
             [self.imgArray insertObject:imgData atIndex:1];
-            self.rView.imgBtn3.hidden = NO;
-            break;
-        case 193:
-            [self.rView.imgBtn3 setImage:image forState:normal];
+        }else{
+            _rView.imgView3.hidden = NO;
+            _rView.imgView3.image = image;
             if (self.imgArray.count == 3) {
                 [self.imgArray removeObjectAtIndex:2];
             }
             [self.imgArray insertObject:imgData atIndex:2];
-            break;
+        }
     }
 }
 - (void)ConfirmRepairAction:(UIButton *)sender
 {
     [self.rView.describeTextView resignFirstResponder];
+    if ([_rView.PNTapLabel.text isEqualToString:@"------"]) {
+        [stdPubFunc stdShowMessage:@"请选择项目名称"];
+        return;
+    }
     NSDictionary *params = [self.rView getParams];
     if (!params[@"fault_desc"]) {
         [stdPubFunc stdShowMessage:@"请填写报修描述"];
@@ -139,9 +144,10 @@
                 [SVProgressHUD dismiss];
                 [stdPubFunc stdShowMessage:msg];
                 NSLog(@"======== %@", jsonDic);
-                if (self.imgArray.count<1) {
-                    [self.navigationController popViewControllerAnimated:YES];
-                    return ;
+                if (self.imgArray.count == 0) {
+                    MyRepairVC *vc = [[MyRepairVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
                 NSString *cid = jsonDic[@"i"][@"Data"][@"id"];
                 NSString *imgUrl = [NSString stringWithFormat:@"%@support/sys/forUpLoading", BaseUrl];
@@ -196,11 +202,6 @@
                         
                         [uploadTask resume];
                     }];
-                if (self.imgArray.count == 0) {
-                    MyRepairVC *vc = [[MyRepairVC alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
             } else {
                 //失败
                 [SVProgressHUD showErrorWithStatus:msg];
