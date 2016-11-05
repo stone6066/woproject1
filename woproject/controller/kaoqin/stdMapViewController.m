@@ -177,6 +177,8 @@
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    _latitudeStr=@"";
+    _longitudeStr=@"0";
     _signArr=[[NSMutableArray alloc]init];
     [self requestKaoqin];
     //[self drawBtnView];
@@ -263,16 +265,47 @@
 -(NSDictionary *)makeUpLoadDict:(NSString*)signFlag{
     NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
     
-    [dict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
-    [dict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
-    [dict setObject:signFlag forKey:@"status"];//签到0  签退1
-    [dict setObject:_longitudeStr forKey:@"longitude"];
-    
-    [dict setObject:_latitudeStr forKey:@"latitude"];
-    [dict setObject:_locationStr forKey:@"location"];
-    [dict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
+    @try {
+        [dict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
+        [dict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
+        [dict setObject:signFlag forKey:@"status"];//签到0  签退1
+        [dict setObject:_longitudeStr forKey:@"longitude"];
+        
+        if (!_latitudeStr) {
+            [dict setObject:_latitudeStr forKey:@"latitude"];
+        }
+        else
+            [dict setObject:@"0" forKey:@"latitude"];
+        if (_locationStr) {
+            [dict setObject:_locationStr forKey:@"location"];
+        }
+        else
+            [dict setObject:@"0" forKey:@"location"];
+        [dict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
+    } @catch (NSException *exception) {
+        ;
+    } @finally {
+        return dict;
 
-    NSLog(@"dict:%@",[self dictionaryToJson:dict]);
+    }
+//    [dict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
+//    [dict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
+//    [dict setObject:signFlag forKey:@"status"];//签到0  签退1
+//    [dict setObject:_longitudeStr forKey:@"longitude"];
+//    
+//    if (!_latitudeStr) {
+//        [dict setObject:_latitudeStr forKey:@"latitude"];
+//    }
+//    else
+//        [dict setObject:@"0" forKey:@"latitude"];
+//    if (_locationStr) {
+//        [dict setObject:_locationStr forKey:@"location"];
+//    }
+//    else
+//         [dict setObject:@"0" forKey:@"location"];
+//    [dict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
+
+    //NSLog(@"dict:%@",[self dictionaryToJson:dict]);
     
     
     return dict;

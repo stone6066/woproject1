@@ -307,7 +307,8 @@
         _detailTextFont = [UIFont systemFontOfSize:11];
         _detailTextColor = kDetailTextColor;
         _indicatorColor = kTextColor;
-        _tableViewHeight = IS_IPHONE_4_OR_LESS ? 200 : kTableViewHeight;
+        _tableViewHeight =fDeviceHeight-130;
+        //IS_IPHONE_4_OR_LESS ? 200 : kTableViewHeight;
         _isClickHaveItemValid = YES;
         
         //lefttableView init
@@ -552,9 +553,10 @@
         _buttomImageView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, kButtomImageViewHeight);
         [self.superview addSubview:_buttomImageView];
         
-        NSInteger num = [_leftTableView numberOfRowsInSection:0];
-        CGFloat tableViewHeight = num * kTableViewCellHeight > _tableViewHeight+1 ? _tableViewHeight:num*kTableViewCellHeight+1;
-        
+       // NSInteger num = [_leftTableView numberOfRowsInSection:0];
+//        CGFloat tableViewHeight = num * kTableViewCellHeight > _tableViewHeight+1 ? _tableViewHeight:num*kTableViewCellHeight+1;
+        CGFloat tableViewHeight =_tableViewHeight;
+
         [UIView animateWithDuration:0.2 animations:^{
             if (haveItems) {
                 _leftTableView.frame = CGRectMake(self.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width/2, tableViewHeight);
@@ -683,7 +685,9 @@
         NSInteger currentSelectedMenudRow = [_currentSelectRowArray[_currentSelectedMenudIndex] integerValue];
         if (indexPath.row == currentSelectedMenudRow)
         {
-            [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            //[tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            cell.tintColor = [UIColor redColor];//选中变成红色对号
+            cell.accessoryType=UITableViewCellAccessoryCheckmark;
         }
         
         if (_dataSourceFlags.numberOfItemsInRow && [_dataSource menu:self numberOfItemsInRow:indexPath.row column:_currentSelectedMenudIndex]> 0){

@@ -3214,7 +3214,7 @@
 				TargetAttributes = {
 					89FBEE961DAA2FA4008FBB8A = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 6EQZYVZ54L;
+						DevelopmentTeam = QNYGZ6JJ24;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -3966,7 +3966,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = woproject/woproject.entitlements;
-				DEVELOPMENT_TEAM = 6EQZYVZ54L;
+				DEVELOPMENT_TEAM = QNYGZ6JJ24;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4007,7 +4007,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = woproject/woproject.entitlements;
-				DEVELOPMENT_TEAM = 6EQZYVZ54L;
+				DEVELOPMENT_TEAM = QNYGZ6JJ24;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

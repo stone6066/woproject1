@@ -300,7 +300,8 @@
 
 - (NSString *)menu:(DOPDropDownMenu *)menu detailTextForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath
 {
-    return [@(arc4random()%1000) stringValue];
+    //return [@(arc4random()%1000) stringValue];
+    return nil;
 }
 
 - (NSInteger)menu:(DOPDropDownMenu *)menu numberOfItemsInRow:(NSInteger)row column:(NSInteger)column

@@ -345,7 +345,7 @@
 static NSString * const TicketCellId = @"TicketCellId";
 -(void)loadListTable{
     
-    self.TableView=[[UITableView alloc]initWithFrame:CGRectMake(0, 65+50, fDeviceWidth, fDeviceHeight-50-65-MainTabbarHeight)];
+    self.TableView=[[UITableView alloc]initWithFrame:CGRectMake(0, 65+50, fDeviceWidth, fDeviceHeight-65-MainTabbarHeight)];
     self.TableView.delegate=self;
     self.TableView.dataSource=self;
     [self.view addSubview:self.TableView];

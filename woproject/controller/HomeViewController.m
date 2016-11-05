@@ -110,7 +110,7 @@
 -(void)drawListNumLbl:(UILabel*)lbl Lframe:(CGRect)lframe parentVc:(UIView*)pvc{
     CGFloat lblWidth=30;
     CGFloat lblHeigh=30;
-    [lbl setFrame:CGRectMake(lframe.origin.x+lframe.size.width-lblWidth/2, lframe.origin.y-lblHeigh/2, lblWidth, lblHeigh)];
+    [lbl setFrame:CGRectMake(lframe.origin.x+lframe.size.width-lblWidth/2-5, lframe.origin.y-lblHeigh/2+10, lblWidth, lblHeigh)];
     lbl.layer.cornerRadius = 15;
     lbl.layer.masksToBounds = YES;
     lbl.backgroundColor=bluetxtcolor;

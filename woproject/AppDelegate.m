@@ -109,7 +109,6 @@
             }
         }];
     }
- 
    
     /*-------jpush------*/
     // Override point for customization after application launch.
@@ -416,17 +415,20 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                          otherButtonTitles:nil, nil];
         [alert show];
 }
+//您有新工单请查看
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex) {
         case 0:{//
-            if ([_Msgtype isEqualToString:@"3"]) {//单点登录
-                [[NSNotificationCenter defaultCenter] postNotificationName:NotificationLogout
-                                                                    object:_logoutUid];
-            }
-            else{
+            
+            if ([alertView.title isEqualToString:@"您有新工单请查看"]) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NotificationTicketTurn
                                                                     object:_Msgtype];
+                
+            }
+            else{//单点登录
+                [[NSNotificationCenter defaultCenter] postNotificationName:NotificationLogout
+                                                                    object:_logoutUid];
             }
         }break;
         default:
@@ -471,7 +473,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
 {
-    [stdPubFunc stdShowMessage:@"收到自定义通知"];
+    //[stdPubFunc stdShowMessage:@"收到自定义通知"];
 }
 
 

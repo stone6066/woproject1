@@ -330,18 +330,6 @@
 
 //0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
 -(void)upInfoRepair:(NSString*)operationType{
-    if ([_priorityBox.data_id isEqualToString:@"-1"]) {
-        [stdPubFunc stdShowMessage:@"请选择优先级"];
-        return;
-    }
-    if ([_jobNameBox.data_id isEqualToString:@"-1"]) {
-        [stdPubFunc stdShowMessage:@"请选择工种"];
-        return;
-    }
-    if ([_operationUserBox.data_id isEqualToString:@"-1"]) {
-        [stdPubFunc stdShowMessage:@"请选择人员"];
-        return;
-    }
     [SVProgressHUD showWithStatus:k_Status_Load];
     
     NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
@@ -350,9 +338,15 @@
     [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [paramDict setObject:_ListId forKey:@"tid"];
     [paramDict setObject:operationType forKey:@"operation"];
-    [paramDict setObject:_priorityBox.data_id forKey:@"priority"];
-    [paramDict setObject:_jobNameBox.data_id forKey:@"job_id"];
-    [paramDict setObject:_operationUserBox.data_id forKey:@"user_id"];
+    
+    if (![_jobNameBox.data_id isEqualToString:@"-1"])
+        [paramDict setObject:_priorityBox.data_id forKey:@"priority"];
+    
+    if (![_jobNameBox.data_id isEqualToString:@"-1"])
+        [paramDict setObject:_jobNameBox.data_id forKey:@"job_id"];
+    
+    if (![_jobNameBox.data_id isEqualToString:@"-1"])
+        [paramDict setObject:_operationUserBox.data_id forKey:@"user_id"];
     
     
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketFlow"];
