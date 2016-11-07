@@ -152,8 +152,11 @@
 
 
 -(void)actloginbtn{
-    
-    [self ActionNetFuc:_MobileTxtF.text passWord:_PswTxtF.text];
+    if ([_PswTxtF.text isEqualToString:_PswTxtF1.text]) {
+        [self ActionNetFuc:_MobileTxtF.text passWord:_PswTxtF.text];
+    }
+    else
+        [stdPubFunc stdShowMessage:@"密码不一致，请重新输入"];
 }
 
 -(NSDictionary *)makeUpLoadDict{
@@ -197,14 +200,15 @@
                                               ApplicationDelegate.myLoginInfo=[LGIN asignInfoWithDict:jsonDic];
                                               
                                               [SVProgressHUD dismiss];
-                                              [stdPubFunc stdShowMessage:msg];
+                                              [stdPubFunc stdShowMessage:@"激活成功"];
                                               [self actionSuccPro];
                                               [stdPubFunc isSaveLoginInfo:@"0"];
                                               
                                               
                                           } else {
                                               //失败
-                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              //[SVProgressHUD showErrorWithStatus:msg];
+                                              [stdPubFunc stdShowMessage:@"该用户不存在，请重新激活"];
                                               if(self.actionFailBlock)
                                                   self.actionFailBlock(self);
                                           }

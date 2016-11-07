@@ -37,6 +37,8 @@
         _alert = [UIAlertController alertControllerWithTitle:nil message:@"是否退出登录" preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *loginOut = [UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/sys/logout"];
+            [ApplicationDelegate stdRealseAlias];//解除setAlias绑定
+            //[JPUSHService setAlias:@"" callbackSelector:nil object:self];
             [SVProgressHUD showWithStatus:k_Status_Load];
             urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             [ApplicationDelegate.httpManager POST:urlstr

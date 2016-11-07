@@ -354,7 +354,7 @@ static NSString * const TicketCellId = @"TicketCellId";
     [self.view addSubview:self.TableView];
     self.TableView.tableFooterView = [[UIView alloc]init];
     self.TableView.backgroundColor=collectionBgdColor;
-    
+    self.TableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.TableView registerNib:[UINib nibWithNibName:NSStringFromClass([ticketListTableViewCell class]) bundle:nil] forCellReuseIdentifier:TicketCellId];
     self.TableView.backgroundColor=bluebackcolor;
     [self.view addSubview:self.TableView];

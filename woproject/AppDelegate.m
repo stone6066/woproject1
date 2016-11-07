@@ -365,7 +365,16 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         [self singleLogin];
     }
     else{
-        [self tiketInfoTurn:@"您有新工单请查看"];
+        if ([_Msgtype isEqualToString:@"0"]) {
+            _myType=@"0";
+        }
+        else if ([_Msgtype isEqualToString:@"1"]) {
+            _myType=@"1";
+        }
+        else if ([_Msgtype isEqualToString:@"2"]) {
+            _myType=@"2";
+        }
+        [self tiketInfoTurn:@"您有新工单请查看" msgtype:_myType];
 #warning 在前台时看看这里的走不走
         UNMutableNotificationContent * content = [UNMutableNotificationContent new];
         //设置通知请求发送时 app图标上显示的数字
@@ -423,7 +432,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             
             if ([alertView.title isEqualToString:@"您有新工单请查看"]) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NotificationTicketTurn
-                                                                    object:_Msgtype];
+                                                                    object:_myType];
                 
             }
             else{//单点登录
@@ -436,7 +445,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     }
 }
 
--(void)tiketInfoTurn:(NSString*)thint{
+-(void)tiketInfoTurn:(NSString*)thint msgtype:(NSString*)myType{
     UIAlertView *alert =
     [[UIAlertView alloc] initWithTitle:thint
                                message:@"确定查看"
@@ -478,7 +487,9 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 
 
-
+-(void)stdRealseAlias{
+    [JPUSHService setAlias:@"" callbackSelector:nil object:self];//解除setAlias绑定
+}
 
 
 
