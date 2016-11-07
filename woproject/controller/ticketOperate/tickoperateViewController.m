@@ -212,7 +212,7 @@
         [scollVc addSubview:_assistBtn];
     }
     if (!_turnBtn) {
-        _turnBtn=[[UIButton alloc]initWithFrame:CGRectMake(controllX, firstLineY+btnHeigh*4, littleBtnWidth, btnHeigh)];
+        _turnBtn=[[UIButton alloc]initWithFrame:CGRectMake(controllX, firstLineY+btnHeigh*3+20, littleBtnWidth, btnHeigh)];
         _turnBtn.tag=105;
         [self stdSamleSetBtn:_turnBtn btnTxt:@"转单"];
         [scollVc addSubview:_turnBtn];
@@ -234,13 +234,15 @@
                 value:[UIColor blackColor]
                 range:NSMakeRange(5,1)];
     
-    UILabel *descLbl=[[UILabel alloc]initWithFrame:CGRectMake(controllX, firstLineY+btnHeigh*4+btnHeigh+20, 100, 30)];
+    //UILabel *descLbl=[[UILabel alloc]initWithFrame:CGRectMake(controllX, firstLineY+btnHeigh*4+btnHeigh+20, 100, 30)];
+    UILabel *descLbl=[[UILabel alloc]initWithFrame:CGRectMake(controllX, _turnBtn.frame.origin.y+_turnBtn.frame.size.height+10, 100, 30)];
     descLbl.attributedText=str;
     [scollVc addSubview:descLbl];
     //[self.view addSubview:descLbl];
     
     if (!_descTxt) {
-        _descTxt=[[UITextView alloc]initWithFrame:CGRectMake(controllX,firstLineY+btnHeigh*4+btnHeigh+20+32, fDeviceWidth-controllX*2,120)];
+        //_descTxt=[[UITextView alloc]initWithFrame:CGRectMake(controllX,firstLineY+btnHeigh*4+btnHeigh+20+32, fDeviceWidth-controllX*2,80)];
+        _descTxt=[[UITextView alloc]initWithFrame:CGRectMake(controllX,descLbl.frame.origin.y+descLbl.size.height+10, fDeviceWidth-controllX*2,80)];
         [self.view addSubview:_descTxt];
         if ([_IsConfom isEqualToString:@"0"]) {
             _descTxt.editable=NO;
@@ -253,14 +255,14 @@
     }
     
     if (!_addImg1) {
-        _addImg1=[[UIButton alloc]initWithFrame:CGRectMake(controllX, _descTxt.frame.origin.y+_descTxt.frame.size.height+15, 40, 40)];
+        _addImg1=[[UIButton alloc]initWithFrame:CGRectMake(controllX, _descTxt.frame.origin.y+_descTxt.frame.size.height+10, 40, 40)];
         _addImg1.tag=200;
         [self stdSetAddImgBtn:_addImg1];
         [scollVc addSubview:_addImg1];
     }
     
     if (!_addImg2) {
-        _addImg2=[[UIButton alloc]initWithFrame:CGRectMake(controllX+45, _descTxt.frame.origin.y+_descTxt.frame.size.height+15, 40, 40)];
+        _addImg2=[[UIButton alloc]initWithFrame:CGRectMake(controllX+45, _descTxt.frame.origin.y+_descTxt.frame.size.height+10, 40, 40)];
         _addImg2.tag=201;
         
         [self stdSetAddImgBtn:_addImg2];
@@ -269,14 +271,14 @@
 
     
     if (!_addImg3) {
-        _addImg3=[[UIButton alloc]initWithFrame:CGRectMake(controllX+45*2, _descTxt.frame.origin.y+_descTxt.frame.size.height+15, 40, 40)];
+        _addImg3=[[UIButton alloc]initWithFrame:CGRectMake(controllX+45*2, _descTxt.frame.origin.y+_descTxt.frame.size.height+10, 40, 40)];
         _addImg3.tag=202;
         [self stdSetAddImgBtn:_addImg3];
         [scollVc addSubview:_addImg3];
     }
 
     if (!_doneBtn) {
-        _doneBtn=[[UIButton alloc]initWithFrame:CGRectMake(controllX, _addImg3.frame.origin.y+_addImg3.frame.size.height+15, fDeviceWidth-controllX*2, 40)];
+        _doneBtn=[[UIButton alloc]initWithFrame:CGRectMake(controllX, _addImg3.frame.origin.y+_addImg3.frame.size.height+10, fDeviceWidth-controllX*2, 40)];
         _doneBtn.tag=300;
         [_doneBtn setTitle:@"维修完成" forState:UIControlStateNormal];// 添加文字
         [_doneBtn addTarget:self action:@selector(clickbtnFunc:) forControlEvents:UIControlEventTouchUpInside];

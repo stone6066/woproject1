@@ -255,7 +255,7 @@
     
     
     /*----------接单----------*/
-    UIButton * operateBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-50, fDeviceWidth, 40)];
+    UIButton * operateBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-40, fDeviceWidth, 40)];
     
     [operateBtn addTarget:self action:@selector(clickoperatebtn) forControlEvents:UIControlEventTouchUpInside];
     
