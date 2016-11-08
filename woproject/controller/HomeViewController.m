@@ -71,7 +71,7 @@
             [self drawMainView];
             [self downDictData];
             [self loadListNum];
-             [self stdSetAlias];
+            [self stdSetAlias];
         };
         [[NSNotificationCenter defaultCenter] postNotificationName:@"isLogin" object:nil];
         self.hidesBottomBarWhenPushed = YES;
@@ -82,6 +82,45 @@
         [self loadListNum];
     
 }
+
+-(void)stdSetAlias{
+    NSLog(@"%@", ApplicationDelegate.myLoginInfo.Id);
+    [JPUSHService setAlias:ApplicationDelegate.myLoginInfo.Id
+          callbackSelector:@selector(tagsAliasCallback:tags:alias:)
+                    object:self];
+    
+}
+- (void)tagsAliasCallback:(int)iResCode
+                     tags:(NSSet *)tags
+                    alias:(NSString *)alias {
+    NSString *callbackString =
+    [NSString stringWithFormat:@"%d, \ntags: %@, \nalias: %@\n", iResCode,
+     [self logSet:tags], alias];
+    NSLog(@"TagsAlias回调:%@", callbackString);
+}
+
+// log NSSet with UTF8
+// if not ,log will be \Uxxx
+- (NSString *)logSet:(NSSet *)dic {
+    if (![dic count]) {
+        return nil;
+    }
+    NSString *tempStr1 =
+    [[dic description] stringByReplacingOccurrencesOfString:@"\\u"
+                                                 withString:@"\\U"];
+    NSString *tempStr2 =
+    [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSString *tempStr3 =
+    [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
+    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *str =
+    [NSPropertyListSerialization propertyListFromData:tempData
+                                     mutabilityOption:NSPropertyListImmutable
+                                               format:NULL
+                                     errorDescription:NULL];
+    return str;
+}
+
 
 - (void)drawHome
 {
@@ -509,48 +548,8 @@
     return dic;
 }
 
-
--(void)stdSetAlias{
-    [JPUSHService setAlias:ApplicationDelegate.myLoginInfo.Id
-          callbackSelector:@selector(tagsAliasCallback:tags:alias:)
-                    object:self];
-    
-}
-- (void)tagsAliasCallback:(int)iResCode
-                     tags:(NSSet *)tags
-                    alias:(NSString *)alias {
-    NSString *callbackString =
-    [NSString stringWithFormat:@"%d, \ntags: %@, \nalias: %@\n", iResCode,
-     [self logSet:tags], alias];
-    NSLog(@"TagsAlias回调:%@", callbackString);
-}
-
-// log NSSet with UTF8
-// if not ,log will be \Uxxx
-- (NSString *)logSet:(NSSet *)dic {
-    if (![dic count]) {
-        return nil;
-    }
-    NSString *tempStr1 =
-    [[dic description] stringByReplacingOccurrencesOfString:@"\\u"
-                                                 withString:@"\\U"];
-    NSString *tempStr2 =
-    [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    NSString *tempStr3 =
-    [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *str =
-    [NSPropertyListSerialization propertyListFromData:tempData
-                                     mutabilityOption:NSPropertyListImmutable
-                                               format:NULL
-                                     errorDescription:NULL];
-    return str;
-}
-
-
-
-
 -(void)logout:(NSNotification *) noti{
+    self.tabBarController.selectedIndex = 0;
     NSString *mystr=noti.object;//[ stringByReplacingOccurrencesOfString:@"\\\"" withString:@""];
     
     
@@ -578,12 +577,13 @@
                                           //
                                           if ([suc isEqualToString:@"0"]) {
                                               [SVProgressHUD showSuccessWithStatus:@"退出成功"];
+                                              [JPUSHService setAlias:@"" callbackSelector:nil object:self];//解除setAlias绑定
                                               dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                                   //成功
                                                   LoginViewController *vc = [[LoginViewController alloc]init];
                                                   vc.loginSuccBlock = ^(LoginViewController *aqrvc){
                                                       NSLog(@"login_suc");
-                                                      ApplicationDelegate.isLogin = YES;
+                                                      ApplicationDelegate.isLogin = NO;
                                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"rootvc" object:nil];
                                                   };
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"isLogin" object:nil];
@@ -609,6 +609,8 @@
 
 -(void)turnTicketFunc:(NSNotification *) noti{
     NSString *tikectType=noti.object;
+    if (tikectType == nil) return;
+    self.tabBarController.selectedIndex = 0;
     if ([tikectType isEqualToString:@"2"]) {
         [self clickzd];
     }
@@ -618,6 +620,5 @@
     else if([tikectType isEqualToString:@"1"]) {
         [self clickgg];
     }
-
 }
 @end

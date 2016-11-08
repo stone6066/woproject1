@@ -7,16 +7,35 @@
 //
 
 #import "BaseViewController.h"
+#import "DropMenuListView.h"
+#import "listCell.h"
 
-@interface BaseViewController () <DOPDropDownMenuDataSource,DOPDropDownMenuDelegate, UITableViewDelegate, UITableViewDataSource>
+
+@interface BaseViewController () <UITableViewDelegate, UITableViewDataSource>
+
 @property (nonatomic, strong) NSMutableArray *classifys;
 
 @property (nonatomic, strong) NSMutableArray *areas;
 
 @property (nonatomic, strong) NSMutableArray *sorts;
-@property (nonatomic, weak) DOPDropDownMenu *menu;
+
+@property (nonatomic, strong)  DropMenuListView *listMenu;
+@property (nonatomic, strong) UIView *listView;
+@property (nonatomic, strong) UITableView *tablevlist;
+
+@property (nonatomic) NSNumber *choose;
+@property (nonatomic, copy) NSString *tempStr;
+@property (nonatomic, strong) NSArray *tempArr;
+
+@property (nonatomic, strong) NSArray *rowDataArr;
+
+@property (nonatomic, strong) UITableView *dateTab;
+
+@property (nonatomic, assign) NSInteger change;
+
 
 @property(nonatomic,strong)NSArray *forProjectList;//项目列表
+
 @property(nonatomic,strong)NSArray *forCityList;//省
 
 
@@ -62,6 +81,10 @@
     
 }
 
+- (void)addNoti {
+    
+}
+
 - (void)setProperties {
     
 }
@@ -76,10 +99,13 @@
     
     self.view.backgroundColor = RGB(240, 240, 240);
     [self manuallyProperties];
+    [self addNoti];
     [self gsHandleData];
     [self initUI];
     [self setProperties];
     [self loadTopNav];
+    [self listMenu];
+    // 添加下拉菜单
     [self stdVarsInit];
     
     // Do any additional setup after loading the view.
@@ -143,62 +169,213 @@
         make.left.right.bottom.top.equalTo(ApplicationDelegate.window);
     }];
     [_backbt addTarget:self action:@selector(back) forControlEvents:(UIControlEventTouchUpInside)];
-    UITableView *tab = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
-    tab.layer.cornerRadius = 5;
-    tab.layer.masksToBounds = YES;
-    [_backbt addSubview:tab];
-    [tab mas_remakeConstraints:^(MASConstraintMaker *make) {
+    _dateTab = [[UITableView alloc] initWithFrame:CGRectZero style:(UITableViewStylePlain)];
+    _dateTab.layer.cornerRadius = 5;
+    _dateTab.layer.masksToBounds = YES;
+    [_backbt addSubview:_dateTab];
+    [_dateTab mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_backbt).offset(54);
         make.right.equalTo(_backbt).offset(-10);
         make.height.equalTo(@100);
         make.width.equalTo(@50);
     }];
-    tab.delegate = self;
-    tab.dataSource = self;
+    _dateTab.delegate = self;
+    _dateTab.dataSource = self;
 //    tab.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tab.scrollEnabled = NO;
+    _dateTab.scrollEnabled = NO;
 }
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    if ([tableView isEqual:_dateTab]) {
+        
+        return 4;
+        
+    } else {
+        
+        return _rowDataArr.count;
+
+    }
     
 }
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
     return 1;
+    
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellName = @"cellname";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellName];
+    
+    if ([tableView isEqual:_dateTab]) {
+        static NSString *cellName = @"cellname";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellName];
+        }
+        cell.textLabel.text = _dateArr[indexPath.row][@"word"];
+        
+        
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.textColor = [UIColor blackColor];
+        if ([cell.textLabel.text isEqualToString:_dateListBt.titleLabel.text]) {
+            cell.textLabel.textColor = RGB(130, 219, 250);
+        }
+        
+        cell.backgroundColor = RGB(255, 255, 255);
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+
+    } else {
+        
+        listCell *cell =  [tableView dequeueReusableCellWithIdentifier:@"baseListCell"];
+        
+        cell.name = _rowDataArr[indexPath.row];
+        
+        if ([_tempStr isEqualToString:cell.name]) {
+            cell.current = YES;
+        } else {
+            cell.current =NO;
+        }
+        
+        return cell;
     }
-    cell.textLabel.text = _dateArr[indexPath.row][@"word"];
     
-    
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.textLabel.textColor = [UIColor blackColor];
-    if ([cell.textLabel.text isEqualToString:_dateListBt.titleLabel.text]) {
-        cell.textLabel.textColor = RGB(130, 219, 250);
-    }
-    
-    cell.backgroundColor = RGB(255, 255, 255);
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 25;
+    if ([tableView isEqual:_dateTab]) {
+        return 25;
+    } else {
+        return 44;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [_dateListBt setTitle:_dateArr[indexPath.row][@"word"] forState:(UIControlStateNormal)];
+    if ([tableView isEqual: _dateTab]) {
+        [_dateListBt setTitle:_dateArr[indexPath.row][@"word"] forState:(UIControlStateNormal)];
+        
+        self.dateStr =_dateArr[indexPath.row][@"code"];
+        
+        [self gsHandleData];
+        
+        [self back];
+        
+    } else {
+        _change = 0;
+        
+        
+        switch ([_choose integerValue]) {
+                
+            case   1: {
+                
+                if (indexPath.row !=0) {
+                    
+                    NSDictionary *dic = _forCityList[indexPath.row -1];
+                    
+                    if (_provinceIdStr != dic[@"id"]) {
+                        
+                        _cityIdStr = @"";
+                        
+                        _change = 2;
+                        
+                        _projectIdStr = @"";
+                        
+                        _provinceIdStr = dic[@"id"];
+                        
+                    }
+                    
+                    
+                    _tempArr = dic [@"city"];
+                    
+                    if (_areas.count > 0) {
+                        
+                        [_areas removeAllObjects];
+                        
+                    }
+                    
+                    [_areas addObject:@"请选择市"];
+                    
+                    for (NSDictionary *dict in dic[@"city"]) {
+                        
+                        NSString *names=[dict objectForKey:@"name"];
+                        
+                        [self.areas addObject:names];
+                        
+                    }
+                    
+                     [self listViewHiddenWith:_rowDataArr[indexPath.row]];
+                    
+                    _rowDataArr  = [NSArray arrayWithArray:_areas];
+                    
+                } else {
+                     [self listViewHiddenWith:_rowDataArr[indexPath.row]];
+                    _cityIdStr = @"";
+                    _projectIdStr = @"";
+                    _provinceIdStr = @"";
+                    
+                }
+                
+            }
+                
+                break;
+                
+            case 2: {
+                
+                if (indexPath.row !=0) {
+                    
+                    NSDictionary *dic = _tempArr[indexPath.row - 1];
+                    
+                    NSLog(@"%@", dic);
+                    if (_cityIdStr != dic[@"id"]) {
+                        _change = 3;
+                        
+                        _projectIdStr = @"";
+                        
+                        _cityIdStr = dic[@"id"];
+                        
+                    }
+                     [self listViewHiddenWith:_rowDataArr[indexPath.row]];
+                    
+                } else {
+                    
+                     [self listViewHiddenWith:_rowDataArr[indexPath.row]];
+                    _projectIdStr = @"";
+                    _cityIdStr =@"";
+                    
+                }
+                
+            }
+                
+                break;
+                
+            case 3:
+                
+                
+                if (indexPath.row != 0) {
+                    NSDictionary *dic = _forProjectList[indexPath.row - 1];
+                    _projectIdStr = dic[@"id"];
+                     [self listViewHiddenWith:_rowDataArr[indexPath.row]];
+                } else {
+                    _projectIdStr = @"";
+                     [self listViewHiddenWith:_rowDataArr[indexPath.row]];
+                }
+                
+                
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+
+        
+        [self gsHandleData];
+        
+        
+    }
     
-    self.dateStr =_dateArr[indexPath.row][@"code"];
-    
-    [self gsHandleData];
-    
-    [self back];
-    
+
 }
 - (void)back {
     [_backbt removeFromSuperview];
@@ -222,205 +399,106 @@
     }
     
     _forProjectList= [DownLoadBaseData readBaseData:@"forProjectList.plist"];
+    
     [_sorts addObject:@"请选择项"];
+    
     for (NSDictionary * dict in _forProjectList) {
         NSString *names=[dict objectForKey:@"name"];
         [_sorts addObject:names];
     }
+
+}
+
+- (DropMenuListView *)listMenu {
     
-    [_areas addObject:@"请选择市"];
-    
-    // 添加下拉菜单
-    DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 64) andHeight:44];
-    menu.delegate = self;
-    menu.dataSource = self;
-    [self.view addSubview:menu];
-    _menu = menu;
-    
-    // 创建menu 第一次显示 不会调用点击代理，可以用这个手动调用
-    [menu selectDefalutIndexPath];
-}
-
-
-- (NSInteger)numberOfColumnsInMenu:(DOPDropDownMenu *)menu
-{
-    return 3;
-}
-
-- (NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column
-{
-    if (column == 0) {
-        return self.classifys.count;
-    }else if (column == 1){
-        return self.areas.count;
-    }else {
-        return self.sorts.count;
-    }
-}
-
-- (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath
-{
-    
-    if (indexPath.column == 0) {
-        return self.classifys[indexPath.row];
-    } else if (indexPath.column == 1){
-        return self.areas[indexPath.row];
-    } else {
-        return self.sorts[indexPath.row];
-    }
-}
-
-// new datasource
-
-- (NSString *)menu:(DOPDropDownMenu *)menu imageNameForRowAtIndexPath:(DOPIndexPath *)indexPath
-{
-    if (indexPath.column == 0 || indexPath.column == 1) {
-        return [NSString stringWithFormat:@"ic_filter_category_%ld",indexPath.row];
-    }
-    return nil;
-}
-
-- (NSString *)menu:(DOPDropDownMenu *)menu imageNameForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath
-{
-    if (indexPath.column == 0 && indexPath.item >= 0) {
-        return [NSString stringWithFormat:@"ic_filter_category_%ld",indexPath.item];
-    }
-    return nil;
-}
-
-// new datasource
-
-- (NSString *)menu:(DOPDropDownMenu *)menu detailTextForRowAtIndexPath:(DOPIndexPath *)indexPath
-{
-    if (indexPath.column < 2) {
-//        return [@(arc4random()%1000) stringValue];
-    }
-    return nil;
-}
-
-- (NSString *)menu:(DOPDropDownMenu *)menu detailTextForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath
-{
-    //return [@(arc4random()%1000) stringValue];
-    return nil;
-}
-
-- (NSInteger)menu:(DOPDropDownMenu *)menu numberOfItemsInRow:(NSInteger)row column:(NSInteger)column
-{
-    //    if (column == 0) {
-    //        if (row == 0) {
-    //            return self.cates.count;
-    //        } else if (row == 2){
-    //            return self.movices.count;
-    //        } else if (row == 3){
-    //            return self.hostels.count;
-    //        }
-    //    }
-    return 0;
-}
-
-- (NSString *)menu:(DOPDropDownMenu *)menu titleForItemsInRowAtIndexPath:(DOPIndexPath *)indexPath
-{
-    //    if (indexPath.column == 0) {
-    //        if (indexPath.row == 0) {
-    //            return self.cates[indexPath.item];
-    //        } else if (indexPath.row == 2){
-    //            return self.movices[indexPath.item];
-    //        } else if (indexPath.row == 3){
-    //            return self.hostels[indexPath.item];
-    //        }
-    //    }
-    return nil;
-}
-
-
-
-- (void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath
-{
-    
-    if (indexPath.item >= 0) {
+    if (!_listMenu) {
+        _listMenu = [[DropMenuListView alloc] initWithFrame:CGRectMake(0, 64, fDeviceWidth, 44)];
+        [self.view addSubview:_listMenu];
+        _listMenu.superClassN = NSStringFromClass([self class]);
+        [_listMenu setTitleContentWithArr:@[@"请选择省", @"请选择市", @"请选择项"]];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(dropMenListViewToBaseViewControllerShowListNoti:) name:NSStringFromClass([self class]) object: nil];
         
-    }else {
         
-        switch (indexPath.column) {
-            case 0: {
-                
-                
+        NSLog(@"%@", NSStringFromClass([self class]));
+    }
+    return _listMenu;
+}
 
-                if (indexPath.row !=0) {
-                    NSDictionary *dic = _forCityList[indexPath.row -1];
-                    
-                    if (_areas.count > 0) {
-                        [_areas removeAllObjects];
-                    }
-                    [_areas addObject:@"请选择市"];
-                    
-                    for (NSDictionary *dict in dic[@"city"]) {
-                        NSString *names=[dict objectForKey:@"name"];
-                        [self.areas addObject:names];
-                    }
-                    
-//                    if (_tempStr.length ==0) {
-//                        _tempStr =  dic[@"name"];
-//                    } else {
-//                        if ([_tempStr isEqualToString:dic[@"name"]]) {
-//                            
-//                        } else {
-//                                                        _tempStr = dic[@"name"];
-//                        }
-//                    }
-//                    
-//                                       NSLog(@"%@", dic[@"name"]);
-                    _provinceIdStr = dic[@"id"];
-                    _tempProStr = dic;
-                } else {
-                    if (_areas.count > 0) {
-                        [_areas removeAllObjects];
-                    }
-                    [_areas addObject:@"请选择市"];
-                    _provinceIdStr = @"";
-                   
-                    _cityIdStr = @"";
-                }
- 
-            }
-                
-                break;
-            case 1: {
-                
-                if (indexPath.row !=0) {
-                    NSDictionary *dic = _tempProStr[@"city"][indexPath.row - 1];
-
-                    if (_provinceIdStr.length > 0) {
-                        if ([dic[@"parentId"] isEqualToString:_provinceIdStr]) {
-                            _cityIdStr = dic[@"id"];
-                        }
-                    } else {
-                        [SVProgressHUD showInfoWithStatus:@"请先选择省份"];
-                        return;
-                    }
-                    
-                } else {
-                    _cityIdStr = @"";
-                }
-            }
-                
-                break;
-            case 2:
-                
-                break;
-            default:
-                break;
+- (void)dropMenListViewToBaseViewControllerShowListNoti:(NSNotification *)noti {
+    
+    _choose = noti.userInfo[@"choose"];
+    
+    _tempStr = noti.userInfo[@"lbtext"];
+    if ([noti.userInfo[@"show"] isEqual:@1]) {
+        [self listView];
+        if ([_choose isEqual:@1]) {
+            _rowDataArr = [NSArray arrayWithArray:_classifys];
+        } else if ([_choose isEqual:@2]) {
+            _rowDataArr = [NSArray arrayWithArray:_areas];
+        } else {
+            _rowDataArr = [NSArray arrayWithArray:_sorts];
         }
-    
-        NSLog(@"%@", _areas);
         
+        [_tablevlist reloadData];
         
+    } else {
         
-        [self gsHandleData];
+        [self listViewHiddenWith:@""];
         
-        NSLog(@"点击了 %ld - %ld 项目",indexPath.column,indexPath.row);
     }
+    
 }
+
+- (UIView *)listView {
+    
+    if (!_listView) {
+        
+        _listView = [[UIView alloc] initWithFrame:CGRectMake(0, 108, fDeviceWidth, fDeviceHeight - 108)];
+        [self.view addSubview:_listView];
+        
+        UIImageView *imgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, fDeviceHeight - 133, fDeviceWidth, 25)];
+        
+        [_listView addSubview:imgv];
+        
+        imgv.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+        
+        [imgv addGestureRecognizer:tap];
+        
+        [imgv setImage:[UIImage imageNamed:@"icon_chose_bottom"]];
+        
+        _tablevlist = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, fDeviceWidth, fDeviceHeight - 133) style:(UITableViewStylePlain)];
+        [_listView addSubview:_tablevlist];
+        _tablevlist.delegate = self;
+        _tablevlist.dataSource = self;
+        [_tablevlist registerNib:[UINib nibWithNibName:@"listCell" bundle:nil] forCellReuseIdentifier:@"baseListCell"];
+        _tablevlist.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tablevlist.tableFooterView = [[UIView alloc] init];
+        _listView.backgroundColor = [UIColor whiteColor];
+        
+    }
+    return _listView;
+}
+
+- (void)tap:(UITapGestureRecognizer *)tap {
+    [self listViewHiddenWith:@""];
+}
+
+- (void)listViewHiddenWith:(NSString *)str {
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:[NSString stringWithFormat:@"remove%@", NSStringFromClass([self class])] object:nil userInfo:@{@"choose":_choose, @"lbtext":str, @"change":@(_change)}];
+    
+    [_listView removeFromSuperview];
+    
+    _listView = nil;
+    
+}
+
+
+
 
 - (void)setDateListShow:(BOOL)dateListShow {
     if (_dateListShow != dateListShow) {

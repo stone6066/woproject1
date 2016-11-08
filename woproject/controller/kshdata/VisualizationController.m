@@ -32,15 +32,13 @@
 - (void)manuallyProperties {
     [super initFrontProperties];
     
-    
 }
 
 
 - (void)initUI {
     self.topTitle = @"可视化数据";
     self.dateListShow = NO;
-    _proCountLb.attributedText = [MJYUtils attributeStr:[NSString stringWithFormat:@"%@", @"2个"] changePartStr:@"2" withFont:20 andColor:RGB(0, 0, 0)];
-    _manageSpaceLb.attributedText = [MJYUtils attributeStr:[NSString stringWithFormat:@"%@", @"90万平方米"] changePartStr:@"90" withFont:20 andColor:RGB(0, 0, 0)];
+
     
 }
 
@@ -101,6 +99,49 @@
     }
     
 }
+
+
+
+
+- (void)gsHandleData {
+    
+    NSDictionary *param = @{
+                            @"uid":ApplicationDelegate.myLoginInfo.Id,
+                            @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                            @"provinceId":self.provinceIdStr,
+                            @"cityId":self.cityIdStr,
+                            @"projectId":self.projectIdStr
+                            };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forProjectCount"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    WS(weakSelf);
+    
+    [GSHttpManager httpManagerPostParameter:param toHttpUrlStr:urlstr  success:^(id result) {
+        NSLog(@"%@", result);
+        
+        [SVProgressHUD dismiss];
+        
+        [weakSelf endDealWith:result];
+        
+    } orFail:^(NSError *error) {
+        
+    }];
+    
+}
+
+#pragma mark -
+#pragma mark 数据处理
+
+- (void)endDealWith:(id)result {
+    
+    _proCountLb.attributedText = [MJYUtils attributeStr:[NSString stringWithFormat:@"%@个", result[@"projectCount"]] changePartStr:[NSString stringWithFormat:@"%@", result[@"projectCount"]] withFont:20 andColor:RGB(0, 0, 0)];
+    _manageSpaceLb.attributedText = [MJYUtils attributeStr:[NSString stringWithFormat:@"%@平方米", result[@"areaCount"]] changePartStr:[NSString stringWithFormat:@"%@", result[@"areaCount"]] withFont:20 andColor:RGB(0, 0, 0)];
+   
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

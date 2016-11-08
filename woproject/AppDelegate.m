@@ -65,15 +65,11 @@
 #endif
     } else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //可以添加自定义categories
-        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                          UIUserNotificationTypeSound |
-                                                          UIUserNotificationTypeAlert)
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert)
                                               categories:nil];
     } else {
         //categories 必须为nil
-        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                          UIRemoteNotificationTypeSound |
-                                                          UIRemoteNotificationTypeAlert)
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)
                                               categories:nil];
     }
     
@@ -279,7 +275,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         [JPUSHService handleRemoteNotification:userInfo];
         NSLog(@"iOS10 前台收到远程通知:%@", [self logDic:userInfo]);
         
-       // [rootViewController addNotificationCount];
+        // [rootViewController addNotificationCount];
         
     }
     else {
@@ -416,13 +412,13 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 
 -(void)singleLogin{
-        UIAlertView *alert =
-        [[UIAlertView alloc] initWithTitle:@"该账号已在其他设备登录"
-                                   message:@"请退出当前账号"
-                                  delegate:self
-                         cancelButtonTitle:@"确定"
-                         otherButtonTitles:nil, nil];
-        [alert show];
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:@"该账号已在其他设备登录"
+                               message:@"请退出当前账号"
+                              delegate:self
+                     cancelButtonTitle:@"确定"
+                     otherButtonTitles:nil, nil];
+    [alert show];
 }
 //您有新工单请查看
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -453,7 +449,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                      cancelButtonTitle:@"确定"
                      otherButtonTitles:@"取消", nil];
     [alert show];
-
+    
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
@@ -462,10 +458,10 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     BOOL notice = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_notice"];
     BOOL vibration = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_vibration"];
     BOOL isSound = [[NSUserDefaults standardUserDefaults] boolForKey:@"setting_sound"];
-//    if (vibration) {
-//        //振动
-//        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-//    }
+    //    if (vibration) {
+    //        //振动
+    //        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    //    }
     if (notice && !isSound) {
         //有弹窗无声音
         completionHandler(UNNotificationPresentationOptionAlert);
@@ -490,11 +486,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 -(void)stdRealseAlias{
     [JPUSHService setAlias:@"" callbackSelector:nil object:self];//解除setAlias绑定
 }
-
-
-
-
-
 
 
 @end

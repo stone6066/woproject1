@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="373" height="109"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="373" height="108.5"/>
+                <frame key="frameInset" width="373" height="108"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czG-V1-pZB">
@@ -95,7 +95,7 @@
                 <outlet property="space" destination="cE1-7J-wK6" id="skm-sq-nD8"/>
                 <outlet property="titleL" destination="VbB-Bw-czF" id="VVN-dv-Pi3"/>
             </connections>
-            <point key="canvasLocation" x="-570" y="42"/>
+            <point key="canvasLocation" x="-133" y="-62"/>
         </tableViewCell>
         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O4I-1H-Eh7">
             <rect key="frame" x="0.0" y="0.0" width="42" height="26"/>

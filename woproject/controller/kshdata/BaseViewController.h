@@ -22,6 +22,7 @@
 @property (nonatomic, copy) NSString *projectIdStr;
 
 
+
 - (void)initFrontProperties;
 
 @end

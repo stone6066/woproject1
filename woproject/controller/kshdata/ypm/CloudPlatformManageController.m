@@ -7,15 +7,12 @@
 //
 
 #import "CloudPlatformManageController.h"
-#import "ProjectListCell.h"
+#import "mainBv.h"
 
-@interface CloudPlatformManageController () <UITableViewDelegate,UITableViewDataSource>
+@interface CloudPlatformManageController ()
 
-@property (strong, nonatomic) IBOutlet UITableView *listTBV;
+@property (strong, nonatomic)  mainBv *mainBv;
 
-#pragma mark -
-#pragma mark data
-@property (nonatomic, strong) NSMutableArray *dataArr;
 
 @end
 
@@ -30,63 +27,30 @@
     
 }
 
+- (mainBv *)mainBv {
+    if (!_mainBv) {
+        _mainBv = [[mainBv alloc ] initWithFrame:CGRectMake(0, 108, fDeviceWidth, fDeviceHeight - 108)];
+        [self.view addSubview:_mainBv];
+    }
+    return _mainBv;
+}
 - (void)manuallyProperties {
     [super initFrontProperties];
 }
 
 
 - (void)setProperties {
-    _listTBV.delegate = self;
-    _listTBV.dataSource = self;
-    _listTBV.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _listTBV.tableFooterView = [UIView new];
-}
-
-#pragma mark -
-#pragma mark tableView delegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _dataArr.count;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *cellName = @"ProjectListCell";
-    
-    ProjectListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
-    
-    if (!cell) {
-        
-        cell = [[[NSBundle mainBundle] loadNibNamed:cellName owner:nil options:nil] firstObject];
-        
-    }
-    cell.selectionStyle  = UITableViewCellSelectionStyleNone;
-    cell.dataDic = _dataArr[indexPath.section];
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 12;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return CGFLOAT_MIN;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 110;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self mainBv];
+    
     // Do any additional setup after loading the view from its nib.
 }
+
 
 - (void)gsHandleData {
     NSDictionary *param = @{
@@ -113,16 +77,16 @@
     } orFail:^(NSError *error) {
         
     }];
-
+    
 }
-
 #pragma mark -
 #pragma mark 数据处理
 
 - (void)endDealWith:(id)result {
-    _dataArr = result;
-    [_listTBV reloadData];
+    _mainBv.dicArr = result;
 }
+
+
 
 
 - (void)didReceiveMemoryWarning {

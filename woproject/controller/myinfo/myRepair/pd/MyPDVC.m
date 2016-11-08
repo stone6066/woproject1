@@ -61,6 +61,7 @@ static NSString * const myPaiDanIdentifier = @"myrepairIdentifier";
 {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 108 , fDeviceWidth, fDeviceHeight - 108) style:UITableViewStylePlain];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [UIView new];
@@ -341,7 +342,7 @@ static NSString * const myPaiDanIdentifier = @"myrepairIdentifier";
             cell.backgroundColor = [UIColor whiteColor];
             break;
         case 1:
-            cell.backgroundColor = RGB(232, 239, 247);
+            cell.backgroundColor = RGB(241, 248, 253);
             break;
             
         default:
@@ -397,7 +398,7 @@ static NSString * const myPaiDanIdentifier = @"myrepairIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 211;
+    return 222;
 }
 
 @end

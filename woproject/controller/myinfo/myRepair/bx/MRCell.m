@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UILabel *xmmsLabel;
 @property (nonatomic, strong) UILabel *xmmsContent;
 @property (nonatomic, strong) UIImageView *img;
+@property (nonatomic, strong) UIView *tmpView;
 
 @end
 
@@ -99,7 +100,10 @@
     [self.contentView addSubview:_xmmsContent];
     _img = [UIImageView new];
     _img.image = [UIImage imageNamed:@"new"];
-    [self addSubview:_img];
+    [self.contentView addSubview:_img];
+    _tmpView = [UIView new];
+    _tmpView.backgroundColor = RGB(229, 239, 247);
+    [self.contentView addSubview:_tmpView];
 }
 
 - (void)layoutSubviews
@@ -143,6 +147,10 @@
         make.left.offset(10);
         make.right.offset(-10);
         make.height.lessThanOrEqualTo(@50);
+    }];
+    [_tmpView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.offset(0);
+        make.height.mas_equalTo(@11);
     }];
 }
 

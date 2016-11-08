@@ -37,7 +37,7 @@
         
         if ( i!= arr.count - 1) {
             UILabel *linelb = [[UILabel alloc] init];
-            [linelb setFrame:CGRectMake(singleAnalysisView.right + 5, 15, 1, 40)];
+            [linelb setFrame:CGRectMake(fDeviceWidth / arr.count * (i + 1), 15, 1, 40)];
             linelb.backgroundColor = RGB(192, 194, 201);
             [self addSubview:linelb];
         }

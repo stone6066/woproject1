@@ -109,9 +109,9 @@
     NSDictionary *param = @{
                             @"uid":ApplicationDelegate.myLoginInfo.Id,
                             @"ukey":ApplicationDelegate.myLoginInfo.ukey,
-                            @"provinceId":@"",
-                            @"cityId":@"",
-                            @"projectId":@"",
+                            @"provinceId":self.provinceIdStr,
+                            @"cityId":self.cityIdStr,
+                            @"projectId":self.projectIdStr,
                             @"dateType":self.dateStr
                             };
     

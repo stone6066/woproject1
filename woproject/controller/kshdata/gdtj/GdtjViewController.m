@@ -292,11 +292,12 @@
     NSDictionary *param = @{
                             @"uid":ApplicationDelegate.myLoginInfo.Id,
                             @"ukey":ApplicationDelegate.myLoginInfo.ukey,
-                            @"provinceId":self.projectIdStr,
+                            @"provinceId":self.provinceIdStr,
                             @"cityId":self.cityIdStr,
-                            @"projectId":self.provinceIdStr,
+                            @"projectId":self.projectIdStr,
                             @"dateType":self.dateStr
                             };
+
     
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketCount"];
     
