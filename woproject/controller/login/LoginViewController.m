@@ -357,7 +357,7 @@
                                               [stdPubFunc stdShowMessage:msg];
                                               [self loginSuccPro];
                                               if (ApplicationDelegate.isRmbPsw) {
-                                                  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"login_out"];
+                                                  [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"login_out"];
                                                   [stdPubFunc isSaveLoginInfo:@"1"];
                                                   [stdPubFunc saveLoginInfo:_UsrTxtF.text password:_PassTxtF.text];
                                               }
