@@ -28,6 +28,17 @@
     [self loadLoginView];
     // Do any additional setup after loading the view.
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // 禁用 iOS7 返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+}
+
 -(void)keyboardHide:(UITapGestureRecognizer*)tap{
     [_UsrTxtF resignFirstResponder];
     [_PassTxtF resignFirstResponder];
@@ -346,7 +357,7 @@
                                               [stdPubFunc stdShowMessage:msg];
                                               [self loginSuccPro];
                                               if (ApplicationDelegate.isRmbPsw) {
-                                                  
+                                                  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"login_out"];
                                                   [stdPubFunc isSaveLoginInfo:@"1"];
                                                   [stdPubFunc saveLoginInfo:_UsrTxtF.text password:_PassTxtF.text];
                                               }

@@ -583,7 +583,7 @@
                                                   LoginViewController *vc = [[LoginViewController alloc]init];
                                                   vc.loginSuccBlock = ^(LoginViewController *aqrvc){
                                                       NSLog(@"login_suc");
-                                                      ApplicationDelegate.isLogin = NO;
+                                                      ApplicationDelegate.isLogin = YES;
                                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"rootvc" object:nil];
                                                   };
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"isLogin" object:nil];

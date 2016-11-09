@@ -59,6 +59,7 @@
                                                   NSString *msg=[jsonDic objectForKey:@"m"];
                                                   //
                                                   if ([suc isEqualToString:@"0"]) {
+                                                      [ApplicationDelegate stdRealseAlias];//解除setAlias绑定
                                                       [SVProgressHUD showSuccessWithStatus:@"退出成功"];
                                                       [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"login_out"];
                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -66,7 +67,7 @@
                                                           LoginViewController *vc = [[LoginViewController alloc]init];
                                                           vc.loginSuccBlock = ^(LoginViewController *aqrvc){
                                                               NSLog(@"login_suc");
-                                                              ApplicationDelegate.isLogin = NO;
+                                                              ApplicationDelegate.isLogin = YES;
                                                               [[NSNotificationCenter defaultCenter] postNotificationName:@"rootvc" object:nil];
                                                           };
                                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"isLogin" object:nil];
