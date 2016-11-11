@@ -290,7 +290,11 @@
     _indicators = [tempIndicators copy];
     _bgLayers = [tempBgLayers copy];
 }
+-(void)setTitleAtIndex:(NSString*)txt forIndex:(NSInteger)Idx{
+    CATextLayer *title = (CATextLayer *)_titles[Idx];
+    title.string=txt;//(CATextLayer *)_titles[Idx][0];
 
+}
 #pragma mark - init method
 - (instancetype)initWithOrigin:(CGPoint)origin andHeight:(CGFloat)height {
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
@@ -641,7 +645,8 @@
 {
     static NSString *identifier = @"DropDownMenuCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
+//    if (!cell)//判断去掉，否则选中对号会出现多次
+    {
         cell = [[UITableViewCell alloc] initWithStyle:_cellStyle reuseIdentifier:identifier];
         //cell.separatorInset = UIEdgeInsetsZero;
         DOPBackgroundCellView *bg = [[DOPBackgroundCellView alloc]init];
@@ -686,6 +691,7 @@
         if (indexPath.row == currentSelectedMenudRow)
         {
             //[tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            
             cell.tintColor = [UIColor redColor];//选中变成红色对号
             cell.accessoryType=UITableViewCellAccessoryCheckmark;
         }

@@ -465,4 +465,15 @@
     }];
 }
 
+-(void)textViewDidChange:(UITextView *)textView{
+    NSString  *nsTextContent = textView.text;
+    NSInteger existTextNum = nsTextContent.length;
+    if (existTextNum > txtViewMaxLen)
+    {
+        //截取到最大位置的字符
+        NSString *s = [nsTextContent substringToIndex:txtViewMaxLen];
+        [textView setText:s];
+    }
+}
+
 @end

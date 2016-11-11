@@ -118,6 +118,7 @@
     {//如果下拉框尚未显示，则进行显示
         [_dropTableView reloadData];
         CGRect sf = self.frame;
+        //CGRectMake(self.frame.origin.x+1, self.frame.origin.y, self.frame.size.width-2, self.frame.size.height);
         sf.size.height = frameHeight;
         [self addSubview:_dropTableView];        
         //把dropdownList放到前面，防止下拉框被别的控件遮住
@@ -125,7 +126,7 @@
         _dropTableView.hidden = NO;
         showList = YES;//显示下拉框
         
-        CGRect frame = _dropTableView.frame;
+        CGRect frame = CGRectMake(1, _dropTableView.frame.origin.y,self.frame.size.width-2, _dropTableView.frame.size.height);//_dropTableView.frame;
         frame.size.height = 0;
         _dropTableView.frame = frame;
         frame.size.height = tabheight;

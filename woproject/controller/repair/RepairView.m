@@ -83,6 +83,8 @@
         _tableView.dataSource = self;
         _tableView.tableFooterView = [UIView new];
         _tableView.layer.borderWidth = .5f;
+        _tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+         [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, -45, 0, 0)];
     }
     return _tableView;
 }
@@ -263,11 +265,12 @@
     _PNTapLabel.text = @"------";
     _FSTapLabel.text = @"------";
     _DTTapLabel.text = @"------";
-    _PTapLabel.text = @"------";
+    _PTapLabel.text = @"低";
     _describeTextView.text = @"";
     [_imgBtn1 setImage:[UIImage imageNamed:@"add"] forState:normal];
     _imgView1.hidden = _imgView2.hidden = _imgView3.hidden = YES;
     [self.paramsDic removeAllObjects];
+    [self.paramsDic setObject:@"3" forKey:@"priority"];
     [self repairButtonIsReady];
 }
 - (void)repairButtonIsReady
@@ -455,9 +458,10 @@
     [_PView addSubview:_PLabel];
     _PTapLabel = [UILabel new];
     _PTapLabel.font = [UIFont systemFontOfSize:14];
-    _PTapLabel.text = @"------";
+    _PTapLabel.text = @"低";
     _PTapLabel.userInteractionEnabled = YES;
     _PTapLabel.textAlignment = 0;
+    [self.paramsDic setObject:@"3" forKey:@"priority"];
     [_PView addSubview:_PTapLabel];
     _PTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(PAction:)];
     

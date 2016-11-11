@@ -344,11 +344,13 @@
 
 static NSString * const TicketCellId = @"TicketCellId";
 -(void)loadListTable{
-    
-    self.TableView=[[UITableView alloc]initWithFrame:CGRectMake(0, 65+50, fDeviceWidth, fDeviceHeight-65-MainTabbarHeight)];
+    UIView *spritLine=[[UIView alloc]initWithFrame:CGRectMake(0, 65+50+4.5, fDeviceWidth, 0.5)];
+    spritLine.backgroundColor=spritLineColor;
+    [self.view addSubview:spritLine];
+    self.TableView=[[UITableView alloc]initWithFrame:CGRectMake(0, 65+50+5, fDeviceWidth, fDeviceHeight-65-MainTabbarHeight-5)];
     self.TableView.delegate=self;
     self.TableView.dataSource=self;
-    [self.view addSubview:self.TableView];
+    //[self.view addSubview:self.TableView];
     self.TableView.tableFooterView = [[UIView alloc]init];
     self.TableView.backgroundColor=collectionBgdColor;
      self.TableView.separatorStyle = UITableViewCellSeparatorStyleNone;

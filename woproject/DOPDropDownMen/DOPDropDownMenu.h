@@ -129,5 +129,7 @@
 - (void)selectIndexPath:(DOPIndexPath *)indexPath; // 默认trigger delegate
 
 - (void)selectIndexPath:(DOPIndexPath *)indexPath triggerDelegate:(BOOL)trigger; // 调用代理
+
+-(void)setTitleAtIndex:(NSString*)txt forIndex:(NSInteger)Idx;//设置标题头 施铁东加
 @end
 

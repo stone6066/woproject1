@@ -27,10 +27,10 @@
         
         UIView *topTitleVc=[[UIView alloc]initWithFrame:CGRectMake(0, 0, viewWidth, 30)];
         topTitleVc.backgroundColor=bluebackcolor;
-        _myViewTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 2, 100, 20)];
+        _myViewTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 5, 100, 20)];
         _myViewTitle.text=@"报修信息";
-//        [_repairTimetitle setFont:[UIFont systemFontOfSize:15]];
-//        _myViewTitle.textColor=deepbluetxtcolor;
+        [_myViewTitle setFont:[UIFont systemFontOfSize:15]];
+        [_myViewTitle setTextColor:deepbluetxtcolor];
         [topTitleVc addSubview:_myViewTitle];
         [self addSubview:topTitleVc];
         

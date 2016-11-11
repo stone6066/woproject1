@@ -25,6 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     [self loadTopNav];
     [self downforYjgdInfo];
     // Do any additional setup after loading the view.
 }
@@ -49,7 +50,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self loadTopNav];
+   
 //    [self downforYjgdInfo];
 }
 -(void)loadTopNav{

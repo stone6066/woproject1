@@ -9,6 +9,7 @@
 #import "tickoperateViewController.h"
 #import "backAndHangUpViewController.h"
 #import "turnAndHelpViewController.h"
+#import "QRVC.h"
 @interface tickoperateViewController ()<UITextViewDelegate>
 
 @end
@@ -315,12 +316,18 @@
     [self.navigationController pushViewController:BAHVC animated:YES];
 }
 
+-(void)stdScanVc{
+    QRVC *vc = [[QRVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 //0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
 -(void)clickbtnFunc:(UIButton*)btn{
     NSLog(@"btn:%ld",(long)btn.tag);
     switch (btn.tag) {
         case 100://扫描二维码
-            
+            [self stdScanVc];
             break;
         case 101://点击确认到场
             [self upInfoRepair:@"2"];
@@ -657,4 +664,14 @@
     }];
 }
 
+-(void)textViewDidChange:(UITextView *)textView{
+    NSString  *nsTextContent = textView.text;
+    NSInteger existTextNum = nsTextContent.length;
+    if (existTextNum > txtViewMaxLen)
+    {
+        //截取到最大位置的字符
+        NSString *s = [nsTextContent substringToIndex:txtViewMaxLen];
+        [textView setText:s];
+    }
+}
 @end

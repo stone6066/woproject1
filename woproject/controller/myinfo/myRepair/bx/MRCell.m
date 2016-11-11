@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UILabel *jdsjLabel;
 @property (nonatomic, strong) UILabel *xmmcLabel;
 @property (nonatomic, strong) UILabel *yxjLabel;
+@property (nonatomic, strong) UILabel *yxjContent;
 @property (nonatomic, strong) UILabel *xmmsLabel;
 @property (nonatomic, strong) UILabel *xmmsContent;
 @property (nonatomic, strong) UIImageView *img;
@@ -43,7 +44,7 @@
 
     _jdsjLabel.text = [NSString stringWithFormat:@"报修时间:  %@", [self stdTimeToStr:model.createTime]];
     _xmmcLabel.text = [NSString stringWithFormat:@"项目名称:  %@", model.projectId];
-    _yxjLabel.text = model.priority != nil?[NSString stringWithFormat:@"优先级:  %@", model.priority]:@"优先级: 无";
+    _yxjContent.text = model.priority != nil?[NSString stringWithFormat:@" %@", model.priority]:@" 无";
     _xmmsContent.text = model.faultDesc;
     _img.hidden = [model.isNew isEqualToString:@"1"]?NO:[model.isNew isEqualToString:@"2"]?YES:NO;
 }
@@ -67,7 +68,7 @@
 {
     _gzsbLabel = [UILabel new];
     _gzsbLabel.font = k_text_font(14);
-    _gzsbLabel.textColor = RGB(135, 137, 176);
+    _gzsbLabel.textColor = RGB(22, 73, 122);
     [self.contentView addSubview:_gzsbLabel];
     _stateLabel = [UILabel new];
     _stateLabel.font = k_text_font(18);
@@ -85,9 +86,14 @@
     _xmmcLabel.textColor = RGB(123, 123, 123);
     [self.contentView addSubview:_xmmcLabel];
     _yxjLabel = [UILabel new];
+    _yxjLabel.text = @"优先级:";
     _yxjLabel.font = k_text_font(14);
     _yxjLabel.textColor = RGB(123, 123, 123);
     [self.contentView addSubview:_yxjLabel];
+    _yxjContent = [UILabel new];
+    _yxjContent.font = k_text_font(14);
+    _yxjContent.textColor = RGB(123, 123, 123);
+    [self.contentView addSubview:_yxjContent];
     _xmmsLabel = [UILabel new];
     _xmmsLabel.font = k_text_font(14);
     _xmmsLabel.textColor = RGB(123, 123, 123);
@@ -135,8 +141,12 @@
         make.top.equalTo(_jdsjLabel.mas_bottom).offset(10);
     }];
     [_yxjLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.offset(10);
+        make.right.equalTo(_xmmsLabel);
         make.top.equalTo(_xmmcLabel.mas_bottom).offset(10);
+    }];
+    [_yxjContent mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_yxjLabel.mas_right).offset(0);
+        make.top.equalTo(_yxjLabel);
     }];
     [_xmmsLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(10);

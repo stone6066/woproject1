@@ -288,27 +288,6 @@
         return dict;
 
     }
-//    [dict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
-//    [dict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
-//    [dict setObject:signFlag forKey:@"status"];//签到0  签退1
-//    [dict setObject:_longitudeStr forKey:@"longitude"];
-//    
-//    if (!_latitudeStr) {
-//        [dict setObject:_latitudeStr forKey:@"latitude"];
-//    }
-//    else
-//        [dict setObject:@"0" forKey:@"latitude"];
-//    if (_locationStr) {
-//        [dict setObject:_locationStr forKey:@"location"];
-//    }
-//    else
-//         [dict setObject:@"0" forKey:@"location"];
-//    [dict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
-
-    //NSLog(@"dict:%@",[self dictionaryToJson:dict]);
-    
-    
-//    return dict;
     
 }
 
@@ -393,8 +372,7 @@
 -(void)drawQiantuiVc:(NSString*)timeStr{
     
     _qiandaoBtn.hidden=YES;
-    
-    CGFloat VcY=fDeviceHeight*2/5+TopSeachHigh-30+100+10;
+       CGFloat VcY=fDeviceHeight*2/5+TopSeachHigh-30+100+10;
     
     UIView * signInVc=[[UIView alloc]initWithFrame:CGRectMake(0, VcY, fDeviceWidth, 50)];
     signInVc.backgroundColor=[UIColor whiteColor];
@@ -410,6 +388,8 @@
     if (!_qiantuiBtn) {
         _qiantuiBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, btnY, fDeviceWidth, 40)];
     }
+    _qiantuiBtn.hidden=NO;
+    _yiqiantuiBtn.hidden=YES;
     [_qiantuiBtn addTarget:self action:@selector(clickqiantui) forControlEvents:UIControlEventTouchUpInside];
     
     [_qiantuiBtn setTitle:@"签退"forState:UIControlStateNormal];// 添加文字
@@ -443,9 +423,9 @@
     if (!_yiqiantuiBtn) {
         _yiqiantuiBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, btnY, fDeviceWidth, 40)];
     }
-//    [_yiqiantuiBtn addTarget:self action:@selector(clickqiantui) forControlEvents:UIControlEventTouchUpInside];
-    
-    [_yiqiantuiBtn setTitle:@"已签退"forState:UIControlStateNormal];// 添加文字
+    [_yiqiantuiBtn addTarget:self action:@selector(clickqiandao) forControlEvents:UIControlEventTouchUpInside];
+    _yiqiantuiBtn.hidden=NO;
+    [_yiqiantuiBtn setTitle:@"签到"forState:UIControlStateNormal];// 添加文字
     _yiqiantuiBtn.backgroundColor=bluetxtcolor;
     
     [self.view addSubview:_yiqiantuiBtn];

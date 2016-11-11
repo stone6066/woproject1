@@ -200,10 +200,13 @@
 #define topviewcolor RGB(41, 51, 63)
 #define topxiancolor RGB(90, 106, 122)
 #define bluebackcolor RGB(241, 248, 253)//淡蓝色背景
-#define deepbluetxtcolor RGB(95, 110, 124)//工单详情蓝色字体
+#define deepbluetxtcolor RGB(22, 73, 122)//工单详情蓝色字体
 #define bluetxtcolor RGB(21, 132, 254)//登录蓝色字体
 #define graytxtcolor RGB(120, 120, 120)//灰色字体
-#define highbluetxtcolor RGB(95, 168, 227)//已接单 蓝色字体
+#define highbluetxtcolor RGB(32, 132, 249)//已接单 蓝色字体
+
+#define txtViewMaxLen (70)
+
 #pragma mark -
 
 #if __has_feature(objc_instancetype)

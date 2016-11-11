@@ -113,7 +113,6 @@
     switch (_type.integerValue) {
         case 0:
         {
-            self.topTitle = @"报修工单详情";
             [_detail.detailBtn setTitle:@"评价" forState:normal];
         }
             break;

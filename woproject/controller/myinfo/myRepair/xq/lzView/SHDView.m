@@ -7,6 +7,7 @@
 //
 
 #import "SHDView.h"
+#import "LZModel.h"
 
 @interface SHDView ()
 
@@ -36,6 +37,18 @@
 - (void)setModel:(LZModel *)model
 {
     _model = model;
+    _shsjContent.text = [self stdTimeToStr:model.operationTime];
+    _shrContent.text = model.operationUser;
+    _gzContent.text = model.jobName;
+    _shyjContent.text = model.result;
+}
+
+-(NSString *)stdTimeToStr:(NSString*)intTime{
+    NSTimeInterval interval=[[intTime substringToIndex:10] doubleValue];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
+    NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
+    [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [objDateformat stringFromDate: date];
 }
 
 - (void)setSubViews

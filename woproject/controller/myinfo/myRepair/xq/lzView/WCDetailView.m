@@ -173,13 +173,10 @@
     _wxjgContent.numberOfLines = 0;
     [self addSubview:_wxjgContent];
     _imgView1 = [UIImageView new];
-    _imgView1.backgroundColor = [UIColor redColor];
     [self addSubview:_imgView1];
     _imgView2 = [UIImageView new];
-    _imgView2.backgroundColor = [UIColor redColor];
     [self addSubview:_imgView2];
     _imgView3 = [UIImageView new];
-    _imgView3.backgroundColor = [UIColor redColor];
     [self addSubview:_imgView3];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewClick:)];
     [_imgView1 addGestureRecognizer:tap];

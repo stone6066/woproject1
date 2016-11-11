@@ -21,6 +21,8 @@
         topTitleVc.backgroundColor=bluebackcolor;
         _myViewTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 2, 100, 20)];
         _myViewTitle.text=@"挂起信息";
+        [_myViewTitle setFont:[UIFont systemFontOfSize:15]];
+        [_myViewTitle setTextColor:deepbluetxtcolor];
         [topTitleVc addSubview:_myViewTitle];
         [self addSubview:topTitleVc];
         

@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "woproject/controller/ticketOperate/tickoperateViewController.m"
-            timestampString = "500190417.945142"
+            timestampString = "500539509.535498"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "633"
-            endingLineNumber = "633"
+            startingLineNumber = "640"
+            endingLineNumber = "640"
             landmarkName = "-upLoadHangTickInofo"
             landmarkType = "7">
          </BreakpointContent>
@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "woproject/controller/ticketOperate/tickoperateViewController.m"
-            timestampString = "500190417.945142"
+            timestampString = "500539509.535498"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
+            startingLineNumber = "578"
+            endingLineNumber = "578"
             landmarkName = "-upLoadHangTickInofo"
             landmarkType = "7">
          </BreakpointContent>

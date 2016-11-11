@@ -207,7 +207,7 @@
                                               
                                           } else {
                                               //失败
-                                              //[SVProgressHUD showErrorWithStatus:msg];
+                                              [SVProgressHUD dismiss];
                                               [stdPubFunc stdShowMessage:@"该用户不存在，请重新激活"];
                                               if(self.actionFailBlock)
                                                   self.actionFailBlock(self);
