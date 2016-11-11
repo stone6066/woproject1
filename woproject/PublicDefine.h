@@ -80,6 +80,9 @@
 #define BaseUrl @"http://139.129.218.74:8080/ticket/"
 #define BasePath @"mobile/interface/"
 
+#define kNotifyDisconnection @"c" //断开
+#define kNotifyReconnection @"kNotifyReconnection" //重联
+
 //#define BaseUrl @"http://192.168.0.65:8080/paistore_m_site/"
 //#define BasePath @"interface/"
 
@@ -194,6 +197,7 @@
 #define gggdColor RGB(253, 193, 19)
 #define kqColor RGB(141, 72, 249)
 #define kshsjColor RGB(79, 100, 255)
+#define videoColor RGB(241, 130, 86)
 
 #define tabbarcolor RGB(41, 53, 65)
 #define homebackcolor RGB(45, 60, 79)

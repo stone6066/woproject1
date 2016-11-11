@@ -21,6 +21,7 @@
 #import "VisualizationController.h"
 #import "listNum.h"
 #import "JPUSHService.h"
+#import "MainVideoViewController.h"
 @interface HomeViewController ()
 @property (nonatomic, strong) MAMapView *mapView;
 @property (nonatomic, strong) AMapSearchAPI *search;
@@ -165,6 +166,9 @@
     CGFloat offsetY=10;
     CGFloat cellWidth=(fDeviceWidth-3*offsetX)/2;
     CGFloat cellMinHeigh=(fDeviceHeight-topHeigh-MainTabbarHeight-4*offsetY)/4;
+    
+    CGFloat cellMinHeighLeft=(cellMinHeigh*2-offsetY)/2;//指定接单和考勤的高度
+    
     CGFloat imgW=60;
     CGFloat imgH=60;
     UIView *topView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, topHeigh)];
@@ -178,10 +182,10 @@
     xianImg.backgroundColor=topxiancolor;
     [topView addSubview:xianImg];
     
-    UIView * yjgd=[[UIView alloc]initWithFrame:CGRectMake(offsetX, topHeigh+offsetY, cellWidth, cellMinHeigh*2)];
+    UIView * yjgd=[[UIView alloc]initWithFrame:CGRectMake(offsetX, topHeigh+offsetY, cellWidth, cellMinHeigh)];
     yjgd.backgroundColor=yjgdColor;
     [self.view addSubview:yjgd];
-    UIImageView *yjimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh*2-imgH-30)/2, imgW, imgH)];
+    UIImageView *yjimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh-imgH-30)/2, imgW, imgH)];
     yjimg.image=[UIImage imageNamed:@"FOLDER-OK"];
     [yjgd addSubview:yjimg];
     CGFloat lblH1= yjimg.frame.origin.y+yjimg.frame.size.height+3;
@@ -202,7 +206,7 @@
     [self.view addSubview:yjbtn];
     [yjbtn addTarget:self action:@selector(clickyj) forControlEvents:UIControlEventTouchUpInside];
     
-    UIView * zdjd=[[UIView alloc]initWithFrame:CGRectMake(offsetX, topHeigh+offsetY*2+cellMinHeigh*2, cellWidth, cellMinHeigh)];
+    UIView * zdjd=[[UIView alloc]initWithFrame:CGRectMake(offsetX, topHeigh+offsetY*2+cellMinHeigh, cellWidth, cellMinHeighLeft)];
     zdjd.backgroundColor=zdjdColor;
     [self.view addSubview:zdjd];
     UIImageView *zdimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh-imgH-30)/2, imgW, imgH)];
@@ -222,10 +226,10 @@
     [zdbtn addTarget:self action:@selector(clickzd) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIView * kq=[[UIView alloc]initWithFrame:CGRectMake(offsetX, topHeigh+offsetY*3+cellMinHeigh*3, cellWidth, cellMinHeigh)];
+    UIView * kq=[[UIView alloc]initWithFrame:CGRectMake(offsetX, topHeigh+offsetY*3+cellMinHeigh+cellMinHeighLeft, cellWidth, cellMinHeighLeft)];
     kq.backgroundColor=kqColor;
     [self.view addSubview:kq];
-    UIImageView *kqimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeigh-imgH-30)/2, imgW, imgH)];
+    UIImageView *kqimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeighLeft-imgH-30)/2, imgW, imgH)];
     kqimg.image=[UIImage imageNamed:@"PIN-ZOOM-IN"];
     [kq addSubview:kqimg];
     CGFloat lblH3= kqimg.frame.origin.y+kqimg.frame.size.height+3;
@@ -235,6 +239,20 @@
     UIButton *kqbtn=[[UIButton alloc]initWithFrame:kq.frame];
     [self.view addSubview:kqbtn];
     [kqbtn addTarget:self action:@selector(clickkq) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView * videoVc=[[UIView alloc]initWithFrame:CGRectMake(offsetX, topHeigh+offsetY*3+cellMinHeigh*3, cellWidth, cellMinHeigh)];
+    videoVc.backgroundColor=videoColor;
+    [self.view addSubview:videoVc];
+    UIImageView *videoimg=[[UIImageView alloc]initWithFrame:CGRectMake((cellWidth-imgW)/2, (cellMinHeighLeft-imgH-30)/2, 53, imgH)];
+    videoimg.image=[UIImage imageNamed:@"video"];
+    [videoVc addSubview:videoimg];
+    CGFloat lblH7= kqimg.frame.origin.y+kqimg.frame.size.height+3;
+    UILabel *videolbl=[[UILabel alloc]initWithFrame:CGRectMake(0, lblH7, cellWidth, 30)];
+    [self stdInitLable:videolbl hint:@"视频"];
+    [videoVc addSubview:videolbl];
+    UIButton *videobtn=[[UIButton alloc]initWithFrame:videoVc.frame];
+    [self.view addSubview:videobtn];
+    [videobtn addTarget:self action:@selector(clickVideo) forControlEvents:UIControlEventTouchUpInside];
     
     
     UIView * pd=[[UIView alloc]initWithFrame:CGRectMake(offsetX*2+cellWidth, topHeigh+offsetY, cellWidth, cellMinHeigh)];
@@ -253,7 +271,7 @@
         _PdNum=[[UILabel alloc]init];
         [self drawListNumLbl:_PdNum Lframe:pdimg.frame parentVc:pd];
     }
-
+    
     
     
     UIButton *pdbtn=[[UIButton alloc]initWithFrame:pd.frame];
@@ -310,6 +328,7 @@
     [self.navigationController pushViewController:zdVc animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
+
 -(void)clickkq{//考勤
     
     BaseMapViewController *subViewController = [[stdMapViewController alloc] init];
@@ -324,6 +343,17 @@
     [self.navigationController pushViewController:(UIViewController*)subViewController animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
+
+-(void)clickVideo{//视频
+    MainVideoViewController *videoVc=[[MainVideoViewController alloc]init];
+    videoVc.view.backgroundColor=[UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:videoVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+    
+}
+
+
 -(void)clickpd{//派单
     PaidanViewController *pdVc=[[PaidanViewController alloc]init];
     pdVc.view.backgroundColor=[UIColor whiteColor];

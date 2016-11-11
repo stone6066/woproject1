@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeviceViewController">
+            <connections>
+                <outlet property="deviceTable" destination="MRW-n3-b1e" id="l5E-ds-8KH"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MRW-n3-b1e">
+                    <frame key="frameInset" width="240" height="128"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="MRW-n3-b1e" secondAttribute="trailing" id="0Me-tZ-k9o"/>
+                <constraint firstItem="MRW-n3-b1e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4BV-fU-QWD"/>
+                <constraint firstAttribute="bottom" secondItem="MRW-n3-b1e" secondAttribute="bottom" id="7Lz-tT-smE"/>
+                <constraint firstItem="MRW-n3-b1e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="AjD-FE-rI7"/>
+                <constraint firstAttribute="trailing" secondItem="MRW-n3-b1e" secondAttribute="trailing" id="BDp-TE-YYW"/>
+                <constraint firstItem="MRW-n3-b1e" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TW1-Mv-m2d"/>
+                <constraint firstItem="MRW-n3-b1e" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hXe-vX-dBp"/>
+                <constraint firstAttribute="bottom" secondItem="MRW-n3-b1e" secondAttribute="bottom" id="qJq-IR-eeg"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="MRW-n3-b1e"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="0Me-tZ-k9o"/>
+                    <exclude reference="4BV-fU-QWD"/>
+                    <exclude reference="7Lz-tT-smE"/>
+                    <exclude reference="AjD-FE-rI7"/>
+                    <exclude reference="BDp-TE-YYW"/>
+                    <exclude reference="TW1-Mv-m2d"/>
+                    <exclude reference="hXe-vX-dBp"/>
+                    <exclude reference="qJq-IR-eeg"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="MRW-n3-b1e"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="0Me-tZ-k9o"/>
+                    <include reference="4BV-fU-QWD"/>
+                    <include reference="TW1-Mv-m2d"/>
+                    <include reference="qJq-IR-eeg"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="constraints">
+                    <include reference="7Lz-tT-smE"/>
+                    <include reference="AjD-FE-rI7"/>
+                    <include reference="BDp-TE-YYW"/>
+                    <include reference="hXe-vX-dBp"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>
