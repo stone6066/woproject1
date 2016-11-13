@@ -387,6 +387,11 @@
 		58F0112F1DB206230051D044 /* grade_all.png in Resources */ = {isa = PBXBuildFile; fileRef = 58F011221DB206230051D044 /* grade_all.png */; };
 		8900D80B1DB8F86400FC2C2D /* GggdDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8900D80A1DB8F86400FC2C2D /* GggdDetailInfoViewController.m */; };
 		8900D80E1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8900D80D1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m */; };
+		8902BFD11DD7FE5D00BB3363 /* VideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8902BFD01DD7FE5D00BB3363 /* VideoModel.m */; };
+		8902BFD41DD7FF2D00BB3363 /* ChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8902BFD31DD7FF2D00BB3363 /* ChannelModel.m */; };
+		8902BFD71DD80EB800BB3363 /* VideoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8902BFD61DD80EB800BB3363 /* VideoDetailViewController.m */; };
+		8902BFDB1DD80F2C00BB3363 /* VideoDetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8902BFD91DD80F2C00BB3363 /* VideoDetailCollectionViewCell.m */; };
+		8902BFDC1DD80F2C00BB3363 /* VideoDetailCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8902BFDA1DD80F2C00BB3363 /* VideoDetailCollectionViewCell.xib */; };
 		8919CBCC1DB0AB3D00858721 /* paidanInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */; };
 		892298BB1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 892298BA1DB9B5130053ECB1 /* ZhiDDetailInfoViewController.m */; };
 		892298BE1DB9E1870053ECB1 /* listNum.m in Sources */ = {isa = PBXBuildFile; fileRef = 892298BD1DB9E1870053ECB1 /* listNum.m */; };
@@ -423,6 +428,11 @@
 		8939E8BE1DD5B13B00188E30 /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8BB1DD5B13B00188E30 /* video.png */; };
 		8939E8BF1DD5B13B00188E30 /* video2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8BC1DD5B13B00188E30 /* video2.png */; };
 		8939E8C01DD5B13B00188E30 /* video2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8BD1DD5B13B00188E30 /* video2@2x.png */; };
+		8939E8C41DD5C01100188E30 /* VideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8939E8C21DD5C01100188E30 /* VideoTableViewCell.m */; };
+		8939E8C51DD5C01100188E30 /* VideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8C31DD5C01100188E30 /* VideoTableViewCell.xib */; };
+		8939E8C91DD5C0F300188E30 /* smallvideo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8C61DD5C0F300188E30 /* smallvideo.png */; };
+		8939E8CA1DD5C0F300188E30 /* smallvideo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8C71DD5C0F300188E30 /* smallvideo@2x.png */; };
+		8939E8CB1DD5C0F300188E30 /* smallvideo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8C81DD5C0F300188E30 /* smallvideo@3x.png */; };
 		89406AE21DC43E5400AC7372 /* nhfx_color4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89406AE11DC43E5400AC7372 /* nhfx_color4@2x.png */; };
 		894752BA1DB85BCC00C32394 /* hangupInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752B91DB85BCC00C32394 /* hangupInfoView.m */; };
 		894752BD1DB85F5A00C32394 /* backOrderViewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BC1DB85F5A00C32394 /* backOrderViewInfo.m */; };
@@ -1310,6 +1320,15 @@
 		8900D80A1DB8F86400FC2C2D /* GggdDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GggdDetailInfoViewController.m; sourceTree = "<group>"; };
 		8900D80C1DB8FC3B00FC2C2D /* PaiDanDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaiDanDetailViewController.h; sourceTree = "<group>"; };
 		8900D80D1DB8FC3B00FC2C2D /* PaiDanDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaiDanDetailViewController.m; sourceTree = "<group>"; };
+		8902BFCF1DD7FE5D00BB3363 /* VideoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoModel.h; sourceTree = "<group>"; };
+		8902BFD01DD7FE5D00BB3363 /* VideoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoModel.m; sourceTree = "<group>"; };
+		8902BFD21DD7FF2D00BB3363 /* ChannelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelModel.h; sourceTree = "<group>"; };
+		8902BFD31DD7FF2D00BB3363 /* ChannelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelModel.m; sourceTree = "<group>"; };
+		8902BFD51DD80EB800BB3363 /* VideoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDetailViewController.h; sourceTree = "<group>"; };
+		8902BFD61DD80EB800BB3363 /* VideoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDetailViewController.m; sourceTree = "<group>"; };
+		8902BFD81DD80F2C00BB3363 /* VideoDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDetailCollectionViewCell.h; sourceTree = "<group>"; };
+		8902BFD91DD80F2C00BB3363 /* VideoDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDetailCollectionViewCell.m; sourceTree = "<group>"; };
+		8902BFDA1DD80F2C00BB3363 /* VideoDetailCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoDetailCollectionViewCell.xib; sourceTree = "<group>"; };
 		8919CBCA1DB0AB3D00858721 /* paidanInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paidanInfoView.h; sourceTree = "<group>"; };
 		8919CBCB1DB0AB3D00858721 /* paidanInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = paidanInfoView.m; sourceTree = "<group>"; };
 		892298B91DB9B5130053ECB1 /* ZhiDDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhiDDetailInfoViewController.h; sourceTree = "<group>"; };
@@ -1362,6 +1381,12 @@
 		8939E8BB1DD5B13B00188E30 /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video.png; sourceTree = "<group>"; };
 		8939E8BC1DD5B13B00188E30 /* video2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video2.png; sourceTree = "<group>"; };
 		8939E8BD1DD5B13B00188E30 /* video2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video2@2x.png"; sourceTree = "<group>"; };
+		8939E8C11DD5C01100188E30 /* VideoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoTableViewCell.h; sourceTree = "<group>"; };
+		8939E8C21DD5C01100188E30 /* VideoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoTableViewCell.m; sourceTree = "<group>"; };
+		8939E8C31DD5C01100188E30 /* VideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoTableViewCell.xib; sourceTree = "<group>"; };
+		8939E8C61DD5C0F300188E30 /* smallvideo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallvideo.png; sourceTree = "<group>"; };
+		8939E8C71DD5C0F300188E30 /* smallvideo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smallvideo@2x.png"; sourceTree = "<group>"; };
+		8939E8C81DD5C0F300188E30 /* smallvideo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smallvideo@3x.png"; sourceTree = "<group>"; };
 		89406AE11DC43E5400AC7372 /* nhfx_color4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nhfx_color4@2x.png"; sourceTree = "<group>"; };
 		894752B81DB85BCC00C32394 /* hangupInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hangupInfoView.h; sourceTree = "<group>"; };
 		894752B91DB85BCC00C32394 /* hangupInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hangupInfoView.m; sourceTree = "<group>"; };
@@ -2816,6 +2841,18 @@
 				8939E8981DD5AB6000188E30 /* passageway@2x.png */,
 				8939E8991DD5AB6000188E30 /* passageway@3x.png */,
 				8939E89A1DD5AB6000188E30 /* Video */,
+				8939E8C11DD5C01100188E30 /* VideoTableViewCell.h */,
+				8939E8C21DD5C01100188E30 /* VideoTableViewCell.m */,
+				8939E8C31DD5C01100188E30 /* VideoTableViewCell.xib */,
+				8902BFCF1DD7FE5D00BB3363 /* VideoModel.h */,
+				8902BFD01DD7FE5D00BB3363 /* VideoModel.m */,
+				8902BFD21DD7FF2D00BB3363 /* ChannelModel.h */,
+				8902BFD31DD7FF2D00BB3363 /* ChannelModel.m */,
+				8902BFD51DD80EB800BB3363 /* VideoDetailViewController.h */,
+				8902BFD61DD80EB800BB3363 /* VideoDetailViewController.m */,
+				8902BFD81DD80F2C00BB3363 /* VideoDetailCollectionViewCell.h */,
+				8902BFD91DD80F2C00BB3363 /* VideoDetailCollectionViewCell.m */,
+				8902BFDA1DD80F2C00BB3363 /* VideoDetailCollectionViewCell.xib */,
 			);
 			path = video;
 			sourceTree = "<group>";
@@ -3115,6 +3152,9 @@
 		89FBEEE31DAA3CD5008FBB8A /* image */ = {
 			isa = PBXGroup;
 			children = (
+				8939E8C61DD5C0F300188E30 /* smallvideo.png */,
+				8939E8C71DD5C0F300188E30 /* smallvideo@2x.png */,
+				8939E8C81DD5C0F300188E30 /* smallvideo@3x.png */,
 				8939E8BB1DD5B13B00188E30 /* video.png */,
 				8939E8BC1DD5B13B00188E30 /* video2.png */,
 				8939E8BD1DD5B13B00188E30 /* video2@2x.png */,
@@ -3460,6 +3500,7 @@
 				89F61E421DACAB5B00E9B489 /* kshsj_icon02.png in Resources */,
 				899C89A01DAD101A0073794E /* cancle.png in Resources */,
 				89F61E3A1DACAB5B00E9B489 /* FOLDER-OK@2x.png in Resources */,
+				8902BFDC1DD80F2C00BB3363 /* VideoDetailCollectionViewCell.xib in Resources */,
 				2F5649CB1DBFA22C0075019F /* hh_pj01@2x.png in Resources */,
 				89F61E431DACAB5B00E9B489 /* kshsj_icon02@2x.png in Resources */,
 				8939E8BF1DD5B13B00188E30 /* video2.png in Resources */,
@@ -3512,6 +3553,7 @@
 				8981D1601DAB8C5900CF2426 /* AMap.bundle in Resources */,
 				894AD5191DBF3E180051C9E8 /* new@3x.png in Resources */,
 				2F5649CA1DBFA22C0075019F /* hh_pj01.png in Resources */,
+				8939E8C91DD5C0F300188E30 /* smallvideo.png in Resources */,
 				89F61E711DACABCE00E9B489 /* CHART.png in Resources */,
 				582D13401DCCD4540062FCC7 /* img_detail_circle@2x.png in Resources */,
 				58F0112F1DB206230051D044 /* grade_all.png in Resources */,
@@ -3542,6 +3584,7 @@
 				2FE428AB1DD1A27200B446D0 /* VisualizationController.xib in Resources */,
 				89F61E751DACB79600E9B489 /* hh_login01.png in Resources */,
 				89F61E391DACAB5B00E9B489 /* FOLDER-OK.png in Resources */,
+				8939E8CB1DD5C0F300188E30 /* smallvideo@3x.png in Resources */,
 				89F61E4E1DACAB5B00E9B489 /* login_bg.png in Resources */,
 				89F61E5A1DACAB5B00E9B489 /* PIN-ZOOM-IN.png in Resources */,
 				89F61E601DACAB5B00E9B489 /* USERS.png in Resources */,
@@ -3564,7 +3607,9 @@
 				89F61E4D1DACAB5B00E9B489 /* kshsj_icon05@3x.png in Resources */,
 				582D13441DCCD4540062FCC7 /* img_indicate_arrow@2x.png in Resources */,
 				89F61E4B1DACAB5B00E9B489 /* kshsj_icon05.png in Resources */,
+				8939E8C51DD5C01100188E30 /* VideoTableViewCell.xib in Resources */,
 				8939E8BE1DD5B13B00188E30 /* video.png in Resources */,
+				8939E8CA1DD5C0F300188E30 /* smallvideo@2x.png in Resources */,
 				58F011291DB206230051D044 /* nhfx_color5.png in Resources */,
 				2FE428A81DD1A27200B446D0 /* EquipmentHealthController.xib in Resources */,
 				2F5649CD1DBFA22C0075019F /* qrcode_scan_light_green@2x.png in Resources */,
@@ -3832,6 +3877,7 @@
 				2F56492E1DBF9F230075019F /* ZXAI013x0x1xDecoder.m in Sources */,
 				2F5649021DBF9F230075019F /* ZXBinarizer.m in Sources */,
 				8981D12F1DAB3CE200CF2426 /* LineDashPolyline.m in Sources */,
+				8902BFD11DD7FE5D00BB3363 /* VideoModel.m in Sources */,
 				89F61E841DACCF9900E9B489 /* AnimatedAnnotation.m in Sources */,
 				2F5649561DBF9F230075019F /* ZXOneDimensionalCodeWriter.m in Sources */,
 				2F56498A1DBF9F230075019F /* ZXQRCodeBlockPair.m in Sources */,
@@ -3900,6 +3946,7 @@
 				2FE4289A1DD1A27200B446D0 /* GdtjViewController.m in Sources */,
 				582D134B1DCCD4540062FCC7 /* UIView+TTLineChartView.m in Sources */,
 				2F5648BD1DBF9F230075019F /* ZXAztecEncoder.m in Sources */,
+				8902BFDB1DD80F2C00BB3363 /* VideoDetailCollectionViewCell.m in Sources */,
 				2F5649731DBF9F230075019F /* ZXPDF417ErrorCorrection.m in Sources */,
 				89FB40871DAF850000E95134 /* baoxiuInfoView.m in Sources */,
 				2F56497D1DBF9F230075019F /* ZXQRCodeDecoder.m in Sources */,
@@ -3963,12 +4010,14 @@
 				2F5648E01DBF9F230075019F /* ZXURIParsedResult.m in Sources */,
 				2F5648F61DBF9F230075019F /* ZXBoolArray.m in Sources */,
 				2F56489C1DBF9F230075019F /* MRCell.m in Sources */,
+				8939E8C41DD5C01100188E30 /* VideoTableViewCell.m in Sources */,
 				89FBEF601DAA48DE008FBB8A /* projectList.m in Sources */,
 				2F5648C41DBF9F230075019F /* ZXAztecWriter.m in Sources */,
 				89FB407B1DAF616B00E95134 /* ticketInfo.m in Sources */,
 				2F5648F31DBF9F230075019F /* ZXBitArray.m in Sources */,
 				2F5649291DBF9F230075019F /* ZXAbstractExpandedDecoder.m in Sources */,
 				2FE4289E1DD1A27200B446D0 /* SingleProgressBarView.m in Sources */,
+				8902BFD41DD7FF2D00BB3363 /* ChannelModel.m in Sources */,
 				2F5649671DBF9F230075019F /* ZXPDF417CodewordDecoder.m in Sources */,
 				2F56497C1DBF9F230075019F /* ZXQRCodeDecodedBitStreamParser.m in Sources */,
 				2F5649721DBF9F230075019F /* ZXPDF417Dimensions.m in Sources */,
@@ -4014,6 +4063,7 @@
 				582D13331DCCD4540062FCC7 /* SCBar.m in Sources */,
 				2F56497B1DBF9F230075019F /* ZXQRCodeDataMask.m in Sources */,
 				2F5648BB1DBF9F230075019F /* ZXAztecBinaryShiftToken.m in Sources */,
+				8902BFD71DD80EB800BB3363 /* VideoDetailViewController.m in Sources */,
 				89FBEF5D1DAA47F6008FBB8A /* deptList.m in Sources */,
 				2F5649801DBF9F230075019F /* ZXQRCodeFormatInformation.m in Sources */,
 				2FE4289F1DD1A27200B446D0 /* EnvironmentComfortableController.m in Sources */,

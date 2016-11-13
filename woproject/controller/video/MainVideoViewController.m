@@ -11,10 +11,12 @@
 #import "MindNet.h"
 #import "DeviceModel.h"
 #import <qysdk/QYType.h>
-#import "LocalityTree_Level1_Cell.h"
 #import "HeadView.h"
 #import "StringUtils.h"
 #import "VideoViewController.h"
+#import "VideoModel.h"
+#import "VideoTableViewCell.h"
+#import "VideoDetailViewController.h"
 
 @interface MainVideoViewController ()<DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,HeadViewDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -94,7 +96,7 @@
 
 -(void)stdVarsInit{
     //   self.classifys = @[@"项目名称",@"故障系统",@"优先级",@"酒店"];
-    
+    _videotabledata=[[NSMutableArray alloc]init];
     _provinceArr=[[NSMutableArray alloc]init];
     _cityArr=[[NSMutableArray alloc]init];
     _projectArr=[[NSMutableArray alloc]init];
@@ -308,7 +310,9 @@
         [[MindNet sharedManager] loginSession:^(int32_t ret) {
             if(ret==0)
             {
-                [self DeviceList];
+                NSLog(@"视频登录成功！");
+                [self stdGetVideoPragram:@"632891200"];
+                //[self DeviceList];
                 [[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationDidBecomeActiveNotification object:NULL];
             }
         }];
@@ -360,85 +364,48 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 80;
+    return 20;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 150;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return deviceArray.count;
+    return _videotabledata.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    DeviceModel *device= [deviceArray objectAtIndex:section];
-    return  device.subDeviceList.count;
+    return  1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+     VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId forIndexPath:indexPath];
+    VideoModel *vmtmp=_videotabledata[indexPath.row];
     
-    LocalityTree_Level1_Cell *cell = [LocalityTree_Level1_Cell cellWithTableView:tableView];
-    
-    DeviceModel *deviceGroup = deviceArray[indexPath.section];
-    DeviceModel *subdevice =deviceGroup.subDeviceList[indexPath.row];
-    cell.channelLineLabel.text =deviceGroup.status&& subdevice.status?@"在线":@"离线";
-    
-    cell.channelNameLabel.text =[NSString stringWithFormat:@"%lld",subdevice.device_id];
-    
-    //    SLLog(@"显示。。。。。。  %@",subdevice.calledName);
-    if(deviceGroup.status&&subdevice.status)
-    {
-        cell.channelLineLabel.textColor=[UIColor blackColor];
-        cell.channelNameLabel.textColor=[UIColor blackColor];
-        if(subdevice.localimage!=nil)
-        {
-            [cell.channelIcon setImage:subdevice.localimage];
-            [cell.channelIcon setHighlightedImage:subdevice.localimage];
-            cell.channelIcon.backgroundColor=[UIColor clearColor];
-            
-        }
-        else
-        {
-            [cell.channelIcon setHighlightedImage:[UIImage imageNamed:@"passageway"]];
-            [cell.channelIcon setImage:[UIImage imageNamed:@"passageway"]];
-            cell.channelIcon.backgroundColor=[UIColor clearColor];
-        }
-    }
-    else
-    {
-        cell.channelLineLabel.textColor=[StringUtils colorWithHexString:@"#666666"];
-        cell.channelNameLabel.textColor=[StringUtils colorWithHexString:@"#666666"];
-        [cell.channelIcon setHighlightedImage:[UIImage imageNamed:@"passageway"]];
-        [cell.channelIcon setImage:[UIImage imageNamed:@"passageway"]];
-        cell.channelIcon.backgroundColor=[UIColor clearColor];
-    }
+    [cell showCellView:vmtmp];
     return cell;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    HeadView *headView = [HeadView headViewWithTableView:tableView];
-    
-    headView.delegate = self;
-    headView.deviceGroup = deviceArray[section];
-    
-    return headView;
-}
+
 #pragma mark----实现跳转，就是缺少导航控制器
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DeviceModel *model=[deviceArray[indexPath.section] subDeviceList][indexPath.row];
-    
-    if(model.status)
-    {
-        VideoViewController *view= [[VideoViewController alloc]initWithDat:model];
-        //        view.naDelegate=self.naDelegate;
-        [self.navigationController pushViewController:view animated:true];
-    }
+//    DeviceModel *model=[deviceArray[indexPath.section] subDeviceList][indexPath.row];
+//    
+//    if(model.status)
+//    {
+//        VideoViewController *view= [[VideoViewController alloc]initWithDat:model];
+//        //        view.naDelegate=self.naDelegate;
+//        [self.navigationController pushViewController:view animated:true];
+//    }
+    VideoModel *vmtmp=_videotabledata[indexPath.row];
+    VideoDetailViewController *detailVc=[[VideoDetailViewController alloc]init:vmtmp.channelList];
+    detailVc.view.backgroundColor=[UIColor whiteColor];
+    [self.navigationController pushViewController:detailVc animated:true];
 }
 
 static NSString * const TicketCellId = @"mainVideoCellId";
@@ -451,11 +418,70 @@ static NSString * const TicketCellId = @"mainVideoCellId";
     self.deviceTable.tableFooterView = [[UIView alloc]init];
     self.deviceTable.backgroundColor=collectionBgdColor;
     self.deviceTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.deviceTable registerNib:[UINib nibWithNibName:NSStringFromClass([LocalityTree_Level1_Cell class]) bundle:nil] forCellReuseIdentifier:TicketCellId];
+    [self.deviceTable registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:TicketCellId];
     self.deviceTable.backgroundColor=bluebackcolor;
     [self.view addSubview:self.deviceTable];
     
     
 }
 
+
+
+
+
+//获取视频列表
+-(void)stdGetVideoPragram:(NSString*)pid{
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/getVideoList"];
+    if (!pid) {
+        return;
+    }
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                                @"projectId":pid,
+                                @"v":ApplicationDelegate.myLoginInfo.v
+                                };
+
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"视频返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              [SVProgressHUD dismiss];
+                                              VideoModel *VmModel=[[VideoModel alloc]init];
+                                              _videotabledata=[VmModel asignInfoWithDict:jsonDic];
+                                              [self.deviceTable reloadData];
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD dismiss];
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                         
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                     
+                                  }];
+    
+}
 @end
