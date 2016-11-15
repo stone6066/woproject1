@@ -14,6 +14,8 @@
 -(void)downForCity;
 -(void)downforWorkType;
 -(void)downDeviceType;
+-(void)downLoadVideoArg;
 +(NSArray *) readBaseData:(NSString*)fileName;
 +(NSArray *) readCityData:(NSString*)fileName;
++(NSDictionary *) readBaseData1:(NSString*)fileName;
 @end

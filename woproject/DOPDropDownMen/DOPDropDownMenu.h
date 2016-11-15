@@ -130,6 +130,6 @@
 
 - (void)selectIndexPath:(DOPIndexPath *)indexPath triggerDelegate:(BOOL)trigger; // 调用代理
 
--(void)setTitleAtIndex:(NSString*)txt forIndex:(NSInteger)Idx;//设置标题头 施铁东加
+-(void)setTitleAtIndex:(NSString*)txt forIndex:(NSInteger)Idx selectIndex:(NSInteger)indexI;//设置标题头 施铁东加
 @end
 

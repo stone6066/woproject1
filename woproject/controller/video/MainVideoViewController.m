@@ -38,14 +38,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadTopNav];
-    [self stdVarsInit];
+    _videotabledata=[[NSMutableArray alloc]init];
+    _provinceArr=[[NSMutableArray alloc]init];
+    _cityArr=[[NSMutableArray alloc]init];
+    _projectArr=[[NSMutableArray alloc]init];
+    
+    _forProjectList=[[NSMutableArray alloc]init];
+    _forCityList=[[NSMutableArray alloc]init];
+    _forProvinceList=[[NSMutableArray alloc]init];
+    _projectAllData=[[NSMutableArray alloc]init];
+    
+    
     [self loadListTable];
-//    _deviceTable.delegate=self;
-//    _deviceTable.dataSource=self;
-//    self.deviceTable.tableFooterView=[UIView new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ConnectNetwork) name:kNotifyReconnection object:nil];
     //[self ConnectNetwork];
     // Do any additional setup after loading the view.
+    [self downgetProjectList:nil city:nil];//下载默认项目
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,7 +63,8 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self ConnectNetwork];
+    //[self downgetProjectList:nil city:nil];
+    
 
 }
 -(void)loadTopNav{
@@ -95,33 +104,21 @@
 }
 
 -(void)stdVarsInit{
-    //   self.classifys = @[@"项目名称",@"故障系统",@"优先级",@"酒店"];
-    _videotabledata=[[NSMutableArray alloc]init];
-    _provinceArr=[[NSMutableArray alloc]init];
-    _cityArr=[[NSMutableArray alloc]init];
-    _projectArr=[[NSMutableArray alloc]init];
-    
-    _forProjectList=[[NSMutableArray alloc]init];
-    _forCityList=[[NSMutableArray alloc]init];
-    _forProvinceList=[[NSMutableArray alloc]init];
-    
+    [_provinceArr removeAllObjects];
+    [_projectArr removeAllObjects];
+    [_cityArr removeAllObjects];
     _forProvinceList= [DownLoadBaseData readBaseData:@"forCity.plist"];
-    [_provinceArr addObject:@"请选择省"];
+   
     for (NSDictionary * dict in _forProvinceList) {
         [_provinceArr addObject:[dict objectForKey:@"name"]];
     }
+
+    [self stdGetCityFromProvinceId:_provinceId];
     
-    [_cityArr addObject:@"请选择城"];
-    
-    _forProjectList= [DownLoadBaseData readBaseData:@"forProjectList.plist"];
-    [_projectArr addObject:@"请选择项"];
     for (NSDictionary * dict in _forProjectList) {
         [_projectArr addObject:[dict objectForKey:@"name"]];
     }
-    
-    
-    
-    
+
     // 添加下拉菜单
     DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 64) andHeight:44];
     menu.delegate = self;
@@ -131,7 +128,14 @@
     _menu = menu;
     
     // 创建menu 第一次显示 不会调用点击代理，可以用这个手动调用
-    [menu selectDefalutIndexPath];
+    //[menu selectDefalutIndexPath];
+    NSInteger pIndex=[self getProvinceIndex:_provinceId];
+    
+    [menu setTitleAtIndex:_provinceName forIndex:0 selectIndex:pIndex];
+    [menu setTitleAtIndex:_cityName forIndex:1 selectIndex:0];
+    [menu setTitleAtIndex:_projectName forIndex:2 selectIndex:0];
+
+    [self ConnectNetwork];
 }
 
 
@@ -240,40 +244,50 @@
     switch (indexPath.column) {
             
         case 0://省份
-            if (indexPath.row>0) {
-                dict=_forProvinceList[indexPath.row-1];
+            if (indexPath.row>=0) {
+                dict=_forProvinceList[indexPath.row];
                 _provinceId=[dict objectForKey:@"id"];
+                _provinceName=[dict objectForKey:@"name"];
                 [self stdGetCityFromProvinceId:_provinceId];
             }
             else
             {
                 _provinceId=nil;
                 [_cityArr removeAllObjects];
-                [_cityArr addObject:@"请选择城"];
+//                [_cityArr addObject:@"请选择城"];
                 
             }
-            [menu setTitleAtIndex:_cityArr[0] forIndex:1];
-            _cityId=nil;
+            if (_cityArr.count>0) {
+                [menu setTitleAtIndex:_cityArr[0] forIndex:1 selectIndex:0];
+                //[menu setTitleAtIndex:_cityArr[0] forIndex:1];
+            }
+            [self downgetProjectList1:_provinceId city:_cityId];
             break;
         case 1://城市
-            if (indexPath.row>0) {
-                dict=_forCityList[indexPath.row-1];
+            if (indexPath.row>=0) {
+                dict=_forCityList[indexPath.row];
                 _cityId=[dict objectForKey:@"id"];
+                _cityName=[dict objectForKey:@"name"];
+                _cityIndex=indexPath.row;
             }
             else
             {
                 _cityId=nil;
             }
+            [self downgetProjectList1:_provinceId city:_cityId];
             break;
         case 2://项目
-            if (indexPath.row>0) {
-                dict=_forProjectList[indexPath.row-1];
+            if (indexPath.row>=0) {
+                dict=_forProjectList[indexPath.row];
                 _projectId=[dict objectForKey:@"id"];
+                _projectIndex=indexPath.row;
             }
             else
             {
                 _projectId=nil;
             }
+            [self stdGetVideoPragram:_projectId];
+
             break;
         default:
             break;
@@ -283,6 +297,8 @@
     _sortid=@"0";
     //[self downforYjgdList:_projectId systemFault:_systemId priority:_priority];
     NSLog(@"_provinceId:%@ _cityId:%@ _projectId:%@",_provinceId,_cityId,_projectId);
+    //
+
 }
 
 -(void)stdGetCityFromProvinceId:(NSString *)pid{
@@ -291,14 +307,17 @@
         if ([pid isEqualToString:tmpid]) {
             _forCityList=[dict objectForKey:@"city"];
             [_cityArr removeAllObjects];
-            [_cityArr addObject:@"请选择城"];
+            if (_forCityList.count>0) {
+                NSDictionary * dict1=_forCityList[0];
+                _cityId=[dict1 objectForKey:@"id"];//去除列表第一个城市id
+            }
+            
             for (NSDictionary * dict in _forCityList) {
                 [_cityArr addObject:[dict objectForKey:@"name"]];
             }
-            //[_menu reloadData];
             return;
         }
-        
+        [_cityArr addObject:@"无城市列表"];
     }
 }
 
@@ -310,10 +329,10 @@
         [[MindNet sharedManager] loginSession:^(int32_t ret) {
             if(ret==0)
             {
-                NSLog(@"视频登录成功！");
-                [self stdGetVideoPragram:@"632891200"];
+                NSLog(@"视频登录成功！%@",_projectId);
+                [self stdGetVideoPragram:_projectId];//@"632891200"
                 //[self DeviceList];
-                [[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationDidBecomeActiveNotification object:NULL];
+                //[[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationDidBecomeActiveNotification object:NULL];
             }
         }];
     }
@@ -394,18 +413,15 @@
 #pragma mark----实现跳转，就是缺少导航控制器
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    DeviceModel *model=[deviceArray[indexPath.section] subDeviceList][indexPath.row];
-//    
-//    if(model.status)
-//    {
-//        VideoViewController *view= [[VideoViewController alloc]initWithDat:model];
-//        //        view.naDelegate=self.naDelegate;
-//        [self.navigationController pushViewController:view animated:true];
-//    }
+
+    //menuArr:0._provinceId 1._provinceName 2._cityName 3_projectName 4._cityIndex 5.projectIndex 6.forProjectList
+    NSMutableArray *menuArr=[[NSMutableArray alloc]initWithObjects:_provinceId,_provinceName, _cityName,_projectName,@(_cityIndex),@(_projectIndex),_forProjectList,nil];
     VideoModel *vmtmp=_videotabledata[indexPath.row];
-    VideoDetailViewController *detailVc=[[VideoDetailViewController alloc]init:vmtmp.channelList];
+    VideoDetailViewController *detailVc=[[VideoDetailViewController alloc]init:vmtmp.channelList menuArg:menuArr];
     detailVc.view.backgroundColor=[UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:detailVc animated:true];
+    //self.hidesBottomBarWhenPushed = NO;
 }
 
 static NSString * const TicketCellId = @"mainVideoCellId";
@@ -434,6 +450,9 @@ static NSString * const TicketCellId = @"mainVideoCellId";
     [SVProgressHUD showWithStatus:k_Status_Load];
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/getVideoList"];
     if (!pid) {
+        [_videotabledata removeAllObjects];
+        [self.deviceTable reloadData];
+        [SVProgressHUD dismiss];
         return;
     }
     NSDictionary *paramDict = @{
@@ -484,4 +503,345 @@ static NSString * const TicketCellId = @"mainVideoCellId";
                                   }];
     
 }
+
+
+
+//获项目列表
+-(void)stdGetProjectForVideo{
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forProjectList"];
+    
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                                @"v":ApplicationDelegate.myLoginInfo.v
+                                };
+    
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          NSLog(@"视频返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              [SVProgressHUD dismiss];
+                                              VideoModel *VmModel=[[VideoModel alloc]init];
+                                              _videotabledata=[VmModel asignInfoWithDict:jsonDic];
+                                              [self.deviceTable reloadData];
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD dismiss];
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+    
+}
+
+-(void)downgetProjectList:(NSString*)provinceId city:(NSString*)cityId{//下载项目列表
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+//    NSDictionary *paramDict = @{
+//                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+//                                @"ukey":ApplicationDelegate.myLoginInfo.ukey
+//                                };
+    NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
+    
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
+    if (provinceId!=nil) {
+         [paramDict setObject:provinceId forKey:@"provinceId"];
+    }
+    if (cityId!=nil) {
+        [paramDict setObject:cityId forKey:@"cityId"];
+    }
+   
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/getProjectList"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          //NSLog(@"下载项目返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              NSDictionary *idict=[jsonDic objectForKey:@"i"];
+                                              _projectAllData=[idict objectForKey:@"Data"];
+                                              [self praseProjectArr:_projectAllData];
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
+
+
+-(void)downgetProjectList1:(NSString*)provinceId city:(NSString*)cityId{//下载项目列表
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    //    NSDictionary *paramDict = @{
+    //                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+    //                                @"ukey":ApplicationDelegate.myLoginInfo.ukey
+    //                                };
+    NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
+    
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
+    if (provinceId!=nil) {
+        [paramDict setObject:provinceId forKey:@"provinceId"];
+    }
+    if (cityId!=nil) {
+        [paramDict setObject:cityId forKey:@"cityId"];
+    }
+    
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/getProjectList"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          //NSLog(@"下载项目返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              NSDictionary *idict=[jsonDic objectForKey:@"i"];
+                                              _projectAllData=[idict objectForKey:@"Data"];
+                                              [self praseProjectArr1:_projectAllData];
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+}
+
+-(NSInteger)getProvinceIndex:(NSString*)provinceId{
+    NSInteger myIndex=0;
+    for (NSDictionary* dict in _forProvinceList ) {
+        NSString * pid=[dict objectForKey:@"id"];
+       
+        if ([pid isEqualToString:provinceId]) {
+            return myIndex;
+        }
+         myIndex++;
+    }
+    return 0;
+}
+-(void)praseProjectArr:(NSArray*)pdata{
+    @try {
+        [_forProjectList removeAllObjects];
+        //_projectId
+        if (pdata.count>0) {//第一次要显示的省市项目
+            NSDictionary *dict1 = pdata[0];
+            _projectId=[dict1 objectForKey:@"id"];
+            _provinceId=[dict1 objectForKey:@"provinceId"];
+            _cityId=[dict1 objectForKey:@"cityId"];
+            _projectName=[dict1 objectForKey:@"name"];
+            _provinceName=[dict1 objectForKey:@"provinceName"];
+            _cityName=[dict1 objectForKey:@"cityName"];
+            
+        }
+        
+        for (NSDictionary *dict in pdata) {
+            NSMutableDictionary * dictTmp=[[NSMutableDictionary alloc]init];
+            
+            [dictTmp setObject:[dict objectForKey:@"id"] forKey:@"id"];
+            [dictTmp setObject:[dict objectForKey:@"name"]forKey:@"name"];
+            [_forProjectList addObject:dictTmp];
+
+        }
+        if (_forProjectList.count<1) {
+            NSMutableDictionary * dictTmp=[[NSMutableDictionary alloc]init];
+            [dictTmp setObject:@"" forKey:@"id"];
+            [dictTmp setObject:@"无项目" forKey:@"name"];
+            [_forProjectList addObject:dictTmp];
+            _projectName=@"无项目";
+            _projectId=nil;
+            [_projectArr removeAllObjects];
+            for (NSDictionary * dict in _forProjectList) {
+                [_projectArr addObject:[dict objectForKey:@"name"]];
+            }
+            [_menu setTitleAtIndex:_projectName forIndex:2 selectIndex:0];
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"视频参数数组解析错误");
+    } @finally {
+        if (pdata.count>0) {
+            [self stdVarsInit];
+        }
+        else{
+            [_videotabledata removeAllObjects];
+            [self.deviceTable reloadData];
+        }
+        
+    }
+}
+
+-(void)praseProjectArr1:(NSArray*)pdata{
+    @try {
+        [_forProjectList removeAllObjects];
+        //_projectId
+        if (pdata.count>0) {//第一次要显示的省市项目
+            NSDictionary *dict1 = pdata[0];
+            _projectId=[dict1 objectForKey:@"id"];
+            _provinceId=[dict1 objectForKey:@"provinceId"];
+            _cityId=[dict1 objectForKey:@"cityId"];
+            _projectName=[dict1 objectForKey:@"name"];
+            _provinceName=[dict1 objectForKey:@"provinceName"];
+            _cityName=[dict1 objectForKey:@"cityName"];
+            
+        }
+        
+        for (NSDictionary *dict in pdata) {
+            NSMutableDictionary * dictTmp=[[NSMutableDictionary alloc]init];
+            
+            [dictTmp setObject:[dict objectForKey:@"id"] forKey:@"id"];
+            [dictTmp setObject:[dict objectForKey:@"name"]forKey:@"name"];
+            [_forProjectList addObject:dictTmp];
+            
+        }
+        if (_forProjectList.count<1) {
+            NSMutableDictionary * dictTmp=[[NSMutableDictionary alloc]init];
+            [dictTmp setObject:@"" forKey:@"id"];
+            [dictTmp setObject:@"无项目" forKey:@"name"];
+            [_forProjectList addObject:dictTmp];
+            _projectName=@"无项目";
+            _projectId=nil;
+            [_projectArr removeAllObjects];
+            for (NSDictionary * dict in _forProjectList) {
+                [_projectArr addObject:[dict objectForKey:@"name"]];
+            }
+            [_menu setTitleAtIndex:_projectName forIndex:2 selectIndex:0] ;
+        }
+    } @catch (NSException *exception) {
+        NSLog(@"视频参数数组解析错误");
+    } @finally {
+        if (pdata.count>0) {
+            [_projectArr removeAllObjects];
+            for (NSDictionary * dict in _forProjectList) {
+                [_projectArr addObject:[dict objectForKey:@"name"]];
+            }
+            [_menu setTitleAtIndex:_projectArr[0] forIndex:2 selectIndex:0];
+            [self ConnectNetwork];
+        }
+        else{
+            [_videotabledata removeAllObjects];
+            [self.deviceTable reloadData];
+        }
+        
+    }
+}
+
+-(NSInteger)getIndexOfString:(NSArray*)arr searchStr:(NSString*)ss{
+    for (NSInteger i=0; i<arr.count; i++) {
+        NSString *tmp=arr[i];
+        if ([ss isEqualToString:tmp]) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+-(NSMutableArray*)getProjectArrFromProvince:(NSString*)provinceId city:(NSString*)cityId{
+    NSMutableArray *rtnArr=[[NSMutableArray alloc]init];
+    if (!provinceId) {
+        for (NSDictionary *dict in _projectAllData) {
+            NSString *pid=[dict objectForKey:@"provinceId"];
+            if ([pid isEqualToString:provinceId]) {
+                NSMutableDictionary * dictTmp=[[NSMutableDictionary alloc]init];
+                [dictTmp setObject:[dict objectForKey:@"id"] forKey:@"id"];
+                [dictTmp setObject:[dict objectForKey:@"name"]forKey:@"name"];
+                [rtnArr addObject:dictTmp];
+            }
+        }
+        return rtnArr;
+    }
+    if (!cityId) {
+        for (NSDictionary *dict in _projectAllData) {
+            NSString *pid=[dict objectForKey:@"cityId"];
+            if ([pid isEqualToString:cityId]) {
+                NSMutableDictionary * dictTmp=[[NSMutableDictionary alloc]init];
+                
+                [dictTmp setObject:[dict objectForKey:@"id"] forKey:@"id"];
+                [dictTmp setObject:[dict objectForKey:@"name"]forKey:@"name"];
+                
+                [rtnArr addObject:dictTmp];
+            }
+        }
+        return rtnArr;
+    }
+    return rtnArr;
+}
+
 @end

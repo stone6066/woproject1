@@ -15,7 +15,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="188" height="145"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kshsj_icon01.png" translatesAutoresizingMaskIntoConstraints="NO" id="hjn-YR-e3T"/>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lq8-3P-QyN">
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="g7x-MK-OiU"/>
@@ -24,26 +23,26 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passageway.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bb4-WE-UcV"/>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="Lq8-3P-QyN" firstAttribute="top" secondItem="hjn-YR-e3T" secondAttribute="bottom" constant="8" id="F6T-3g-9iI"/>
-                <constraint firstItem="hjn-YR-e3T" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="V0u-m6-UAU"/>
+                <constraint firstItem="Bb4-WE-UcV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="1Gp-rw-Cgz"/>
+                <constraint firstAttribute="trailing" secondItem="Bb4-WE-UcV" secondAttribute="trailing" constant="19" id="4ZJ-gM-GAB"/>
+                <constraint firstItem="Bb4-WE-UcV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="19" id="Pmz-1V-Ev1"/>
                 <constraint firstItem="Lq8-3P-QyN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="V9b-gH-1QG"/>
-                <constraint firstAttribute="trailing" secondItem="hjn-YR-e3T" secondAttribute="trailing" id="dZW-la-tB7"/>
-                <constraint firstItem="hjn-YR-e3T" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="dyU-dG-qW5"/>
+                <constraint firstItem="Lq8-3P-QyN" firstAttribute="top" secondItem="Bb4-WE-UcV" secondAttribute="bottom" constant="8" id="eGp-sH-KS9"/>
                 <constraint firstAttribute="bottom" secondItem="Lq8-3P-QyN" secondAttribute="bottom" id="g9B-dU-pVG"/>
                 <constraint firstAttribute="trailing" secondItem="Lq8-3P-QyN" secondAttribute="trailing" id="lm6-rD-Utg"/>
             </constraints>
             <size key="customSize" width="188" height="145"/>
             <connections>
-                <outlet property="VideoImg" destination="hjn-YR-e3T" id="txz-cw-cs5"/>
                 <outlet property="txtDetail" destination="Lq8-3P-QyN" id="5eD-DV-niI"/>
             </connections>
             <point key="canvasLocation" x="101" y="150.5"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="kshsj_icon01.png" width="81" height="81"/>
+        <image name="passageway.png" width="68" height="60"/>
     </resources>
 </document>

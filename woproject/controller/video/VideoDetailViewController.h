@@ -12,11 +12,11 @@
 @property (strong,nonatomic)NSMutableArray *dataSource;
 @property (nonatomic,strong)UICollectionView *collectionView;
 
-@property(nonatomic,strong)NSArray *forProjectList;//项目列表
+@property(nonatomic,strong)NSMutableArray *forProjectList;//项目列表
 @property(nonatomic,strong)NSArray *forProvinceList;//项目列表
 @property(nonatomic,strong)NSArray *forCityList;//项目列表
 @property(nonatomic,strong)NSMutableArray *videotabledata;
-
+@property(nonatomic,strong)NSMutableArray *menuData;//0._provinceId 1._provinceName 2._cityName 3_projectName 4._cityIndex 5.projectIndex 6._forProjectList
 
 @property(nonatomic,assign)NSInteger pageindex;
 
@@ -30,5 +30,15 @@
 @property (nonatomic, strong) NSMutableArray *sorts;
 @property (nonatomic, weak) DOPDropDownMenu *menu;
 
--(id)init:(NSMutableArray *)channelList;
+@property(nonatomic,copy)NSString * projectName;//项目
+@property(nonatomic,copy)NSString * provinceName;//
+@property(nonatomic,copy)NSString * cityName;//
+
+
+@property(nonatomic,assign)NSInteger provinceIndex;
+@property(nonatomic,assign)NSInteger cityIndex;
+@property(nonatomic,assign)NSInteger projectIndex;
+@property(nonatomic,strong)NSMutableArray *projectAllData;//省市项目全部数据
+
+-(id)init:(NSMutableArray *)channelList menuArg:(NSMutableArray*)menuArr;
 @end

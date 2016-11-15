@@ -290,9 +290,11 @@
     _indicators = [tempIndicators copy];
     _bgLayers = [tempBgLayers copy];
 }
--(void)setTitleAtIndex:(NSString*)txt forIndex:(NSInteger)Idx{
+-(void)setTitleAtIndex:(NSString*)txt forIndex:(NSInteger)Idx selectIndex:(NSInteger)indexI{
     CATextLayer *title = (CATextLayer *)_titles[Idx];
     title.string=txt;//(CATextLayer *)_titles[Idx][0];
+    _currentSelectRowArray[Idx]=@(indexI);
+    
 
 }
 #pragma mark - init method

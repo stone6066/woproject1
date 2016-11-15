@@ -136,6 +136,7 @@
     [DLBD downforProjectList];
     [DLBD downForCity];
     [DLBD downDeviceType];
+    [DLBD downLoadVideoArg];
     
 }
 

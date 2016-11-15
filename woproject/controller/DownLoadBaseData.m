@@ -414,5 +414,104 @@
     return rtnArr;
 }
 
++(NSDictionary *) readBaseData1:(NSString*)fileName
+{
+    
+    NSString *dataFilePath =[NSString stringWithFormat:@"%@/%@",DocumentBasePath,fileName];
+    //@"/Provincial.plist"
+    NSDictionary *rtnArr=[[NSDictionary alloc]initWithContentsOfFile:dataFilePath];
+    return rtnArr;
+}
+
+/*下载视频参数*/
+-(void)downLoadVideoArg{
+    [SVProgressHUD showWithStatus:k_Status_Load];
+    
+    NSDictionary *paramDict = @{
+                                @"uid":ApplicationDelegate.myLoginInfo.Id,
+                                @"ukey":ApplicationDelegate.myLoginInfo.ukey,
+                                @"v":ApplicationDelegate.myLoginInfo.v
+                                };
+    
+    NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/getVideoParam"];
+    
+    urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [ApplicationDelegate.httpManager POST:urlstr
+                               parameters:paramDict
+                                 progress:^(NSProgress * _Nonnull uploadProgress) {}
+                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                      //http请求状态
+                                      if (task.state == NSURLSessionTaskStateCompleted) {
+                                          NSError* error;
+                                          NSDictionary* jsonDic = [NSJSONSerialization
+                                                                   JSONObjectWithData:responseObject
+                                                                   options:kNilOptions
+                                                                   error:&error];
+                                          //NSLog(@"下载人员信息返回：%@",jsonDic);
+                                          NSString *suc=[jsonDic objectForKey:@"s"];
+                                          NSString *msg=[jsonDic objectForKey:@"m"];
+                                          //
+                                          if ([suc isEqualToString:@"0"]) {
+                                              //成功
+                                              
+                                              [SVProgressHUD dismiss];
+                                              NSDictionary *idict=[jsonDic objectForKey:@"i"];
+                                              NSDictionary *sysData=[idict objectForKey:@"Data"];
+                                              
+//                                              NSMutableArray *wArr=[[NSMutableArray alloc]init];
+//                                              NSString *serverIp=[sysData objectForKey:@"serverIp"];
+//                                             
+//                                              NSString *portStr=[sysData objectForKey:@"serverPort"];
+//                                              NSString *appId=[sysData objectForKey:@"appID"];
+//                                              NSString *auth=[sysData objectForKey:@"auth"];
+//                                              NSString *account=[sysData objectForKey:@"account"];
+//                                              
+//                                              if (!serverIp) {
+//                                                  [wArr addObject:serverIp];
+//                                              }
+//                                              if (!portStr) {
+//                                                  [wArr addObject:portStr];
+//                                              }
+//                                              if (!appId) {
+//                                                  [wArr addObject:appId];
+//                                              }
+//                                              if (!auth) {
+//                                                  [wArr addObject:auth];
+//                                              }
+//                                              if (!account) {
+//                                                  [wArr addObject:account];
+//                                              }
+                                              NSString *carBrandModelPath = [DocumentBasePath stringByAppendingFormat:@"/%@", @"forVideo.plist"];
+                                              
+                                              BOOL saveResult = [sysData writeToFile:carBrandModelPath atomically:YES];
+                                              if (saveResult) {
+                                                  
+                                                  NSLog(@"写入 %@ 数据字典成功", carBrandModelPath);
+                                              }
+                                              else {
+                                                  
+                                                  NSLog(@"写入 %@ 数据字典失败", carBrandModelPath);
+                                              }
+                                              
+                                          } else {
+                                              //失败
+                                              [SVProgressHUD showErrorWithStatus:msg];
+                                              
+                                          }
+                                          
+                                      } else {
+                                          [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                          
+                                      }
+                                      
+                                  } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                      //请求异常
+                                      [SVProgressHUD showErrorWithStatus:k_Error_Network];
+                                      
+                                  }];
+
+}
+
+
 
 @end

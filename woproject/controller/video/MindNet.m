@@ -39,28 +39,55 @@
     self=[super init];
     return self;
 }
+-(NSString *)stringByDecodingURLFormat:(NSString *)str
 
+{
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+        
+        str = [str stringByRemovingPercentEncoding];
+        
+    } else {
+        
+        str = [str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+    }
+    
+    return str;
+    
+}
 
 - (void)loginSession:(void (^)(int32_t ret)) callback
 {
     // Put setup code here. This method is called before the invocation of each test method in the class.
     session = [[QYSession alloc] init];
-    
     NSLog(@"start login");
+    NSDictionary *forProgram = [DownLoadBaseData readBaseData1:@"forVideo.plist"];
+   
+    NSString *serverIp=[forProgram objectForKey:@"serverIp"];
+    NSString *portStr=[forProgram objectForKey:@"serverPort"] ;
+    NSString *appId=[forProgram objectForKey:@"appID"];
+    NSString *auth= [self stringByDecodingURLFormat:[forProgram objectForKey:@"auth"]];
     
-    [session SetServer:@"117.28.255.16" port: 39100];
+    NSString *account=[forProgram objectForKey:@"account"];
+        
+    int portI=[portStr intValue];
     
-    //此接口现在登陆失败，成功登陆sdk账户名和密码需要联系我们这边的人员还获取
-    [session ViewerLogin:@"wholeally"
-                    auth:@"czFYScb5pAu+Ze7rXhGh/+wasfGt6civRHegt/IPGEevW39JVXs32hEiZko5dHJPoabz311PZh/TMKCPIpX2FT9wD6vgn1Wh5DAFR53B2Zc="callBack:^(int32_t ret) {
-                       if(ret==0)
-                       {
-                           _hasLogin=YES;
-                           [session SetEventDelegate:self];
-                       }
-                       callback(ret);
-                       NSLog(@"Login complate: %d", ret);
+    [session SetServer:serverIp port:portI ];//@"117.28.255.16"
+        //@"czFYScb5pAu+Ze7rXhGh/+wasfGt6civRHegt/IPGEevW39JVXs32hEiZko5dHJPoabz311PZh/TMKCPIpX2FT9wD6vgn1Wh5DAFR53B2Zc="
+        //此接口现在登陆失败，成功登陆sdk账户名和密码需要联系我们这边的人员还获取
+    [session ViewerLogin:appId
+                        auth:auth
+                    callBack:^(int32_t ret) {
+                        if(ret==0)
+                        {
+                            _hasLogin=YES;
+                            [session SetEventDelegate:self];
+                        }
+                        callback(ret);
+                        NSLog(@"Login complate: %d", ret);
                     }];
+   
 }
 
 - (void)tearDown {
@@ -117,6 +144,7 @@
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         QYView* videoView= [session CreateView:devid];
+         //QYView* videoView= [session CreateView:1000001827001];
         NSLog(@"videoView=%@",videoView);
         if (videoView == nil)
         {

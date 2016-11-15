@@ -208,7 +208,7 @@
 #define bluetxtcolor RGB(21, 132, 254)//登录蓝色字体
 #define graytxtcolor RGB(120, 120, 120)//灰色字体
 #define highbluetxtcolor RGB(32, 132, 249)//已接单 蓝色字体
-
+#define videobluetxtcolor RGB(58, 75, 105)//视频界面暗蓝色字体 （在线摄像头）
 #define txtViewMaxLen (70)
 
 #pragma mark -
