@@ -392,18 +392,23 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _videotabledata.count;
+     return _videotabledata.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return  1;
+   
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId forIndexPath:indexPath];
-    VideoModel *vmtmp=_videotabledata[indexPath.row];
+    VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId];
+    if (!cell) {
+        cell = [[VideoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TicketCellId];
+    }
+    NSLog(@"indexPath.row:%ld",(long)indexPath.section);
+    VideoModel *vmtmp=_videotabledata[indexPath.section];
     
     [cell showCellView:vmtmp];
     return cell;
@@ -416,7 +421,7 @@
 
     //menuArr:0._provinceId 1._provinceName 2._cityName 3_projectName 4._cityIndex 5.projectIndex 6.forProjectList
     NSMutableArray *menuArr=[[NSMutableArray alloc]initWithObjects:_provinceId,_provinceName, _cityName,_projectName,@(_cityIndex),@(_projectIndex),_forProjectList,nil];
-    VideoModel *vmtmp=_videotabledata[indexPath.row];
+    VideoModel *vmtmp=_videotabledata[indexPath.section];
     VideoDetailViewController *detailVc=[[VideoDetailViewController alloc]init:vmtmp.channelList menuArg:menuArr];
     detailVc.view.backgroundColor=[UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;

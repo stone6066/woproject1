@@ -51,22 +51,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "woproject/controller/video/MainVideoViewController.m"
-            timestampString = "500817626.164031"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
-            landmarkName = "-ConnectNetwork"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "woproject/controller/video/Video/VideoViewController.m"
             timestampString = "500818130.901258"
             startingColumnNumber = "9223372036854775807"
@@ -84,12 +68,12 @@
                   moduleName = "woproject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tianan-apple/Desktop/work/woproject/woproject/woproject/controller/video/Video/VideoViewController.m"
-                  timestampString = "500818506.808672"
+                  timestampString = "500979623.637182"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "256"
                   endingLineNumber = "256"
-                  offsetFromSymbolStart = "164">
+                  offsetFromSymbolStart = "115">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -99,12 +83,12 @@
                   moduleName = "woproject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tianan-apple/Desktop/work/woproject/woproject/woproject/controller/video/Video/VideoViewController.m"
-                  timestampString = "500818506.810088"
+                  timestampString = "500979623.639532"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "258"
                   endingLineNumber = "258"
-                  offsetFromSymbolStart = "34">
+                  offsetFromSymbolStart = "50">
                </Location>
             </Locations>
          </BreakpointContent>
