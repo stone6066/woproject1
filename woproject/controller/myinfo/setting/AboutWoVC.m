@@ -37,7 +37,7 @@
     self.topTitle = @"关于Wo";
     WS(weakSelf);
     _iconImgView = [UIImageView new];
-    UIImage *img = [UIImage imageNamed:@"wo"];
+    UIImage *img = [UIImage imageNamed:@"login02"];
     _iconImgView.image = img;
     [self.view addSubview:_iconImgView];
     [_iconImgView mas_remakeConstraints:^(MASConstraintMaker *make) {

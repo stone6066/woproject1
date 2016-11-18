@@ -175,7 +175,7 @@
     UIView *topView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, fDeviceWidth, topHeigh)];
     topView.backgroundColor=topviewcolor;
     [self.view addSubview:topView];
-    UIImageView *topImg=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth/2-12, 30, 24, 12)];
+    UIImageView *topImg=[[UIImageView alloc]initWithFrame:CGRectMake(fDeviceWidth/2-12, 30, 24, 24)];
     topImg.image=[UIImage imageNamed:@"login02"];
     [topView addSubview:topImg];
     
