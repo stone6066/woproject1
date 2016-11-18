@@ -77,7 +77,8 @@
 //#define NetUrl @"http://shop.anquan365.org/nst/common.htm?"
 #define MainUrl @"http://shop.anquan365.org/"
 #define MainToken @"tao-yx.com"
-#define BaseUrl @"http://139.129.218.74:8080/ticket/"
+#define BaseUrl @"http://120.132.124.11/ticket/"
+//@"http://139.129.218.74:8080/ticket/"
 #define BasePath @"mobile/interface/"
 
 #define kNotifyDisconnection @"c" //断开
