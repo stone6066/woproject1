@@ -8,11 +8,16 @@
 
 #import "CloudPlatformManageController.h"
 #import "mainBv.h"
+#import "InfoDetailsView.h"
 
-@interface CloudPlatformManageController ()
+@interface CloudPlatformManageController (){
+    BOOL infodetails;
+}
+
 
 @property (strong, nonatomic)  mainBv *mainBv;
 
+@property (nonatomic, strong) InfoDetailsView *detailsV;
 
 @end
 
@@ -24,18 +29,38 @@
     
     self.topTitle = @"总体概览";
     self.dateListShow = NO;
-    
+    [self mainBv];
+    [self detailsV];
 }
 
 - (mainBv *)mainBv {
     if (!_mainBv) {
         _mainBv = [[mainBv alloc ] initWithFrame:CGRectMake(0, 108, fDeviceWidth, fDeviceHeight - 108)];
         [self.view addSubview:_mainBv];
+        _mainBv.hidden = NO;
     }
     return _mainBv;
 }
+
+- (InfoDetailsView *)detailsV {
+    
+    if (!_detailsV) {
+        
+        _detailsV = [[InfoDetailsView alloc] initWithFrame:CGRectMake(0, 108, fDeviceWidth, fDeviceHeight - 108)];
+        
+        [self.view addSubview:_detailsV];
+        
+        _detailsV.hidden = YES;
+        
+    }
+    
+    return _detailsV;
+    
+}
 - (void)manuallyProperties {
     [super initFrontProperties];
+    infodetails = NO;
+
 }
 
 
@@ -46,13 +71,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self mainBv];
-    
+   
     // Do any additional setup after loading the view from its nib.
 }
 
 
 - (void)gsHandleData {
+    
     NSDictionary *param = @{
                             @"uid":ApplicationDelegate.myLoginInfo.Id,
                             @"ukey":ApplicationDelegate.myLoginInfo.ukey,
@@ -60,6 +85,8 @@
                             @"cityId":self.cityIdStr,
                             @"projectId":self.projectIdStr
                             };
+    
+    infodetails = self.projectIdStr.length > 0 ? YES : NO;
     
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forProjectOrDetails"];
     
@@ -83,7 +110,18 @@
 #pragma mark 数据处理
 
 - (void)endDealWith:(id)result {
-    _mainBv.dicArr = result;
+    if (infodetails) {
+        _mainBv.hidden = YES;
+        _detailsV.hidden = NO;
+        _detailsV.dataDic = result;
+        _detailsV.backgroundColor = [UIColor redColor];
+       self.topTitle = @"项目信息";
+    } else {
+        self.topTitle = @"总体概览";
+        _mainBv.hidden = NO;
+        _detailsV.hidden = YES;
+        _mainBv.dicArr = result;
+    }
 }
 
 

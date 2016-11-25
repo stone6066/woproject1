@@ -16,5 +16,6 @@
  0-我的报修 1-我的派单 2-我的工单
  */
 @property (nonatomic, copy) NSString *type;
+@property (nonatomic, strong) UIImageView *img;
 
 @end

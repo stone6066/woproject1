@@ -203,7 +203,7 @@
     
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([tableView isEqual:_dateTab]) {
         static NSString *cellName = @"cellname";
@@ -262,7 +262,6 @@
         
     } else {
         _change = 0;
-        
         
         switch ([_choose integerValue]) {
                 
@@ -367,9 +366,7 @@
                 break;
         }
         
-        
 
-        
         [self gsHandleData];
         
         
@@ -420,7 +417,7 @@
         [center addObserver:self selector:@selector(dropMenListViewToBaseViewControllerShowListNoti:) name:NSStringFromClass([self class]) object: nil];
         
         
-        NSLog(@"%@", NSStringFromClass([self class]));
+    
     }
     return _listMenu;
 }

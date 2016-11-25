@@ -7,8 +7,8 @@
 //
 
 #import "DropMenuListView.h"
-NSString *const DropMenListViewToBaseViewControllerShowListNoti = @"extern NSString *const DropMenListViewToBaseViewControllerShowListNoti";
 
+NSString *const DropMenListViewToBaseViewControllerShowListNoti = @"extern NSString *const DropMenListViewToBaseViewControllerShowListNoti";
 
 
 @interface DropMenuListView ()

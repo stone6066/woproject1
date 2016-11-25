@@ -74,21 +74,23 @@
         case 1:
         {
             _imgView2.hidden = _imgView3.hidden = YES;
-            [_imgView1 sd_setImageWithURL:[NSURL URLWithString:model.imageList[0][@"url"]] placeholderImage:nil];
+            _imgView1.hidden = NO;
+            [_imgView1 sd_setImageWithURL:[NSURL URLWithString:model.imageList[0][@"url"]] placeholderImage:[UIImage imageNamed:@"login_icon"]];
         }
             break;
         case 2:
         {
             _imgView3.hidden = YES;
-            [_imgView1 sd_setImageWithURL:[NSURL URLWithString:model.imageList[0][@"url"]] placeholderImage:nil];
-            [_imgView2 sd_setImageWithURL:[NSURL URLWithString:model.imageList[1][@"url"]] placeholderImage:nil];
+            _imgView1.hidden = _imgView2.hidden = NO;
+            [_imgView1 sd_setImageWithURL:[NSURL URLWithString:model.imageList[0][@"url"]] placeholderImage:[UIImage imageNamed:@"login_icon"]];
+            [_imgView2 sd_setImageWithURL:[NSURL URLWithString:model.imageList[1][@"url"]] placeholderImage:[UIImage imageNamed:@"login_icon"]];
         }
             break;
         case 3:
         {
-            [_imgView1 sd_setImageWithURL:[NSURL URLWithString:model.imageList[0][@"url"]] placeholderImage:nil];
-            [_imgView2 sd_setImageWithURL:[NSURL URLWithString:model.imageList[1][@"url"]] placeholderImage:nil];
-            [_imgView3 sd_setImageWithURL:[NSURL URLWithString:model.imageList[2][@"url"]] placeholderImage:nil];
+            [_imgView1 sd_setImageWithURL:[NSURL URLWithString:model.imageList[0][@"url"]] placeholderImage:[UIImage imageNamed:@"login_icon"]];
+            [_imgView2 sd_setImageWithURL:[NSURL URLWithString:model.imageList[1][@"url"]] placeholderImage:[UIImage imageNamed:@"login_icon"]];
+            [_imgView3 sd_setImageWithURL:[NSURL URLWithString:model.imageList[2][@"url"]] placeholderImage:[UIImage imageNamed:@"login_icon"]];
         }
             break;
     }

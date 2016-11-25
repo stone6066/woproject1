@@ -311,6 +311,15 @@
     cell.textLabel.textAlignment = 1;
     return cell;
 }
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [_describeTextView resignFirstResponder];
+    [self.tableView removeFromSuperview];
+    _isPN = NO;
+    _isFS = NO;
+    _isDT = NO;
+    _isP = NO;
+}
 #pragma mark UITabelViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -385,10 +394,6 @@
     NSMutableString *t = [self.describeTextView.text mutableCopy];
     [t replaceCharactersInRange:range withString:text];
     return t.length <= 100;
-}
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [_describeTextView resignFirstResponder];
 }
 #pragma mark UI
 - (void)setSubViews

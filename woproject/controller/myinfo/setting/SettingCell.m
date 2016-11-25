@@ -40,6 +40,7 @@
             _qrLabel.hidden = YES;
             _loginOut.hidden = YES;
             if (index == 0) {
+                [[UIApplication sharedApplication] unregisterForRemoteNotifications];
                 [_setSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"setting_notice"]];
             }else if (index == 1){
                 [_setSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"setting_sound"]];

@@ -50,10 +50,10 @@
         [stdPubFunc stdShowMessage:@"请输入原密码"];
         return;
     }else{
-//        if (![_originalPwdFD.text isEqualToString:@""]) {
-//            [stdPubFunc stdShowMessage:@"原密码输入错误，请重新输入"];
-//            return;
-//        }
+        if (![_originalPwdFD.text isEqualToString:@""]) {
+            [stdPubFunc stdShowMessage:@"原密码输入错误，请重新输入"];
+            return;
+        }
 //        if (![self checkInputPassword:_originalPwdFD.text] && _originalPwdFD.text.length > 0) {
 //            [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
 //            return;
@@ -64,7 +64,7 @@
         return;
     }else{
         if (![self checkInputPassword:_pwdFD.text] && _pwdFD.text.length > 0) {
-            [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
+            [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
             return;
         }
     }
@@ -73,7 +73,7 @@
         return;
     }else{
         if (![self checkInputPassword:_againPwdFD.text] && _againPwdFD.text.length > 0) {
-            [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
+            [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
             return;
         }
     }
@@ -87,24 +87,23 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if (textField == _originalPwdFD) {
-#warning 判断原密码
-//        if (![_originalPwdFD.text isEqualToString:@""]) {
-//            [stdPubFunc stdShowMessage:@"原密码输入错误，请重新输入"];
-//            return;
-//        }
+        if (![_originalPwdFD.text isEqualToString:@""]) {
+            [stdPubFunc stdShowMessage:@"原密码输入错误，请重新输入"];
+            return;
+        }
         if (![self checkInputPassword:_originalPwdFD.text] && _originalPwdFD.text.length > 0) {
-            [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
+            [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
         }
     }else if (textField == _pwdFD){
         if (![self passwardIsRepeatWithPwd:_pwdFD.text andAgainPwd:_againPwdFD.text]) {
             if (![self checkInputPassword:_pwdFD.text] && _pwdFD.text.length > 0) {
-                [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
+                [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
             }
         }
     }else{
         if (![self passwardIsRepeatWithPwd:_againPwdFD.text andAgainPwd:_pwdFD.text]) {
             if (![self checkInputPassword:_againPwdFD.text] && _againPwdFD.text.length > 0) {
-                [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
+                [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
             }
         }
     }

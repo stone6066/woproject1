@@ -113,12 +113,12 @@
 {
     [self.rView.describeTextView resignFirstResponder];
     if ([_rView.PNTapLabel.text isEqualToString:@"------"]) {
-        [stdPubFunc stdShowMessage:@"请选择项目名称"];
+        [stdPubFunc stdShowMessage:@"项目必选项"];
         return;
     }
     NSDictionary *params = [self.rView getParams];
     if (!params[@"fault_desc"]) {
-        [stdPubFunc stdShowMessage:@"请填写报修描述"];
+        [stdPubFunc stdShowMessage:@"未写报修描述"];
         return;
     }
     NSLog(@"%@", params);

@@ -1,30 +1,30 @@
 //
-//  mainBv.m
+//  InfoDetailsView.m
 //  woproject
 //
-//  Created by 关宇琼 on 2016/11/8.
+//  Created by 关宇琼 on 2016/11/21.
 //  Copyright © 2016年 tianan-apple. All rights reserved.
 //
 
-#import "mainBv.h"
-#import "ProjectListCell.h"
+#import "InfoDetailsView.h"
+#import "DetailsCell.h"
 
-
-@interface mainBv ()<UITableViewDelegate,UITableViewDataSource>
+@interface InfoDetailsView ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *listTBV;
 
-
-
 @end
 
-@implementation mainBv
+@implementation InfoDetailsView
+
+
+
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    
     if (self) {
+        
         _listTBV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) style:(UITableViewStyleGrouped)];
         [self addSubview:_listTBV];
         _listTBV.delegate = self;
@@ -35,11 +35,10 @@
     }
     return self;
 }
-
 #pragma mark -
 #pragma mark tableView delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _dicArr.count;
+    return _dataDic.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -47,17 +46,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *cellName = @"ProjectListCell";
+    static NSString *cellName = @"DetailsCell";
     
-    ProjectListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
+    DetailsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
     
     if (!cell) {
         
         cell = [[[NSBundle mainBundle] loadNibNamed:cellName owner:nil options:nil] firstObject];
         
     }
+    cell.backgroundColor = [UIColor whiteColor];
     cell.selectionStyle  = UITableViewCellSelectionStyleNone;
-    cell.dataDic = _dicArr[indexPath.section];
+    cell.dataDic = _dataDic[indexPath.section];
     return cell;
 }
 
@@ -74,19 +74,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 110;
+    return 450;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-}
-
-- (void)setDicArr:(NSArray *)dicArr {
-    if (_dicArr != dicArr) {
-        _dicArr = dicArr;
-    }
-    
-    [_listTBV reloadData];
 }
 
 
@@ -98,5 +90,13 @@
     // Drawing code
 }
 */
+
+
+- (void)setDataDic:(NSArray *)dataDic {
+    if (_dataDic != dataDic) {
+        _dataDic = dataDic;
+    }
+      [_listTBV reloadData];
+}
 
 @end

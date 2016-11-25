@@ -19,7 +19,6 @@
 @property (nonatomic, strong) UILabel *yxjContent;
 @property (nonatomic, strong) UILabel *xmmsLabel;
 @property (nonatomic, strong) UILabel *xmmsContent;
-@property (nonatomic, strong) UIImageView *img;
 @property (nonatomic, strong) UIView *tmpView;
 
 @end
@@ -42,7 +41,13 @@
 
     _stateLabel.text = model.ticketStatus;
 
-    _jdsjLabel.text = [NSString stringWithFormat:@"报修时间:  %@", [self stdTimeToStr:model.createTime]];
+    if ([model.ticketStatus isEqualToString:@"未派单"]) {
+        _jdsjLabel.text = [NSString stringWithFormat:@"报修时间:  %@", [self stdTimeToStr:model.createTime]];
+    }else if([model.ticketStatus isEqualToString:@"未接单"]){
+        _jdsjLabel.text = [NSString stringWithFormat:@"派单时间:  %@", [self stdTimeToStr:model.createTime]];
+    }else{
+        _jdsjLabel.text = [NSString stringWithFormat:@"%@时间:  %@", [model.ticketStatus substringWithRange:NSMakeRange(model.ticketStatus.length - 2, 2)], [self stdTimeToStr:model.createTime]];
+    }
     _xmmcLabel.text = [NSString stringWithFormat:@"项目名称:  %@", model.projectId];
     _yxjContent.text = model.priority != nil?[NSString stringWithFormat:@" %@", model.priority]:@" 无";
     _xmmsContent.text = model.faultDesc;

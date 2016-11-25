@@ -253,8 +253,9 @@ fetchCompletionHandler:
 }
 
 - (void)application:(UIApplication *)application
-didReceiveLocalNotification:(UILocalNotification *)notification {
+didReceiveLocalNotification:(UILocalNotification *)notification {if ([[UIDevice currentDevice].systemVersion floatValue]<10.0) {
     [JPUSHService showLocalNotificationAtFront:notification identifierKey:nil];
+}
 }
 
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max

@@ -182,7 +182,8 @@ static NSString * const myorderIdentifier = @"myorderIdentifier";
                                               }
                                               [self.tableView showEmptyMessage:k_empty_messgae dataSourceCount:self.dataArray.count];
                                               [self.tableView reloadData];
-                                              
+                                              [self.tableView.mj_header endRefreshing];
+                                              [self.tableView.mj_footer endRefreshing];
                                               
                                           } else {
                                               //失败
@@ -385,6 +386,8 @@ static NSString * const myorderIdentifier = @"myorderIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    MRCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.img.hidden = YES;
     MRModel *model = self.dataArray[indexPath.row];
     DetailVC *vc = [[DetailVC alloc] init];
     vc.orderId = model.Id;

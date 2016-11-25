@@ -76,7 +76,9 @@
     NSLog(@"流转记录:%@", model.ticketFlowList);
     if (model.imageList.count != 0) {
         [_bxxxContentView mas_updateConstraints:^(MASConstraintMaker *make) {
+            
            make.bottom.equalTo(_gzmsContent.mas_bottom).offset(55);
+            
         }];
     }
     switch (model.imageList.count) {
