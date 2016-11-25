@@ -15,7 +15,7 @@
 #import "daochangInfoView.h"
 #import "hangupInfoView.h"
 #import "backOrderViewInfo.h"
-#import "YjgdViewController.h"
+#import "GggdViewController.h"
 #import "ShowImgViewController.h"
 
 @interface GggdDetailInfoViewController ()<stdImgDelegate,stdPaidanImgDelegate,stdHangUpImgDelegate,stdBackOrderImgDelegate>
@@ -344,7 +344,7 @@
 }
 
 -(void)pushYjgdView{
-    YjgdViewController *yjVc=[[YjgdViewController alloc]init];
+    GggdViewController *yjVc=[[GggdViewController alloc]init];
     yjVc.view.backgroundColor=[UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:yjVc animated:YES];

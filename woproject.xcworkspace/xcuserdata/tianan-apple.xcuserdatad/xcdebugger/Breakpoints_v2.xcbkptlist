@@ -19,38 +19,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "woproject/controller/ticketOperate/tickoperateViewController.m"
-            timestampString = "500539509.535498"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "640"
-            endingLineNumber = "640"
-            landmarkName = "-upLoadHangTickInofo"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "woproject/controller/ticketOperate/tickoperateViewController.m"
-            timestampString = "500539509.535498"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "578"
-            endingLineNumber = "578"
-            landmarkName = "-upLoadHangTickInofo"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "woproject/controller/video/Video/VideoViewController.m"
             timestampString = "500818130.901258"
             startingColumnNumber = "9223372036854775807"
@@ -59,38 +27,6 @@
             endingLineNumber = "256"
             landmarkName = "-playVideo"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[VideoViewController playVideo]"
-                  moduleName = "woproject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tianan-apple/Desktop/work/woproject/woproject1-master%202/woproject/controller/video/Video/VideoViewController.m"
-                  timestampString = "501752077.955317"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "256"
-                  endingLineNumber = "256"
-                  offsetFromSymbolStart = "115">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__32-[VideoViewController playVideo]_block_invoke"
-                  moduleName = "woproject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tianan-apple/Desktop/work/woproject/woproject1-master%202/woproject/controller/video/Video/VideoViewController.m"
-                  timestampString = "501752077.958095"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "258"
-                  endingLineNumber = "258"
-                  offsetFromSymbolStart = "50">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

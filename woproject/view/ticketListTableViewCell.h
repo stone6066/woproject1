@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *detail;
 @property(nonatomic,copy)NSString* Id;
 @property(nonatomic,copy)NSString* isnew;
+@property (weak, nonatomic) IBOutlet UILabel *timeTitle;
 
 -(void)showCellView:(ticketList*)dataModel;
 @end

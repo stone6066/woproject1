@@ -21,7 +21,10 @@
 
 #define kDropDownListTag1 1000
 @interface PaiDanDetailViewController ()<StdComBoxDelegate,stdImgDelegate,stdPaidanImgDelegate,stdHangUpImgDelegate,stdBackOrderImgDelegate>
-
+{
+    UITapGestureRecognizer *tapGestureRecognizer;
+    UIScrollView *scollVc;
+}
 @end
 
 @implementation PaiDanDetailViewController
@@ -29,8 +32,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self downforYjgdInfo];
+    
+     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(comboxHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapGestureRecognizer.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapGestureRecognizer];
     // Do any additional setup after loading the view.
 }
+-(void)comboxHide:(UITapGestureRecognizer*)tap{
+    CGPoint touchPoint = [tap locationInView:scollVc];
+    
+    /*--------点击在combox上的时候，无需隐藏下拉列表-------------*/
+    CGRect userHeaderImageRect = [scollVc convertRect:_priorityBox.bounds fromView:_priorityBox];
+    if (CGRectContainsPoint(userHeaderImageRect, touchPoint)) {
+        return;
+    }
+    
+    CGRect userHeaderImageRect2 = [scollVc convertRect:_jobNameBox.bounds fromView:_jobNameBox];
+    if (CGRectContainsPoint(userHeaderImageRect2, touchPoint)) {
+        return;
+    }
+    
+    CGRect userHeaderImageRect3 = [scollVc convertRect:_operationUserBox.bounds fromView:_operationUserBox];
+    if (CGRectContainsPoint(userHeaderImageRect3, touchPoint)) {
+        return;
+    }
+    /*-----------------------------------------------------*/
+    /*-----------一定要延时执行，否则combox赋值不上--------------*/
+    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1/*延迟执行时间*/ * NSEC_PER_SEC));
+    
+    dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+        [_priorityBox stdRemoveView];
+        [_jobNameBox stdRemoveView];
+        [_operationUserBox stdRemoveView];
+    });
+   
+}
+
 -(id)init:(NSString *)listId{
     if (self==[super init]) {
         _ListId=listId;
@@ -153,7 +192,7 @@
     _priorityBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY, BoxWidth, BoxHeigh) titleStr:@"优先级：" tagFlag:0];
     _priorityBox.stdTableDelegate=self;
     [Svc addSubview:_priorityBox];
-   
+    [_priorityBox setComboxTitleAtIndex:2];
     _jobNameBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+15+BoxHeigh, BoxWidth, BoxHeigh) titleStr:@"工种：" tagFlag:1];
     _jobNameBox.stdTableDelegate=self;
     [Svc addSubview:_jobNameBox];
@@ -162,6 +201,7 @@
     _operationUserBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+(15+BoxHeigh)*2, BoxWidth, BoxHeigh) titleStr:@"接单人：" tagFlag:2];
     _operationUserBox.stdTableDelegate=self;
     [Svc addSubview:_operationUserBox];
+    
 
 }
 -(void)stdComBoxClickDelegate:(NSString *)sendId tag:(NSInteger)tagFlag
@@ -185,7 +225,7 @@
 }
 -(void)drawDetailView:(ticketInfo*)myInfo{
     CGFloat ScrollHeigh=fDeviceHeight;
-    UIScrollView *scollVc=[[UIScrollView alloc]initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, fDeviceHeight-TopSeachHigh)];
+    scollVc=[[UIScrollView alloc]initWithFrame:CGRectMake(0, TopSeachHigh, fDeviceWidth, fDeviceHeight-TopSeachHigh)];
     
     [self drawCombox:scollVc];
     /*---------工单状态----------------*/

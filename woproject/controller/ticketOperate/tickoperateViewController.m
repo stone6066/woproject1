@@ -10,6 +10,8 @@
 #import "backAndHangUpViewController.h"
 #import "turnAndHelpViewController.h"
 #import "QRVC.h"
+#import "YjgdViewController.h"
+
 @interface tickoperateViewController ()<UITextViewDelegate>
 
 @end
@@ -62,6 +64,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)setPriority:(NSString *)priority{
+    _priority=priority;
+}
 -(void)setOrderId:(NSString *)OrderId{
     _OrderId=OrderId;
 }
@@ -116,9 +121,9 @@
 -(void)stdSamleSetBtn:(UIButton *)btn btnTxt:(NSString*)hinttxt{
     [btn addTarget:self action:@selector(clickbtnFunc:) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:hinttxt forState:UIControlStateNormal];// 添加文字
-   
+    
     btn.titleLabel.font = [UIFont systemFontOfSize: 14.0];
-   
+    
     if ([_IsConfom isEqualToString:@"0"]) {
         btn.enabled=NO;
         btn.backgroundColor=[UIColor whiteColor];
@@ -128,7 +133,7 @@
     {
         btn.enabled=YES;
         btn.backgroundColor=bluetxtcolor;
-         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
     }
     //[self.view addSubview:btn];
@@ -146,7 +151,7 @@
     else{
         btn.enabled=YES;
     }
-
+    
     //[self.view addSubview:btn];
 }
 -(void)drawMainView{
@@ -182,7 +187,7 @@
             [_confomBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             
             _confTimeLbl.text=[NSString stringWithFormat:@"%@%@",@"到场时间：",_confTime];
-           
+            
             
             
         }
@@ -209,7 +214,7 @@
     if (!_assistBtn) {
         _assistBtn=[[UIButton alloc]initWithFrame:CGRectMake(controllX*3+littleBtnWidth*2, firstLineY+btnHeigh*2, littleBtnWidth, btnHeigh)];
         _assistBtn.tag=104;
-         [self stdSamleSetBtn:_assistBtn btnTxt:@"协助"];
+        [self stdSamleSetBtn:_assistBtn btnTxt:@"协助"];
         [scollVc addSubview:_assistBtn];
     }
     if (!_turnBtn) {
@@ -218,7 +223,7 @@
         [self stdSamleSetBtn:_turnBtn btnTxt:@"转单"];
         [scollVc addSubview:_turnBtn];
     }
-
+    
     
     
     
@@ -230,7 +235,7 @@
     [str addAttribute:NSForegroundColorAttributeName
                 value:[UIColor redColor]
                 range:NSMakeRange(4,1)];
-
+    
     [str addAttribute:NSForegroundColorAttributeName
                 value:[UIColor blackColor]
                 range:NSMakeRange(5,1)];
@@ -269,7 +274,7 @@
         [self stdSetAddImgBtn:_addImg2];
         [scollVc addSubview:_addImg2];
     }
-
+    
     
     if (!_addImg3) {
         _addImg3=[[UIButton alloc]initWithFrame:CGRectMake(controllX+45*2, _descTxt.frame.origin.y+_descTxt.frame.size.height+10, 40, 40)];
@@ -277,7 +282,7 @@
         [self stdSetAddImgBtn:_addImg3];
         [scollVc addSubview:_addImg3];
     }
-
+    
     if (!_doneBtn) {
         _doneBtn=[[UIButton alloc]initWithFrame:CGRectMake(controllX, _addImg3.frame.origin.y+_addImg3.frame.size.height+10, fDeviceWidth-controllX*2, 40)];
         _doneBtn.tag=300;
@@ -311,7 +316,7 @@
 }
 
 -(void)showTurnAndHelp:(NSInteger)typeI{
-    turnAndHelpViewController * BAHVC=[[turnAndHelpViewController alloc]init:_OrderId viewType:typeI];
+    turnAndHelpViewController * BAHVC=[[turnAndHelpViewController alloc]init:_OrderId viewType:typeI priority:_priority];
     BAHVC.view.backgroundColor=bluebackcolor;
     [self.navigationController pushViewController:BAHVC animated:YES];
 }
@@ -382,13 +387,33 @@
     _addImg1.enabled=YES;
     _addImg2.enabled=YES;
     _addImg3.enabled=YES;
-     _confTimeLbl.text=[NSString stringWithFormat:@"%@%@",@"到场时间：",[stdPubFunc stdGetCurrTime]];
+    _confTimeLbl.text=[NSString stringWithFormat:@"%@%@",@"到场时间：",[stdPubFunc stdGetCurrTime]];
     _confTimeLbl.enabled=YES;
 }
-//0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助
+-(void)showHint:(NSString*)myType{
+    if ([myType isEqualToString:@"3"]) {
+        [stdPubFunc stdShowMessage:@"维修结果不能为空"];
+    }
+    else if ([myType isEqualToString:@"6"]) {
+        [stdPubFunc stdShowMessage:@"挂起原因不能为空"];
+    }
+    else if ([myType isEqualToString:@"7"]) {
+        [stdPubFunc stdShowMessage:@"协助原因不能为空"];
+    }
+    else if ([myType isEqualToString:@"8"]) {
+        [stdPubFunc stdShowMessage:@"转单原因不能为空"];
+    }
+    else if ([myType isEqualToString:@"5"]) {
+        [stdPubFunc stdShowMessage:@"退单原因不能为空"];
+    }
+}
+//0.派单；1.接单；2.到场；3.完成；4.核查；5.退单；6.挂起；7.协助 8转单
 -(void)upInfoRepair:(NSString*)operationType{
-    [SVProgressHUD showWithStatus:k_Status_Load];
     
+//    if (_descTxt.text.length<1) {
+//        [self showHint:operationType];
+//        return;
+//    }
     NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
     
     [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
@@ -396,8 +421,8 @@
     [paramDict setObject:_OrderId forKey:@"tid"];
     [paramDict setObject:operationType forKey:@"operation"];
     [paramDict setObject:_descTxt.text forKey:@"result"];
-
     
+    [SVProgressHUD showWithStatus:k_Status_Load];
     NSString *urlstr=[NSString stringWithFormat:@"%@%@",BaseUrl,@"support/ticket/forTicketFlow"];
     
     urlstr = [urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -422,7 +447,7 @@
                                               if ([operationType isEqualToString:@"2"]) {
                                                   [self confomSuccessBack];
                                               }
-                                    
+                                              
                                               
                                               
                                               
@@ -553,7 +578,7 @@
     [self.paramsDic setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [self.paramsDic setObject:_descTxt.text forKey:@"result"];
     [self.paramsDic setObject:_OrderId forKey:@"tid"];
-   
+    
     [self.paramsDic setObject:@"3" forKey:@"operation"];
     
     return self.paramsDic;
@@ -564,7 +589,7 @@
     //[self.rView.describeTextView resignFirstResponder];
     NSDictionary *params = [self getParams];
     if (_descTxt.text.length<1) {
-        [stdPubFunc stdShowMessage:@"请填写原因"];
+        [stdPubFunc stdShowMessage:@"维修结果不能为空"];
         return;
     }
     
@@ -593,7 +618,8 @@
                 NSLog(@"======== %@", jsonDic);
                 //NSString *cid = jsonDic[@"i"][@"Data"][@"id"];
                 if (self.imgArray.count<1) {
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self stdTurnToYJGD];
+                    //[self.navigationController popViewControllerAnimated:YES];
                     return ;
                 }
                 NSString *imgUrl = [NSString stringWithFormat:@"%@support/sys/forUpLoading", BaseUrl];
@@ -637,7 +663,8 @@
                                               NSLog(@"全部传完");
                                               [SVProgressHUD dismiss];
                                               [stdPubFunc stdShowMessage:@"上传完毕"];
-                                              [self.navigationController popViewControllerAnimated:YES];
+                                              [self stdTurnToYJGD];
+                                              //                                              [self.navigationController popViewControllerAnimated:YES];
                                           }
                                           
                                       }
@@ -673,5 +700,14 @@
         NSString *s = [nsTextContent substringToIndex:txtViewMaxLen];
         [textView setText:s];
     }
+}
+
+
+-(void)stdTurnToYJGD{
+    YjgdViewController *yjVc=[[YjgdViewController alloc]init];
+    yjVc.view.backgroundColor=[UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:yjVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 @end

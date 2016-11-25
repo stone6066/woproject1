@@ -19,7 +19,7 @@ UINavigationControllerDelegate
 @property (nonatomic,strong)ComboxView *jobNameBox;//工种
 @property (nonatomic,strong)ComboxView *operationUserBox;//接单人
 @property (nonatomic,strong)UITextView *memoResion;//原因
-
+@property(nonatomic,copy)NSString *priority;
 @property (nonatomic,strong)UIButton *addImg1;
 @property (nonatomic,strong)UIButton *addImg2;
 @property (nonatomic,strong)UIButton *addImg3;
@@ -33,5 +33,5 @@ UINavigationControllerDelegate
 @property (nonatomic, strong) NSMutableArray *imgArray;
 @property (nonatomic, strong) NSMutableDictionary *paramsDic;
 
--(id)init:(NSString *)listId viewType:(NSInteger)typeI;
+-(id)init:(NSString *)listId viewType:(NSInteger)typeI priority:(NSString*)pstr;
 @end

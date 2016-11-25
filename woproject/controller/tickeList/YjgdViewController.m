@@ -400,8 +400,11 @@ static NSString * const TicketCellId = @"TicketCellId";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId forIndexPath:indexPath];
+    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId];
+    if (!cell) {
+        cell = [[ticketListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TicketCellId];
+    }
+//    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId forIndexPath:indexPath];
     //
     // 将数据视图框架模型(该模型中包含了数据模型)赋值给Cell，
     ticketList *dm=_tabledata[indexPath.item];
@@ -434,7 +437,7 @@ static NSString * const TicketCellId = @"TicketCellId";
     ticketListTableViewCell *svc =(ticketListTableViewCell*)[self.TableView cellForRowAtIndexPath:indexPath];
     NSLog(@"%@",svc.Id);
     
-
+    svc.myNewImg.hidden=YES;
     ticketInfoViewController *noticeVc=[[ticketInfoViewController alloc]init:svc.Id];
     [noticeVc setMyViewTitle:@"已接工单详情"];
     

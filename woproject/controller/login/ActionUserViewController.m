@@ -152,13 +152,49 @@
 
 
 -(void)actloginbtn{
-    if ([_PswTxtF.text isEqualToString:_PswTxtF1.text]) {
-        [self ActionNetFuc:_MobileTxtF.text passWord:_PswTxtF.text];
+    if (_MobileTxtF.text.length<1) {
+        [stdPubFunc stdShowMessage:@"手机号不能为空，请重新输入"];
+        return;
     }
-    else
-        [stdPubFunc stdShowMessage:@"密码不一致，请重新输入"];
+    if (_PswTxtF1.text.length<1) {
+        [stdPubFunc stdShowMessage:@"登入密码不能为空，请重新输入"];
+        return;
+    }
+    if (_PswTxtF.text.length<1) {
+        [stdPubFunc stdShowMessage:@"登入密码不能为空，请重新输入"];
+        return;
+    }
+   
+    if (![_PswTxtF.text isEqualToString:_PswTxtF1.text]) {
+         [stdPubFunc stdShowMessage:@"密码输入不一致，请重新输入"];
+        return;
+    }
+    if (![self numberOrlate:_PswTxtF.text]) {
+        [stdPubFunc stdShowMessage:@"密码只能是大小写字母、数字，请重新输入"];
+        return;
+    }
+    if (_PswTxtF.text.length<6) {
+        [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
+        return;
+    }
+    if (_PswTxtF.text.length>18) {
+        [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
+        return;
+    }
+    [self ActionNetFuc:_MobileTxtF.text passWord:_PswTxtF.text];
+       
 }
 
+-(BOOL)numberOrlate:(NSString*)mystring{
+    NSCharacterSet *s = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"];
+    s = [s invertedSet];
+    NSRange r = [mystring rangeOfCharacterFromSet:s];
+    if (r.location !=NSNotFound)
+    {
+        return NO;
+    }
+    return YES;
+}
 -(NSDictionary *)makeUpLoadDict{
     NSMutableDictionary * dict=[[NSMutableDictionary alloc]init];
     
@@ -196,13 +232,9 @@
                                           //
                                           if ([suc isEqualToString:@"0"]) {
                                               //成功
-                                              loginInfo *LGIN=[[loginInfo alloc]init];
-                                              ApplicationDelegate.myLoginInfo=[LGIN asignInfoWithDict:jsonDic];
-                                              
                                               [SVProgressHUD dismiss];
-                                              [stdPubFunc stdShowMessage:@"激活成功"];
-                                              [self actionSuccPro];
-                                              [stdPubFunc isSaveLoginInfo:@"0"];
+                                              [self showAlert];
+                                              
                                               
                                               
                                           } else {
@@ -227,6 +259,35 @@
                                   }];
     
 }
+-(void)showAlert{
+    UIAlertView *alert =
+    [[UIAlertView alloc] initWithTitle:@"该用户已激活"
+                               message:@"立即登录"
+                              delegate:self
+                     cancelButtonTitle:@"确定"
+                     otherButtonTitles:nil, nil];
+    [alert show];
+
+}
+
+//您有新工单请查看
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:{//
+//            loginInfo *LGIN=[[loginInfo alloc]init];
+//            ApplicationDelegate.myLoginInfo=[LGIN asignInfoWithDict:jsonDic];
+//            [stdPubFunc stdShowMessage:@"激活成功"];
+//            [self actionSuccPro];
+//            [stdPubFunc isSaveLoginInfo:@"0"];
+            [self.navigationController popViewControllerAnimated:YES];
+            }break;
+        default:
+            break;
+    }
+}
+
+
 
 -(void)actionSuccPro{
     [self.navigationController popViewControllerAnimated:NO];

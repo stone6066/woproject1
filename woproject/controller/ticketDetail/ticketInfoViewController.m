@@ -198,6 +198,7 @@
     /*---------报修信息----------------*/
 
     baoxiuInfoView * BXVc=[[baoxiuInfoView alloc]initWithFrame:CGRectMake(0, firstY, fDeviceWidth, BXVcHigh)];
+    _priority=myInfo.priority;
     [BXVc asignDataToLab:myInfo];
     [scollVc addSubview:BXVc];
      BXVc.stdImgDelegate =self;
@@ -289,6 +290,7 @@
     tickoperateViewController *oprateVc=[[tickoperateViewController alloc]init:_daochang confTime:_daochangTime];
     oprateVc.view.backgroundColor=bluebackcolor;
     [oprateVc setOrderId:_ListId];
+    [oprateVc setPriority:_priority];
     [self.navigationController pushViewController:oprateVc animated:YES];
 
 }

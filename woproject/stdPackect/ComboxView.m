@@ -24,9 +24,13 @@
     _job_id=@"-1";
     _data_id=@"-1";
     self = [super initWithFrame:frame];
-    
+    if (_tagFlag==0) {
+        _tableArray = [[NSMutableArray alloc]initWithObjects:@"高",@"中",@"低",nil];
+        _tableIdArray= [[NSMutableArray alloc]initWithObjects:@"1",@"2",@"3",nil];
+    }
+   
     if(self){
-        showList = NO; //默认不显示下拉框
+        _showList = NO; //默认不显示下拉框
         
         [self creatTableView:frame];
         UIView *comboxBackGroudVc=[[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, 40)];
@@ -63,7 +67,10 @@
     }
     return self;
 }
-
+-(void)setComboxTitleAtIndex:(NSInteger)myIndex{
+    _textLbl.text = [_tableArray objectAtIndex:myIndex];
+    _data_id=[_tableIdArray objectAtIndex:myIndex] ;
+}
 -(void)resetCombox{
     _textLbl.text=@"---------";
     _data_id=@"-1";
@@ -71,8 +78,8 @@
 -(void)viewBtnClick{
     switch (_tagFlag) {
         case 0://优先级
-            _tableArray = [[NSMutableArray alloc]initWithObjects:@"高",@"中",@"低",nil];
-            _tableIdArray= [[NSMutableArray alloc]initWithObjects:@"1",@"2",@"3",nil];
+//            _tableArray = [[NSMutableArray alloc]initWithObjects:@"高",@"中",@"低",nil];
+//            _tableIdArray= [[NSMutableArray alloc]initWithObjects:@"1",@"2",@"3",nil];
             [self dropdown];
             break;
         case 1://工种
@@ -97,12 +104,13 @@
     _dropTableView.delegate = self;
     _dropTableView.dataSource = self;
     _dropTableView.hidden = YES;
+    
 }
 
 
 - (void)closeTableView
 {
-    if (showList) {
+    if (_showList) {
         self.hidden = YES;
         NSLog(@"在选择状态");
     }
@@ -110,7 +118,7 @@
 
 -(void)dropdown{
 
-    if (showList)
+    if (_showList)
     {//如果下拉框已显示，移除
         [self stdRemoveView];
     }
@@ -120,11 +128,12 @@
         CGRect sf = self.frame;
         //CGRectMake(self.frame.origin.x+1, self.frame.origin.y, self.frame.size.width-2, self.frame.size.height);
         sf.size.height = frameHeight;
-        [self addSubview:_dropTableView];        
+        _dropTableView.hidden=NO;
+        [self addSubview:_dropTableView];
         //把dropdownList放到前面，防止下拉框被别的控件遮住
         [self.superview bringSubviewToFront:self];
         _dropTableView.hidden = NO;
-        showList = YES;//显示下拉框
+        _showList = YES;//显示下拉框
         
         CGRect frame = CGRectMake(1, _dropTableView.frame.origin.y,self.frame.size.width-2, _dropTableView.frame.size.height);//_dropTableView.frame;
         frame.size.height = 0;
@@ -185,7 +194,10 @@
 }
 
 -(void)stdRemoveView{
-    showList = NO;
+    if (!_showList) {
+        return;
+    }
+    _showList = NO;
     _dropTableView.hidden = YES;
     
     CGRect sf = self.frame;

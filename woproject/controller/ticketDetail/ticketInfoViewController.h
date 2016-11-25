@@ -14,7 +14,7 @@
 @property (nonatomic,copy)NSString* daochang;//是否到场 0未到  1已到
 @property (nonatomic,copy)NSString* daochangTime;
 @property (nonatomic,strong)ticketInfo *myTicketInfo;
- 
+@property(nonatomic,copy)NSString *priority;//优先级
 
 -(id)init:(NSString *)listId;
 @end

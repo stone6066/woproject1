@@ -272,11 +272,11 @@
 -(void)clickloginbtn{
 
     if ( _UsrTxtF.text.length<1) {
-        [stdPubFunc stdShowMessage:@"请填写用户名"];
+        [stdPubFunc stdShowMessage:@"用户名错误"];
         return;
     }
     if ( _PassTxtF.text.length<1) {
-        [stdPubFunc stdShowMessage:@"请填写密码"];
+        [stdPubFunc stdShowMessage:@"登录密码不能为空"];
         return;
     }
     [self loginNetFuc:_UsrTxtF.text passWord:_PassTxtF.text];

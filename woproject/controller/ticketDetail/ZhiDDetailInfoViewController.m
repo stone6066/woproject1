@@ -15,7 +15,7 @@
 #import "daochangInfoView.h"
 #import "hangupInfoView.h"
 #import "backOrderViewInfo.h"
-#import "YjgdViewController.h"
+#import "ZhiDViewController.h"
 #import "ShowImgViewController.h"
 @interface ZhiDDetailInfoViewController ()<stdImgDelegate,stdPaidanImgDelegate,stdHangUpImgDelegate,stdBackOrderImgDelegate>
 
@@ -343,7 +343,7 @@
 }
 
 -(void)pushYjgdView{
-    YjgdViewController *yjVc=[[YjgdViewController alloc]init];
+    ZhiDViewController *yjVc=[[ZhiDViewController alloc]init];
     yjVc.view.backgroundColor=[UIColor whiteColor];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:yjVc animated:YES];

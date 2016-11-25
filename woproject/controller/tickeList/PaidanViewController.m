@@ -420,7 +420,10 @@ static NSString * const TicketCellId = @"TicketCellId";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId forIndexPath:indexPath];
+    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId];
+    if (!cell) {
+        cell = [[ticketListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TicketCellId];
+    }
     //
     // 将数据视图框架模型(该模型中包含了数据模型)赋值给Cell，
     ticketList *dm=_tabledata[indexPath.item];
@@ -440,6 +443,14 @@ static NSString * const TicketCellId = @"TicketCellId";
     
     [cell showCellView:dm];
     
+    
+    if ([dm.ticketStatus isEqualToString:@"已退单"]) {
+        cell.timeTitle.text=@"退单时间";
+    }else if ([dm.ticketStatus isEqualToString:@"已挂起"]) {
+        cell.timeTitle.text=@"挂起时间";
+    }else
+         cell.timeTitle.text=@"报修时间";
+    
     return cell;
     
 }
@@ -451,7 +462,8 @@ static NSString * const TicketCellId = @"TicketCellId";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ticketListTableViewCell *svc =(ticketListTableViewCell*)[self.TableView cellForRowAtIndexPath:indexPath];
     NSLog(@"%@",svc.Id);
-    
+    svc.myNewImg.hidden=YES;
+
     PaiDanDetailViewController *gggdDetailVc=[[PaiDanDetailViewController alloc]init:svc.Id];
     [gggdDetailVc setMyViewTitle:@"派单详情"];
     

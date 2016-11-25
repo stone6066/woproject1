@@ -24,7 +24,7 @@
 @property (nonatomic,copy)NSString *IsConfom;//是否已经到场 0未到场  1到场
 @property (nonatomic,copy)NSString *OrderId;//工单id
 @property (nonatomic,copy)NSString *confTime;//到场时间
-
+@property(nonatomic,copy)NSString *priority;//优先级
 
 @property (nonatomic, strong) UIAlertController *alert;
 @property (nonatomic, strong) UIImagePickerController *pickerController;

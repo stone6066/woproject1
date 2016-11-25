@@ -12,11 +12,12 @@
 @end
 @interface ComboxView : UIView <UITableViewDelegate,UITableViewDataSource> {
     
-    BOOL showList;//是否弹出下拉列表
+    //BOOL showList;//是否弹出下拉列表
     CGFloat tabheight;//table下拉列表的高度
     CGFloat frameHeight;//frame的高度
     
 }
+@property(nonatomic,assign)BOOL showList;
 @property(nonatomic,strong)id<StdComBoxDelegate> stdTableDelegate;
 @property (nonatomic,retain) UITableView *dropTableView;//下拉列表
 @property (nonatomic,retain) NSMutableArray *tableArray;//下拉列表数据
@@ -30,5 +31,7 @@
 @property (nonatomic,copy) NSString *job_id;//工种
 - (void)closeTableView;
 -(void)resetCombox;
+-(void)setComboxTitleAtIndex:(NSInteger)myIndex;
 -(id)initWithFrame:(CGRect)frame titleStr:(NSString*)tstr tagFlag:(NSInteger)tagI;
+-(void)stdRemoveView;
 @end

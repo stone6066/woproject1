@@ -31,7 +31,7 @@
     label.textColor = [UIColor whiteColor];
     label.textAlignment = 1;
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont boldSystemFontOfSize:15];
+    label.font = [UIFont boldSystemFontOfSize:13];
     [showview addSubview:label];
     showview.frame = CGRectMake((fDeviceWidth -LabelSize.width - 20)/2, fDeviceHeight/2-50, LabelSize.width+20, LabelSize.height+10);
     [UIView animateWithDuration:5.0 animations:^{

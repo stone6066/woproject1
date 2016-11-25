@@ -405,8 +405,12 @@ static NSString * const TicketCellId = @"TicketCellId";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId forIndexPath:indexPath];
+    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId];
+    if (!cell) {
+        cell = [[ticketListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TicketCellId];
+    }
+
+//    ticketListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellId forIndexPath:indexPath];
     //
     // 将数据视图框架模型(该模型中包含了数据模型)赋值给Cell，
     ticketList *dm=_tabledata[indexPath.item];
@@ -437,7 +441,7 @@ static NSString * const TicketCellId = @"TicketCellId";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ticketListTableViewCell *svc =(ticketListTableViewCell*)[self.TableView cellForRowAtIndexPath:indexPath];
-   
+    svc.myNewImg.hidden=YES;
     ZhiDDetailInfoViewController *gggdDetailVc=[[ZhiDDetailInfoViewController alloc]init:svc.Id];
     [gggdDetailVc setMyViewTitle:@"指定接单详情"];
     

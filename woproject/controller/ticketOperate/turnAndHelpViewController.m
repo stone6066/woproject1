@@ -8,7 +8,7 @@
 
 #import "turnAndHelpViewController.h"
 #import "ComboxView.h"
-
+#import "YjgdViewController.h"
 #define kDropDownListTag 1000
 
 
@@ -35,10 +35,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(id)init:(NSString *)listId viewType:(NSInteger)typeI{
+-(id)init:(NSString *)listId viewType:(NSInteger)typeI priority:(NSString*)pstr{
     if (self==[super init]) {
         _listId=listId;
         _ViewType=typeI;
+        _priority=pstr;
     }
     return self;
 }
@@ -116,7 +117,17 @@
     _priorityBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY, BoxWidth, BoxHeigh) titleStr:@"优先级：" tagFlag:0];
     _priorityBox.stdTableDelegate=self;
     [self.view addSubview:_priorityBox];
-    
+    NSInteger idx=0;
+    if ([_priority isEqualToString:@"高"]) {
+        idx=0;
+    }
+    else if ([_priority isEqualToString:@"中"]) {
+        idx=1;
+    }
+    else {
+        idx=2;
+    }
+    [_priorityBox setComboxTitleAtIndex:idx];
     _jobNameBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+15+BoxHeigh, BoxWidth, BoxHeigh) titleStr:@"工种：" tagFlag:1];
     _jobNameBox.stdTableDelegate=self;
     [self.view addSubview:_jobNameBox];
@@ -131,15 +142,15 @@
         lblStr=[[NSMutableAttributedString alloc] initWithString:@"协助原因:*"];
     }
     [lblStr addAttribute:NSForegroundColorAttributeName
-                value:[UIColor blackColor]
-                range:NSMakeRange(0,4)];
+                   value:[UIColor blackColor]
+                   range:NSMakeRange(0,4)];
     [lblStr addAttribute:NSForegroundColorAttributeName
-                value:[UIColor redColor]
-                range:NSMakeRange(4,1)];
+                   value:[UIColor redColor]
+                   range:NSMakeRange(4,1)];
     
     [lblStr addAttribute:NSForegroundColorAttributeName
-                value:[UIColor blackColor]
-                range:NSMakeRange(5,1)];
+                   value:[UIColor blackColor]
+                   range:NSMakeRange(5,1)];
     UILabel *hintLbl=[[UILabel alloc]initWithFrame:CGRectMake(offsetX, _operationUserBox.frame.origin.y+_operationUserBox.frame.size.height+offsetX, BoxWidth, 30)];
     [hintLbl setFont:[UIFont systemFontOfSize:12]];
     hintLbl.attributedText=lblStr;
@@ -206,8 +217,8 @@
         _scanBtn.titleLabel.font = [UIFont systemFontOfSize: 14.0];
         [self.view addSubview:_scanBtn];
     }
-
-
+    
+    
 }
 
 
@@ -232,7 +243,7 @@
         default:
             break;
     }
-
+    
 }
 
 
@@ -352,23 +363,44 @@
     return self.paramsDic;
 }
 //- (void)ConfirmRepairAction:(UIButton *)sender
+-(void)showHint:(NSString*)myType{
+    if ([myType isEqualToString:@"3"]) {
+        [stdPubFunc stdShowMessage:@"维修结果不能为空"];
+    }
+    else if ([myType isEqualToString:@"6"]) {
+        [stdPubFunc stdShowMessage:@"挂起原因不能为空"];
+    }
+    else if ([myType isEqualToString:@"7"]) {
+        [stdPubFunc stdShowMessage:@"协助原因不能为空"];
+    }
+    else if ([myType isEqualToString:@"8"]) {
+        [stdPubFunc stdShowMessage:@"转单原因不能为空"];
+    }
+    else if ([myType isEqualToString:@"5"]) {
+        [stdPubFunc stdShowMessage:@"退单原因不能为空"];
+    }
+}
 -(void)upLoadHelpTickInofo
 {
     //[self.rView.describeTextView resignFirstResponder];
     NSDictionary *params = [self getParams];
-    if (!params[@"job_id"]) {
+    if ([params[@"job_id"] isEqualToString:@"-1"]) {
         [stdPubFunc stdShowMessage:@"请填写工种"];
         return;
     }
-    if (!params[@"user_id"]) {
+    if ([params[@"user_id"]isEqualToString:@"-1"]) {
         [stdPubFunc stdShowMessage:@"请填写接单人"];
         return;
     }
-    if (!params[@"result"]) {
-        [stdPubFunc stdShowMessage:@"请填写原因"];
+    if (_memoResion.text.length<1) {
+        if (_ViewType==8) {
+            [stdPubFunc stdShowMessage:@"转单原因不能为空"];
+        }
+        else
+            [stdPubFunc stdShowMessage:@"协助原因不能为空"];
         return;
     }
-
+    
     NSLog(@"%@", params);
     NSString *urlStr = [NSString stringWithFormat:@"%@support/ticket/forTicketFlow", BaseUrl];
     urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -393,7 +425,8 @@
                 [stdPubFunc stdShowMessage:msg];
                 NSLog(@"======== %@", jsonDic);
                 if (self.imgArray.count<1) {
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self stdTurnToYJGD];
+                    //[self.navigationController popViewControllerAnimated:YES];
                     return ;
                 }
                 //NSString *cid = jsonDic[@"i"][@"Data"][@"id"];
@@ -437,8 +470,9 @@
                                           if (idx == self.imgArray.count - 1) {
                                               NSLog(@"全部传完");
                                               [SVProgressHUD dismiss];
-                                               [stdPubFunc stdShowMessage:@"上传完毕"];
-                                              [self.navigationController popViewControllerAnimated:YES];
+                                              [stdPubFunc stdShowMessage:@"上传完毕"];
+                                              [self stdTurnToYJGD];
+                                              //[self.navigationController popViewControllerAnimated:YES];
                                           }
                                           
                                       }
@@ -447,11 +481,11 @@
                     
                     [uploadTask resume];
                 }];
-//                if (self.imgArray.count == 0) {
-//                    MyRepairVC *vc = [[MyRepairVC alloc] init];
-//                    vc.hidesBottomBarWhenPushed = YES;
-//                    [self.navigationController pushViewController:vc animated:YES];
-//                }
+                //                if (self.imgArray.count == 0) {
+                //                    MyRepairVC *vc = [[MyRepairVC alloc] init];
+                //                    vc.hidesBottomBarWhenPushed = YES;
+                //                    [self.navigationController pushViewController:vc animated:YES];
+                //                }
             } else {
                 //失败
                 [SVProgressHUD showErrorWithStatus:msg];
@@ -475,5 +509,11 @@
         [textView setText:s];
     }
 }
-
+-(void)stdTurnToYJGD{
+    YjgdViewController *yjVc=[[YjgdViewController alloc]init];
+    yjVc.view.backgroundColor=[UIColor whiteColor];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:yjVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
 @end
