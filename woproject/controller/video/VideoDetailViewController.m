@@ -10,8 +10,8 @@
 #import "VideoDetailCollectionViewCell.h"
 #import "ChannelModel.h"
 #import "DeviceModel.h"
-#import "VideoViewController.h"
-
+//#import "VideoViewController.h"
+#import "PlayerViewController.h"
 #import "MindNet.h"
 #import <qysdk/QYType.h>
 #import "HeadView.h"
@@ -86,6 +86,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *dict= _dataSource[indexPath.item];
     NSString *channelNo=[dict objectForKey:@"channelNo"];
+    NSString *channelName=[dict objectForKey:@"channelName"];
     NSLog(@"channelNo:%@",channelNo);
     
     DeviceModel *model=[[DeviceModel alloc]init];
@@ -93,8 +94,9 @@
     model.device_id=[channelNo longLongValue];
     if(model.status)
     {
-        VideoViewController *view= [[VideoViewController alloc]initWithDat:model];
+        PlayerViewController *view= [[PlayerViewController alloc]initWithDat:model title:channelName];
         //        view.naDelegate=self.naDelegate;
+        view.view.backgroundColor=[UIColor whiteColor];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:view animated:true];
        //  self.hidesBottomBarWhenPushed = NO;

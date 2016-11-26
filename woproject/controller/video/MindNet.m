@@ -144,6 +144,7 @@
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         QYView* videoView= [session CreateView:devid];
+
          //QYView* videoView= [session CreateView:1000001827001];
         NSLog(@"videoView=%@",videoView);
         if (videoView == nil)

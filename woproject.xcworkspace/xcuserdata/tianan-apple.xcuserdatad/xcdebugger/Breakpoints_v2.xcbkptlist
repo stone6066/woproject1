@@ -19,12 +19,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "woproject/controller/video/Video/VideoViewController.m"
-            timestampString = "500818130.901258"
+            filePath = "woproject/controller/video/PlayerViewController.m"
+            timestampString = "501862682.585367"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "-playVideo"
             landmarkType = "7">
          </BreakpointContent>

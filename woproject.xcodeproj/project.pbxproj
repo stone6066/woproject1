@@ -437,6 +437,8 @@
 		8939E8CA1DD5C0F300188E30 /* smallvideo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8C71DD5C0F300188E30 /* smallvideo@2x.png */; };
 		8939E8CB1DD5C0F300188E30 /* smallvideo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8939E8C81DD5C0F300188E30 /* smallvideo@3x.png */; };
 		89406AE21DC43E5400AC7372 /* nhfx_color4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89406AE11DC43E5400AC7372 /* nhfx_color4@2x.png */; };
+		8943EE0A1DE9B8CF004920F4 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8943EE091DE9B8CF004920F4 /* PlayerViewController.m */; };
+		8943EE0C1DE9D8F2004920F4 /* Assets1.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8943EE0B1DE9D8F2004920F4 /* Assets1.xcassets */; };
 		894752BA1DB85BCC00C32394 /* hangupInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752B91DB85BCC00C32394 /* hangupInfoView.m */; };
 		894752BD1DB85F5A00C32394 /* backOrderViewInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BC1DB85F5A00C32394 /* backOrderViewInfo.m */; };
 		894752C01DB8661700C32394 /* backAndHangUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 894752BF1DB8661700C32394 /* backAndHangUpViewController.m */; };
@@ -1396,6 +1398,9 @@
 		8939E8C71DD5C0F300188E30 /* smallvideo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smallvideo@2x.png"; sourceTree = "<group>"; };
 		8939E8C81DD5C0F300188E30 /* smallvideo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smallvideo@3x.png"; sourceTree = "<group>"; };
 		89406AE11DC43E5400AC7372 /* nhfx_color4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nhfx_color4@2x.png"; sourceTree = "<group>"; };
+		8943EE081DE9B8CF004920F4 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerViewController.h; path = ../PlayerViewController.h; sourceTree = "<group>"; };
+		8943EE091DE9B8CF004920F4 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerViewController.m; path = ../PlayerViewController.m; sourceTree = "<group>"; };
+		8943EE0B1DE9D8F2004920F4 /* Assets1.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets1.xcassets; sourceTree = "<group>"; };
 		894752B81DB85BCC00C32394 /* hangupInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hangupInfoView.h; sourceTree = "<group>"; };
 		894752B91DB85BCC00C32394 /* hangupInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hangupInfoView.m; sourceTree = "<group>"; };
 		894752BB1DB85F5A00C32394 /* backOrderViewInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backOrderViewInfo.h; sourceTree = "<group>"; };
@@ -2924,6 +2929,8 @@
 		8939E89A1DD5AB6000188E30 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				8943EE081DE9B8CF004920F4 /* PlayerViewController.h */,
+				8943EE091DE9B8CF004920F4 /* PlayerViewController.m */,
 				8939E89B1DD5AB6000188E30 /* VideoViewController.h */,
 				8939E89C1DD5AB6000188E30 /* VideoViewController.m */,
 				8939E89D1DD5AB6000188E30 /* VideoViewController.xib */,
@@ -3165,6 +3172,7 @@
 		89FBEEE31DAA3CD5008FBB8A /* image */ = {
 			isa = PBXGroup;
 			children = (
+				8943EE0B1DE9D8F2004920F4 /* Assets1.xcassets */,
 				8939E8C61DD5C0F300188E30 /* smallvideo.png */,
 				8939E8C71DD5C0F300188E30 /* smallvideo@2x.png */,
 				8939E8C81DD5C0F300188E30 /* smallvideo@3x.png */,
@@ -3640,6 +3648,7 @@
 				89F61E371DACAB5B00E9B489 /* Color-Fill@2x.png in Resources */,
 				89F61E451DACAB5B00E9B489 /* kshsj_icon03.png in Resources */,
 				89F61E401DACAB5B00E9B489 /* kshsj_icon01@2x.png in Resources */,
+				8943EE0C1DE9D8F2004920F4 /* Assets1.xcassets in Resources */,
 				89F61E611DACAB5B00E9B489 /* USERS@2x.png in Resources */,
 				89406AE21DC43E5400AC7372 /* nhfx_color4@2x.png in Resources */,
 				89F61E3D1DACAB5B00E9B489 /* home@2x.png in Resources */,
@@ -4058,6 +4067,7 @@
 				8939E89E1DD5AB6000188E30 /* DeviceViewController.m in Sources */,
 				2FDA5FF21DC5E096005221AC /* UIView+WPEmptyView.m in Sources */,
 				2F5648B11DBF9F230075019F /* LBXScanResult.m in Sources */,
+				8943EE0A1DE9B8CF004920F4 /* PlayerViewController.m in Sources */,
 				2F5648E31DBF9F230075019F /* ZXVCardResultParser.m in Sources */,
 				2FE10BD61DE336B2008E3CCD /* EnvironmentComfortableController.m in Sources */,
 				2FE10BE11DE336B2008E3CCD /* VisualizationController.m in Sources */,

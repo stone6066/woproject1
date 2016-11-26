@@ -235,6 +235,7 @@
             {
                 video=view;
                 [video SetEventDelegate:self];
+                //[video startCaptureWidth:fDeviceWidth height:fDeviceHeight];
                 [video SetCanvas:self.videoView];
                 
             }

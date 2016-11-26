@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kzA-Wb-ijc">
-                    <frame key="frameInset" width="240" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="400" id="IZr-rD-UhE"/>
@@ -44,10 +48,10 @@
                     </variation>
                 </view>
                 <view alpha="0.59999999999999998" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wtj-CB-uKy">
-                    <frame key="frameInset" width="240" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hm3-Df-GB4">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="dvK-E3-8P6">
                                     <variation key="widthClass=compact" constant="65"/>
@@ -105,10 +109,10 @@
                     </variation>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ppp-e2-J0q" userLabel="CloudView">
-                    <frame key="frameInset" width="240" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2V-Ef-Sty" userLabel="downBtn">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="68" id="ZDI-3L-o9m"/>
                                 <constraint firstAttribute="height" constant="32" id="vaE-D9-MRA"/>
@@ -132,7 +136,7 @@
                             </variation>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jp-Mc-bJa" userLabel="centerBtn">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="20" id="Inf-eX-sLm"/>
                                 <constraint firstAttribute="height" constant="20" id="gwM-e9-JUD"/>
@@ -158,7 +162,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chg-M1-xkd" userLabel="close">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="loZ-bm-mqo"/>
                                 <constraint firstAttribute="width" constant="46" id="ngP-HJ-c9i"/>
@@ -183,7 +187,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGQ-Xz-GZh" userLabel="rightBtn">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="32" id="Dk7-po-2cl"/>
                                 <constraint firstAttribute="height" constant="68" id="iVN-9s-WQO"/>
@@ -207,7 +211,7 @@
                             </variation>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BY1-gO-VS8" userLabel="upBtn">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="NGs-ay-jhb"/>
                                 <constraint firstAttribute="width" constant="68" id="qDD-nw-NhX"/>
@@ -231,7 +235,7 @@
                             </variation>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPo-Jv-MCV" userLabel="leftBtn">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="68" id="YU3-Wj-T7f"/>
                                 <constraint firstAttribute="width" constant="32" id="lv1-ro-9Av"/>
@@ -331,10 +335,10 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dTM-Jc-1CS" userLabel="FuncView">
-                    <frame key="frameInset" width="240" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v6X-LD-RSI">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="W6m-xO-GbX"/>
                                 <constraint firstAttribute="width" constant="80" id="tqA-2w-teH"/>
@@ -359,7 +363,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vU-Ui-frD">
-                            <frame key="frameInset" minX="27" minY="19" width="46" height="30"/>
+                            <rect key="frame" x="27" y="19" width="46" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="对讲">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -369,7 +373,7 @@
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZa-nN-5Rw" userLabel="回放">
-                            <frame key="frameInset" minX="177" minY="45" width="46" height="30"/>
+                            <rect key="frame" x="177" y="45" width="46" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="回放">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -414,10 +418,10 @@
                     </variation>
                 </view>
                 <view hidden="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NKQ-EP-Xo8" userLabel="talkView">
-                    <frame key="frameInset" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gu3-bR-3ov" userLabel="close">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="79" id="B4Y-dd-Uw7"/>
                                 <constraint firstAttribute="width" constant="79" id="kgb-Br-8bt"/>
@@ -448,7 +452,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O5I-jh-NaY" userLabel="talkBtn">
-                            <frame key="frameInset" minX="-23" minY="-15" width="46" height="30"/>
+                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="104" id="K2n-Ca-fD2"/>
                                 <constraint firstAttribute="width" constant="132" id="OTf-sM-WTO"/>
@@ -594,7 +598,7 @@
                     <include reference="dA7-RK-E2m"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="295" y="335"/>
+            <point key="canvasLocation" x="290" y="338"/>
         </view>
     </objects>
     <resources>
