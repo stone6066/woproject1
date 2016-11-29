@@ -26,6 +26,15 @@
 @property (strong, nonatomic) UIButton *huazhiBtn;
 @property (strong, nonatomic) UIButton *fanzhuanBtn;
 @property (strong, nonatomic) UIButton *huifangBtn;
+@property (strong, nonatomic) UILabel *bufangLbl;
+@property (strong, nonatomic) UILabel *huazhiLbl;
+@property (strong, nonatomic) UIView *huazhiShowView;
+@property (strong, nonatomic) UITableView *huazhiTable;
+@property (strong, nonatomic) NSMutableArray *huazhiData;
+@property (strong, nonatomic) NSMutableArray *huazhiIdData;
 @property(nonatomic,copy)NSString *topTitle;
+@property(nonatomic,assign)int alamEnable;//0布防解除  1布防中
+
+@property (strong, nonatomic) UIView *turnShowView;
 -(id)initWithDat:(DeviceModel*) dev title:(NSString*)tStr;
 @end

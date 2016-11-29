@@ -11,4 +11,5 @@
 @interface ChannelModel : NSObject
 @property(nonatomic,copy)NSString *channelName;
 @property(nonatomic,copy)NSString *channelNo;
+@property(nonatomic,copy)NSString *channelImgName;
 @end

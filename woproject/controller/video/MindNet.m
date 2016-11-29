@@ -233,6 +233,69 @@
     NSLog(@"aaaaa");
 }
 
+//- (void)setAlamConfig:(uint64_t)channelID type:(QY_ALARM_TYPE)type config:(QY_ALARM_CONFIG*)config callBack:(void(^)(int32_t ret))callback{
+//    
+//    [session SetAlarmConfig:channelID type:type config:config callBack:^(int32_t ret) {
+//     callback(ret);
+// }];
+//}
+//
+//
+//-(void)GetAlarmConfig:(uint64_t)channelID type:(QY_ALARM_TYPE)type callBackWithAlarmConfig:(void (^)(int32_t stdRet, QY_ALARM_CONFIG stdConfig))callback{
+//    [session GetAlarmConfig:channelID type:type callBackWithAlarmConfig:^(int32_t ret, QY_ALARM_CONFIG config) {
+//    callback(ret,config);
+//}];
+//
+//}
 
+-(void)stdSetConfig:(uint64_t)channelID configEnable:(int)myEnable callBackWithAlarmConfig:(void (^)(int32_t))callback{
+    [session GetAlarmConfig:channelID type:0 callBackWithAlarmConfig:^(int32_t ret, QY_ALARM_CONFIG config) {
+        if (ret==0) {
+            config.enable=myEnable;
+            [session SetAlarmConfig:channelID type:0 config:&config callBack:^(int32_t ret) {
+                callback(ret);
+            }];
 
+        }
+    }];
+}
+
+-(void)stdGetConfig:(uint64_t)channelID callBackWithAlarmConfig:(void (^)(int32_t stdRet,int myEnable))callback{
+    [session GetAlarmConfig:channelID type:0 callBackWithAlarmConfig:^(int32_t ret, QY_ALARM_CONFIG config) {
+        if (ret==0) {
+            callback(ret,config.enable);
+        }
+    }];
+
+}
+
+-(void)stdGetVideoQuality:(uint64_t)channelID callBack:(void(^)(int32_t stdRet,int action,NSArray *list))callBack{
+    [session GetVideoQuality:channelID callBack:^(int32_t ret, enum QY_VIDEO_QUALITY action, NSArray *list) {
+        if (ret==0) {
+            callBack(ret,action,list);
+        }
+    }];
+
+}
+
+-(void)stdSetVideoQuality:(uint64_t)channelID action:(int)action callBack:(void(^)(int32_t stdRet))callBack{
+    [session SetVideoQuality:action ChanelNO:channelID callBack:^(int32_t ret) {
+        callBack(ret);
+    }];
+    
+}
+
+-(void)stdGetStoreFileList:(uint64_t)channelID year:(int)year month:(int)month cloud:(int)cloud callBackWithDayIndex:(void (^)(int32_t ret,QY_DAYS_INDEX config))callback{
+    [session GetStoreFileListDayIndex:channelID year:year month:month cloud:cloud callBackWithDayIndex:^(int32_t ret, QY_DAYS_INDEX config) {
+    callback(ret,config);
+    }];
+
+}
+
+-(void)GetCaptureImage:(uint64_t)ChanelNo imagePath:(NSString*)path callBack:(void(^)(int32_t ret))callback{
+    [session GetDeviceCapture:ChanelNo savePaht:path callBack:^(int32_t ret) {
+        callback(ret);
+    }];
+
+}
 @end

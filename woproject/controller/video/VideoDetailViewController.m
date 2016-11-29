@@ -26,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _imgDataSource=[[NSMutableArray alloc]init];
     [self loadTopNav];
     [self stdVarsInit];
 
@@ -42,6 +43,9 @@
         _dataSource=[[NSMutableArray alloc]init];
         _dataSource=channelList;
         _menuData=menuArr;
+        _imageCount=0;
+         [_imgDataSource removeAllObjects];
+        [self stdGetVideoImg];
     }
     return self;
 }
@@ -79,6 +83,9 @@
     ChannelModel *CM=[[ChannelModel alloc]init];
     CM.channelName=[dict objectForKey:@"channelName"];
     CM.channelNo=[dict objectForKey:@"channelNo"];
+    if (_imgDataSource.count==_dataSource.count) {
+        CM.channelImgName=_imgDataSource[indexPath.item];
+    }
     [cell showCellView:CM];
     return cell;
 }
@@ -119,13 +126,7 @@
     return CGSizeMake((fDeviceWidth - 10) / 2, 125);
 }
 
-//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-//    return UIEdgeInsetsMake(0,20,0,20);
-//}
 
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-//    return CGSizeMake(self.collectionView.frame.size.width, 50);
-//}
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 0;
@@ -519,6 +520,10 @@
                                               
                                               
                                               [self.collectionView reloadData];
+                                              _imageCount=0;
+                                               [_imgDataSource removeAllObjects];
+                                              [self stdGetVideoImg];
+                                              
                                               
                                           } else {
                                               //失败
@@ -640,4 +645,36 @@
     [numVc addSubview:titleLblGe];
     [self.view addSubview:numVc];
 }
+
+-(void)stdGetVideoImg{
+    
+   
+    // for (NSDictionary *dict in _dataSource)
+    {
+        NSDictionary *dict=_dataSource[_imageCount];
+        NSString *channelNo=[dict objectForKey:@"channelNo"];
+        NSString *paths=[NSString stringWithFormat:@"%@myvideo%ld%@",DocumentBasePath,(long)_imageCount,@".png"];
+        
+        [[MindNet sharedManager]GetCaptureImage:[channelNo longLongValue] imagePath:paths callBack:^(int32_t ret) {
+            if (ret==0) {
+                
+                [_imgDataSource addObject:paths];
+                _imageCount++;
+                if (_imageCount<_dataSource.count) {
+                    [self stdGetVideoImg];
+                }
+                if (_imgDataSource.count==_dataSource.count) {
+                    [_collectionView reloadData];
+                }
+                
+            }
+        }];
+        
+    }
+    
+    //[DocumentBasePath stringByAppendingFormat:@"/%@", @"png"];
+   
+    
+}
+
 @end

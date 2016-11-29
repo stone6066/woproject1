@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,6 +19,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lq8-3P-QyN">
+                        <rect key="frame" x="0.0" y="124" width="188" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="g7x-MK-OiU"/>
                         </constraints>
@@ -23,7 +27,9 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passageway.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bb4-WE-UcV"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passageway.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bb4-WE-UcV">
+                        <rect key="frame" x="19" y="8" width="150" height="108"/>
+                    </imageView>
                 </subviews>
             </view>
             <constraints>
@@ -37,6 +43,7 @@
             </constraints>
             <size key="customSize" width="188" height="145"/>
             <connections>
+                <outlet property="VideoImg" destination="Bb4-WE-UcV" id="sdA-JA-7rk"/>
                 <outlet property="txtDetail" destination="Lq8-3P-QyN" id="5eD-DV-niI"/>
             </connections>
             <point key="canvasLocation" x="101" y="150.5"/>

@@ -11,12 +11,16 @@
 #import <qysdk/QYView.h>
 #import "MindNet.h"
 #import "MBProgressHUD+MJ.h"
-@interface PlayerViewController ()<QYViewDelegate>
+#import "SSCheckBoxView.h"
+
+@interface PlayerViewController ()<QYViewDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     DeviceModel* chanel;
     QYView* video;
     QYView* talk;
     QYView* replay;
+    SSCheckBoxView *cbv1;
+    SSCheckBoxView *cbv2;
 }
 @end
 
@@ -24,7 +28,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _huazhiData=[[NSMutableArray alloc]init];
+    _huazhiIdData=[[NSMutableArray alloc]init];
     [self loadTopNav];
+    
     [self drawMainView];
     // Do any additional setup after loading the view.
 }
@@ -156,6 +163,18 @@
 
     [videoSvc setContentSize:CGSizeMake(ViewWith*2, ViewHigh)];
 
+    _bufangLbl=[[UILabel alloc]initWithFrame:CGRectMake(ViewWith/2+30, fDeviceHeight-160-30, 100, 20)];
+    _bufangLbl.text=@"布防状态：";
+    [_bufangLbl setTextColor:[UIColor grayColor]];
+    [_bufangLbl setFont:[UIFont systemFontOfSize:12]];
+    [self.view addSubview:_bufangLbl];
+    
+    _huazhiLbl=[[UILabel alloc]initWithFrame:CGRectMake(10, fDeviceHeight-160-30, 100, 20)];
+    _huazhiLbl.text=@"当前画质：";
+    [_huazhiLbl setTextColor:[UIColor grayColor]];
+    [_huazhiLbl setFont:[UIFont systemFontOfSize:12]];
+    [self.view addSubview:_huazhiLbl];
+    
     
     
     _controllView=[[UIView alloc]initWithFrame:CGRectMake(10,fDeviceHeight-160 , fDeviceWidth-20, 150)];
@@ -316,16 +335,30 @@
             [self stdCreatTalk];
             break;
         case 102://布防
-            self.videoView.width=fDeviceWidth;
+            if (_alamEnable==0) {
+                _alamEnable=1;
+            }
+            else
+                _alamEnable=0;
+            [self stdSetAlarmConfig:_alamEnable];
             break;
         case 103://画质
-            
+            if (_huazhiData.count>0) {
+                [self showView];
+                 [_huazhiTable reloadData];
+            }
+            else
+            {
+                [self stdGetVideoQuality];
+                [self showView];
+                [_huazhiTable reloadData];
+            }
             break;
         case 104://翻转
-            
+            [self drawTurnView];
             break;
         case 105://回放
-            
+            [self stdReplay];
             break;
         default:
             break;
@@ -458,6 +491,9 @@
     //    dispatch_async(dispatch_get_main_queue(), ^{
     //显示到界面
     [MBProgressHUD showError:@"连接观看成功！"];
+    [self stdGetAlarmConfig];
+    [self stdGetVideoQuality];
+    
     //    });
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -487,8 +523,310 @@
 
 }
 
-//布防
--(void)stdSetAlarmConfig{
+//获取布防
+-(void)stdGetAlarmConfig{
+    [[MindNet sharedManager] stdGetConfig:chanel.device_id callBackWithAlarmConfig:^(int32_t stdRet, int myEnable) {
+        if (stdRet==0) {
+            _alamEnable=myEnable;
+            if (_alamEnable==1) {
+                _bufangLbl.text=@"布防状态：布防中";
+            }
+            else
+                _bufangLbl.text=@"布防状态：撤防中";
+            
+        }
+    }];
 
+}
+-(void)stdSetAlarmConfig:(int)myEnable{
+    [[MindNet sharedManager]stdSetConfig:chanel.device_id configEnable:myEnable callBackWithAlarmConfig:^(int32_t ret) {
+        if (ret==0) {
+            if (_alamEnable==1) {
+                _bufangLbl.text=@"布防状态：布防中";
+            }
+            else
+                _bufangLbl.text=@"布防状态：撤防中";
+            [stdPubFunc stdShowMessage:@"设置成功"];
+        }
+        else{
+            if (_alamEnable==1)
+                _alamEnable=0;
+            else
+                _alamEnable=1;
+        }
+    }];
+}
+-(void)stdGetVideoQuality{
+    [[MindNet sharedManager]stdGetVideoQuality:chanel.device_id callBack:^(int32_t stdRet, int action, NSArray *list) {
+        if (stdRet==0) {
+            [_huazhiIdData removeAllObjects];
+            [_huazhiData removeAllObjects];
+            for (int i=0;i<list.count;i++) {
+                int tmp=[list[i]intValue];
+                NSNumber *aNumber = [NSNumber numberWithInteger:tmp];
+                [_huazhiIdData addObject:aNumber];
+                [self setHuazhi:action];
+                switch (tmp) {
+                    case 0:
+                        [_huazhiData addObject:@"普清"];
+                        break;
+                    case 1:
+                        [_huazhiData addObject:@"标清"];
+                        break;
+                    case 2:
+                        [_huazhiData addObject:@"高清"];
+                        break;
+                    case 3:
+                        [_huazhiData addObject:@"超清"];
+                        break;
+                        
+                        
+                    default:
+                        break;
+                }
+            }
+            //[self showView];
+            //_huazhiShowView.hidden=YES;
+            //_huazhiShowView.height=(2+_huazhiData.count)*30+10;
+            //[_huazhiTable reloadData];
+            NSLog(@"123");
+        }
+    }];
+}
+
+-(void)showView{
+    
+    //设置弹出视图
+    CGFloat viewWidth=180;
+    CGFloat viewHeigh=185;
+    if (!_huazhiShowView) {
+        _huazhiShowView = [[UIView alloc]initWithFrame:CGRectMake((fDeviceWidth-180)/2, (fDeviceHeight-250)/2, viewWidth, viewHeigh)];
+        [self.view addSubview:_huazhiShowView];
+        _huazhiShowView.backgroundColor = [UIColor whiteColor];
+        
+        UIButton *canncleBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, viewHeigh-30, viewWidth, 30)];
+        [canncleBtn setTitle:@"取 消" forState:UIControlStateNormal];
+        canncleBtn.backgroundColor=[UIColor clearColor];
+        [canncleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_huazhiShowView addSubview:canncleBtn];
+        [canncleBtn addTarget:self action:@selector(huazhiCloseClick) forControlEvents:UIControlEventTouchUpInside];
+        UILabel *viewTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, viewWidth, 30)];
+        viewTitle.text=@"画质选择";
+        [viewTitle setTextAlignment:NSTextAlignmentCenter];
+        [viewTitle setTextColor:deepbluetxtcolor];
+        [_huazhiShowView addSubview:viewTitle];
+        
+        UIView *spVc=[[UIView alloc]initWithFrame:CGRectMake(0, 33, viewWidth, 1)];
+        spVc.backgroundColor=deepbluetxtcolor;
+        [_huazhiShowView addSubview:spVc];
+        _huazhiTable=[[UITableView alloc]initWithFrame:CGRectMake(0, 40, viewWidth, viewHeigh-30-35)];
+        _huazhiTable.delegate=self;
+        _huazhiTable.dataSource=self;
+        _huazhiTable.tableFooterView = [[UIView alloc]init];
+        _huazhiTable.backgroundColor=[UIColor whiteColor];
+        //_huazhiTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+         _huazhiTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        if ([_huazhiTable respondsToSelector:@selector(setSeparatorInset:)]) {
+            
+            [_huazhiTable  setSeparatorInset:UIEdgeInsetsZero];
+            
+        }
+        
+        if ([_huazhiTable  respondsToSelector:@selector(setLayoutMargins:)]) {
+            
+            [_huazhiTable  setLayoutMargins:UIEdgeInsetsZero];
+            
+        }
+
+        
+        [_huazhiShowView addSubview:_huazhiTable];
+    }
+   else
+       _huazhiShowView.hidden=NO;
+   
+    //实现弹出方法
+    
+//    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+//    
+//    window.windowLevel = UIWindowLevelNormal;
+
+}
+-(void)huazhiCloseClick{
+    _huazhiShowView.hidden=YES;
+}
+
+
+#pragma mark table delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _huazhiData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myhuazhi"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"myhuazhi"];
+    }
+    
+    cell.textLabel.text=_huazhiData[indexPath.row];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
+    return cell;
+    
+}
+
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+
+{
+    
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+        
+    }
+    
+    
+    
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 30;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%@",_huazhiIdData[indexPath.row]);
+    NSNumber *tmp=_huazhiIdData[indexPath.row];
+    int tmpI=[tmp intValue];
+    [[MindNet sharedManager]stdSetVideoQuality:chanel.device_id action:tmpI callBack:^(int32_t stdRet) {
+        if (stdRet==0) {
+            [stdPubFunc stdShowMessage:@"画质切换成功"];
+            [self setHuazhi:tmpI];
+        }
+    }];
+    _huazhiShowView.hidden=YES;
+}
+
+-(void)setHuazhi:(int)huazhiID{
+    switch (huazhiID) {
+        case 0:
+            _huazhiLbl.text=@"当前画质：普清";
+            break;
+        case 1:
+            _huazhiLbl.text=@"当前画质：标清";
+            break;
+        case 2:
+            _huazhiLbl.text=@"当前画质：高清";
+            break;
+        case 3:
+            _huazhiLbl.text=@"当前画质：超清";
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)turnCloseClick{
+    _turnShowView.hidden=YES;
+}
+-(void)turnOkClick{
+    _turnShowView.hidden=YES;
+    
+    if (cbv1.checked) {
+        NSLog(@"%@",@"1selected");
+        [stdPubFunc stdShowMessage:@"翻转成功"];
+    }
+    if (cbv2.checked) {
+        NSLog(@"%@",@"2selected");
+        [stdPubFunc stdShowMessage:@"翻转成功"];
+    }
+}
+-(void)drawTurnView{
+    
+        CGFloat viewWidth=180;
+        CGFloat viewHeigh=185;
+        if (!_turnShowView) {
+            _turnShowView = [[UIView alloc]initWithFrame:CGRectMake((fDeviceWidth-180)/2, (fDeviceHeight-250)/2, viewWidth, viewHeigh)];
+            [self.view addSubview:_turnShowView];
+            _turnShowView.backgroundColor = [UIColor whiteColor];
+            
+            UIButton *canncleBtn=[[UIButton alloc]initWithFrame:CGRectMake(0, viewHeigh-30, viewWidth/2-1, 30)];
+            [canncleBtn setTitle:@"取 消" forState:UIControlStateNormal];
+            canncleBtn.backgroundColor=[UIColor clearColor];
+            [canncleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [_turnShowView addSubview:canncleBtn];
+            [canncleBtn addTarget:self action:@selector(turnCloseClick) forControlEvents:UIControlEventTouchUpInside];
+            
+            UIButton *okBtn=[[UIButton alloc]initWithFrame:CGRectMake(viewWidth/2-1, viewHeigh-30, viewWidth/2-1, 30)];
+            [okBtn setTitle:@"确 定" forState:UIControlStateNormal];
+            okBtn.backgroundColor=[UIColor clearColor];
+            [okBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [_turnShowView addSubview:okBtn];
+            [okBtn addTarget:self action:@selector(turnOkClick) forControlEvents:UIControlEventTouchUpInside];
+            
+            UIView *spVc1=[[UIView alloc]initWithFrame:CGRectMake(viewWidth/2, viewHeigh-25, 1, 20)];
+            spVc1.backgroundColor=deepbluetxtcolor;
+            [_turnShowView addSubview:spVc1];
+            
+            
+            UILabel *viewTitle=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, viewWidth, 30)];
+            viewTitle.text=@"翻转选择";
+            [viewTitle setTextAlignment:NSTextAlignmentCenter];
+            [viewTitle setTextColor:deepbluetxtcolor];
+            [_turnShowView addSubview:viewTitle];
+            
+            UIView *spVc=[[UIView alloc]initWithFrame:CGRectMake(0, 33, viewWidth, 1)];
+            spVc.backgroundColor=deepbluetxtcolor;
+            [_turnShowView addSubview:spVc];
+            
+            
+            BOOL checked = 0;
+            CGRect frame = CGRectMake(10, 40, viewWidth-10, 30);
+            SSCheckBoxViewStyle style = kSSCheckBoxViewStyleGreen;
+            
+            cbv1 = [[SSCheckBoxView alloc] initWithFrame:frame
+                                                   style:style
+                                                 checked:checked];
+            [cbv1 setText:@"水平翻转"];
+            frame.origin.y += 36;
+            cbv2 = [[SSCheckBoxView alloc] initWithFrame:frame
+                                                   style:style
+                                                 checked:checked];
+             [cbv2 setText:@"垂直翻转"];
+            [_turnShowView addSubview:cbv1];
+            [_turnShowView addSubview:cbv2];
+            
+        }
+        else
+            _turnShowView.hidden=NO;
+}
+
+-(void)stdReplay{
+    
+    [[MindNet sharedManager]createReplayView:chanel.device_id CloudStroe:NO callback:^(int32_t ret, QYView *view) {
+        if(ret==0)
+        {
+            video=view;
+            [video SetEventDelegate:self];
+            //[video startCaptureWidth:fDeviceWidth height:fDeviceHeight];
+            [video SetCanvas:self.videoView];
+            
+        }
+        else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //显示到界面
+                [MBProgressHUD showError:@"连接观看失败！"];
+            });
+        }
+
+    }];
 }
 @end

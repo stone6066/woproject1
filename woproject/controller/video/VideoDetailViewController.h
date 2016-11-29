@@ -10,6 +10,7 @@
 
 @interface VideoDetailViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (strong,nonatomic)NSMutableArray *dataSource;
+@property (strong,nonatomic)NSMutableArray *imgDataSource;
 @property (nonatomic,strong)UICollectionView *collectionView;
 
 @property(nonatomic,strong)NSMutableArray *forProjectList;//项目列表
@@ -39,6 +40,6 @@
 @property(nonatomic,assign)NSInteger cityIndex;
 @property(nonatomic,assign)NSInteger projectIndex;
 @property(nonatomic,strong)NSMutableArray *projectAllData;//省市项目全部数据
-
+@property(nonatomic,assign)NSInteger imageCount;
 -(id)init:(NSMutableArray *)channelList menuArg:(NSMutableArray*)menuArr;
 @end

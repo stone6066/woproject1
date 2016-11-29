@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 @class ChannelModel;
 @interface VideoDetailCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *VideoImg;
+//@property (weak, nonatomic) IBOutlet UIImageView *VideoImg;
 @property (weak, nonatomic) IBOutlet UILabel *txtDetail;
 @property(nonatomic,copy)NSString* channelNo;
+@property (weak, nonatomic) IBOutlet UIImageView *VideoImg;
 -(void)showCellView:(ChannelModel*)dataModel;
 @end

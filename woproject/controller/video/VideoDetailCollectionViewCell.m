@@ -19,5 +19,9 @@
 -(void)showCellView:(ChannelModel*)dataModel{
     self.channelNo=dataModel.channelNo;
     self.txtDetail.text=dataModel.channelName;
-}
+    if (dataModel.channelImgName.length>0) {
+        self.VideoImg.image=[UIImage imageWithContentsOfFile:dataModel.channelImgName];
+
+    }
+   }
 @end

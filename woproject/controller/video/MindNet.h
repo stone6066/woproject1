@@ -45,4 +45,15 @@
                   callback:(void(^)(int32_t ret,QYView* view)) callback;
 
 - (void)Release;
+
+-(void)stdSetConfig:(uint64_t)channelID configEnable:(int)myEnable callBackWithAlarmConfig:(void (^)(int32_t))callback;
+
+-(void)stdGetConfig:(uint64_t)channelID  callBackWithAlarmConfig:(void (^)(int32_t stdRet,int myEnable))callback;
+
+-(void)stdGetVideoQuality:(uint64_t)channelID callBack:(void(^)(int32_t stdRet,int action,NSArray *list))callBack;
+
+-(void)stdSetVideoQuality:(uint64_t)channelID action:(int)action callBack:(void(^)(int32_t stdRet))callBack;
+
+-(void)stdGetStoreFileList:(uint64_t)channelID year:(int)year month:(int)month cloud:(int)cloud callBackWithDayIndex:(void (^)(int32_t ret,QY_DAYS_INDEX config))callback;
+-(void)GetCaptureImage:(uint64_t)ChanelNo imagePath:(NSString*)path callBack:(void(^)(int32_t ret))callback;
 @end
