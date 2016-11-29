@@ -120,7 +120,7 @@
     [self.contentView addSubview:_loginOut];
     _qrLabel = [UILabel new];
     _qrLabel.font = [UIFont systemFontOfSize:12];
-    _qrLabel.text = @"扫描二位码下载APP";
+    _qrLabel.text =@"";// @"扫描二维码下载APP";
     [self.contentView addSubview:_qrLabel];
 }
 

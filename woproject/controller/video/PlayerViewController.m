@@ -115,15 +115,54 @@
     }];
     [self addButtonListener];
 }
+-(void)drawTalkView{
+    _talkView=[[UIView alloc]initWithFrame:CGRectMake(10,fDeviceHeight-160 , fDeviceWidth-20, 150)];
+    [self.view addSubview:_talkView];
+    _talkView.backgroundColor=topviewcolor;
+    _talkView.hidden=YES;
+    
+    
+    UIButton *closeTalk=[[UIButton alloc]initWithFrame:CGRectMake(20, 10, 30, 30)];
+    [closeTalk setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+    [_talkView addSubview:closeTalk];
+    [closeTalk addTarget:self action:@selector(closeTalkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *openEndTalk=[[UIButton alloc]initWithFrame:CGRectMake((_talkView.frame.size.width-155)/2, 10, 155, 80)];
+    [openEndTalk setImage:[UIImage imageNamed:@"talk1"] forState:UIControlStateNormal];
+    [openEndTalk setImage:[UIImage imageNamed:@"talk3"] forState:UIControlStateHighlighted];
+    [_talkView addSubview:openEndTalk];
+    [openEndTalk addTarget:self action:@selector(startTalkBtnClick:) forControlEvents:UIControlEventTouchDown];
+    [openEndTalk addTarget:self action:@selector(endTalkBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel * talkHint=[[UILabel alloc]initWithFrame:CGRectMake(0, 100, _talkView.frame.size.width, 20)];
+    talkHint.text=@"按住对讲，松开结束";
+    [talkHint setFont:[UIFont systemFontOfSize:14]];
+    [talkHint setTextAlignment:NSTextAlignmentCenter];
+    [talkHint setTextColor:[UIColor whiteColor]];
+    [_talkView addSubview:talkHint];
+
+}
 -(void)drawMainView{
+    
+    CGFloat ViewHigh=fDeviceHeight-TopSeachHigh-150-40;
+    CGFloat videoWith=ViewHigh*1280/768;
     CGFloat ViewWith=fDeviceWidth-20;
-    self.videoView=[[UIView alloc]initWithFrame:CGRectMake(10, TopSeachHigh+10, ViewWith, fDeviceHeight-TopSeachHigh-150-40)];
-    [self.view addSubview:self.videoView];
-    //self.videoView.backgroundColor=[UIColor yellowColor];
+    UIScrollView *videoSvc=[[UIScrollView alloc]initWithFrame:CGRectMake(10, TopSeachHigh+10, ViewWith, ViewHigh)];
+    
+    self.videoView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, videoWith, ViewHigh)];
+    
+    [videoSvc addSubview:self.videoView];
+    [self.view addSubview:videoSvc];
+
+    [videoSvc setContentSize:CGSizeMake(ViewWith*2, ViewHigh)];
+
+    
     
     _controllView=[[UIView alloc]initWithFrame:CGRectMake(10,fDeviceHeight-160 , fDeviceWidth-20, 150)];
     [self.view addSubview:_controllView];
     _controllView.backgroundColor=topviewcolor;
+    
+    [self drawTalkView];
     
     CGFloat centerX=((ViewWith-30*5)/5)+20;
     CGFloat centerY=80;
@@ -165,6 +204,7 @@
     _talkBtn=[[UIButton alloc]initWithFrame:CGRectMake(btnJG/2, fiveBtnY, fiveBtnW, fiveBtnH)];
     [self stdSetMyBtn:_talkBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"对讲"];
     [_controllView addSubview:_talkBtn];
+   
     
     _bufangBtn=[[UIButton alloc]initWithFrame:CGRectMake(btnJG/2+btnJG+fiveBtnW, fiveBtnY, fiveBtnW, fiveBtnH)];
     [self stdSetMyBtn:_bufangBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"布防"];
@@ -182,6 +222,21 @@
     [self stdSetMyBtn:_huifangBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"回放"];
     [_controllView addSubview:_huifangBtn];
     //_talkBtn.backgroundColor=[UIColor yellowColor];
+    _talkBtn.tag=101;
+    [_talkBtn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _bufangBtn.tag=102;
+    [_bufangBtn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _huazhiBtn.tag=103;
+    [_huazhiBtn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _fanzhuanBtn.tag=104;
+    [_fanzhuanBtn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _huifangBtn.tag=105;
+    [_huifangBtn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     CGFloat firstLblY=centerY-fourBtnHigh-offsetLen;
     CGFloat lblJG=(_controllView.frame.size.height-firstLblY)/3;
@@ -241,12 +296,40 @@
     [jiaojuDc setTitle:@"+" forState:UIControlStateNormal];
     jiaojuDc.titleLabel.font = [UIFont systemFontOfSize:20];
     [_controllView addSubview:jiaojuDc];
+}
+-(void)closeTalkBtnClick:(UIButton*)btn{
+    [talk Release];
+    [_talkView setHidden:YES];
+}
+-(void)startTalkBtnClick:(UIButton*)btn{
+    [talk CtrlTalk:NO];
+}
 
-    
-    
-    
-    
-    
+-(void)endTalkBtnClick:(UIButton*)btn{
+    [talk CtrlTalk:YES];
+}
+
+
+-(void)topBtnClick:(UIButton*)senderBtn{
+    switch (senderBtn.tag) {
+        case 101://对讲
+            [self stdCreatTalk];
+            break;
+        case 102://布防
+            self.videoView.width=fDeviceWidth;
+            break;
+        case 103://画质
+            
+            break;
+        case 104://翻转
+            
+            break;
+        case 105://回放
+            
+            break;
+        default:
+            break;
+    }
 }
 -(void)stdSetMyBtn:(UIButton*)button img:(NSString*)imgName imgSelected:(NSString*)imgNameSel title:(NSString*)tStr{
     [button setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];//给button添加image
@@ -274,7 +357,7 @@
         {
             video=view;
             [video SetEventDelegate:self];
-            [video startCaptureWidth:fDeviceWidth height:fDeviceHeight];
+            //[video startCaptureWidth:fDeviceWidth height:fDeviceHeight];
             [video SetCanvas:self.videoView];
             
         }
@@ -317,13 +400,13 @@
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
         if([[gestureRecognizer view] isEqual:self.leftBtn])
         {
-            [video CtrlPtz:0 action:QY_MOVE_LEFT callBack:^(int32_t ret) {
+            [video CtrlPtz:15 action:QY_MOVE_LEFT callBack:^(int32_t ret) {
                 
             }];
         }
         else if([[gestureRecognizer view] isEqual:self.rightBtn])
         {
-            [video CtrlPtz:0 action:QY_MOVE_RIGHT callBack:^(int32_t ret) {
+            [video CtrlPtz:15 action:QY_MOVE_RIGHT callBack:^(int32_t ret) {
                 
             }];
             
@@ -385,5 +468,27 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:NULL];
     
     
+}
+
+-(void)stdCreatTalk{
+    [[MindNet sharedManager] createTalkView:chanel.device_id callback:^(int32_t ret, QYView *view) {
+        if(ret==0)
+        {
+            talk=view;
+            [talk SetEventDelegate:self];
+            
+        }
+        
+        if(talk)
+        {
+            [_talkView setHidden:NO];
+        }
+    }];
+
+}
+
+//布防
+-(void)stdSetAlarmConfig{
+
 }
 @end

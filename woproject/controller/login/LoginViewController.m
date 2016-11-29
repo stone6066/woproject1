@@ -125,7 +125,7 @@
     [self.view addSubview:logoImg];
     
     UILabel *titleLbl=[[UILabel alloc]initWithFrame:CGRectMake(0, fDeviceHeight/10+110, fDeviceWidth, 30)];
-    titleLbl.text=@"工单管理";
+    titleLbl.text=@"移动运维";
     [titleLbl setTextColor:[UIColor blackColor]];
     [titleLbl setFont:[UIFont systemFontOfSize:18]];
     [titleLbl setTextAlignment:NSTextAlignmentCenter];

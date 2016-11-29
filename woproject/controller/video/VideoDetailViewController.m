@@ -10,7 +10,7 @@
 #import "VideoDetailCollectionViewCell.h"
 #import "ChannelModel.h"
 #import "DeviceModel.h"
-//#import "VideoViewController.h"
+#import "VideoViewController.h"
 #import "PlayerViewController.h"
 #import "MindNet.h"
 #import <qysdk/QYType.h>
@@ -94,7 +94,9 @@
     model.device_id=[channelNo longLongValue];
     if(model.status)
     {
+        
         PlayerViewController *view= [[PlayerViewController alloc]initWithDat:model title:channelName];
+        // VideoViewController *view= [[VideoViewController alloc]initWithDat:model];
         //        view.naDelegate=self.naDelegate;
         view.view.backgroundColor=[UIColor whiteColor];
         self.hidesBottomBarWhenPushed = YES;

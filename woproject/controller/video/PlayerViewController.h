@@ -12,6 +12,9 @@
 
 @property(nonatomic,strong)UIView* videoView;
 @property(nonatomic,strong)UIView* controllView;
+
+@property (strong, nonatomic)  UIView *talkView;
+
 @property (strong, nonatomic) UIButton *leftBtn;
 @property (strong, nonatomic) UIButton *rightBtn;
 @property (strong, nonatomic) UIButton *upBtn;

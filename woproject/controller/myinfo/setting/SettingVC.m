@@ -121,7 +121,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.nameLabel.text = self.dataArray[indexPath.section];
-    cell.qrImgView.backgroundColor = [UIColor redColor];
+    //cell.qrImgView.backgroundColor = [UIColor redColor];
     cell.index = indexPath.section;
     return cell;
 }
@@ -200,7 +200,7 @@
     [_dataArray addObject:@"信息提示通知"];
     [_dataArray addObject:@"声音"];
     [_dataArray addObject:@"振动"];
-    [_dataArray addObject:@"关于Wo"];
+    [_dataArray addObject:@"关于移动运维"];
     [_dataArray addObject:@"二维码"];
     [_dataArray addObject:@"退出登录"];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, fDeviceWidth, fDeviceHeight - 64) style:UITableViewStylePlain];
