@@ -83,7 +83,7 @@
     ChannelModel *CM=[[ChannelModel alloc]init];
     CM.channelName=[dict objectForKey:@"channelName"];
     CM.channelNo=[dict objectForKey:@"channelNo"];
-    if (_imgDataSource.count==_dataSource.count) {
+    if (_imgDataSource.count>indexPath.item) {
         CM.channelImgName=_imgDataSource[indexPath.item];
     }
     [cell showCellView:CM];
@@ -647,15 +647,12 @@
 }
 
 -(void)stdGetVideoImg{
-    
-   
-    // for (NSDictionary *dict in _dataSource)
-    {
         NSDictionary *dict=_dataSource[_imageCount];
         NSString *channelNo=[dict objectForKey:@"channelNo"];
-        NSString *paths=[NSString stringWithFormat:@"%@myvideo%ld%@",DocumentBasePath,(long)_imageCount,@".png"];
-        
-        [[MindNet sharedManager]GetCaptureImage:[channelNo longLongValue] imagePath:paths callBack:^(int32_t ret) {
+        NSString *paths=[NSString stringWithFormat:@"%@/myvideo%ld%@",DocumentBasePath,(long)_imageCount,@".png"];
+        //NSLog(@"%@",channelNo);
+        uint64_t li=[channelNo longLongValue];
+        [[MindNet sharedManager]GetCaptureImage:li imagePath:paths callBack:^(int32_t ret) {
             if (ret==0) {
                 
                 [_imgDataSource addObject:paths];
@@ -663,14 +660,15 @@
                 if (_imageCount<_dataSource.count) {
                     [self stdGetVideoImg];
                 }
-                if (_imgDataSource.count==_dataSource.count) {
-                    [_collectionView reloadData];
-                }
+                 [_collectionView reloadData];
+//                if (_imgDataSource.count==_dataSource.count) {
+//                    [_collectionView reloadData];
+//                }
                 
             }
         }];
         
-    }
+    
     
     //[DocumentBasePath stringByAppendingFormat:@"/%@", @"png"];
    

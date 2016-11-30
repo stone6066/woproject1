@@ -21,6 +21,7 @@
     QYView* replay;
     SSCheckBoxView *cbv1;
     SSCheckBoxView *cbv2;
+    UIScrollView *videoSvc;
 }
 @end
 
@@ -154,7 +155,7 @@
     CGFloat ViewHigh=fDeviceHeight-TopSeachHigh-150-40;
     CGFloat videoWith=ViewHigh*1280/768;
     CGFloat ViewWith=fDeviceWidth-20;
-    UIScrollView *videoSvc=[[UIScrollView alloc]initWithFrame:CGRectMake(10, TopSeachHigh+10, ViewWith, ViewHigh)];
+    videoSvc=[[UIScrollView alloc]initWithFrame:CGRectMake(10, TopSeachHigh+10, ViewWith, ViewHigh)];
     
     self.videoView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, videoWith, ViewHigh)];
     
@@ -216,29 +217,34 @@
     [_controllView addSubview:_upBtn];
     
     CGFloat fiveBtnY=5;
-    CGFloat fiveBtnW=30;
-    CGFloat fiveBtnH=30;
-    CGFloat btnJG=(ViewWith-30*5)/5;
+    CGFloat fiveBtnW=25;
+    CGFloat fiveBtnH=32.5;
+    CGFloat btnJG=(ViewWith-fiveBtnW*5)/5;
     
     _talkBtn=[[UIButton alloc]initWithFrame:CGRectMake(btnJG/2, fiveBtnY, fiveBtnW, fiveBtnH)];
-    [self stdSetMyBtn:_talkBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"对讲"];
+    [_talkBtn setImage:[UIImage imageNamed:@"duijiang"] forState:UIControlStateNormal];
+    //[self stdSetMyBtn:_talkBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"对讲"];
     [_controllView addSubview:_talkBtn];
    
     
     _bufangBtn=[[UIButton alloc]initWithFrame:CGRectMake(btnJG/2+btnJG+fiveBtnW, fiveBtnY, fiveBtnW, fiveBtnH)];
-    [self stdSetMyBtn:_bufangBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"布防"];
+    [_bufangBtn setImage:[UIImage imageNamed:@"bufang"] forState:UIControlStateNormal];
+    //[self stdSetMyBtn:_bufangBtn img:@"bufang" imgSelected:@"bufang_pressed" title:@"布防"];
     [_controllView addSubview:_bufangBtn];
     
     _huazhiBtn=[[UIButton alloc]initWithFrame:CGRectMake(btnJG/2+(btnJG+fiveBtnW)*2, fiveBtnY, fiveBtnW, fiveBtnH)];
-    [self stdSetMyBtn:_huazhiBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"画质"];
+    [_huazhiBtn setImage:[UIImage imageNamed:@"huazhi"] forState:UIControlStateNormal];
+    //[self stdSetMyBtn:_huazhiBtn img:@"hauzhi" imgSelected:@"huazhi_pressed" title:@"画质"];
     [_controllView addSubview:_huazhiBtn];
     
     _fanzhuanBtn=[[UIButton alloc]initWithFrame:CGRectMake(btnJG/2+(btnJG+fiveBtnW)*3, fiveBtnY, fiveBtnW, fiveBtnH)];
-    [self stdSetMyBtn:_fanzhuanBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"翻转"];
+    [_fanzhuanBtn setImage:[UIImage imageNamed:@"fanzhuan"] forState:UIControlStateNormal];
+    //[self stdSetMyBtn:_fanzhuanBtn img:@"fanzhuan" imgSelected:@"fanzhuan_pressed" title:@"翻转"];
     [_controllView addSubview:_fanzhuanBtn];
     
     _huifangBtn=[[UIButton alloc]initWithFrame:CGRectMake(btnJG/2+(btnJG+fiveBtnW)*4, fiveBtnY, fiveBtnW, fiveBtnH)];
-    [self stdSetMyBtn:_huifangBtn img:@"talkback_normal" imgSelected:@"talkback_pressed" title:@"回放"];
+    [_huifangBtn setImage:[UIImage imageNamed:@"huifang"] forState:UIControlStateNormal];
+    //[self stdSetMyBtn:_huifangBtn img:@"huifang" imgSelected:@"huifang_pressed" title:@"回放"];
     [_controllView addSubview:_huifangBtn];
     //_talkBtn.backgroundColor=[UIColor yellowColor];
     _talkBtn.tag=101;
@@ -355,7 +361,8 @@
             }
             break;
         case 104://翻转
-            [self drawTurnView];
+            //[self drawTurnView];
+            [self allScreenPlay];
             break;
         case 105://回放
             [self stdReplay];
@@ -828,5 +835,32 @@
         }
 
     }];
+}
+
+-(void)allScreenPlay{
+
+    [self.videoView removeFromSuperview];
+    [self.videoView setFrame:CGRectMake((fDeviceWidth-fDeviceHeight)/2, 0,fDeviceHeight,fDeviceHeight)];
+    [self.view addSubview:self.videoView];
+    self.videoView.transform=CGAffineTransformMakeRotation(M_PI/2);
+    [video SetCanvas:self.videoView];
+    UIButton *backToOldPlay=[[UIButton alloc]initWithFrame:CGRectMake(0, fDeviceHeight-40, 40, 40)];
+    [backToOldPlay setTitle:@"返回" forState:UIControlStateNormal];
+    [backToOldPlay setTitleColor:deepbluetxtcolor forState:UIControlStateNormal];
+    [backToOldPlay addTarget:self action:@selector(backPlayView:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backToOldPlay];
+    backToOldPlay.transform=CGAffineTransformMakeRotation(M_PI/2);
+}
+-(void)backPlayView:(UIButton*)btn{
+    CGFloat ViewHigh=fDeviceHeight-TopSeachHigh-150-40;
+    CGFloat videoWith=ViewHigh*1280/768;
+    btn.hidden=YES;
+    [self.videoView removeFromSuperview];
+    self.videoView.transform=CGAffineTransformMakeRotation((M_PI/2)*4);
+    [self.videoView setFrame:CGRectMake(0, 0, videoWith, ViewHigh)];
+
+    [videoSvc addSubview:self.videoView];
+    [video SetCanvas:self.videoView];
+
 }
 @end
