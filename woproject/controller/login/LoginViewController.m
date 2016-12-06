@@ -109,10 +109,11 @@
 }
 
 -(void)clearbtnClick:(UIButton*)btn{
-    if (btn.tag==101) {
+//    if (btn.tag==101) {
+//        _UsrTxtF.text=@"";
+//    }
+//    else
         _UsrTxtF.text=@"";
-    }
-    else
         _PassTxtF.text=@"";
 }
 -(void)loadLoginView{

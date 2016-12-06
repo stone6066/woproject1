@@ -384,14 +384,14 @@
 {
     //[self.rView.describeTextView resignFirstResponder];
     NSDictionary *params = [self getParams];
-    if ([params[@"job_id"] isEqualToString:@"-1"]) {
-        [stdPubFunc stdShowMessage:@"请填写工种"];
-        return;
-    }
-    if ([params[@"user_id"]isEqualToString:@"-1"]) {
-        [stdPubFunc stdShowMessage:@"请填写接单人"];
-        return;
-    }
+//    if ([params[@"job_id"] isEqualToString:@"-1"]) {
+//        [stdPubFunc stdShowMessage:@"请填写工种"];
+//        return;
+//    }
+//    if ([params[@"user_id"]isEqualToString:@"-1"]) {
+//        [stdPubFunc stdShowMessage:@"请填写接单人"];
+//        return;
+//    }
     if (_memoResion.text.length<1) {
         if (_ViewType==8) {
             [stdPubFunc stdShowMessage:@"转单原因不能为空"];
