@@ -192,7 +192,16 @@
     _priorityBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY, BoxWidth, BoxHeigh) titleStr:@"优先级：" tagFlag:0];
     _priorityBox.stdTableDelegate=self;
     [Svc addSubview:_priorityBox];
-    [_priorityBox setComboxTitleAtIndex:2];
+    if ([_myTicketInfo.priority isEqualToString:@"高"]) {
+        [_priorityBox setComboxTitleAtIndex:0];
+    }
+    else if ([_myTicketInfo.priority isEqualToString:@"中"]) {
+        [_priorityBox setComboxTitleAtIndex:1];
+    }
+    else if ([_myTicketInfo.priority isEqualToString:@"低"]) {
+        [_priorityBox setComboxTitleAtIndex:2];
+    }
+
     _jobNameBox = [[ComboxView alloc] initWithFrame:CGRectMake(offsetX, offsetY+15+BoxHeigh, BoxWidth, BoxHeigh) titleStr:@"工种：" tagFlag:1];
     _jobNameBox.stdTableDelegate=self;
     [Svc addSubview:_jobNameBox];
@@ -434,11 +443,12 @@
 }
 
 -(void)pushPaidanView{
-    PaidanViewController *pdVc=[[PaidanViewController alloc]init];
-    pdVc.view.backgroundColor=[UIColor whiteColor];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:pdVc animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[PaidanViewController class]]) {
+            PaidanViewController *revise =(PaidanViewController *)controller;
+            [self.navigationController popToViewController:revise animated:YES];
+        }
+    }
 }
 
 -(void)stdImageClickDelegate:(NSString *)imgUrl{

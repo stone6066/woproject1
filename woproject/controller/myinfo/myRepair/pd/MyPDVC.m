@@ -254,9 +254,6 @@ static NSString * const myPaiDanIdentifier = @"myrepairIdentifier";
 
 - (NSString *)menu:(DOPDropDownMenu *)menu detailTextForRowAtIndexPath:(DOPIndexPath *)indexPath
 {
-    if (indexPath.column < 3) {
-        return [@(arc4random()%1000) stringValue];
-    }
     return nil;
 }
 
@@ -349,6 +346,7 @@ static NSString * const myPaiDanIdentifier = @"myrepairIdentifier";
         default:
             break;
     }
+    cell.type = @"1";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -358,6 +356,7 @@ static NSString * const myPaiDanIdentifier = @"myrepairIdentifier";
     MRCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.img.hidden = YES;
     MRModel *model = self.dataArray[indexPath.row];
+    model.isNew = @"2";
     DetailVC *vc = [[DetailVC alloc] init];
     vc.orderId = model.Id;
     vc.v = model.v;

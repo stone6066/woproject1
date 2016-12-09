@@ -264,6 +264,7 @@
     [paramDict setObject:@"2" forKey:@"status"];
     [paramDict setObject:[NSString stringWithFormat:@"%@",_sortid] forKey:@"sort_id"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
+    [paramDict setObject:@"1" forKey:@"category"];//公共、派单为0 其余1
     if (_pageindex==0) {//获取最新数据
         [paramDict setObject:@"Greater" forKey:@"comparison"];
     }

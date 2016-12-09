@@ -41,13 +41,13 @@
 
     _stateLabel.text = model.ticketStatus;
 
-    if ([model.ticketStatus isEqualToString:@"未派单"]) {
-        _jdsjLabel.text = [NSString stringWithFormat:@"报修时间:  %@", [self stdTimeToStr:model.createTime]];
-    }else if([model.ticketStatus isEqualToString:@"未接单"]){
-        _jdsjLabel.text = [NSString stringWithFormat:@"派单时间:  %@", [self stdTimeToStr:model.createTime]];
-    }else{
-        _jdsjLabel.text = [NSString stringWithFormat:@"%@时间:  %@", [model.ticketStatus substringWithRange:NSMakeRange(model.ticketStatus.length - 2, 2)], [self stdTimeToStr:model.createTime]];
-    }
+//    if ([model.ticketStatus isEqualToString:@"未派单"]) {
+//        _jdsjLabel.text = [NSString stringWithFormat:@"报修时间:  %@", [self stdTimeToStr:model.createTime]];
+//    }else if([model.ticketStatus isEqualToString:@"未接单"]){
+//        _jdsjLabel.text = [NSString stringWithFormat:@"派单时间:  %@", [self stdTimeToStr:model.createTime]];
+//    }else{
+//        _jdsjLabel.text = [NSString stringWithFormat:@"%@时间:  %@", [model.ticketStatus substringWithRange:NSMakeRange(model.ticketStatus.length - 2, 2)], [self stdTimeToStr:model.createTime]];
+//    }
     _xmmcLabel.text = [NSString stringWithFormat:@"项目名称:  %@", model.projectId];
     _yxjContent.text = model.priority != nil?[NSString stringWithFormat:@" %@", model.priority]:@" 无";
     _xmmsContent.text = model.faultDesc;
@@ -56,8 +56,22 @@
 
 - (void)setType:(NSString *)type
 {
-    if ([type isEqualToString:@"2"]) {
-        _jdsjLabel.text = [_jdsjLabel.text stringByReplacingCharactersInRange:NSMakeRange(0, 2) withString:@"完成"];
+//    if ([type isEqualToString:@"2"]) {
+//        _jdsjLabel.text = [_jdsjLabel.text stringByReplacingCharactersInRange:NSMakeRange(0, 2) withString:@"完成"];
+//    }
+    switch (type.integerValue) {
+        case 0:
+            _jdsjLabel.text = [NSString stringWithFormat:@"报修时间:  %@", [self stdTimeToStr:_model.createTime]];
+            break;
+        case 1:
+            _jdsjLabel.text = [NSString stringWithFormat:@"派单时间:  %@", [self stdTimeToStr:_model.createTime]];
+            break;
+        case 2:
+            _jdsjLabel.text = [NSString stringWithFormat:@"接单时间:  %@", [self stdTimeToStr:_model.createTime]];
+            break;
+            
+        default:
+            break;
     }
 }
 

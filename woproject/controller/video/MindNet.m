@@ -167,21 +167,21 @@
     });
 }
 
-//-(void)createTalkView:(long long) devid  callback:(void(^)(int32_t ret,QYView* view)) callback
-//{
-//    QYView* videoView= [session CreateTalkView:devid];
-//    [videoView StartConnectCallBack:^(int32_t ret) {
-//        if(ret==0)
-//        {
-//            callback(ret,videoView);
-//        }
-//        else
-//        {
-//            callback(ret,nil);
-//        }
-//    }];
-//
-//}
+-(void)createTalkView:(long long) devid  callback:(void(^)(int32_t ret,QYView* view)) callback
+{
+    QYView* videoView= [session CreateTalkView:devid];
+    [videoView StartConnectCallBack:^(int32_t ret) {
+        if(ret==0)
+        {
+            callback(ret,videoView);
+        }
+        else
+        {
+            callback(ret,nil);
+        }
+    }];
+
+}
 
 
 

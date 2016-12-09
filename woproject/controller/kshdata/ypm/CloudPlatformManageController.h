@@ -10,4 +10,6 @@
 
 @interface CloudPlatformManageController : BaseViewController
 
+@property (nonatomic, strong) NSArray *arr;
+
 @end

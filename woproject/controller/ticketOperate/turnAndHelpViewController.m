@@ -510,10 +510,11 @@
     }
 }
 -(void)stdTurnToYJGD{
-    YjgdViewController *yjVc=[[YjgdViewController alloc]init];
-    yjVc.view.backgroundColor=[UIColor whiteColor];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:yjVc animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[YjgdViewController class]]) {
+            YjgdViewController *revise =(YjgdViewController *)controller;
+            [self.navigationController popToViewController:revise animated:YES];
+        }
+    }
 }
 @end

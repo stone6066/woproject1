@@ -30,12 +30,23 @@
     _level.text=dataModel.priority;
     _detail.text=dataModel.faultDesc;
     _isnew=dataModel.isNew;
-    if ([_isnew isEqualToString:@"2"]) {
+    if ([_isnew isEqualToString:@"0"]) {
         _myNewImg.hidden=YES;
     }
     else
          _myNewImg.hidden=NO;
     _Id=dataModel.Id;
+    if ([dataModel.ticketStatus isEqualToString:@"已退单"]) {
+        self.timeTitle.text=@"退单时间";
+    }else if ([dataModel.ticketStatus isEqualToString:@"已挂起"]) {
+        self.timeTitle.text=@"挂起时间";
+    }else if ([dataModel.ticketStatus isEqualToString:@"未派单"]) {
+        self.timeTitle.text=@"报修时间";
+    }else if ([dataModel.ticketStatus isEqualToString:@"已退单"]) {
+        self.timeTitle.text=@"退单时间";
+    }else if ([dataModel.ticketStatus isEqualToString:@"未接单"]) {
+        self.timeTitle.text=@"派单时间";
+    }
 
 }
 
@@ -43,7 +54,7 @@
     NSTimeInterval interval=[[intTime substringToIndex:10] doubleValue];
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
     NSDateFormatter *objDateformat = [[NSDateFormatter alloc] init];
-    [objDateformat setDateFormat:@"yyyy-MM-dd"];
+    [objDateformat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     return [objDateformat stringFromDate: date];
 }
 

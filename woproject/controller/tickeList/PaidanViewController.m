@@ -274,13 +274,13 @@
 
     NSMutableDictionary * paramDict=[[NSMutableDictionary alloc]init];
     
-    [paramDict setObject:@"" forKey:@"uid"];
+    [paramDict setObject:ApplicationDelegate.myLoginInfo.Id forKey:@"uid"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.ukey forKey:@"ukey"];
     [paramDict setObject:@"0" forKey:@"status"];
     //[paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_pageindex] forKey:@"sort_id"];
     [paramDict setObject:[NSString stringWithFormat:@"%@",_sortid] forKey:@"sort_id"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
-    
+    [paramDict setObject:@"0" forKey:@"category"];//公共、派单为0 其余1
     if (_pageindex==0) {//获取最新数据
         [paramDict setObject:@"Greater" forKey:@"comparison"];
     }

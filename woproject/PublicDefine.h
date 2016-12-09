@@ -74,20 +74,16 @@
 #define NSUserIsLogin @"IsLogin"
 #define NSUserLoginMsg @"userMsg"
 #define NSUserVideoMsg @"VideoMsg"
-//#define NetUrl @"http://shop.anquan365.org/nst/common.htm?"
-#define MainUrl @"http://shop.anquan365.org/"
-#define MainToken @"tao-yx.com"
-//#define BaseUrl @"http://139.129.218.74:8080/ticket/"
-#define BaseUrl @"http://120.132.124.11/ticket/"
-//@"http://120.132.124.11/ticket/"
-//@"http://139.129.218.74:8080/ticket/"
+
+
+#define BaseUrl @"http://139.129.218.74:8080/ticket/"
+//#define BaseUrl @"http://120.132.124.11/ticket/"
+
 #define BasePath @"mobile/interface/"
 
 #define kNotifyDisconnection @"c" //断开
 #define kNotifyReconnection @"kNotifyReconnection" //重联
 
-//#define BaseUrl @"http://192.168.0.65:8080/paistore_m_site/"
-//#define BasePath @"interface/"
 
 
 #define MainTabbarColor ([UIColor whiteColor])

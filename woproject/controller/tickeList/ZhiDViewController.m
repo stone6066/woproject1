@@ -44,7 +44,7 @@
     TopView.backgroundColor=topviewcolor;//[UIColor redColor];
     
     UILabel *topLbl=[[UILabel alloc]initWithFrame:CGRectMake(0, 20, fDeviceWidth, 40)];
-    topLbl.text=@"指定工单";
+    topLbl.text=@"指定接单";
     [topLbl setFont:[UIFont systemFontOfSize:18]];
     [topLbl setTextAlignment:NSTextAlignmentCenter];
     [topLbl setTextColor:[UIColor whiteColor]];
@@ -269,7 +269,7 @@
     [paramDict setObject:@"1" forKey:@"status"];
     [paramDict setObject:[NSString stringWithFormat:@"%@",_sortid] forKey:@"sort_id"];
     [paramDict setObject:ApplicationDelegate.myLoginInfo.v forKey:@"v"];
-    
+    [paramDict setObject:@"1" forKey:@"category"];//公共、派单为0 其余1
     if (_pageindex==0) {//获取最新数据
         [paramDict setObject:@"Greater" forKey:@"comparison"];
     }

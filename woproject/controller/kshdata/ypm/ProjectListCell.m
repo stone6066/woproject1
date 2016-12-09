@@ -26,7 +26,7 @@
     }
     _titleL.text  = _dataDic[@"buildingName"];
     _count.text = [_dataDic[@"projectCount"] stringValue];
-    _space.text = [_dataDic[@"areaCount"] stringValue];;
+    _space.attributedText = [MJYUtils attributeStr:[NSString stringWithFormat:@"%.2f", [dataDic[@"areaCount"] floatValue] / 10000] changePartStr:[NSString stringWithFormat:@"%.2f", [dataDic[@"areaCount"] floatValue] / 10000] withFont:20 andColor:RGB(0, 0, 0)];
 }
 
 - (void)awakeFromNib {

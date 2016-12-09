@@ -52,6 +52,10 @@
     }else{
         if (![_originalPwdFD.text isEqualToString:@""]) {
             [stdPubFunc stdShowMessage:@"原密码输入错误，请重新输入"];
+            _originalPwdFD.text = @"";
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [_originalPwdFD becomeFirstResponder];
+            });
             return;
         }
 //        if (![self checkInputPassword:_originalPwdFD.text] && _originalPwdFD.text.length > 0) {
@@ -65,6 +69,10 @@
     }else{
         if (![self checkInputPassword:_pwdFD.text] && _pwdFD.text.length > 0) {
             [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
+            _pwdFD.text = @"";
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [_pwdFD becomeFirstResponder];
+            });
             return;
         }
     }
@@ -74,6 +82,10 @@
     }else{
         if (![self checkInputPassword:_againPwdFD.text] && _againPwdFD.text.length > 0) {
             [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
+            _againPwdFD.text = @"";
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [_againPwdFD becomeFirstResponder];
+            });
             return;
         }
     }
@@ -89,21 +101,38 @@
     if (textField == _originalPwdFD) {
         if (![_originalPwdFD.text isEqualToString:@""]) {
             [stdPubFunc stdShowMessage:@"原密码输入错误，请重新输入"];
+            _originalPwdFD.text = @"";
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [_originalPwdFD becomeFirstResponder];
+            });
             return;
         }
         if (![self checkInputPassword:_originalPwdFD.text] && _originalPwdFD.text.length > 0) {
             [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
+            _originalPwdFD.text = @"";
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [_originalPwdFD becomeFirstResponder];
+            });
         }
     }else if (textField == _pwdFD){
         if (![self passwardIsRepeatWithPwd:_pwdFD.text andAgainPwd:_againPwdFD.text]) {
             if (![self checkInputPassword:_pwdFD.text] && _pwdFD.text.length > 0) {
                 [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
+                _pwdFD.text = @"";
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [_pwdFD becomeFirstResponder];
+                });
             }
         }
     }else{
         if (![self passwardIsRepeatWithPwd:_againPwdFD.text andAgainPwd:_pwdFD.text]) {
             if (![self checkInputPassword:_againPwdFD.text] && _againPwdFD.text.length > 0) {
                 [stdPubFunc stdShowMessage:@"密码长度必须是6-18个字符，请重新输入"];
+                _againPwdFD.text = @"";
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [_againPwdFD becomeFirstResponder];
+                });
+
             }
         }
     }

@@ -39,7 +39,7 @@
     [_imgv sd_setImageWithURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BaseUrl, dataDic[@"imagePath"]]]  placeholderImage:nil];
       _forms.text = [NSString stringWithFormat:@"建筑业态:%@", dataDic[@"buildingName"]];
     _bulidHeight.text = [NSString stringWithFormat:@"楼高:%@米", dataDic[@"height"]];
-    _space.text = [NSString stringWithFormat:@"建筑面积:%@万平方米", dataDic[@"areaCount"]];
+    _space.text = [NSString stringWithFormat:@"建筑面积:%@万㎡", [NSString stringWithFormat:@"%.2f", [dataDic[@"areaCount"] floatValue] / 10000] ];
     _over.text = [NSString stringWithFormat:@"地上层数:%@", dataDic[@"overground"]];
     _under.text = [NSString stringWithFormat:@"地下层数:%@", dataDic[@"underground"]];
     _responsible.text =[NSString stringWithFormat:@"负责人:%@", dataDic[@"manager"]];

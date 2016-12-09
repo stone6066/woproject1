@@ -344,12 +344,12 @@
 }
 
 -(void)pushYjgdView{
-    GggdViewController *yjVc=[[GggdViewController alloc]init];
-    yjVc.view.backgroundColor=[UIColor whiteColor];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:yjVc animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
-
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[GggdViewController class]]) {
+            GggdViewController *revise =(GggdViewController *)controller;
+            [self.navigationController popToViewController:revise animated:YES];
+        }
+    }
 }
 
 -(void)stdImageClickDelegate:(NSString *)imgUrl{

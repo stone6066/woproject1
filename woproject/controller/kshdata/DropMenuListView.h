@@ -17,4 +17,14 @@ extern NSString *const DropMenListViewToBaseViewControllerShowListNoti;
 
 - (void)setTitleContentWithArr:(NSArray *)arr;
 
+@property (nonatomic, strong) UILabel *leftLb;
+@property (nonatomic, strong) UILabel *middleLb;
+@property (nonatomic, strong) UILabel *rightLb;
+
+@property (nonatomic, strong) UIButton *leftBt;
+@property (nonatomic, strong) UIButton *middleBt;
+@property (nonatomic, strong) UIButton *rightBt;
+
+
+
 @end

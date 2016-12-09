@@ -284,9 +284,6 @@ static NSString * const myorderIdentifier = @"myorderIdentifier";
 
 - (NSString *)menu:(DOPDropDownMenu *)menu detailTextForRowAtIndexPath:(DOPIndexPath *)indexPath
 {
-    if (indexPath.column < 3) {
-        return [@(arc4random()%1000) stringValue];
-    }
     return nil;
 }
 
@@ -389,6 +386,7 @@ static NSString * const myorderIdentifier = @"myorderIdentifier";
     MRCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.img.hidden = YES;
     MRModel *model = self.dataArray[indexPath.row];
+    model.isNew = @"2";
     DetailVC *vc = [[DetailVC alloc] init];
     vc.orderId = model.Id;
     vc.v = model.v;

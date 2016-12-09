@@ -7,19 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+@class DropMenuListView;
 
 @interface BaseViewController : UIViewController 
 
-@property (nonatomic, copy) NSString *topTitle;
+//@property (nonatomic, copy) NSString *topTitle;
 
-@property (nonatomic, assign) BOOL dateListShow;
-
-
-@property (nonatomic, copy) NSString *dateStr;
-
-@property (nonatomic, copy) NSString *provinceIdStr;
-@property (nonatomic, copy) NSString *cityIdStr;
-@property (nonatomic, copy) NSString *projectIdStr;
+//@property (nonatomic, strong) UIView *toptView;
+//
+//@property (nonatomic, copy) NSString *dateStr;
+//
+//@property (nonatomic, copy) NSString *provinceIdStr;
+//@property (nonatomic, copy) NSString *cityIdStr;
+//@property (nonatomic, copy) NSString *projectIdStr;
+//
+//
+//@property (nonatomic, strong)  DropMenuListView *listMenu;
 
 
 

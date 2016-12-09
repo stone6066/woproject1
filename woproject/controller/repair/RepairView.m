@@ -256,6 +256,7 @@
 
 - (void)imageButtonAction:(UIButton *)sender
 {
+    [self regis];
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(openPhotosAndCamera:)]) {
         [self.delegate openPhotosAndCamera:sender];
     }
@@ -312,6 +313,10 @@
     return cell;
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self regis];
+}
+- (void)regis
 {
     [_describeTextView resignFirstResponder];
     [self.tableView removeFromSuperview];
@@ -371,6 +376,11 @@
 #pragma mark TextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
+    [self.tableView removeFromSuperview];
+    _isPN = NO;
+    _isFS = NO;
+    _isDT = NO;
+    _isP = NO;
     CGFloat space = fDeviceHeight - _describeTextView.frame.origin.y - _describeTextView.frame.size.height - 64;
     if(space < 282){
         [UIView animateWithDuration:.333f animations:^{
