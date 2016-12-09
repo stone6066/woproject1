@@ -33,7 +33,7 @@
     _huazhiIdData=[[NSMutableArray alloc]init];
     [self loadTopNav];
     
-    [self drawMainView];
+    //[self drawMainView];
     // Do any additional setup after loading the view.
 }
 
@@ -397,8 +397,8 @@
         {
             video=view;
             [video SetEventDelegate:self];
-            //[video startCaptureWidth:fDeviceWidth height:fDeviceHeight];
-            [video SetCanvas:self.videoView];
+            [self allScreenPlay];
+            //[video SetCanvas:self.videoView];
             
         }
         else{
@@ -839,6 +839,9 @@
 
 -(void)allScreenPlay{
 
+    if (!self.videoView) {
+        self.videoView=[[UIView alloc]init];
+    }
     [self.videoView removeFromSuperview];
     [self.videoView setFrame:CGRectMake((fDeviceWidth-fDeviceHeight)/2, 0,fDeviceHeight,fDeviceHeight)];
     [self.view addSubview:self.videoView];
@@ -852,15 +855,16 @@
     backToOldPlay.transform=CGAffineTransformMakeRotation(M_PI/2);
 }
 -(void)backPlayView:(UIButton*)btn{
-    CGFloat ViewHigh=fDeviceHeight-TopSeachHigh-150-40;
-    CGFloat videoWith=ViewHigh*1280/768;
-    btn.hidden=YES;
-    [self.videoView removeFromSuperview];
-    self.videoView.transform=CGAffineTransformMakeRotation((M_PI/2)*4);
-    [self.videoView setFrame:CGRectMake(0, 0, videoWith, ViewHigh)];
-
-    [videoSvc addSubview:self.videoView];
-    [video SetCanvas:self.videoView];
+//    CGFloat ViewHigh=fDeviceHeight-TopSeachHigh-150-40;
+//    CGFloat videoWith=ViewHigh*1280/768;
+//    btn.hidden=YES;
+//    [self.videoView removeFromSuperview];
+//    self.videoView.transform=CGAffineTransformMakeRotation((M_PI/2)*4);
+//    [self.videoView setFrame:CGRectMake(0, 0, videoWith, ViewHigh)];
+//
+//    [videoSvc addSubview:self.videoView];
+//    [video SetCanvas:self.videoView];
+    [self.navigationController popViewControllerAnimated:YES];
 
 }
 @end
