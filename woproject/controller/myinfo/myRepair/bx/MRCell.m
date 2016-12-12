@@ -51,7 +51,8 @@
     _xmmcLabel.text = [NSString stringWithFormat:@"项目名称:  %@", model.projectId];
     _yxjContent.text = model.priority != nil?[NSString stringWithFormat:@" %@", model.priority]:@" 无";
     _xmmsContent.text = model.faultDesc;
-    _img.hidden = [model.isNew isEqualToString:@"1"]?NO:[model.isNew isEqualToString:@"2"]?YES:NO;
+    _img.hidden =YES;
+    //[model.isNew isEqualToString:@"1"]?NO:[model.isNew isEqualToString:@"2"]?YES:NO;
 }
 
 - (void)setType:(NSString *)type
